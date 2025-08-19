@@ -40,7 +40,7 @@
     </p>
     <div class="flex justify-center mt-6">
         <a href="/register"
-            class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 transition text-center">
+            class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
             Daftar
         </a>
     </div>
@@ -49,7 +49,7 @@
 
         </div>
         <div class="col-span-3 flex justify-center items-center bg-white ">
-            <div class="w-10/12 px-8 md:px-32 lg:px-24">
+            <div class="w-10/12 px-8 md:w-full lg:w-10/12">
                 <div class="w-full">
                     <h1 class="text-gray-800 font-bold text-2xl mb-3 text-center">Masuk</h1>
                     <div class="flex gap-3 mt-4 md:mt-0 justify-center">
@@ -74,21 +74,21 @@
                         <label for="name" class="font-semibold ">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-8 py-2 px-3">
                             <input id="name" class=" pl-2 w-full outline-none border-none" type="text name="name"
-                                placeholder="Nama Pengguna" />
+                                placeholder="Nama Pengguna" required autofocus />
                         </div>
                         <label for="password" class="font-semibold">Kata Sandi</label>
                         <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
                             <input class="pl-2 w-full outline-none border-none" type="password" name="password"
-                                id="password" placeholder="Kata Sandi" />
+                                id="password" placeholder="Kata Sandi" required />
                         </div>
                         <div>
                             <input type="checkbox" name="" id="" class="border"> 
-                            <label for="" class="font-semibold text-gray-500 pl-1">ingat saya</label>
-                            <a href="" class="float-right font-semibold text-[#fa6601]">Lupa Kata Sandi</a>
+                            <label for="" class="font-semibold text-gray-500 pl-1 md:">ingat saya </label>
+                            <a href="" class="float-right font-semibold text-[#fa6601] lg:px-4">Lupa Kata Sandi</a>
                         </div>
                         <div class="flex justify-center">
                             <button type="submit"
-                                class="w-52   bg-[#fa6601] mt-5 py-4 rounded-full hover:bg-[#fa6601] hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">MASUK</button>
+                                class="w-52  bg-[#fa6601] mt-5 py-4 rounded-full hover:bg-[#fa6601] hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">MASUK</button>
                         </div>
                         <div class="flex justify-center mt-4">
                             <span class="font-semibold text-black">Tidak Memiliki Acount? <a href="/register"

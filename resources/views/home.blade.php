@@ -56,16 +56,16 @@
                         <p class="text-center text-zinc-700 font-bold">Pemasaran</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
+                        <p class="text-center text-zinc-700 font-bold">Pendidik</p>
+                    </div>
+                    <div class="border border-gray-300 py-2 shadow-sm">
+                        <p class="text-center text-zinc-700 font-bold">Customer Service</p>
+                    </div>
+                    <div class="border border-gray-300 py-2 shadow-sm">
                         <p class="text-center text-zinc-700 font-bold">Keuangan</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
                         <p class="text-center text-zinc-700 font-bold">Kasir</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Customor</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Multimedia</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
                         <p class="text-center text-zinc-700 font-bold">Admin</p>
@@ -103,16 +103,20 @@
     </section>
     {{-- Navigation Home --}}
     <div class="mt-10 flex justify-center gap-10  items-center font-semibold border-b">
-        <button class="border-b-2 border-[#fa6601] text-[13px] lg:text-[16px] md:text-[16px] cursor-pointer">UMPAN
+        <button id="umpan-lowongan"
+            class="border-b-2 border-[#fa6601] text-[13px] lg:text-[16px] md:text-[16px] cursor-pointer">UMPAN
             LOWONGAN</button>
-        <button class="cursor-pointer text-[13px] lg:text-[16px] md:text-[16px]">PENCAPAIAN BARU BARU INI</button>
+        <button id="pencarian"
+            class="gacursor-pointer border-[#fa6601]  text-[13px] lg:text-[16px] md:text-[16px]">PENCARIAN BARU BARU
+            INI</button>
     </div>
     {{-- End Navigation Home --}}
 
     <section class="mx-2 lg:mx-0 md:mx-0 px-0 lg:px-20 md:px-20">
-        <p class="my-10 font-semibold text-gray-500 text-center lg:text-left md:text-left">Lowongan berdasarkan pada aktivitas anda di areakerja</p>
-        <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3">
-            <div class="border p-8">
+        <p class="my-10 font-semibold text-gray-500 text-center lg:text-left md:text-left">Lowongan berdasarkan pada
+            aktivitas anda di areakerja</p>
+        <div id="section-umpan-lowongan" class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3">
+            <a href="/detail/job" class="border p-8">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="bg-[#fdedf4] w-fit p-2 text-[#9d2b6b] font-semibold rounded-md text-[12px]">dibutuhkan
@@ -125,7 +129,8 @@
                 </div>
                 <p class="text-gray-500 font-semibold">Capital Club</p>
                 <p class="text-gray-500 font-semibold">Jakarta</p>
-                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 4.500.000 – Rp. 7.000.000 per
+                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 4.500.000 – Rp. 7.000.000
+                    per
                     bulan
                 </p>
                 <div class="flex items-center gap-2 my-4">
@@ -136,10 +141,11 @@
                 <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
                     <li>Gaji – Rp6.000.000 – Rp11.894.293 per bulan Tergantung Pengalaman.</li>
                     <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
-                    <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1 menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).</li>
+                    <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1
+                        menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).</li>
                 </ul>
                 <span>Aktif 2jam lalu</span>
-            </div>
+            </a>
             <div class="border p-8">
                 <div class="flex justify-between items-center">
                     <div>
@@ -153,7 +159,8 @@
                 </div>
                 <p class="text-gray-500 font-semibold">Eduwork.id</p>
                 <p class="text-gray-500 font-semibold">Yogyakarta</p>
-                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 4.500.000 – Rp. 7.000.000 per
+                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 4.500.000 – Rp. 7.000.000
+                    per
                     bulan
                 </p>
                 <div class="flex items-center gap-2 my-4">
@@ -164,7 +171,8 @@
                 <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
                     <li>Gaji – Rp6.000.000 – Rp11.894.293 per bulan Tergantung Pengalaman.</li>
                     <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
-                    <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1 menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).</li>
+                    <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1
+                        menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).</li>
                 </ul>
                 <span>Aktif 2jam lalu</span>
             </div>
@@ -181,7 +189,8 @@
                 </div>
                 <p class="text-gray-500 font-semibold">Permata Solutions</p>
                 <p class="text-gray-500 font-semibold">Jakarta</p>
-                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 7.000.000 – Rp. 15.000.000 per
+                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 7.000.000 – Rp.
+                    15.000.000 per
                     bulan
                 </p>
                 <div class="flex items-center gap-2 my-4">
@@ -192,12 +201,53 @@
                 <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
                     <li>Mengembangkan dan menerapkan pengujian kegunaan</li>
                     <li>Komunikasikan konsep desain yang kompleks dan interaktif dengan jelas dan persuasif</li>
-                    <li>Menciptakan antarmuka dan pengalaman yang berpusat pada pengguna dengan mempertimbangkan analisis pasar, data, umpan balik pelanggan, riset pengguna, dan kendala/peluang teknis</li>
+                    <li>Menciptakan antarmuka dan pengalaman yang berpusat pada pengguna dengan mempertimbangkan analisis
+                        pasar, data, umpan balik pelanggan, riset pengguna, dan kendala/peluang teknis</li>
                 </ul>
-                <span >Aktif 2jam lalu</span>
+                <span>Aktif 2jam lalu</span>
             </div>
         </div>
-    </section> 
+
+
+        
+        {{-- Berdasarkan pencarian terbaru --}}
+        <section id="berdasarkan-pencarian" class="hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3">
+                <a href="/detail/job" class="border p-8">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="bg-[#fdedf4] w-fit p-2 text-[#9d2b6b] font-semibold rounded-md text-[12px]">
+                                dibutuhkan
+                                segera</p>
+                            <h1 class="font-bold text-[18px] my-3">Lead Graphic Designer - WFH </h1>
+                        </div>
+                        <div class="text-5xl font-bold">
+                            <i class="ph ph-dots-three-vertical"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 font-semibold">Capital Club</p>
+                    <p class="text-gray-500 font-semibold">Jakarta</p>
+                    <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 4.500.000 – Rp.
+                        7.000.000 per
+                        bulan
+                    </p>
+                    <div class="flex items-center gap-2 my-4">
+                        <i class="ph-fill ph-paper-plane-right text-blue-600 text-2xl"></i>
+                        <span>Lamar Dengan Cepat</span>
+                    </div>
+
+                    <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
+                        <li>Gaji – Rp6.000.000 – Rp11.894.293 per bulan Tergantung Pengalaman.</li>
+                        <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
+                        <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1
+                            menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).
+                        </li>
+                    </ul>
+                    <span>Aktif 2jam lalu</span>
+                </a>
+            </div>
+        </section>
+    </section>
 
     <div class="my-20 flex justify-center">
         <button class="bg-[#fa6601] px-12 py-2 text-white font-semibold rounded-md">Memuat</button>

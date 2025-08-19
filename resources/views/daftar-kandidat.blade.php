@@ -52,33 +52,34 @@
         </div>
     </section>
 
-    <div class="max-w-4xl mx-auto bg-white p-6 mt-10">
-        <h2 class="text-2xl font-bold text-center mb-8">Cara Daftar Kandidat</h2>
+    <div class="flex justify-center py-10">
+        <div class="bg-white  rounded-2xl w-full max-w-5xl overflow-hidden">
 
-        <div class="flex items-center border-t py-4 relative">
-            <div class="w-32 bg-orange-500 h-32 rounded-lg overflow-hidden mr-6">
-                <img src="{{ asset('image/1.png') }}" alt="" class="object-cover w-full h-full">
-            </div>
-            <div
-                class="absolute left-23 lg:left-28 md:left-28 top-12 w-8 h-8 bg-orange-500 text-white flex items-center justify-center rounded-full font-bold">
-                →
-            </div>
-            <div class="border-b py-4">
-                <p class="text-gray-700 text-base">Klik Daftar untuk registrasi kandidat</p>
-            </div>
-        </div>
-        <div class="">
-            <div class="border-b py-4">
-                <p class="text-gray-700 text-base">Lengkapi data yang diperlukan pada proses registrasi</p>
+            <div class="bg-gradient-to-r from-orange-400 to-yellow-400 text-center py-4">
+                <h2 class="text-xl font-bold text-black">Cara Daftar Kandidat</h2>
             </div>
 
-            <div class="border-b py-4">
-                <p class="text-gray-700 text-base">Tunggu pemberitahuan setelah melakukan registrasi</p>
+            <div class="flex flex-col md:flex-row items-center p-6">
+                <div class="w-48 h-48 bg-orange-500 rounded-lg overflow-hidden mr-6">
+                    <img src="{{ asset('image/1.png') }}" alt="" class="object-cover w-full h-full">
+                </div>
+
+                <div class="ml-0 mr-9 flex justify-center items-center">
+                    <div class="w-10 h-10 bg-orange-500 text-white flex items-center justify-center rounded-full shadow-md">
+                        <span class="text-lg font-bold"> →</span>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex items-center justify-between ml-20">
+                    <div class="divide-y divide-gray-300 text-gray-700 w-full">
+                        <p class="py-3">Klik Daftar untuk registrasi kandidat</p>
+                        <p class="py-3">Lengkapi data yang diperlukan pada proses registrasi</p>
+                        <p class="py-3">Tunggu pemberitahuan setelah melakukan registrasi</p>
+                        <p class="py-3">Ikuti pelatihan sesuai prosedur Areakerja.com</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="border-b py-4">
-                <p class="text-gray-700 text-base">Ikuti pelatihan sesuai prosedur Areakerja.com</p>
-            </div>
         </div>
     </div>
 @endsection

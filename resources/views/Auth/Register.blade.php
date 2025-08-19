@@ -29,9 +29,9 @@
     <div class="grid grid-cols-1 md:grid-cols-5 min-h-screen">
 
         <div class="col-span-3 flex justify-center items-center bg-white">
-            <div class="w-10/12 md:w-full px-8 md:px-32 lg:w-10/12">
+            <div class="w-10/12 md:w-full px-8 lg:w-10/12">
                 <div
-                    class="flex  items-center mb-6 transform translate-x-[-2rem] lg:translate-x-[-5rem] md:translate-x-[-3rem]">
+                    class="flex  items-center mb-6 transform translate-x-[-2rem] lg:translate-x-[-2rem] md:translate-x-[-2rem]">
                     <img class="w-10 h-10" src="{{ asset('image/logo-areakerja.png') }}" alt="Logo" class="w-20">
                     <span class=" font-semibold text-[#fa6601]">AreaKerja.com</span>
                 </div>
@@ -55,16 +55,16 @@
 
                     <div class="flex justify-center mb-6">
                         <div class="flex bg-gray-200 rounded-full w-max p-1">
-                            <button class="px-4 py-2 rounded-full bg-orange-500 text-white font-semibold">
+                            <button id="pelamar" class="px-4 py-2 rounded-full bg-orange-500 text-white font-semibold">
                                 Pelamar
                             </button>
-                            <button class="px-4 py-2 rounded-full text-gray-600 font-semibold">
+                            <button id="perusahaan" class="px-4 py-2 rounded-full font-semibold">
                                 Perusahaan
                             </button>
                         </div>
                     </div>
-
-                    <form>
+                    <!-- form regist Pelamar -->
+                    <form id="form-pelamar" >
                         <label for="name" class="font-semibold">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
                             <input id="name" class="pl-2 w-full outline-none border-none" type="text"
@@ -91,8 +91,8 @@
 
                         <div class="flex items-center justify-center mb-4">
                             <label class="flex items-center text-gray-500 font-semibold">
-                                <input type="checkbox" class="mr-2 border">
-                                <span>saya menyetujui <a class="text-[#fa6601]">syarat dan ketentuan</a> yang
+                                <input type="checkbox" class="mr-2 border" required>
+                                <span class="text-[12px] text-black">saya menyetujui <a class="text-[#fa6601]">syarat dan ketentuan</a> yang
                                     berlaku</span>
                             </label>
                         </div>
@@ -104,6 +104,49 @@
                             </button>
                         </div>
                     </form>
+
+                    <!-- form login perusahaan -->
+                    <form id="form-perusahaan" class="hidden">
+                        <label for="name" class="font-semibold">Nama Perusahaan</label>
+                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
+                            <input id="name" class="pl-2 w-full outline-none border-none" type="text"
+                                name="name" placeholder="Nama Perusahaan" />
+                        </div>
+
+                        <label for="email" class="font-semibold">E-Mail</label>
+                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
+                            <input id="email" class="pl-2 w-full outline-none border-none" type="email"
+                                name="email" placeholder="E-Mail" />
+                        </div>
+
+                        <label for="phone" class="font-semibold">No. Tlp Perusahaan</label>
+                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
+                            <input id="phone" class="pl-2 w-full outline-none border-none" type="number"
+                                name="phone" placeholder="No. Tlp Perusahaan" />
+                        </div>
+
+                        <label for="password" class="font-semibold">Kata Sandi</label>
+                        <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
+                            <input class="pl-2 w-full outline-none border-none" type="password" name="password"
+                                id="password" placeholder="Kata Sandi" />
+                        </div>
+
+                        <div class="flex items-center justify-center mb-4">
+                            <label class="flex items-center text-gray-500 font-semibold">
+                                <input type="checkbox" class="mr-2 border" required>
+                                <span class="text-[12px] text-black">saya menyetujui <a class="text-[#fa6601]">syarat dan ketentuan</a> yang
+                                    berlaku</span>
+                            </label>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button type="submit"
+                                class="w-52 bg-[#fa6601] mt-3 py-4 rounded-full hover:-translate-y-1 transition-all duration-500 text-white font-semibold">
+                                DAFTAR
+                            </button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -121,7 +164,7 @@
 
                 <div class="flex justify-center mt-6">
                     <a href="/login"
-                        class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 transition text-center">
+                        class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
                         Masuk
                     </a>
                 </div>
@@ -129,6 +172,7 @@
         </div>
 
     </div>
+    <script src="{{ asset('js/Auth.js') }}"></script>
 </body>
 
 </html>
