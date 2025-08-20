@@ -3,8 +3,7 @@
 @section('content')
     <section class="container max-w-screen-lg mx-auto pt-40">
         {{-- Search landing page --}}
-        <div
-            class="flex items-center mx-5 lg:w-full lg:mx-auto md:w-full md:mx-auto p-2 border border-gray-300 rounded-lg shadow-sm">
+        <div class="flex items-center mx-5 lg:w-full lg:mx-auto md:w-auto  p-2 border border-gray-300 rounded-lg shadow-sm">
             <div class="flex items-center flex-1 px-2">
                 <i class="ph ph-magnifying-glass text-zinc-900 text-lg mr-2"></i>
                 <input type="text" placeholder="Posisi lowongan, kata kunci, ..."
@@ -39,10 +38,10 @@
 
         {{-- Kategori --}}
         <div>
-            <p class="font-semibold text-zinc-700 px-2 lg:px-0 md:px-0">KATEGORI PEKERJAAN POPULER</p>
+            <p class="font-semibold text-zinc-700 px-2 lg:px-0">KATEGORI PEKERJAAN POPULER</p>
             <div class="flex gap-3">
 
-                <div class="px-2 lg:px-0 md:px-0 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-4 gap-2 mt-5 flex-1">
+                <div class="px-2 lg:px-0 md:ml-5 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-4 gap-2 mt-5 flex-1">
                     <div class="border border-gray-300 py-2 shadow-sm">
                         <p class="text-center text-zinc-700 font-bold">Teknologi</p>
                     </div>
@@ -80,7 +79,7 @@
                         <p class="text-center text-zinc-700 font-bold">Multimedia</p>
                     </div>
                 </div>
-                <div class="mt-5 flex flex-col pr-2 lg:pr-0 md:pr-0 gap-2 w-32">
+                <div class="mt-5 flex flex-col pr-2 lg:pr-0 md:mr-5 gap-2 w-32">
                     <div
                         class="border border-gray-300 border-l-4 border-l-red-600 py-2 flex items-center justify-center gap-1 shadow-sm text-red-600 font-semibold">
                         <i class="ph ph-fire text-lg"></i>
@@ -101,6 +100,7 @@
         </div>
         {{-- End Kategori --}}
     </section>
+
     {{-- Navigation Home --}}
     <div class="mt-10 flex justify-center gap-10  items-center font-semibold border-b">
         <button id="umpan-lowongan"
@@ -209,7 +209,6 @@
         </div>
 
 
-        
         {{-- Berdasarkan pencarian terbaru --}}
         <section id="berdasarkan-pencarian" class="hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3">

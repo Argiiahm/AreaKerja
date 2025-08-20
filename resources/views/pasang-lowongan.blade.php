@@ -21,7 +21,7 @@
             </div>
         </div>
     </section>
-    <section class="mx-0 lg:mx-20 md:mx-20 mt-10">
+    <section class="mx-0 lg:mx-20  mt-10">
         <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="bg-white rounded-lg shadow-md border text-center">
                 <div class="bg-yellow-500 p-5">
@@ -132,7 +132,7 @@
         </div>
         <div class="block lg:flex md:flex items-center justify-between">
             <img src="{{ asset('image/2.png') }}" alt="">
-            <div class="pr-0 mt-10 space-y-5 lg:pr-52 md:pr-52 lg:mt-0 md:mt-0 lg:space-y-0 md:space-y-0">
+            <div class="pr-0 mt-10 space-y-5 lg:pr-52 md:pr-10 lg:mt-0 md:mt-0 lg:space-y-0">
                 <div class="flex items-center gap-2">
                     <img class="w-20" src="{{ asset('Icon/1.png') }}" alt="">
                     <p class="w-full lg:w-96 md:w-96 text-orange-500">Website kami menjangkau ratusan perusahaan yang siap menerima ribuan pencari kerja</p>
