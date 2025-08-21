@@ -23,7 +23,7 @@
     </section>
     <section class="mx-0 lg:mx-20  mt-10">
         <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div class="bg-white rounded-lg shadow-md border text-center">
+            <div class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
                 <div class="bg-yellow-500 p-5">
                     <h2 class="text-xl font-bold text-white">GOLD</h2>
                 </div>
@@ -50,7 +50,7 @@
             </div>
 
             <div
-                class="bg-white rounded-lg shadow-md transform  lg:translate-y-[-1rem] md:translate-y-[-1rem] translate-y-0 border text-center">
+                class="bg-white rounded-lg shadow-md transform  lg:translate-y-[-1rem] md:translate-y-[-1rem] translate-y-0 border text-center hover:-translate-y-6 transition-all duration-500 ">
                 <div class="bg-[#979aa0] p-5">
                     <h2 class="text-xl font-bold text-white">Silver</h2>
                 </div>
@@ -76,7 +76,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md border text-center">
+            <div class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
                 <div class="bg-[#71665d] p-5">
                     <h2 class="text-xl font-bold text-white">Bronze </h2>
                 </div>

@@ -4,63 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Akun</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Verifikasi Finance</title>
     <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}" type="image/x-icon">
-
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
-
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     @vite('resources/css/app.css')
-
-    <style>
-        .login_img_section {
-            background: linear-gradient(rgba(2, 2, 2, .7), rgba(0, 0, 0, .7)), url('/image/login-bg-1.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-    </style>
 </head>
 
-<body>
-    <div class="grid grid-cols-1 md:grid-cols-5 min-h-screen">
-        <div class="col-span-2 login_img_section hidden md:flex items-center justify-center">
-            <div class="relative h-screen flex flex-col items-center justify-center pt-1 max-w-md mx-auto w-full">
+<body class="bg-orange-500">
+    <div class="grid grid-cols-1 md:grid-cols-5 min-h-screen md:block lg:grid">
+        <div class="col-span-2 bg-orange-500 hidden md:flex items-center justify-center">
+            <div
+                class="relative h-[600px] flex flex-col items-center justify-center pt-1 max-w-md mx-auto w-full bg-orange-500">
                 <div class="absolute top-4 left-6 flex items-center text-white">
                     <img class="w-10" src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="">
                     <span class="ml-2 font-semibold">AreaKerja.com</span>
                 </div>
-                <h1 class="text-white font-bold text-4xl text-center mb-6">Halo, AreaKerja</h1>
-                <p class="text-white font-medium text-center">
-                    Untuk tetap terhubung dengan kami,<br>
-                    silahkan masuk dengan informasi pribadi anda
-                </p>
+                <h1 class="text-white font-bold text-2xl font-sans text-center mb-2">Selamat Datang Kembali !</h1>
+                <h1 class="text-white font-bold text-2xl font-sans text-center mb-2">Finance Area Kerja</h1>
+                <img src="{{ asset('image/bg-login-finance.png') }}" alt="" class="w-80">
                 <div class="flex justify-center mt-6">
-                    <a href="/login"
-                        class="px-8 py-3 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500 text-center">
+                    <a href="/login/finance"
+                        class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
                         Masuk
                     </a>
                 </div>
             </div>
         </div>
-
-        <div class="col-span-3 flex items-center justify-center bg-white">
-            <div class="w-full max-w-md rounded-xl p-8">
-                <div class="transform translate-x-0 lg:translate-x-[-1rem]">
+        <div class="col-span-3 flex justify-center items-center bg-orange-500 ">
+            <div class="bg-white rounded-2xl w-10/12 py-5 px-8 md:w-full lg:w-9/12 lg:py-20 lg:px-20 md:py-20">
+                               <div class="transform translate-x-0 lg:translate-x-[-1rem]">
                     <h2 class="text-2xl font-bold mb-2 text-[#fa6601]">Verifikasi Akun</h2>
                     <p class="text-gray-600 mb-4">
                         Silahkan verifikasi akun anda terlebih dahulu <br>
                         untuk bisa melakukan penggantian kata sandi
                     </p>
-    
                     <p class="text-gray-600">
                         Kode verifikasi telah dikirim ke email <br>
                         <span class="font-semibold">emailpengguna@gmail.com</span>
                     </p>
                 </div>
-
                 <p class="mt-6 font-semibold text-center">Kode Verifikasi</p>
                 <form action="" method="POST" class="mt-4 lg:text-center md:text-center">
                     @csrf
@@ -71,7 +60,6 @@
                                 oninput="moveNext(this, {{ $i + 1 }})">
                         @endfor
                     </div>
-
                     <p class="text-sm text-gray-600 mb-2">
                         Belum menerima kode verifikasi melalui email?
                     </p>
@@ -92,15 +80,13 @@
             </div>
         </div>
     </div>
-
-    <script>
+        <script>
         function moveNext(current, index) {
             if (current.value.length === 1) {
                 let next = current.parentElement.children[index];
                 if (next) next.focus();
             }
         }
-
         let timeLeft = 45;
         let timerEl = document.getElementById("timer");
         let resendBtn = document.getElementById("resendBtn");

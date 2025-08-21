@@ -19,34 +19,22 @@
     </section>
     <section class="container max-w-screen-lg mx-auto mt-10">
         <div class="grid grid-cols-1 gap-5">
-            <div class="flex shadow-md p-4">
-                <div>
-                    <img src="{{ asset('Icon/seveninc.png') }}" alt="">
-                </div>
-                <div class="w-full">
-                    <p>Seven Inc</p>
-                    <h1>UI UX Designer - WFO</h1>
-                    <span>Yogyakarta</span>
-                    <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                        <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.xxxxx - Rp.xxxxx per bulan</span>
-                        <span class="block mt-3 text-[#565656]">Aktif 2jam lalu</span>
+            <a href="/lowongan/tersimpan/detail">
+                <div class="flex shadow-md p-4">
+                    <div>
+                        <img src="{{ asset('Icon/seveninc.png') }}" alt="">
+                    </div>
+                    <div class="w-full">
+                        <p>Seven Inc</p>
+                        <h1>UI UX Designer - WFO</h1>
+                        <span>Yogyakarta</span>
+                        <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
+                            <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.xxxxx - Rp.xxxxx per bulan</span>
+                            <span class="block mt-3 text-[#565656]">Aktif 2jam lalu</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex shadow-md p-4">
-                <div>
-                    <img src="{{ asset('Icon/seveninc.png') }}" alt="">
-                </div>
-                <div class="w-full">
-                    <p>Seven Inc</p>
-                    <h1>UI UX Designer - WFO</h1>
-                    <span>Yogyakarta</span>
-                    <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                        <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.xxxxx - Rp.xxxxx per bulan</span>
-                        <span class="block mt-3 text-[#565656]">Aktif 2jam lalu</span>
-                    </div>
-                </div>
-            </div>
+            </a>
         </div>
     </section>
 @endsection

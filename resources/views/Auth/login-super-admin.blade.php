@@ -33,7 +33,7 @@
                     <img class="w-10" src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="">
                     <span class="ml-2 font-semibold">AreaKerja.com</span>
                 </div>
-                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Hallo, Admin</h1>
+                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Super Admin Area Kerja</h1>
                 <p class="text-white mt-1 text-center font-semibold">
                     Untuk tetap terhubung dengan kami, silahkan
                 </p>
@@ -86,16 +86,16 @@
                         <div>
                             <input type="checkbox" name="" id="" class="border">
                             <label for="" class="font-semibold text-gray-500 pl-1 md:">ingat saya </label>
-                            <a href="/verifikasi/admin" class="float-right font-semibold text-[#616161] lg:px-4">Lupa Kata
+                            <a href="/verifikasi/admin" class="float-right font-semibold text-[#fa6601] lg:px-4">Lupa Kata
                                 Sandi</a>
                         </div>
                         <div class="flex justify-center">
                             <button type="submit"
-                                class="w-52  bg-[#616161] mt-5 py-4 rounded-full hover:opacity-80 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">MASUK</button>
+                                class="w-52  bg-[#fa6601] mt-5 py-4 rounded-full hover:bg-[#fa6601] hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">MASUK</button>
                         </div>
                         <div class="flex justify-center mt-4">
                             <span class="font-semibold text-black">Tidak Memiliki Acount? <a href="/register/admin"
-                                    class="text-[#616161] font-semibold">Daftar Sekarang</a></span>
+                                    class="text-[#fa6601] font-semibold">Daftar Sekarang</a></span>
                         </div>
                     </form>
                 </div>

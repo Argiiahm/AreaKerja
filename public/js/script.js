@@ -19,3 +19,4 @@ btn_pencarian_baru.addEventListener("click", () => {
     section_umpan_lowongan.classList.add("hidden");
     section_berdasarkan_pencarian.classList.remove("hidden");
 });
+

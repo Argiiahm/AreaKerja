@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Akun</title>
+    <title>Verifikasi Admin</title>
     <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}" type="image/x-icon">
 
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
@@ -62,7 +62,7 @@
                 </div>
 
                 <p class="mt-6 font-semibold text-center">Kode Verifikasi</p>
-                <form action="" method="POST" class="mt-4">
+                <form action="" method="POST" class="mt-4 lg:text-center md:text-center">
                     @csrf
                     <div class="flex justify-center gap-3 mb-6">
                         @for ($i = 0; $i < 6; $i++)
@@ -71,7 +71,6 @@
                                 oninput="moveNext(this, {{ $i + 1 }})">
                         @endfor
                     </div>
-
                     <p class="text-sm text-gray-600 mb-2">
                         Belum menerima kode verifikasi melalui email?
                     </p>
@@ -80,8 +79,14 @@
                         Kirim Ulang Kode Verifikasi <span id="timer"
                             class="text-orange-600 font-semibold">(00:45)</span>
                     </button>
-
-                    <button type="submit" class="hidden"></button>
+                    <button type="submit"
+                        class="w-full bg-[#616161] text-white mt-2 font-semibold py-2 rounded-lg hover:bg-gray-500 hover:-translate-y-1 transition-all duration-500 v">
+                        Lanjutkan
+                    </button>
+                    <a href="/login"
+                        class="block text-center text-[#616161] font-semibold mt-2 hover:underline">
+                        Ubah E-mail
+                    </a>
                 </form>
             </div>
         </div>

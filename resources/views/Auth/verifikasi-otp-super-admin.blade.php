@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Akun</title>
+    <title>Verifikasi OTP Akun Super Admin</title>
     <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}" type="image/x-icon">
 
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
@@ -32,13 +32,13 @@
                     <img class="w-10" src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="">
                     <span class="ml-2 font-semibold">AreaKerja.com</span>
                 </div>
-                <h1 class="text-white font-bold text-4xl text-center mb-6">Halo, AreaKerja</h1>
+                <h1 class="text-white font-bold text-4xl text-center mb-6">Super Admin Area Kerja</h1>
                 <p class="text-white font-medium text-center">
                     Untuk tetap terhubung dengan kami,<br>
                     silahkan masuk dengan informasi pribadi anda
                 </p>
                 <div class="flex justify-center mt-6">
-                    <a href="/login"
+                    <a href="/login/admin"
                         class="px-8 py-3 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500 text-center">
                         Masuk
                     </a>
@@ -49,12 +49,12 @@
         <div class="col-span-3 flex items-center justify-center bg-white">
             <div class="w-full max-w-md rounded-xl p-8">
                 <div class="transform translate-x-0 lg:translate-x-[-1rem]">
-                    <h2 class="text-2xl font-bold mb-2 text-[#fa6601]">Verifikasi Akun</h2>
+                    <h2 class="text-2xl font-bold mb-2">Verifikasi Akun</h2>
                     <p class="text-gray-600 mb-4">
                         Silahkan verifikasi akun anda terlebih dahulu <br>
                         untuk bisa melakukan penggantian kata sandi
                     </p>
-    
+
                     <p class="text-gray-600">
                         Kode verifikasi telah dikirim ke email <br>
                         <span class="font-semibold">emailpengguna@gmail.com</span>
@@ -86,7 +86,7 @@
                     </button>
                     <a href="/login"
                         class="block text-center text-[#fa6601] font-semibold mt-2 hover:underline">
-                        Ubah E-mail
+                        Ubah  E-mail
                     </a>
                 </form>
             </div>

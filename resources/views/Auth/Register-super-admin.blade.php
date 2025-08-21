@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register Admin</title>
+    <title>Register Super Admin</title>
     <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
@@ -103,7 +103,7 @@
         <div class="col-span-2 login_img_section hidden md:flex items-center justify-center">
             <div class="relative h-screen flex flex-col items-center justify-center pt-1 max-w-md mx-auto">
 
-                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Admin Area Kerja</h1>
+                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Super Admin Area Kerja</h1>
                 <p class="text-white mt-1 text-center font-semibold">
                     Untuk tetap terhubung dengan kami, silahkan
                 </p>

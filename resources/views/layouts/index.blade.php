@@ -18,6 +18,9 @@
 </head>
 
 <body>
+
+    @include('Popup.pop-up_logout')
+
     <nav class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <div class="flex items-center gap-2">
@@ -89,7 +92,7 @@
                     {{-- End Drowpdown --}}
                     {{-- End Notifikasi --}}
 
-                    @if (Auth::check())
+                    {{-- @if (Auth::check()) --}}
                     {{-- Profile --}}
                     <button type="button" id="user-menu-button" aria-expanded="false"
                         data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
@@ -123,21 +126,23 @@
                                 <a href="#" class="block px-4 py-2 text-sm">Transaksi</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm">Bantuan</a>
+                                <a href="/bantuan" class="block px-4 py-2 text-sm">Bantuan</a>
                             </li>
                             <li class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
-                                <button>Keluar</button>
+                                <button data-modal-target="popup-modal-logout" data-modal-toggle="popup-modal-logout"  type="button">
+                                    Keluar
+                                </button>
                             </li>
                         </ul>
                     </div>
                     {{-- End Drowpdown --}}
 
                     {{-- End Profile --}}
-                    @else
+                    {{-- @else --}}
                     {{-- Link Login --}}
                     <a href="/login" class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
                     {{-- End Link Login --}}
-                    @endif
+                    {{-- @endif --}}
 
 
                 </div>
@@ -251,6 +256,7 @@
     </nav>
 
     @yield('content')
+
 
     <footer class="bg-orange-500  text-white py-10 mt-32">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">

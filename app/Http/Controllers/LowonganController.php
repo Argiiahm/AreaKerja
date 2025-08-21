@@ -13,4 +13,8 @@ class LowonganController extends Controller
     public function lowongan_tersimpan() {
         return view('Lowongan-tersimpan.index');
     }
+
+    public function lowongan_tersimpan_detail() {
+        return view('Lowongan-tersimpan.lowongan-tersimpan_detail');
+    }
 }

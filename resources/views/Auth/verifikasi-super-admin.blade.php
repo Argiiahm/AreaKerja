@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Verifikasi Admin</title>
+    <title>Verifikasi Super Admin</title>
     <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
@@ -24,6 +24,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="grid grid-cols-1 md:grid-cols-5 min-h-screen">
         <div class="col-span-2 login_img_section hidden md:flex items-center justify-center">
@@ -32,7 +33,7 @@
                     <img class="w-10" src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="">
                     <span class="ml-2 font-semibold">AreaKerja.com</span>
                 </div>
-                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Admin AreaKerja</h1>
+                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Super Admin Area Kerja</h1>
                 <p class="text-white mt-1 text-center font-semibold">
                     Untuk tetap terhubung dengan kami, silahkan
                 </p>
@@ -46,6 +47,8 @@
                     </a>
                 </div>
             </div>
+
+
         </div>
         <div class="col-span-3 flex justify-center items-center bg-white ">
             <div class="w-full max-w-md bg-white shadow-md rounded-xl p-8">
@@ -65,7 +68,7 @@
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-[#616161] text-white font-semibold py-2 rounded-lg hover:bg-gray-800 transition">
+                        class="w-full bg-gray-700 text-white font-semibold py-2 rounded-lg hover:bg-gray-800 transition">
                         Lanjutkan
                     </button>
 
