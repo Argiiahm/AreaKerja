@@ -17,8 +17,10 @@
     @vite('resources/css/app.css')
     <style>
         .login_img_section {
-            background: linear-gradient(rgba(2, 2, 2, .7), rgba(0, 0, 0, .7)),url('/image/login-bg-1.jpg');background-size: cover ;
-        background-position: center;;
+            background: linear-gradient(rgba(2, 2, 2, .7), rgba(0, 0, 0, .7)), url('/image/login-bg-1.jpg');
+            background-size: cover;
+            background-position: center;
+            ;
         }
     </style>
 </head>
@@ -26,25 +28,25 @@
 <body>
     <div class="grid grid-cols-1 md:grid-cols-5 min-h-screen">
         <div class="col-span-2 login_img_section hidden md:flex items-center justify-center">
-<div class="relative h-screen flex flex-col items-center justify-center pt-1 max-w-md mx-auto w-full">
-    <div class="absolute top-4 left-6 flex items-center text-white">
-        <img class="w-10" src="{{asset('image/logo_area_kerja_putih.png')}}" alt="">
-        <span class="ml-2 font-semibold">AreaKerja.com</span>
-    </div>
-    <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Hallo, Pekerja</h1>
-    <p class="text-white mt-1 text-center font-semibold">
-        Untuk tetap terhubung dengan kami, silahkan
-    </p>
-    <p class="text-white mb-3 font-semibold">
-        masuk dengan informasi pribadi anda
-    </p>
-    <div class="flex justify-center mt-6">
-        <a href="/register"
-            class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
-            Daftar
-        </a>
-    </div>
-</div>
+            <div class="relative h-screen flex flex-col items-center justify-center pt-1 max-w-md mx-auto w-full">
+                <div class="absolute top-4 left-6 flex items-center text-white">
+                    <img class="w-10" src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="">
+                    <span class="ml-2 font-semibold">AreaKerja.com</span>
+                </div>
+                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Hallo, Pekerja</h1>
+                <p class="text-white mt-1 text-center font-semibold">
+                    Untuk tetap terhubung dengan kami, silahkan
+                </p>
+                <p class="text-white mb-3 font-semibold">
+                    masuk dengan informasi pribadi anda
+                </p>
+                <div class="flex justify-center mt-6">
+                    <a href="/register"
+                        class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
+                        Daftar
+                    </a>
+                </div>
+            </div>
 
 
         </div>
@@ -53,24 +55,24 @@
                 <div class="w-full">
                     <h1 class="text-gray-800 font-bold text-2xl mb-3 text-center">Masuk</h1>
                     <div class="flex gap-3 mt-4 md:mt-0 justify-center">
-                            <a href="#"
-                                class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                                <i class="ph ph-facebook-logo"></i>
-                            </a>
-                            <a href="#"
-                                class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                                <i class="ph ph-google-logo"></i>
-                            </a>
-                            <a href="#"
-                                class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                                <i class="ph ph-linkedin-logo"></i>
-                            </a>
-                        </div>
-                        
-                        <p class="text-sm font-normal text-gray-600 mb-8 text-center mt-3">gunakan email anda untuk
-                            pendaftaran
-                        </p>
-                        <form class="bg">
+                        <a href="#"
+                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
+                            <i class="ph ph-facebook-logo"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
+                            <i class="ph ph-google-logo"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
+                            <i class="ph ph-linkedin-logo"></i>
+                        </a>
+                    </div>
+
+                    <p class="text-sm font-normal text-gray-600 mb-8 text-center mt-3">gunakan email anda untuk
+                        pendaftaran
+                    </p>
+                    <form class="bg">
                         <label for="name" class="font-semibold ">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-8 py-2 px-3">
                             <input id="name" class=" pl-2 w-full outline-none border-none" type="text name="name"
@@ -82,9 +84,10 @@
                                 id="password" placeholder="Kata Sandi" required />
                         </div>
                         <div>
-                            <input type="checkbox" name="" id="" class="border"> 
+                            <input type="checkbox" name="" id="" class="border">
                             <label for="" class="font-semibold text-gray-500 pl-1 md:">ingat saya </label>
-                            <a href="" class="float-right font-semibold text-[#fa6601] lg:px-4">Lupa Kata Sandi</a>
+                            <a href="" class="float-right font-semibold text-[#fa6601] lg:px-4">Lupa Kata
+                                Sandi</a>
                         </div>
                         <div class="flex justify-center">
                             <button type="submit"

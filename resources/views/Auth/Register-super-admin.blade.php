@@ -53,7 +53,7 @@
                         </a>
                     </div>
 
-                    
+
 
                     <form id="form-pelamar">
                         <label for="name" class="font-semibold">Nama Pengguna</label>

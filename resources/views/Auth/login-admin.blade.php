@@ -86,7 +86,8 @@
                         <div>
                             <input type="checkbox" name="" id="" class="border">
                             <label for="" class="font-semibold text-gray-500 pl-1 md:">ingat saya </label>
-                            <a href="/verifikasi/admin" class="float-right font-semibold text-[#616161] lg:px-4">Lupa Kata
+                            <a href="/verifikasi/admin" class="float-right font-semibold text-[#616161] lg:px-4">Lupa
+                                Kata
                                 Sandi</a>
                         </div>
                         <div class="flex justify-center">

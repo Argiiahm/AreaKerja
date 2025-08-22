@@ -57,37 +57,64 @@
                 <div class="mt-4 space-y-4">
                     <div>
                         <p class="px-6 text-sm font-semibold text-white/80">Umum</p>
-                        <a href="#" data-drawer-hide="logo-sidebar"
-                            class="flex items-center gap-2 px-6 py-2 mt-2 mx-4 rounded-md transition-all duration-300
-                                  bg-white text-orange-600 font-semibold shadow-md">
+                        <a href="/dashboard/finance" data-drawer-hide="logo-sidebar"
+                            class="flex items-center {{ Request()->is('dashboard/finance') ? ' bg-white text-orange-600 font-semibold shadow-md mx-5 my-2' : 'transition-all duration-300 hover:bg-orange-600 hover:translate-x-1' }} gap-2 px-6 py-2 rounded-md
+                                 ">
                             <i class="ph ph-gauge"></i>
                             <span>Dashboard</span>
                         </a>
                     </div>
 
                     <div>
-                        <p class="px-6 text-sm font-semibold text-white/80">Finance</p>
+                        <p class="px-6 text-sm font-semibold text-white/80 my-3">Finance</p>
 
-                        <a href="#" data-drawer-hide="logo-sidebar"
-                            class="flex items-center gap-2 px-6 py-2 rounded-md transition-all duration-300 hover:bg-orange-600 hover:translate-x-1">
+                        <a href="/dashboard/finance/paketharga" data-drawer-hide="logo-sidebar"
+                            class="flex items-center {{ Request()->is('dashboard/finance/paketharga') ? ' bg-white text-orange-600 font-semibold shadow-md mx-5 my-2' : 'transition-all duration-300 hover:bg-orange-600 hover:translate-x-1' }} gap-2 px-6 py-2 rounded-md
+                                 ">
                             <i class="ph ph-credit-card"></i>
                             <span>Paket Harga</span>
                         </a>
 
-                        <a href="#" data-drawer-hide="logo-sidebar"
-                            class="flex items-center gap-2 px-6 py-2 rounded-md transition-all duration-300 hover:bg-orange-600 hover:translate-x-1">
+                        <a href="/dashboard/finance/omset" data-drawer-hide="logo-sidebar"
+                            class="flex items-center {{ Request()->is('dashboard/finance/omset') ? ' bg-white text-orange-600 font-semibold shadow-md mx-5 my-2' : 'transition-all duration-300 hover:bg-orange-600 hover:translate-x-1' }} gap-2 px-6 py-2 rounded-md
+                                 ">
                             <i class="ph ph-hand-coins"></i>
                             <span>Omset Perusahaan</span>
                         </a>
 
-                        <a href="#" data-drawer-hide="logo-sidebar"
-                            class="flex items-center gap-2 px-6 py-2 rounded-md transition-all duration-300 hover:bg-orange-600 hover:translate-x-1">
-                            <i class="ph ph-notebook"></i>
-                            <span>Catatan Transaksi</span>
-                        </a>
+                        <details class="group">
+                            <summary
+                                class="flex items-center gap-2 px-2 py-2 mx-5 my-2 rounded-md cursor-pointer {{ Request()->is('dashboard/finance/catatantransaksi')
+                                    ? 'bg-white text-orange-600 font-semibold shadow-md'
+                                    : 'transition-all duration-300 hover:bg-orange-600 hover:text-white' }}">
+                                <i class="ph ph-notebook"></i>
+                                <a href="/dashboard/finance/catatantransaksi" class="flex-1">
+                                    Catatan Transaksi
+                                </a>
+                                <span class="ml-auto transition-transform group-open:rotate-180">▼</span>
+                            </summary>
+                            <div class="ml-12 mt-2 flex flex-col gap-1">
+                                <a href="/dashboard/finance/catatantransaksi/tunai"
+                                    class="flex items-center gap-2 px-2 py-2 mx-5 my-2 rounded-md cursor-pointer {{ Request()->is('dashboard/finance/catatantransaksi/tunai')
+                                        ? 'bg-white text-orange-600 font-semibold shadow-md'
+                                        : 'transition-all duration-300 hover:bg-orange-600 hover:text-white' }}">
+                                    Riwayat Tunai
+                                </a>
+                                <a href="/dashboard/finance/catatantransaksi/koin"
+                                    class="flex items-center gap-2 px-2 py-2 mx-5 my-2 rounded-md cursor-pointer {{ Request()->is('dashboard/finance/catatantransaksi/koin')
+                                        ? 'bg-white text-orange-600 font-semibold shadow-md'
+                                        : 'transition-all duration-300 hover:bg-orange-600 hover:text-white' }}">
+                                    Riwayat Koin
+                                </a>
+                            </div>
+                        </details>
 
-                        <a href="#" data-drawer-hide="logo-sidebar"
-                            class="flex items-center gap-2 px-6 py-2 rounded-md transition-all duration-300 hover:bg-orange-600 hover:translate-x-1">
+
+
+                        <a href="/dashboard/finance/laporan" data-drawer-hide="logo-sidebar"
+                            class="flex items-center gap-2 px-2 py-2 mx-5 my-2 rounded-md cursor-pointer {{ Request()->is('dashboard/finance/laporan')
+                                ? 'bg-white text-orange-600 font-semibold shadow-md'
+                                : 'transition-all duration-300 hover:bg-orange-600 hover:text-white' }}">
                             <i class="ph ph-file-text"></i>
                             <span>Laporan Transaksi</span>
                         </a>
@@ -106,7 +133,7 @@
 
     <div class="p-4 sm:ml-64">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold hidden lg:block md:block">Dashboard</h1>
+            <h1 class="text-2xl font-bold hidden lg:block md:block">{{ $title }}</h1>
 
             <div class="flex items-center px-8 gap-4">
                 <button class="relative">

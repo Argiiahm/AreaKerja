@@ -39,7 +39,7 @@
         </div>
         <div class="col-span-3 flex justify-center items-center bg-orange-500 ">
             <div class="bg-white rounded-2xl w-10/12 py-5 px-8 md:w-full lg:w-9/12 lg:py-20 lg:px-20 md:py-20">
-                               <div class="transform translate-x-0 lg:translate-x-[-1rem]">
+                <div class="transform translate-x-0 lg:translate-x-[-1rem]">
                     <h2 class="text-2xl font-bold mb-2 text-[#fa6601]">Verifikasi Akun</h2>
                     <p class="text-gray-600 mb-4">
                         Silahkan verifikasi akun anda terlebih dahulu <br>
@@ -72,15 +72,14 @@
                         class="w-full bg-[#fa6601] text-white mt-2 font-semibold py-2 rounded-lg hover:bg-gray-500 hover:-translate-y-1 transition-all duration-500 v">
                         Lanjutkan
                     </button>
-                    <a href="/login"
-                        class="block text-center text-[#fa6601] font-semibold mt-2 hover:underline">
+                    <a href="/login" class="block text-center text-[#fa6601] font-semibold mt-2 hover:underline">
                         Ubah E-mail
                     </a>
                 </form>
             </div>
         </div>
     </div>
-        <script>
+    <script>
         function moveNext(current, index) {
             if (current.value.length === 1) {
                 let next = current.parentElement.children[index];

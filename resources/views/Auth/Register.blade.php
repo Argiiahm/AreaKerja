@@ -55,7 +55,8 @@
 
                     <div class="flex justify-center mb-6">
                         <div class="flex bg-gray-200 rounded-full w-max p-1">
-                            <button id="pelamar" class="px-4 py-2 rounded-full bg-orange-500 text-white font-semibold">
+                            <button id="pelamar"
+                                class="px-4 py-2 rounded-full bg-orange-500 text-white font-semibold">
                                 Pelamar
                             </button>
                             <button id="perusahaan" class="px-4 py-2 rounded-full font-semibold">
@@ -64,7 +65,7 @@
                         </div>
                     </div>
                     <!-- form regist Pelamar -->
-                    <form id="form-pelamar" >
+                    <form id="form-pelamar">
                         <label for="name" class="font-semibold">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
                             <input id="name" class="pl-2 w-full outline-none border-none" type="text"
@@ -92,7 +93,8 @@
                         <div class="flex items-center justify-center mb-4">
                             <label class="flex items-center text-gray-500 font-semibold">
                                 <input type="checkbox" class="mr-2 border" required>
-                                <span class="text-[12px] text-black">saya menyetujui <a class="text-[#fa6601]">syarat dan ketentuan</a> yang
+                                <span class="text-[12px] text-black">saya menyetujui <a class="text-[#fa6601]">syarat
+                                        dan ketentuan</a> yang
                                     berlaku</span>
                             </label>
                         </div>
@@ -134,7 +136,8 @@
                         <div class="flex items-center justify-center mb-4">
                             <label class="flex items-center text-gray-500 font-semibold">
                                 <input type="checkbox" class="mr-2 border" required>
-                                <span class="text-[12px] text-black">saya menyetujui <a class="text-[#fa6601]">syarat dan ketentuan</a> yang
+                                <span class="text-[12px] text-black">saya menyetujui <a class="text-[#fa6601]">syarat
+                                        dan ketentuan</a> yang
                                     berlaku</span>
                             </label>
                         </div>

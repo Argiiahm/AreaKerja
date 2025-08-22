@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FinanceController;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route Landing Page
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/detail/job', [HomeController::class, 'viewjob']);
 
@@ -32,6 +34,8 @@ Route::get('/tipskerja', [TipskerjaController::class, 'index']);
 Route::get('/tipskerja/details', [TipskerjaController::class, 'details']);
 
 Route::get('/daftarkandidat', [KandidatController::class, 'index']);
+
+// End Route Landing Page
 
 
 // Pasang Lowongan
@@ -81,3 +85,14 @@ Route::get('/change/password/super/admin', [AuthController::class, 'change_passw
 
 // Dashboard Finance
 Route::get('/dashboard/finance',[FinanceController::class, 'index']);
+Route::get('/dashboard/finance/paketharga',[FinanceController::class, 'paket_harga']);
+Route::get('/dashboard/finance/omset',[FinanceController::class, 'omset']);
+Route::get('/dashboard/finance/catatantransaksi',[FinanceController::class, 'catatan_transaksi']);
+Route::get('/dashboard/finance/catatantransaksi/tunai',[FinanceController::class, 'catatan_transaksi_tunai_detail']);
+Route::get('/dashboard/finance/catatantransaksi/koin',[FinanceController::class, 'catatan_transaksi_koin_detail']);
+Route::get('/dashboard/finance/laporan',[FinanceController::class, 'catatan_laporan_transaksi']);
+Route::get('/dashboard/finance/laporan/penghasilan',[FinanceController::class, 'catatan_laporan_transaksi_penghasilan']);
+
+// Dashboard Admin
+Route::get('/dashboard/admin',[AdminController::class, 'index']);
+Route::get('/dashboard/admin/profile',[AdminController::class, 'profile']);

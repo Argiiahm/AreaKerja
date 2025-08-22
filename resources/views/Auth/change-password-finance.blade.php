@@ -39,71 +39,74 @@
         </div>
         <div class="col-span-3 flex justify-center items-center bg-orange-500 ">
             <div class="bg-white rounded-2xl w-10/12 py-5 px-8 md:w-full lg:w-9/12 lg:py-16 lg:px-20 md:py-24">
-                       <div class="col-span-3 flex justify-center items-center bg-white">
-            <div class="w-full max-w-md px-6">
-                <h1 class="text-2xl font-bold mb-2 text-[#fa6601]">Lupa Kata Sandi</h1>
-                <p class="text-[#616161] text-sm mb-6">
-                    Masukan kata sandi anda.<br>
-                    kata sandi harus mengandung.
-                </p>
+                <div class="col-span-3 flex justify-center items-center bg-white">
+                    <div class="w-full max-w-md px-6">
+                        <h1 class="text-2xl font-bold mb-2 text-[#fa6601]">Lupa Kata Sandi</h1>
+                        <p class="text-[#616161] text-sm mb-6">
+                            Masukan kata sandi anda.<br>
+                            kata sandi harus mengandung.
+                        </p>
 
-                <div class="grid grid-cols-5 text-center text-sm mb-6">
-                    <div>
-                        <p class="text-black font-semibold">8+</p>
-                        <p class="text-[#616161]">Karakter</p>
-                    </div>
-                    <div>
-                        <p class="text-black font-semibold">AA</p>
-                        <p class="text-[#616161]">Huruf Besar</p>
-                    </div>
-                    <div>
-                        <p class="text-black font-semibold">aa</p>
-                        <p class="text-[#616161]">Huruf Kecil</p>
-                    </div>
-                    <div>
-                        <p class="text-black font-semibold">123</p>
-                        <p class="text-[#616161]">Angka</p>
-                    </div>
-                    <div>
-                        <p class="text-black font-semibold">@#$</p>
-                        <p class="text-[#616161]">Simbol</p>
+                        <div class="grid grid-cols-5 text-center text-sm mb-6">
+                            <div>
+                                <p class="text-black font-semibold">8+</p>
+                                <p class="text-[#616161]">Karakter</p>
+                            </div>
+                            <div>
+                                <p class="text-black font-semibold">AA</p>
+                                <p class="text-[#616161]">Huruf Besar</p>
+                            </div>
+                            <div>
+                                <p class="text-black font-semibold">aa</p>
+                                <p class="text-[#616161]">Huruf Kecil</p>
+                            </div>
+                            <div>
+                                <p class="text-black font-semibold">123</p>
+                                <p class="text-[#616161]">Angka</p>
+                            </div>
+                            <div>
+                                <p class="text-black font-semibold">@#$</p>
+                                <p class="text-[#616161]">Simbol</p>
+                            </div>
+                        </div>
+
+                        <form action="" method="POST" class="space-y-4">
+                            @csrf
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Kata Sandi Baru</label>
+                                <div class="relative">
+                                    <input type="password" name="password"
+                                        class="w-full border rounded-md p-3 pr-10 focus:ring-2 focus:ring-[#616161] focus:outline-none placeholder-gray-400"
+                                        placeholder="Kata Sandi">
+                                    <button type="button"
+                                        class="absolute inset-y-0 right-3 flex items-center text-gray-500">
+                                        0
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Konfirmasi Kata
+                                    Sandi</label>
+                                <div class="relative">
+                                    <input type="password" name="password_confirmation"
+                                        class="w-full border rounded-md p-3 pr-10 focus:ring-2 focus:ring-[#616161] focus:outline-none placeholder-gray-400"
+                                        placeholder="Kata Sandi">
+                                    <button type="button"
+                                        class="absolute inset-y-0 right-3 flex items-center text-gray-500">
+                                        0
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-md">
+                                Ubah Kata Sandi
+                            </button>
+                        </form>
                     </div>
                 </div>
-
-                <form action="" method="POST" class="space-y-4">
-                    @csrf
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Kata Sandi Baru</label>
-                        <div class="relative">
-                            <input type="password" name="password"
-                                class="w-full border rounded-md p-3 pr-10 focus:ring-2 focus:ring-[#616161] focus:outline-none placeholder-gray-400"
-                                placeholder="Kata Sandi">
-                            <button type="button" class="absolute inset-y-0 right-3 flex items-center text-gray-500">
-                                0
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Konfirmasi Kata Sandi</label>
-                        <div class="relative">
-                            <input type="password" name="password_confirmation"
-                                class="w-full border rounded-md p-3 pr-10 focus:ring-2 focus:ring-[#616161] focus:outline-none placeholder-gray-400"
-                                placeholder="Kata Sandi">
-                            <button type="button" class="absolute inset-y-0 right-3 flex items-center text-gray-500">
-                                0
-                            </button>
-                        </div>
-                    </div>
-
-                    <button type="submit"
-                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-md">
-                        Ubah Kata Sandi
-                    </button>
-                </form>
-            </div>
-        </div>
             </div>
         </div>
     </div>

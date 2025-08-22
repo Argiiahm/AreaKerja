@@ -20,10 +20,10 @@
             background: linear-gradient(rgba(2, 2, 2, .7), rgba(0, 0, 0, .7)), url('/image/login-bg-1.jpg');
             background-size: cover;
             background-position: center;
-            ;
         }
     </style>
 </head>
+
 <body>
     <div class="grid grid-cols-1 md:grid-cols-5 min-h-screen">
         <div class="col-span-2 login_img_section hidden md:flex items-center justify-center">
@@ -69,8 +69,7 @@
                         Lanjutkan
                     </button>
 
-                    <a href="/login/admin"
-                        class="block text-center text-gray-500 font-semibold mt-2 hover:underline">
+                    <a href="/login/admin" class="block text-center text-gray-500 font-semibold mt-2 hover:underline">
                         Kembali
                     </a>
                 </form>
