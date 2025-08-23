@@ -105,6 +105,11 @@ Route::get('/dashboard/admin/nonkandidat/view',[AdminController::class, 'non_kan
 Route::get('/dashboard/admin/calonkandidat/view',[AdminController::class, 'calon_kandidat_view']);
 
 Route::get('/dashboard/admin/perusahaan',[AdminController::class, 'perusahaan']);
+Route::get('/dashboard/admin/perusahaan/view',[AdminController::class, 'perusahaan_view']);
+Route::get('/dashboard/admin/perusahaan/view/lowongan',[AdminController::class, 'perusahaan_view_lowongan']);
+Route::get('/dashboard/admin/perusahaan/view/cv',[AdminController::class, 'perusahaan_view_cv']);
+Route::get('/dashboard/admin/perusahaan/view/talenthunter',[AdminController::class, 'perusahaan_view_talenthunter']);
+
 Route::get('/dashboard/admin/finance',[AdminController::class, 'finance']);
 Route::get('/dashboard/admin/tipskerja',[AdminController::class, 'tips_kerja']);
 Route::get('/dashboard/admin/event',[AdminController::class, 'event']);

@@ -50,4 +50,35 @@ class AdminController extends Controller
             "title"   =>   "Data Kandidat"
         ]);
     }
+
+    public function perusahaan()
+    {
+        return view('Admin.Dashboard-admin.perusahaan.data-perusahaan_admin_dashboard', [
+            "title"   =>   "Data Perusahaan"
+        ]);
+    }
+    public function perusahaan_view()
+    {
+        return view('Admin.Dashboard-admin.perusahaan.view-perusahaan_admin_dashboard', [
+            "title"   =>   ""
+        ]);
+    }
+    public function perusahaan_view_lowongan()
+    {
+        return view('Admin.Dashboard-admin.perusahaan.view-lowongan_perushaan_admin_dashboard', [
+            "title"   =>   ""
+        ]);
+    }
+    public function perusahaan_view_cv()
+    {
+        return view('Admin.Dashboard-admin.perusahaan.view-cv_perusahaan_admin_dashboard', [
+            "title"   =>   ""
+        ]);
+    }
+    public function perusahaan_view_talenthunter()
+    {
+        return view('Admin.Dashboard-admin.perusahaan.perusahaan_view_talenthunter_admin_dashboard', [
+            "title"   =>   ""
+        ]);
+    }
 }

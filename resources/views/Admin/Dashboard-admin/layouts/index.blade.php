@@ -69,27 +69,32 @@
                     <span>Profile</span>
                 </a>
 
-                <a href="/dashboard/admin/pelamar" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/pelamar') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                <a href="/dashboard/admin/pelamar"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/pelamar') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/user-profile 1.png') }}" alt="">
                     <span>Pelamar</span>
                 </a>
 
-                <a href="/dashboard/admin/perusahaan" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/perusahaan') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                <a href="/dashboard/admin/perusahaan"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/perusahaan') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/office 3.png') }}" alt="">
                     <span>Perusahaan</span>
                 </a>
 
-                <a href="/dashboard/admin/finance" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/finance') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                <a href="/dashboard/admin/finance"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/finance') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/budget 1.png') }}" alt="">
                     <span>Finance</span>
                 </a>
 
-                <a href="/dashboard/admin/tipskerja" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/tipskerja') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                <a href="/dashboard/admin/tipskerja"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/tipskerja') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/news 2.png') }}" alt="">
                     <span>Tips Kerja</span>
                 </a>
 
-                <a href="/dashboard/admin/event" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/event') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                <a href="/dashboard/admin/event"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/event') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/calendar 2.png') }}" alt="">
                     <span>Event</span>
                 </a>
@@ -131,6 +136,8 @@
     </div>
 
     <script src="{{ asset('js/admin.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js"></script>
+
 </body>
 
 </html>
