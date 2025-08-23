@@ -57,40 +57,39 @@
                     @endif
 
                     <span>Dashboard</span>
-                </a>  
+                </a>
             </div>
 
 
             <div class="space-y-3">
                 <p class="px-6 text-sm my-5 font-semibold text-white/70">Finance</p>
-
                 <a href="/dashboard/admin/profile"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/profile') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : '' }}">
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/profile') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/bussiness-man 1.png') }}" alt="">
                     <span>Profile</span>
                 </a>
 
-                <a href="/dashboard/pelamar" class="flex items-center gap-2 px-6 py-2 rounded-md">
+                <a href="/dashboard/admin/pelamar" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/pelamar') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/user-profile 1.png') }}" alt="">
                     <span>Pelamar</span>
                 </a>
 
-                <a href="/dashboard/perusahaan" class="flex items-center gap-2 px-6 py-2 rounded-md">
+                <a href="/dashboard/admin/perusahaan" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/perusahaan') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/office 3.png') }}" alt="">
                     <span>Perusahaan</span>
                 </a>
 
-                <a href="/dashboard/finance" class="flex items-center gap-2 px-6 py-2 rounded-md">
+                <a href="/dashboard/admin/finance" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/finance') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/budget 1.png') }}" alt="">
                     <span>Finance</span>
                 </a>
 
-                <a href="/dashboard/tips" class="flex items-center gap-2 px-6 py-2 rounded-md">
+                <a href="/dashboard/admin/tipskerja" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/tipskerja') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/news 2.png') }}" alt="">
                     <span>Tips Kerja</span>
                 </a>
 
-                <a href="/dashboard/event" class="flex items-center gap-2 px-6 py-2 rounded-md">
+                <a href="/dashboard/admin/event" class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/event') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ asset('Icon/calendar 2.png') }}" alt="">
                     <span>Event</span>
                 </a>
@@ -100,7 +99,7 @@
         <div class="px-6 mb-6">
             <a href="/logout" class="flex items-center gap-2 hover:text-gray-200">
                 <i class="ph ph-sign-out text-lg"></i>
-                <span>Keluar</span> 
+                <span>Keluar</span>
             </a>
         </div>
     </aside>
@@ -131,6 +130,7 @@
         @yield('admin-content')
     </div>
 
+    <script src="{{ asset('js/admin.js') }}"></script>
 </body>
 
 </html>

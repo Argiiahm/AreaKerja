@@ -95,4 +95,16 @@ Route::get('/dashboard/finance/laporan/penghasilan',[FinanceController::class, '
 
 // Dashboard Admin
 Route::get('/dashboard/admin',[AdminController::class, 'index']);
+
 Route::get('/dashboard/admin/profile',[AdminController::class, 'profile']);
+Route::get('/dashboard/admin/profile/edit',[AdminController::class, 'profile_edit']);
+
+Route::get('/dashboard/admin/pelamar',[AdminController::class, 'pelamar']);
+Route::get('/dashboard/admin/kandidat/view',[AdminController::class, 'kandidat_view_cv']);
+Route::get('/dashboard/admin/nonkandidat/view',[AdminController::class, 'non_kandidat_view_cv']);
+Route::get('/dashboard/admin/calonkandidat/view',[AdminController::class, 'calon_kandidat_view']);
+
+Route::get('/dashboard/admin/perusahaan',[AdminController::class, 'perusahaan']);
+Route::get('/dashboard/admin/finance',[AdminController::class, 'finance']);
+Route::get('/dashboard/admin/tipskerja',[AdminController::class, 'tips_kerja']);
+Route::get('/dashboard/admin/event',[AdminController::class, 'event']);
