@@ -46,7 +46,6 @@ if (btn_calon_kandidat && table_calon_kandidat) {
     });
 }
 
-
 //Perushaan
 const btn_perusahaan = document.getElementById("btn_perusahaan");
 const btn_recruitment = document.getElementById("btn_recruitment");
@@ -60,7 +59,7 @@ if (btn_perusahaan && table_perusahaan) {
     btn_perusahaan.addEventListener("click", () => {
         table_perusahaan.classList.remove("hidden");
         btn_perusahaan.classList.add("bg-gray-700", "text-white");
-        
+
         table_recruitment.classList.add("hidden");
         btn_recruitment.classList.remove("bg-gray-700", "text-white");
 
@@ -92,5 +91,32 @@ if (btn_talent_hunter && table_talent_hunter) {
 
         table_talent_hunter.classList.remove("hidden");
         btn_talent_hunter.classList.add("bg-gray-700", "text-white");
+    });
+}
+
+//finance-Admin
+const btn_koin = document.getElementById("btn_koin");
+const btn_tunai = document.getElementById("btn_tunai");
+
+const table_koin = document.getElementById("table_koin");
+const table_tunai = document.getElementById("table_tunai");
+
+if (btn_koin && table_koin) {
+    btn_koin.addEventListener("click", () => {
+        table_koin.classList.remove("hidden");
+        btn_koin.classList.add("bg-gray-700", "text-white");
+
+        table_tunai.classList.add("hidden");
+        btn_tunai.classList.remove("bg-gray-700", "text-white");
+    });
+}
+
+if (btn_tunai && table_tunai) {
+    btn_tunai.addEventListener("click", () => {
+        table_koin.classList.add("hidden");
+        btn_koin.classList.remove("bg-gray-700", "text-white");
+
+        table_tunai.classList.remove("hidden");
+        btn_tunai.classList.add("bg-gray-700", "text-white");
     });
 }

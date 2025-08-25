@@ -81,4 +81,40 @@ class AdminController extends Controller
             "title"   =>   ""
         ]);
     }
+
+    public function finance() {
+        return view('Admin.Dashboard-admin.Finance.transaksi-koin_admin_dashboard',[
+            "title"   =>   "Data Transaksi Koin"
+        ]);
+    }
+    public function tips_kerja() {
+        return view('Admin.Dashboard-admin.Tipskerja.index',[
+            "title"   =>   "Tips Kerja"
+        ]);
+    }
+    public function tips_kerja_add_post() {
+        return view('Admin.Dashboard-admin.Tipskerja.add-post',[
+            "title"   =>   "Buat Post Baru"
+        ]);
+    }
+    public function event() {
+        return view('Admin.Dashboard-admin.Event.index',[
+            "title"   =>   "Kelola Event"
+        ]);
+    }
+    public function event_add() {
+        return view('Admin.Dashboard-admin.Event.add-event',[
+            "title"   =>   "Buat Event Baru"
+        ]);
+    }
+    public function event_edit() {
+        return view('Admin.Dashboard-admin.Event.edit-event',[
+            "title"   =>   "Edit Event"
+        ]);
+    }
+    public function event_detail() {
+        return view('Admin.Dashboard-admin.Event.detail-event',[
+            "title"   =>   "Event"
+        ]);
+    }
 }

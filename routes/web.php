@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KandidatController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TalentHunterController;
 use App\Http\Controllers\TipskerjaController;
 use App\Http\Middleware\Authenticate;
@@ -76,6 +77,15 @@ Route::get('/verifikasi/admin', [AuthController::class, 'verifikasi_admin']);
 Route::get('/verifikasi/admin/otp', [AuthController::class, 'verifikasi_admin_otp']);
 Route::get('/change/password/admin', [AuthController::class, 'change_password_admin']);
 
+
+// Kandidat
+Route::get('/kandidat/kosong', [KandidatController::class, 'kandidat_kosong']);
+Route::get('/kandidat/lengkap', [KandidatController::class, 'kandidat_lengkap']);
+Route::get('/kandidat/rekrut', [KandidatController::class, 'rekrut']);
+Route::get('/kandidat/rekrut/detail', [KandidatController::class, 'rekrut_detail']);
+Route::get('/kandidat/status', [KandidatController::class, 'status']);
+
+
 //Auth super Admin
 Route::get('/login/super/admin', [AuthController::class, 'login_super_admin']);
 Route::get('/register/super/admin', [AuthController::class, 'register_super_admin']);
@@ -92,6 +102,13 @@ Route::get('/dashboard/finance/catatantransaksi/tunai',[FinanceController::class
 Route::get('/dashboard/finance/catatantransaksi/koin',[FinanceController::class, 'catatan_transaksi_koin_detail']);
 Route::get('/dashboard/finance/laporan',[FinanceController::class, 'catatan_laporan_transaksi']);
 Route::get('/dashboard/finance/laporan/penghasilan',[FinanceController::class, 'catatan_laporan_transaksi_penghasilan']);
+
+
+// Dashboard SuperAdmin
+Route::get('/dashboard/superadmin',[SuperAdminController::class, 'index']);
+Route::get('/dashboard/superadmin/pelamar',[SuperAdminController::class, 'pelamar']);
+Route::get('/dashboard/superadmin/pelamar/edit',[SuperAdminController::class, 'pelamar_edit']);
+
 
 // Dashboard Admin
 Route::get('/dashboard/admin',[AdminController::class, 'index']);
@@ -111,5 +128,12 @@ Route::get('/dashboard/admin/perusahaan/view/cv',[AdminController::class, 'perus
 Route::get('/dashboard/admin/perusahaan/view/talenthunter',[AdminController::class, 'perusahaan_view_talenthunter']);
 
 Route::get('/dashboard/admin/finance',[AdminController::class, 'finance']);
+
 Route::get('/dashboard/admin/tipskerja',[AdminController::class, 'tips_kerja']);
+Route::get('/dashboard/admin/tipskerja/addpost',[AdminController::class, 'tips_kerja_add_post']);
+
+
 Route::get('/dashboard/admin/event',[AdminController::class, 'event']);
+Route::get('/dashboard/admin/event/detail',[AdminController::class, 'event_detail']);
+Route::get('/dashboard/admin/event/add',[AdminController::class, 'event_add']);
+Route::get('/dashboard/admin/event/edit',[AdminController::class, 'event_edit']);
