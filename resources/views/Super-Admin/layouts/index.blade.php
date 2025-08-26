@@ -66,37 +66,45 @@
                 <p class="px-6 text-sm my-5 font-semibold text-white/70">Super Admin</p>
                 <a href="/dashboard/superadmin/pelamar"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pelamar') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <i class="ph ph-user-circle text-2xl"></i>
+                    @if (Request()->is('dashboard/superadmin/pelamar'))
+                        <img src="{{ asset('Icon/Pelamar OREN.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Account.png') }}" alt="">
+                    @endif
                     <span>Data Pelamar</span>
                 </a>
 
-                <a href=""
-                    class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/user-profile 1.png') }}" alt="">
+                <a href="/dashboard/superadmin/perusahaan"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/perusahaan') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                    @if (Request()->is('dashboard/superadmin/perusahaan'))
+                        <img src="{{ asset('Icon/Data Perusahaan OREN.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Commission.png') }}" alt="">
+                    @endif
                     <span>Data Perushaan</span>
                 </a>
 
                 <a href=""
                     class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/office 3.png') }}" alt="">
+                    <img src="{{ asset('Icon/Finance.png') }}" alt="">
                     <span>Finance</span>
                 </a>
 
                 <a href=""
                     class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/budget 1.png') }}" alt="">
+                    <img src="{{ asset('Icon/Akun Freeze.png') }}" alt="">
                     <span>Akun Freeze</span>
                 </a>
 
                 <a href=""
                     class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/news 2.png') }}" alt="">
+                    <img src="{{ asset('Icon/Tips kerja.png') }}" alt="">
                     <span>Tips Kerja</span>
                 </a>
 
                 <a href=""
                     class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/calendar 2.png') }}" alt="">
+                    <img src="{{ asset('Icon/Bank Event.png') }}" alt="">
                     <span>Event</span>
                 </a>
             </div>
@@ -105,19 +113,19 @@
                 <p class="px-6 text-sm my-5 font-semibold text-white/70">Manajemen Akun</p>
                 <a href=""
                     class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/bussiness-man 1.png') }}" alt="">
+                    <img src="{{ asset('Icon/Settings.png') }}" alt="">
                     <span>Akun</span>
                 </a>
 
                 <a href=""
                     class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/user-profile 1.png') }}" alt="">
+                    <img src="{{ asset('Icon/Settings.png') }}" alt="">
                     <span>Link & Header</span>
                 </a>
 
                 <a href=""
                     class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/office 3.png') }}" alt="">
+                    <img src="{{ asset('Icon/Settings.png') }}" alt="">
                     <span>Pengaturan</span>
                 </a>
             </div>
@@ -142,22 +150,25 @@
                         class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span>
                 </button>
 
-                <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
-                    <div>
-                        <img src="https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8"
-                            alt="Profile" class="w-8 h-9 rounded-full">
+                <a href="/dashboard/superadmin/profile">
+                    <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
+                        <div>
+                            <img src="https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8"
+                                alt="Profile" class="w-8 h-9 rounded-full">
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold">Rehan Roblox</p>
+                            <p class="text-xs text-gray-500">admin@gmail.com</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-sm font-semibold">Rehan Roblox</p>
-                        <p class="text-xs text-gray-500">admin@gmail.com</p>
-                    </div>
-                </div>
+                </a>
+
             </div>
         </div>
         @yield('super_admin-content')
     </div>
 
-    <script src="{{ asset('js/admin.js') }}"></script>
+    <script src="{{ asset('js/superAdmin.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js"></script>
 
 </body>

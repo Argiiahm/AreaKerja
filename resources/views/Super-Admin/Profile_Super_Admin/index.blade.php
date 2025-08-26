@@ -78,7 +78,7 @@
             </div>
 
             <div class="flex justify-center pt-2">
-                <a href="/dashboard/superadmin/pelamar/edit"
+                <a href="/dashboard/superadmin/profile/edit"
                     class="bg-[#fa6601] hover:bg-gray-700 text-white px-8 py-2 rounded-md">
                     Edit
                 </a>

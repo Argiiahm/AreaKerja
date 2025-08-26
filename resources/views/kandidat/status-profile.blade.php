@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('content')
-<div class="max-w-6xl mx-auto p-6">
+<div class="max-w-6xl mx-auto p-6 mt-36 ">
     <!-- Header -->
     <div class="border border-orange-400 rounded-md p-4 flex items-center justify-between">
         <div class="flex items-center gap-4">
@@ -98,67 +98,148 @@
             <!-- Slider -->
             <input type="range" min="2000000" max="7500000" value="2000000" class="w-full accent-orange-500 mb-6">
 
-            <!-- Note -->
-            <ul class="text-sm text-orange-600 space-y-3">
-                <li class="flex items-start gap-2"><span class="text-orange-500 text-lg">✔</span> Setelah menjadi kandidat Areakerja, CV anda akan otomatis terunggah ke etalase perusahaan</li>
-                <li class="flex items-start gap-2"><span class="text-orange-500 text-lg">✔</span> Range gaji akan tertampil pada profil anda di etalase perusahaan</li>
-            </ul>
+          <!-- Note -->
+<div class="space-y-4 mt-4">
+    <div class="flex items-start gap-3">
+        <!-- Icon bulat oranye -->
+        <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-orange-500 rounded-full">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+        </div>
+        <!-- Teks -->
+        <p class="text-orange-600 text-sm font-medium leading-relaxed">
+            Setelah menjadi kandidat Areakerja, CV anda akan otomatis terunggah ke etalase perusahaan
+        </p>
+    </div>
+
+    <div class="flex items-start gap-3">
+        <!-- Icon bulat oranye -->
+        <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-orange-500 rounded-full">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+        </div>
+        <!-- Teks -->
+        <p class="text-orange-600 text-sm font-medium leading-relaxed">
+            Range gaji akan tertampil pada profil anda di etalase perusahaan
+        </p>
+    </div>
+</div>
+
         </div>
     </div>
 
-    <!-- Tambahan Bagian Abu-Abu -->
-    <div class="mt-10 space-y-8">
-        <!-- Pendidikan -->
-        <div>
-            <h2 class="text-lg font-semibold mb-2">Pendidikan <span class="text-red-500">*</span></h2>
-            <div class="bg-gray-100 p-4 rounded-md relative">
-                <textarea class="w-full bg-transparent outline-none resize-none text-sm">Universitas AMIKOM Yogyakarta (2021 – 2025)
+  <!-- Tambahan Bagian Abu-Abu -->
+<div class="mt-10 space-y-6">
+    <!-- Pendidikan -->
+    <div>
+        <h2 class="text-lg font-semibold mb-2">Pendidikan <span class="text-red-500">*</span></h2>
+        <textarea 
+            class="w-full max-w-lg bg-gray-200 rounded-lg p-3 text-sm font-medium resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-orange-400"
+            rows="3"
+            placeholder="Tulis riwayat pendidikan kamu di sini..."
+            oninput="autoResize(this)"
+        >Universitas AMIKOM Yogyakarta (2021 – 2025)
 Ilmu Komunikasi
 
 SMA Negeri 1 Yogyakarta (2018 – 2021)
 Ilmu Pengetahuan Alam (IPA)
 
 SMP Negeri 6 Yogyakarta (2015 – 2018)</textarea>
-                <button class="absolute top-2 right-2 text-orange-500">✎</button>
-            </div>
-        </div>
+    </div>
 
-        <!-- Organisasi -->
+    <!-- Organisasi -->
+    <div>
+        <h2 class="text-lg font-semibold mb-2">Organisasi</h2>
+        <textarea 
+            class="w-full max-w-lg bg-gray-200 rounded-lg p-3 text-sm font-medium resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-orange-400"
+            rows="3"
+            placeholder="Tulis pengalaman organisasi kamu..."
+            oninput="autoResize(this)"
+        >Departemen Olahraga – OSIS (2016 – 2017)
+Bertanggung jawab untuk memastikan kegiatan olahraga bagi siswa terjamin kualitas nya dengan kegiatan yang menarik.</textarea>
+    </div>
+
+    <!-- Pengalaman Kerja -->
+    <div>
+        <h2 class="text-lg font-semibold mb-2">Pengalaman Kerja</h2>
+        <textarea 
+            class="w-full max-w-lg bg-gray-200 rounded-lg p-3 text-sm font-medium resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-orange-400"
+            rows="3"
+            placeholder="Tulis pengalaman kerja kamu..."
+            oninput="autoResize(this)"
+        >UI UX Designer – Mantra Creative (2022 – 2023)
+Bertanggung jawab untuk melakukan kegiatan teknikal di organisasi untuk membantu berjalannya sebuah kegiatan.</textarea>
+    </div>
+
+  <!-- Skill -->
+<div>
+    <h2 class="text-lg font-semibold mb-2">Skill <span class="text-red-500">*</span></h2>
+    <textarea 
+        class="w-full max-w-lg bg-gray-200 rounded-lg p-3 text-sm font-medium resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-orange-400"
+        rows="3"
+        placeholder="Tulis skill kamu..."
+        oninput="autoResize(this)"
+    >Photographer
+Intermediate
+
+Lightingman
+Intermediate
+
+UI UX Designer
+Intermediate</textarea>
+</div>
+
+<!-- Media Sosial -->
+<div class="mt-10">
+    <h2 class="text-lg font-semibold mb-1">Sosial Media</h2>
+    <div class="h-0.5 w-full max-w-lg bg-orange-500 mb-4"></div>
+
+    <div class="space-y-5">
+        <!-- Instagram -->
         <div>
-            <h2 class="text-lg font-semibold mb-2">Organisasi</h2>
-            <div class="bg-gray-100 p-4 rounded-md relative">
-                <textarea class="w-full bg-transparent outline-none resize-none text-sm">Departemen Olahraga – OSIS (2016 – 2017)
-Lorem ipsum dolor sit amet consectetur...
-
-Divisi Teknik – Radio (2016 – 2017)
-Lorem ipsum dolor sit amet consectetur...</textarea>
-                <button class="absolute top-2 right-2 text-orange-500">✎</button>
-            </div>
+            <label class="block text-sm font-medium mb-1">Instagram</label>
+            <input type="text" 
+                   class="w-full max-w-lg border border-gray-300 rounded-lg p-3 text-base focus:outline-none focus:ring-2 focus:ring-orange-400" 
+                   placeholder="@jasonst_">
         </div>
 
-        <!-- Pengalaman Kerja -->
+        <!-- LinkedIn -->
         <div>
-            <h2 class="text-lg font-semibold mb-2">Pengalaman Kerja</h2>
-            <div class="bg-gray-100 p-4 rounded-md relative">
-                <textarea class="w-full bg-transparent outline-none resize-none text-sm">UI UX Designer – Mantra Creative (2022 – 2023)
-Lorem ipsum dolor sit amet consectetur...
-
-Lightingman – Parainsomnia Studio (2023 – 2024)
-Lorem ipsum dolor sit amet consectetur...</textarea>
-                <button class="absolute top-2 right-2 text-orange-500">✎</button>
-            </div>
+            <label class="block text-sm font-medium mb-1">LinkedIn</label>
+            <input type="text" 
+                   class="w-full max-w-lg border border-gray-300 rounded-lg p-3 text-base focus:outline-none focus:ring-2 focus:ring-orange-400" 
+                   placeholder="Jason Statham">
         </div>
 
-        <!-- Skill -->
+        <!-- Website -->
         <div>
-            <h2 class="text-lg font-semibold mb-2">Skill <span class="text-red-500">*</span></h2>
-            <div class="bg-gray-100 p-4 rounded-md relative">
-                <textarea class="w-full bg-transparent outline-none resize-none text-sm">Photographer - Intermediate
-Lightingman - Intermediate
-UI UX Designer - Intermediate</textarea>
-                <button class="absolute top-2 right-2 text-orange-500">✎</button>
-            </div>
+            <label class="block text-sm font-medium mb-1">Website</label>
+            <input type="text" 
+                   class="w-full max-w-lg border border-gray-300 rounded-lg p-3 text-base focus:outline-none focus:ring-2 focus:ring-orange-400" 
+                   placeholder="www.jasonstatham.com">
         </div>
+
+        <!-- Twitter -->
+        <div>
+            <label class="block text-sm font-medium mb-1">Twitter</label>
+            <input type="text" 
+                   class="w-full max-w-lg border border-gray-300 rounded-lg p-3 text-base focus:outline-none focus:ring-2 focus:ring-orange-400" 
+                   placeholder="Jason Statham">
+        </div>
+    </div>
+</div>
+
+
+<script>
+function autoResize(textarea) {
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
+}
+</script>
+
+
     </div>
 </div>
 @endsection
