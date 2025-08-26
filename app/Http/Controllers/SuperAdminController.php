@@ -129,4 +129,17 @@ class SuperAdminController extends Controller
         ]);
     }
 
+    // recrutiment
+    public function recrutiment_detail()
+    {
+        return view('Super-Admin.Perusahaan.Recrutiment.detail_recrutiment_superAdmin', [
+            "title"   =>  "Detail Kandidat"
+        ]);
+    }
+    public function recrutiment_edit()
+    {
+        return view('Super-Admin.Perusahaan.Recrutiment.edit_kandidat_recrutiment_superAdmin', [
+            "title"   =>  "Detail Pelamar"
+        ]);
+    }
 }

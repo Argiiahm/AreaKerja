@@ -137,6 +137,11 @@ Route::get('/dashboard/superadmin/perusahaan/detail',[SuperAdminController::clas
 Route::get('/dashboard/superadmin/perusahaan/lowongan/detail',[SuperAdminController::class, 'lowongan_detail']);
 Route::get('/dashboard/superadmin/perusahaan/lowongan/add',[SuperAdminController::class, 'lowongan_add']);
 Route::get('/dashboard/superadmin/perusahaan/lowongan/edit',[SuperAdminController::class, 'lowongan_edit']);
+
+// Data Recrutiment
+Route::get('/dashboard/superadmin/recrutiment',[SuperAdminController::class, 'recrutiment_detail']);
+Route::get('/dashboard/superadmin/recrutiment/edit',[SuperAdminController::class, 'recrutiment_edit']);
+
  
 
 
