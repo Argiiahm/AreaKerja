@@ -129,7 +129,7 @@ class SuperAdminController extends Controller
         ]);
     }
 
-    // recrutiment
+    // Recrutiment
     public function recrutiment_detail()
     {
         return view('Super-Admin.Perusahaan.Recrutiment.detail_recrutiment_superAdmin', [
@@ -140,6 +140,26 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.Recrutiment.edit_kandidat_recrutiment_superAdmin', [
             "title"   =>  "Detail Pelamar"
+        ]);
+    }
+
+    // Talent Hunter
+    public function talent_hunter_detail()
+    {
+        return view('Super-Admin.Perusahaan.Talent-Hunter.detail-tulent_hunter_superAdmin', [
+            "title"   =>  "Data Talent Hunter"
+        ]);
+    }
+    public function talent_hunter_add()
+    {
+        return view('Super-Admin.Perusahaan.Talent-Hunter.add-data_tulent-hunter_superAdmin', [
+            "title"   =>  "Tambah Tulent Hunter"
+        ]);
+    }
+    public function talent_hunter_edit()
+    {
+        return view('Super-Admin.Perusahaan.Talent-Hunter.edit-data_tulent-hunter_superAdmin', [
+            "title"   =>  "Edit Tulent Hunter"
         ]);
     }
 }

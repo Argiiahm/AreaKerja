@@ -101,7 +101,7 @@
                         <td class="px-6 py-3 text-gray-700">UI UX Designer</td>
                         <td class="px-6 py-3 text-gray-700">Jawa Tengah</td>
                         <td class="px-6 py-4">
-                            <a href="/dashboard/superadmin/pelamar/view/calon_kandidat"
+                            <a href="/dashboard/superadmin/talenthunter"
                                 class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">
                                 View
                             </a>
