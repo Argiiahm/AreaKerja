@@ -1,7 +1,6 @@
 @extends('layouts.index')
 
 @section('content')
-{{-- Dasboard Kosong --}}
     <div class="hidden">
         <div class="max-w-6xl mx-auto px-6 py-6 mt-24">
             <p class="text-sm text-orange-600 font-medium">Dashboard</p>
@@ -104,7 +103,6 @@
         </div>
     </div>
 
-{{-- Dashboard Isi --}}
     <div class="max-w-6xl mx-auto px-6 py-6 mt-24">
         <p class="text-sm text-orange-600 font-medium">Dashboard</p>
         <h1 class="text-2xl font-bold leading-snug">

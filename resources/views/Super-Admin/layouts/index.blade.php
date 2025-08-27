@@ -84,48 +84,76 @@
                     <span>Data Perushaan</span>
                 </a>
 
-                <a href=""
-                    class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/Finance.png') }}" alt="">
+                <a href="/dashboard/superadmin/finance"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/finance') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                    @if (Request()->is('dashboard/superadmin/finance'))
+                        <img src="{{ asset('Icon/Finance OREN.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Finance.png') }}" alt="">
+                    @endif
                     <span>Finance</span>
                 </a>
 
-                <a href=""
-                    class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/Akun Freeze.png') }}" alt="">
+                <a href="/dashboard/superadmin/freeze"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/freeze') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                    @if (Request()->is('dashboard/superadmin/freeze'))
+                        <img src="{{ asset('Icon/Akun Freeze OREN.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Akun Freeze.png') }}" alt="">
+                    @endif
                     <span>Akun Freeze</span>
                 </a>
 
-                <a href=""
-                    class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/Tips kerja.png') }}" alt="">
+                <a href="/dashboard/superadmin/tipskerja"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/tipskerja') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                    @if (Request()->is('dashboard/superadmin/tipskerja'))
+                        <img src="{{ asset('Icon/Tips Kerja OREN.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Tips kerja.png') }}" alt="">
+                    @endif
                     <span>Tips Kerja</span>
                 </a>
 
-                <a href=""
-                    class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/Bank Event.png') }}" alt="">
+                <a href="/dashboard/superadmin/event"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/event') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                    @if (Request()->is('dashboard/superadmin/event'))
+                        <img src="{{ asset('Icon/Event OREN.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Bank Event.png') }}" alt="">
+                    @endif
                     <span>Event</span>
                 </a>
             </div>
 
             <div class="space-y-3">
                 <p class="px-6 text-sm my-5 font-semibold text-white/70">Manajemen Akun</p>
-                <a href=""
-                    class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/Settings.png') }}" alt="">
+                <a href="/dashboard/superadmin/akun"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/akun') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                    @if (Request()->is('dashboard/superadmin/akun'))
+                        <img src="{{ asset('Icon/Settings-orange.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Settings.png') }}" alt="">
+                    @endif
                     <span>Akun</span>
                 </a>
 
-                <a href=""
-                    class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/Settings.png') }}" alt="">
+                <a href="/dashboard/superadmin/pengaturan_page"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pengaturan_page') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                    @if (Request()->is('dashboard/superadmin/pengaturan_page'))
+                        <img src="{{ asset('Icon/Settings-orange.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Settings.png') }}" alt="">
+                    @endif
                     <span>Link & Header</span>
                 </a>
 
-                <a href=""
-                    class="flex items-center gap-2 px-6 {{ Request()->is('') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/Settings.png') }}" alt="">
+                <a href="/dashboard/superadmin/pengaturan"
+                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pengaturan') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
+                    @if (Request()->is('dashboard/superadmin/pengaturan'))
+                        <img src="{{ asset('Icon/Settings-orange.png') }}" alt="">
+                    @else
+                        <img src="{{ asset('Icon/Settings.png') }}" alt="">
+                    @endif
                     <span>Pengaturan</span>
                 </a>
             </div>
@@ -141,7 +169,7 @@
 
     <div class="p-4 sm:ml-64">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold hidden lg:block md:block">{{ $title }}</h1>
+            <h1 id="title" class="text-2xl font-bold hidden lg:block md:block">{{ $title }}</h1>
 
             <div class="flex items-center px-8 gap-4">
                 <button class="relative">

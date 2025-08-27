@@ -162,4 +162,117 @@ class SuperAdminController extends Controller
             "title"   =>  "Edit Tulent Hunter"
         ]);
     }
+
+
+    // Finance
+    public function finance()
+    {
+        return view('Super-Admin.finance.finance-index_superAdmin', [
+            "title"   =>  "Paket Harga"
+        ]);
+    }
+    public function finance_edit_paket_koin()
+    {
+        return view('Super-Admin.finance.edit_paket_harga-koin_superAdmin', [
+            "title"   =>  "Paket Harga Koin"
+        ]);
+    }
+    public function finance_edit_paket_pembayaran()
+    {
+        return view('Super-Admin.finance.edit_paket_harga-tunai_superAdmin', [
+            "title"   =>  "Paket Harga Pembayaran"
+        ]);
+    }
+
+    // Freeze Akun
+    public function freeze()
+    {
+        return view('Super-Admin.Freeze-Akun.freeze_akun_superAdmin', [
+            "title"   =>  "Akun Freeze"
+        ]);
+    }
+    public function freeze_detail()
+    {
+        return view('Super-Admin.Freeze-Akun.detail_freeze_akun_superAdmin', [
+            "title"   =>  "Akun Freeze"
+        ]);
+    }
+    public function tipskerja()
+    {
+        return view('Super-Admin.Tipskerja-superadmin.tipskerja_index', [
+            "title"   =>  "Tips Kerja"
+        ]);
+    }
+    public function tipskerja_add()
+    {
+        return view('Super-Admin.Tipskerja-superadmin.add-post_tipsKerja_superAdmin', [
+            "title"   =>  "Buat Post Baru"
+        ]);
+    }
+
+    // Event
+    public function event()
+    {
+        return view('Super-Admin.Event.index', [
+            "title"   =>  "Event"
+        ]);
+    }
+    public function event_add()
+    {
+        return view('Super-Admin.Event.add-event', [
+            "title"   =>  "Buat Event Baru"
+        ]);
+    }
+    public function event_detail()
+    {
+        return view('Super-Admin.Event.detail-event', [
+            "title"   =>  "Event"
+        ]);
+    }
+    public function event_edit()
+    {
+        return view('Super-Admin.Event.edit-event', [
+            "title"   =>  "Edit Event"
+        ]);
+    }
+
+    // Akun
+    public function akun()
+    {
+        return view('Super-Admin.Akun.akun_index-superAdmin', [
+            "title"   =>  "Kelola Akun"
+        ]);
+    }
+    public function akun_view()
+    {
+        return view('Super-Admin.Akun.view_akun_super-Admin', [
+            "title"   =>  "Kelola Akun"
+        ]);
+    }
+    public function akun_add()
+    {
+        return view('Super-Admin.Akun.add-akun_superAdmin', [
+            "title"   =>  "Kelola Akun"
+        ]);
+    }
+    public function akun_edit()
+    {
+        return view('Super-Admin.Akun.edit-akun_superAdmin', [
+            "title"   =>  "Kelola Akun"
+        ]);
+    }
+
+    //Link & Header
+     public function pengaturan_page()
+    {
+        return view('Super-Admin.Pengaturan.pengaturan_page_superAdmin', [
+            "title"   =>  "Image Header Social Media"
+        ]);
+    }
+     public function pengaturan()
+    {
+        return view('Super-Admin.Pengaturan.pengaturan_superAdmin', [
+            "title"   =>  "Pengaturan"
+        ]);
+    }
 }

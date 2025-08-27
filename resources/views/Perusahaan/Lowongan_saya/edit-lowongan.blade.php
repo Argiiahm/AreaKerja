@@ -5,7 +5,6 @@
         <div class="flex items-center justify-between p-4 mb-6">
             <div class="flex items-center space-x-4">
                 <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-40">
-
                 <div>
                     <h2 class="font-bold text-xl">Seven_Inc</h2>
                     <p class="text-gray-600 text-sm">Jasa TI dan Konsultan TI</p>
@@ -13,12 +12,12 @@
                 </div>
             </div>
 
-            <button class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 flex items-center shadow">
+            <!-- <button class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 flex items-center shadow">
                 <span class="text-lg font-bold mr-2">+</span> Tambah
-            </button>
+            </button> -->
         </div>
 
-        <h2 class="text-2xl font-bold mb-6 border-b-2 border-orange-400 pb-2">Tambah Lowongan</h2>
+        <h2 class="text-2xl font-bold mb-6 border-b-2 border-orange-400 pb-2">Edit Lowongan</h2>
 
         <form action="#" method="POST" class="space-y-8">
 
@@ -121,12 +120,11 @@
 </div>
 
             </div>
-
             <div class="flex justify-center space-x-4 pt-6">
-                <button type="button"
+                <!-- <button type="button"
                     class="px-6 py-2 border-2 border-orange-500 rounded-md text-orange-500 hover:bg-orange-50">
                     Batal
-                </button>
+                </button> -->
                 <button type="submit" class="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600">
                     Simpan
                 </button>

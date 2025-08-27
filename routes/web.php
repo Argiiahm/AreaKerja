@@ -147,7 +147,37 @@ Route::get('/dashboard/superadmin/talenthunter',[SuperAdminController::class, 't
 Route::get('/dashboard/superadmin/perusahaan/add/talent_hunter',[SuperAdminController::class, 'talent_hunter_add']);
 Route::get('/dashboard/superadmin/talenthunter/edit',[SuperAdminController::class, 'talent_hunter_edit']);
 
- 
+// FInance - Super Admin
+Route::get('/dashboard/superadmin/finance',[SuperAdminController::class, 'finance']);
+Route::get('/dashboard/superadmin/finance/edit/paketkoin',[SuperAdminController::class, 'finance_edit_paket_koin']);
+Route::get('/dashboard/superadmin/finance/edit/paketpembayaran',[SuperAdminController::class, 'finance_edit_paket_pembayaran']);
+Route::get('/dashboard/superadmin/finance/edit/laporan',[SuperAdminController::class, 'finance_laporan']);
+
+// Freeze Akun - Super Admin
+Route::get('/dashboard/superadmin/freeze',[SuperAdminController::class, 'freeze']);
+Route::get('/dashboard/superadmin/freeze/detail',[SuperAdminController::class, 'freeze_detail']);
+
+// Tips Kerja - Super Admin
+Route::get('/dashboard/superadmin/tipskerja',[SuperAdminController::class, 'tipskerja']);
+Route::get('/dashboard/superadmin/tipskerja/add',[SuperAdminController::class, 'tipskerja_add']);
+
+
+// Event -Super Admin
+Route::get('/dashboard/superadmin/event',[SuperAdminController::class, 'event']);
+Route::get('/dashboard/superadmin/event/detail',[SuperAdminController::class, 'event_detail']);
+Route::get('/dashboard/superadmin/event/add',[SuperAdminController::class, 'event_add']);
+Route::get('/dashboard/superadmin/event/edit',[SuperAdminController::class, 'event_edit']);
+
+// Akun -Super Admin
+Route::get('/dashboard/superadmin/akun',[SuperAdminController::class, 'akun']);
+Route::get('/dashboard/superadmin/akun/view',[SuperAdminController::class, 'akun_view']);
+Route::get('/dashboard/superadmin/akun/add',[SuperAdminController::class, 'akun_add']);
+Route::get('/dashboard/superadmin/akun/edit',[SuperAdminController::class, 'akun_edit']);
+
+
+// Link & Header - Super Admin
+Route::get('/dashboard/superadmin/pengaturan_page',[SuperAdminController::class, 'pengaturan_page']);
+Route::get('/dashboard/superadmin/pengaturan',[SuperAdminController::class, 'pengaturan']);
 
 
 // Dashboard Admin
@@ -190,4 +220,18 @@ Route::get('/dashboard/perusahaan/alamat/jadi', [PerusahaanController::class, 'a
 
 Route::get('/dashboard/perusahaan/lowongan', [PerusahaanController::class, 'lowongan']);
 Route::get('/dashboard/perusahaan/isi/lowongan', [PerusahaanController::class, 'isi_lowongan']);
+Route::get('/dashboard/perusahaan/edit/lowongan', [PerusahaanController::class, 'edit_lowongan']);
+Route::get('/dashboard/perusahaan/lowongan/detail', [PerusahaanController::class, 'detail_lowongan']);
+Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat']);
+Route::get('/dashboard/perusahaan/kandidatak', [PerusahaanController::class, 'kandidat_ak']);
+Route::get('/dashboard/perusahaan/kandidatak/cv', [PerusahaanController::class, 'cv_kandidat']);
+Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan']);
+Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password']);
 
+Route::get('/dashboard/perusahaan/pelamar', [PerusahaanController::class, 'pelamar']);
+Route::get('/dashboard/perusahaan/konfirmasi/terima/lamaran', [PerusahaanController::class, 'konfirmasi_terima_lamaran']);
+Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim']);
+
+Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan']);
+Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat']);
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info']);

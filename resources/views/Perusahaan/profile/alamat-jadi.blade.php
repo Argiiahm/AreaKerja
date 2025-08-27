@@ -2,10 +2,8 @@
 @section('content')
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10 mt-24">
 <div class="flex items-center space-x-4">
-    {{-- Logo --}}
     <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-40">
 
-    {{-- Info Perusahaan --}}
     <div>
         <h2 class="font-bold text-xl">Seven_Inc</h2>
         <p class="text-gray-600 text-sm">Jasa TI dan Konsultan TI</p>

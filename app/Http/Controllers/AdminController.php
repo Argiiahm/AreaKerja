@@ -117,4 +117,6 @@ class AdminController extends Controller
             "title"   =>   "Event"
         ]);
     }
+
+    
 }

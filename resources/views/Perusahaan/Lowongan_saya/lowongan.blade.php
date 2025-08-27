@@ -1,7 +1,6 @@
 @extends('layouts.index')
 
 @section('content')
-    <!-- Lowongan Kosong -->
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-24 hidden">
         <div class="flex items-start gap-4 w-full py-5">
             <div class="w-32 h-32  flex items-center justify-center">
@@ -45,11 +44,12 @@
             </div>
         </div>
     </div>
-    <!-- Lowongan Isi -->
+
+
+
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-24">
         <div class="flex items-start gap-4 w-full py-5 justify-between">
-            <div class="flex gap-5 justify-between w-full">
-
+            <div class="flex gap-5 justify-between w-10/12 md:w-11/12 lg:w-11/12 items-center">
                 <div class="flex">
                     <div class="w-32 h-32  flex items-center justify-center">
                         <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="object-contain w-full">
@@ -61,25 +61,23 @@
                     </div>
                 </div>
                 <div>
-                    <button
+                    <a href=""
                         class="absolute w-16 h-16 border border-orange-500 rounded-md flex items-center justify-center text-orange-500 hover:bg-orange-50">
                         <i class="ph ph-plus text-xl"></i>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
-
         <div class="mt-8">
-
             <div class="flex justify-between items-end text-center gap-3 mb-3">
                 <h3 class="font-semibold text-center">Lowongan</h3>
                 <div>
-                    <select class="border rounded-md px-10 py-2 text-sm">
+                    <select class="border rounded-md px-6 lg:px-10 md:px-10 py-2 text-sm">
                         <option>Jenis Paket</option>
                         <option>Paket A</option>
                         <option>Paket B</option>
                     </select>
-                    <select class="border rounded-md px-10 py-2 text-sm">
+                    <select class="border rounded-md px-6 lg:px-10 md:px-10 py-2 text-sm">
                         <option>Jenis Lowongan</option>
                         <option>Fulltime</option>
                         <option>Part-time</option>
@@ -105,5 +103,11 @@
                 </div>
             </a>
         </div>
+
+            <div class="flex justify-center mt-8">
+        <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded-lg shadow">
+            Memuat
+        </button>
+    </div>
     </div>
 @endsection

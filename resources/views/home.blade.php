@@ -2,7 +2,6 @@
 
 @section('content')
     <section class="container max-w-screen-lg mx-auto pt-40">
-        {{-- Search landing page --}}
         <div class="flex items-center mx-5 lg:w-full lg:mx-auto md:w-auto  p-2 border border-gray-300 rounded-lg shadow-sm">
             <div class="flex items-center flex-1 px-2">
                 <i class="ph ph-magnifying-glass text-zinc-900 text-lg mr-2"></i>
@@ -28,7 +27,6 @@
             </button>
         </div>
 
-        {{-- End Searching --}}
 
         <div class="flex justify-center my-10">
             <p class="text-[#fa6601] font-semibold text-center lg:text-left md:text-left">Lamar Pekerjaan Kamu ~ <span
@@ -36,7 +34,6 @@
                     Dan Langkah Yang Tepat</span></p>
         </div>
 
-        {{-- Kategori --}}
         <div>
             <p class="font-semibold text-zinc-700 px-2 lg:px-0">KATEGORI PEKERJAAN POPULER</p>
             <div class="flex gap-3">
@@ -98,10 +95,8 @@
                 </div>
             </div>
         </div>
-        {{-- End Kategori --}}
     </section>
 
-    {{-- Navigation Home --}}
     <div class="mt-10 flex justify-center gap-10  items-center font-semibold border-b">
         <button id="umpan-lowongan"
             class="border-b-2 border-[#fa6601] text-[13px] lg:text-[16px] md:text-[16px] cursor-pointer">UMPAN
@@ -110,7 +105,6 @@
             class="gacursor-pointer border-[#fa6601]  text-[13px] lg:text-[16px] md:text-[16px]">PENCARIAN BARU BARU
             INI</button>
     </div>
-    {{-- End Navigation Home --}}
 
     <section class="mx-2 lg:mx-0 md:mx-0 px-0 lg:px-20 md:px-20">
         <p class="my-10 font-semibold text-gray-500 text-center lg:text-left md:text-left">Lowongan berdasarkan pada
@@ -209,7 +203,6 @@
         </div>
 
 
-        {{-- Berdasarkan pencarian terbaru --}}
         <section id="berdasarkan-pencarian" class="hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3">
                 <a href="/detail/job" class="border p-8">
