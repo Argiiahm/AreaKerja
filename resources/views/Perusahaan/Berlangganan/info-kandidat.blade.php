@@ -20,7 +20,7 @@
             <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
                 <div class="bg-orange-500 text-white rounded-lg p-6 flex flex-col items-center text-center shadow-md">
-                    <div class="text-3xl mb-4"><img src="{{ asset('Icon/check.png') }}" alt="" class="w-2xl"></div>
+                    <div class="text-3xl mb-4"><img src="{{ asset('Icon/check.png') }}" alt=""></div>
                     <h3 class="font-semibold mb-2">Laporan Harian Pekerja</h3>
                     <a href="#"
                         class="bg-white text-orange-500 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">

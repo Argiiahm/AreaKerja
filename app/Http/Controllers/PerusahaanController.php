@@ -82,4 +82,7 @@ class PerusahaanController extends Controller
     public function kandidat_info(){
         return view('Perusahaan.Berlangganan.info-kandidat');
     }
+    public function kandidat_bermasalah(){
+        return view('Perusahaan.Berlangganan.pekerja-bermasalah');
+    }
 }

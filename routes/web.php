@@ -95,118 +95,118 @@ Route::get('/verifikasi/super/admin/otp', [AuthController::class, 'verifikasi_su
 Route::get('/change/password/super/admin', [AuthController::class, 'change_password_super_admin']);
 
 // Dashboard Finance
-Route::get('/dashboard/finance',[FinanceController::class, 'index']);
-Route::get('/dashboard/finance/paketharga',[FinanceController::class, 'paket_harga']);
-Route::get('/dashboard/finance/omset',[FinanceController::class, 'omset']);
-Route::get('/dashboard/finance/catatantransaksi',[FinanceController::class, 'catatan_transaksi']);
-Route::get('/dashboard/finance/catatantransaksi/tunai',[FinanceController::class, 'catatan_transaksi_tunai_detail']);
-Route::get('/dashboard/finance/catatantransaksi/koin',[FinanceController::class, 'catatan_transaksi_koin_detail']);
-Route::get('/dashboard/finance/laporan',[FinanceController::class, 'catatan_laporan_transaksi']);
-Route::get('/dashboard/finance/laporan/penghasilan',[FinanceController::class, 'catatan_laporan_transaksi_penghasilan']);
+Route::get('/dashboard/finance', [FinanceController::class, 'index']);
+Route::get('/dashboard/finance/paketharga', [FinanceController::class, 'paket_harga']);
+Route::get('/dashboard/finance/omset', [FinanceController::class, 'omset']);
+Route::get('/dashboard/finance/catatantransaksi', [FinanceController::class, 'catatan_transaksi']);
+Route::get('/dashboard/finance/catatantransaksi/tunai', [FinanceController::class, 'catatan_transaksi_tunai_detail']);
+Route::get('/dashboard/finance/catatantransaksi/koin', [FinanceController::class, 'catatan_transaksi_koin_detail']);
+Route::get('/dashboard/finance/laporan', [FinanceController::class, 'catatan_laporan_transaksi']);
+Route::get('/dashboard/finance/laporan/penghasilan', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan']);
 
 
 // Dashboard SuperAdmin
-Route::get('/dashboard/superadmin',[SuperAdminController::class, 'index']);
+Route::get('/dashboard/superadmin', [SuperAdminController::class, 'index']);
 
 // Profile & Edit Profile Super Admin
-Route::get('/dashboard/superadmin/profile',[SuperAdminController::class, 'profile']);
-Route::get('/dashboard/superadmin/profile/edit',[SuperAdminController::class, 'profile_edit']);
+Route::get('/dashboard/superadmin/profile', [SuperAdminController::class, 'profile']);
+Route::get('/dashboard/superadmin/profile/edit', [SuperAdminController::class, 'profile_edit']);
 
 
 // Pelamar SuperAdmin
-Route::get('/dashboard/superadmin/pelamar',[SuperAdminController::class, 'pelamar']);
+Route::get('/dashboard/superadmin/pelamar', [SuperAdminController::class, 'pelamar']);
 
 //View, Add Dan Edit Kandidat - SuperAdmin
-Route::get('/dashboard/superadmin/kandidat_view',[SuperAdminController::class, 'kandidat_view']);
-Route::get('/dashboard/superadmin/pelamar/add/kandidat',[SuperAdminController::class, 'add_kandidat']);
-Route::get('/dashboard/superadmin/pelamar/edit/kandidat',[SuperAdminController::class, 'edit_kandidat']);
+Route::get('/dashboard/superadmin/kandidat_view', [SuperAdminController::class, 'kandidat_view']);
+Route::get('/dashboard/superadmin/pelamar/add/kandidat', [SuperAdminController::class, 'add_kandidat']);
+Route::get('/dashboard/superadmin/pelamar/edit/kandidat', [SuperAdminController::class, 'edit_kandidat']);
 
 //View, Add Dan Edit Non Kandidat - SuperAdmin
-Route::get('/dashboard/superadmin/nonkandidat_view',[SuperAdminController::class, 'non_kandidat_view']);
-Route::get('/dashboard/superadmin/pelamar/add/non_kandidat',[SuperAdminController::class, 'add_non_kandidat']);
-Route::get('/dashboard/superadmin/pelamar/edit/non_kandidat',[SuperAdminController::class, 'edit_non_kandidat']);
+Route::get('/dashboard/superadmin/nonkandidat_view', [SuperAdminController::class, 'non_kandidat_view']);
+Route::get('/dashboard/superadmin/pelamar/add/non_kandidat', [SuperAdminController::class, 'add_non_kandidat']);
+Route::get('/dashboard/superadmin/pelamar/edit/non_kandidat', [SuperAdminController::class, 'edit_non_kandidat']);
 
 // View, Add Calon Kandidat  -SuperAdmin
-Route::get('/dashboard/superadmin/pelamar/add/calon_kandidat',[SuperAdminController::class, 'add_calon_kandidat']);
-Route::get('/dashboard/superadmin/pelamar/view/calon_kandidat',[SuperAdminController::class, 'view_calon_kandidat']);
+Route::get('/dashboard/superadmin/pelamar/add/calon_kandidat', [SuperAdminController::class, 'add_calon_kandidat']);
+Route::get('/dashboard/superadmin/pelamar/view/calon_kandidat', [SuperAdminController::class, 'view_calon_kandidat']);
 
 // Data Perusahaan -SuperAdmin
-Route::get('/dashboard/superadmin/perusahaan',[SuperAdminController::class, 'perusahaan']);
-Route::get('/dashboard/superadmin/perusahaan/add/perusahaan',[SuperAdminController::class, 'perusahaan_add']);
-Route::get('/dashboard/superadmin/perusahaan/detail',[SuperAdminController::class, 'perusahaan_detail']);
-Route::get('/dashboard/superadmin/perusahaan/lowongan/detail',[SuperAdminController::class, 'lowongan_detail']);
-Route::get('/dashboard/superadmin/perusahaan/lowongan/add',[SuperAdminController::class, 'lowongan_add']);
-Route::get('/dashboard/superadmin/perusahaan/lowongan/edit',[SuperAdminController::class, 'lowongan_edit']);
+Route::get('/dashboard/superadmin/perusahaan', [SuperAdminController::class, 'perusahaan']);
+Route::get('/dashboard/superadmin/perusahaan/add/perusahaan', [SuperAdminController::class, 'perusahaan_add']);
+Route::get('/dashboard/superadmin/perusahaan/detail', [SuperAdminController::class, 'perusahaan_detail']);
+Route::get('/dashboard/superadmin/perusahaan/lowongan/detail', [SuperAdminController::class, 'lowongan_detail']);
+Route::get('/dashboard/superadmin/perusahaan/lowongan/add', [SuperAdminController::class, 'lowongan_add']);
+Route::get('/dashboard/superadmin/perusahaan/lowongan/edit', [SuperAdminController::class, 'lowongan_edit']);
 
 // Data Recrutiment -Super Admin
-Route::get('/dashboard/superadmin/recrutiment',[SuperAdminController::class, 'recrutiment_detail']);
-Route::get('/dashboard/superadmin/recrutiment/edit',[SuperAdminController::class, 'recrutiment_edit']);
+Route::get('/dashboard/superadmin/recrutiment', [SuperAdminController::class, 'recrutiment_detail']);
+Route::get('/dashboard/superadmin/recrutiment/edit', [SuperAdminController::class, 'recrutiment_edit']);
 
 //Data Talent Hunter -SuperAdmin
-Route::get('/dashboard/superadmin/talenthunter',[SuperAdminController::class, 'talent_hunter_detail']);
-Route::get('/dashboard/superadmin/perusahaan/add/talent_hunter',[SuperAdminController::class, 'talent_hunter_add']);
-Route::get('/dashboard/superadmin/talenthunter/edit',[SuperAdminController::class, 'talent_hunter_edit']);
+Route::get('/dashboard/superadmin/talenthunter', [SuperAdminController::class, 'talent_hunter_detail']);
+Route::get('/dashboard/superadmin/perusahaan/add/talent_hunter', [SuperAdminController::class, 'talent_hunter_add']);
+Route::get('/dashboard/superadmin/talenthunter/edit', [SuperAdminController::class, 'talent_hunter_edit']);
 
 // FInance - Super Admin
-Route::get('/dashboard/superadmin/finance',[SuperAdminController::class, 'finance']);
-Route::get('/dashboard/superadmin/finance/edit/paketkoin',[SuperAdminController::class, 'finance_edit_paket_koin']);
-Route::get('/dashboard/superadmin/finance/edit/paketpembayaran',[SuperAdminController::class, 'finance_edit_paket_pembayaran']);
-Route::get('/dashboard/superadmin/finance/edit/laporan',[SuperAdminController::class, 'finance_laporan']);
+Route::get('/dashboard/superadmin/finance', [SuperAdminController::class, 'finance']);
+Route::get('/dashboard/superadmin/finance/edit/paketkoin', [SuperAdminController::class, 'finance_edit_paket_koin']);
+Route::get('/dashboard/superadmin/finance/edit/paketpembayaran', [SuperAdminController::class, 'finance_edit_paket_pembayaran']);
+Route::get('/dashboard/superadmin/finance/edit/laporan', [SuperAdminController::class, 'finance_laporan']);
 
 // Freeze Akun - Super Admin
-Route::get('/dashboard/superadmin/freeze',[SuperAdminController::class, 'freeze']);
-Route::get('/dashboard/superadmin/freeze/detail',[SuperAdminController::class, 'freeze_detail']);
+Route::get('/dashboard/superadmin/freeze', [SuperAdminController::class, 'freeze']);
+Route::get('/dashboard/superadmin/freeze/detail', [SuperAdminController::class, 'freeze_detail']);
 
 // Tips Kerja - Super Admin
-Route::get('/dashboard/superadmin/tipskerja',[SuperAdminController::class, 'tipskerja']);
-Route::get('/dashboard/superadmin/tipskerja/add',[SuperAdminController::class, 'tipskerja_add']);
+Route::get('/dashboard/superadmin/tipskerja', [SuperAdminController::class, 'tipskerja']);
+Route::get('/dashboard/superadmin/tipskerja/add', [SuperAdminController::class, 'tipskerja_add']);
 
 
 // Event -Super Admin
-Route::get('/dashboard/superadmin/event',[SuperAdminController::class, 'event']);
-Route::get('/dashboard/superadmin/event/detail',[SuperAdminController::class, 'event_detail']);
-Route::get('/dashboard/superadmin/event/add',[SuperAdminController::class, 'event_add']);
-Route::get('/dashboard/superadmin/event/edit',[SuperAdminController::class, 'event_edit']);
+Route::get('/dashboard/superadmin/event', [SuperAdminController::class, 'event']);
+Route::get('/dashboard/superadmin/event/detail', [SuperAdminController::class, 'event_detail']);
+Route::get('/dashboard/superadmin/event/add', [SuperAdminController::class, 'event_add']);
+Route::get('/dashboard/superadmin/event/edit', [SuperAdminController::class, 'event_edit']);
 
 // Akun -Super Admin
-Route::get('/dashboard/superadmin/akun',[SuperAdminController::class, 'akun']);
-Route::get('/dashboard/superadmin/akun/view',[SuperAdminController::class, 'akun_view']);
-Route::get('/dashboard/superadmin/akun/add',[SuperAdminController::class, 'akun_add']);
-Route::get('/dashboard/superadmin/akun/edit',[SuperAdminController::class, 'akun_edit']);
+Route::get('/dashboard/superadmin/akun', [SuperAdminController::class, 'akun']);
+Route::get('/dashboard/superadmin/akun/view', [SuperAdminController::class, 'akun_view']);
+Route::get('/dashboard/superadmin/akun/add', [SuperAdminController::class, 'akun_add']);
+Route::get('/dashboard/superadmin/akun/edit', [SuperAdminController::class, 'akun_edit']);
 
 
 // Link & Header - Super Admin
-Route::get('/dashboard/superadmin/pengaturan_page',[SuperAdminController::class, 'pengaturan_page']);
-Route::get('/dashboard/superadmin/pengaturan',[SuperAdminController::class, 'pengaturan']);
+Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page']);
+Route::get('/dashboard/superadmin/pengaturan', [SuperAdminController::class, 'pengaturan']);
 
 
 // Dashboard Admin
-Route::get('/dashboard/admin',[AdminController::class, 'index']);
+Route::get('/dashboard/admin', [AdminController::class, 'index']);
 
-Route::get('/dashboard/admin/profile',[AdminController::class, 'profile']);
-Route::get('/dashboard/admin/profile/edit',[AdminController::class, 'profile_edit']);
+Route::get('/dashboard/admin/profile', [AdminController::class, 'profile']);
+Route::get('/dashboard/admin/profile/edit', [AdminController::class, 'profile_edit']);
 
-Route::get('/dashboard/admin/pelamar',[AdminController::class, 'pelamar']);
-Route::get('/dashboard/admin/kandidat/view',[AdminController::class, 'kandidat_view_cv']);
-Route::get('/dashboard/admin/nonkandidat/view',[AdminController::class, 'non_kandidat_view_cv']);
-Route::get('/dashboard/admin/calonkandidat/view',[AdminController::class, 'calon_kandidat_view']);
+Route::get('/dashboard/admin/pelamar', [AdminController::class, 'pelamar']);
+Route::get('/dashboard/admin/kandidat/view', [AdminController::class, 'kandidat_view_cv']);
+Route::get('/dashboard/admin/nonkandidat/view', [AdminController::class, 'non_kandidat_view_cv']);
+Route::get('/dashboard/admin/calonkandidat/view', [AdminController::class, 'calon_kandidat_view']);
 
-Route::get('/dashboard/admin/perusahaan',[AdminController::class, 'perusahaan']);
-Route::get('/dashboard/admin/perusahaan/view',[AdminController::class, 'perusahaan_view']);
-Route::get('/dashboard/admin/perusahaan/view/lowongan',[AdminController::class, 'perusahaan_view_lowongan']);
-Route::get('/dashboard/admin/perusahaan/view/cv',[AdminController::class, 'perusahaan_view_cv']);
-Route::get('/dashboard/admin/perusahaan/view/talenthunter',[AdminController::class, 'perusahaan_view_talenthunter']);
+Route::get('/dashboard/admin/perusahaan', [AdminController::class, 'perusahaan']);
+Route::get('/dashboard/admin/perusahaan/view', [AdminController::class, 'perusahaan_view']);
+Route::get('/dashboard/admin/perusahaan/view/lowongan', [AdminController::class, 'perusahaan_view_lowongan']);
+Route::get('/dashboard/admin/perusahaan/view/cv', [AdminController::class, 'perusahaan_view_cv']);
+Route::get('/dashboard/admin/perusahaan/view/talenthunter', [AdminController::class, 'perusahaan_view_talenthunter']);
 
-Route::get('/dashboard/admin/finance',[AdminController::class, 'finance']);
+Route::get('/dashboard/admin/finance', [AdminController::class, 'finance']);
 
-Route::get('/dashboard/admin/tipskerja',[AdminController::class, 'tips_kerja']);
-Route::get('/dashboard/admin/tipskerja/addpost',[AdminController::class, 'tips_kerja_add_post']);
+Route::get('/dashboard/admin/tipskerja', [AdminController::class, 'tips_kerja']);
+Route::get('/dashboard/admin/tipskerja/addpost', [AdminController::class, 'tips_kerja_add_post']);
 
 
-Route::get('/dashboard/admin/event',[AdminController::class, 'event']);
-Route::get('/dashboard/admin/event/detail',[AdminController::class, 'event_detail']);
-Route::get('/dashboard/admin/event/add',[AdminController::class, 'event_add']);
-Route::get('/dashboard/admin/event/edit',[AdminController::class, 'event_edit']);
+Route::get('/dashboard/admin/event', [AdminController::class, 'event']);
+Route::get('/dashboard/admin/event/detail', [AdminController::class, 'event_detail']);
+Route::get('/dashboard/admin/event/add', [AdminController::class, 'event_add']);
+Route::get('/dashboard/admin/event/edit', [AdminController::class, 'event_edit']);
 
 
 //Perusahaan
@@ -216,7 +216,6 @@ Route::get('/dashboard/perusahaan/edit/profile', [PerusahaanController::class, '
 Route::get('/dashboard/perusahaan/tambah/alamat', [PerusahaanController::class, 'tambah_alamat']);
 Route::get('/dashboard/perusahaan/isi/alamat', [PerusahaanController::class, 'isi_alamat']);
 Route::get('/dashboard/perusahaan/alamat/jadi', [PerusahaanController::class, 'alamat_jadi']);
-
 
 Route::get('/dashboard/perusahaan/lowongan', [PerusahaanController::class, 'lowongan']);
 Route::get('/dashboard/perusahaan/isi/lowongan', [PerusahaanController::class, 'isi_lowongan']);
@@ -235,3 +234,4 @@ Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanContr
 Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan']);
 Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat']);
 Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info']);
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah', [PerusahaanController::class, 'kandidat_bermasalah']);
