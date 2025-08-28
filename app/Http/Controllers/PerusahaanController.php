@@ -85,4 +85,30 @@ class PerusahaanController extends Controller
     public function kandidat_bermasalah(){
         return view('Perusahaan.Berlangganan.pekerja-bermasalah');
     }
+    public function kandidat_nama(){
+        return view('Perusahaan.Berlangganan.nama-pekerja');
+    }
+    public function kandidat_laporan(){
+        return view('Perusahaan.Berlangganan.laporan-harian');
+    }
+    public function lapor_pekerja(){
+        return view('Perusahaan.Berlangganan.laporan-pekerja');
+    }
+
+
+    //event
+    public function halaman_event(){
+        return view('Perusahaan.Event.halaman-event');
+    }
+    public function gabung_event(){
+        return view('Perusahaan.Event.gabung-event');
+    }
+    public function detail_event_kosong(){
+        return view('Perusahaan.Event.detail-event-kosong');
+    }
+
+
+
+
 }
+

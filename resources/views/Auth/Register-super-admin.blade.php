@@ -112,7 +112,7 @@
                 </p>
 
                 <div class="flex justify-center mt-6">
-                    <a href="/login"
+                    <a href="/login/super/admin"
                         class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
                         Masuk
                     </a>

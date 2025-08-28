@@ -160,10 +160,12 @@
         </div>
 
         <div class="px-6 my-6">
-            <a href="/logout" class="flex items-center gap-2 hover:text-gray-200">
+            <form action="/logout/super/admin" class="flex items-center gap-2 " method="post">
+                @csrf
+                @method('DELETE')
                 <i class="ph ph-sign-out text-lg"></i>
-                <span>Keluar</span>
-            </a>
+                <button type="submit" class="hover:text-gray-200">Keluar</button>
+            </form>
         </div>
     </aside>
 
@@ -177,19 +179,21 @@
                     <span
                         class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span>
                 </button>
-
+                
+                @if(Auth::check() && Auth::user()->role == 'superadmin')
                 <a href="/dashboard/superadmin/profile">
                     <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
                         <div>
-                            <img src="https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8"
-                                alt="Profile" class="w-8 h-9 rounded-full">
+                            <img src="{{ Auth::user()->superadmins->img_profile }}"
+                                alt="" class="w-8 h-9 rounded-full">
                         </div>
                         <div>
-                            <p class="text-sm font-semibold">Rehan Roblox</p>
-                            <p class="text-xs text-gray-500">admin@gmail.com</p>
+                            <p class="text-sm font-semibold">{{ Auth::user()->superadmins->nama_lengkap }}</p>
+                            <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                         </div>
                     </div>
                 </a>
+                @endif
 
             </div>
         </div>

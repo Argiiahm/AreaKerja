@@ -2,13 +2,9 @@
 @section('content')
     <div class="mt-24 md:mt-36 lg:mt-24">
         <section class="max-w-5xl mx-auto px-6 py-8">
-            <div class="flex justify-between items-center mb-8">
-                <a href="/dashboard/perusahaan/berlangganan/kandidat/info"
-                    class="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-600">
-                    &lt; Kembali
-                </a>
+            <div class="flex justify-center items-center mb-8">
                 <h2 class="bg-orange-500 text-white px-6 py-2 rounded-full font-semibold text-sm">
-                    List Pekerja Bermasalah
+                    Cari Nama Pekerja
                 </h2>
                 <div></div>
             </div>

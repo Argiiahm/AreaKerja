@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -97,6 +98,32 @@ class AuthController extends Controller
         return view('Auth.login-super-admin');
     }
 
+    public function masuk_super_admin(Request $request)
+    {
+        $validasi_data = $request->validate([
+            "username"     =>     "required",
+            "password"         =>     "required"
+        ]);
+
+        if(Auth::attempt($validasi_data)) {
+            if(Auth::user()->role == "superadmin") {
+                return redirect('/dashboard/superadmin');
+            }
+        }else {
+            return back();
+        }
+    }
+
+    public function logout_super_admin(Request $request){
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
+
+
+
+
+    
     public function register_super_admin()
     {
         return view('Auth.Register-super-admin');

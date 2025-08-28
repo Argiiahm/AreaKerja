@@ -89,6 +89,10 @@ Route::get('/kandidat/status', [KandidatController::class, 'status']);
 
 //Auth super Admin
 Route::get('/login/super/admin', [AuthController::class, 'login_super_admin']);
+Route::post('/login/super/admin/masuk', [AuthController::class, 'masuk_super_admin']);
+Route::delete('/logout/super/admin', [AuthController::class, 'logout_super_admin']);
+
+
 Route::get('/register/super/admin', [AuthController::class, 'register_super_admin']);
 Route::get('/verifikasi/super/admin', [AuthController::class, 'verifikasi_super_admin']);
 Route::get('/verifikasi/super/admin/otp', [AuthController::class, 'verifikasi_super_admin_otp']);
@@ -106,78 +110,78 @@ Route::get('/dashboard/finance/laporan/penghasilan', [FinanceController::class, 
 
 
 // Dashboard SuperAdmin
-Route::get('/dashboard/superadmin', [SuperAdminController::class, 'index']);
+Route::get('/dashboard/superadmin', [SuperAdminController::class, 'index'])->middleware('superadmin');
 
 // Profile & Edit Profile Super Admin
-Route::get('/dashboard/superadmin/profile', [SuperAdminController::class, 'profile']);
-Route::get('/dashboard/superadmin/profile/edit', [SuperAdminController::class, 'profile_edit']);
-
+Route::get('/dashboard/superadmin/profile', [SuperAdminController::class, 'profile'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/profile/edit', [SuperAdminController::class, 'profile_edit'])->middleware('superadmin');
+Route::put('/dashboard/superadmin/profile/update', [SuperAdminController::class, 'profile_update'])->middleware('superadmin');
 
 // Pelamar SuperAdmin
-Route::get('/dashboard/superadmin/pelamar', [SuperAdminController::class, 'pelamar']);
+Route::get('/dashboard/superadmin/pelamar', [SuperAdminController::class, 'pelamar'])->middleware('superadmin');
 
 //View, Add Dan Edit Kandidat - SuperAdmin
-Route::get('/dashboard/superadmin/kandidat_view', [SuperAdminController::class, 'kandidat_view']);
-Route::get('/dashboard/superadmin/pelamar/add/kandidat', [SuperAdminController::class, 'add_kandidat']);
-Route::get('/dashboard/superadmin/pelamar/edit/kandidat', [SuperAdminController::class, 'edit_kandidat']);
+Route::get('/dashboard/superadmin/kandidat_view', [SuperAdminController::class, 'kandidat_view'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/pelamar/add/kandidat', [SuperAdminController::class, 'add_kandidat'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/pelamar/edit/kandidat', [SuperAdminController::class, 'edit_kandidat'])->middleware('superadmin');
 
 //View, Add Dan Edit Non Kandidat - SuperAdmin
-Route::get('/dashboard/superadmin/nonkandidat_view', [SuperAdminController::class, 'non_kandidat_view']);
-Route::get('/dashboard/superadmin/pelamar/add/non_kandidat', [SuperAdminController::class, 'add_non_kandidat']);
-Route::get('/dashboard/superadmin/pelamar/edit/non_kandidat', [SuperAdminController::class, 'edit_non_kandidat']);
+Route::get('/dashboard/superadmin/nonkandidat_view', [SuperAdminController::class, 'non_kandidat_view'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/pelamar/add/non_kandidat', [SuperAdminController::class, 'add_non_kandidat'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/pelamar/edit/non_kandidat', [SuperAdminController::class, 'edit_non_kandidat'])->middleware('superadmin');
 
 // View, Add Calon Kandidat  -SuperAdmin
-Route::get('/dashboard/superadmin/pelamar/add/calon_kandidat', [SuperAdminController::class, 'add_calon_kandidat']);
-Route::get('/dashboard/superadmin/pelamar/view/calon_kandidat', [SuperAdminController::class, 'view_calon_kandidat']);
+Route::get('/dashboard/superadmin/pelamar/add/calon_kandidat', [SuperAdminController::class, 'add_calon_kandidat'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/pelamar/view/calon_kandidat', [SuperAdminController::class, 'view_calon_kandidat'])->middleware('superadmin');
 
 // Data Perusahaan -SuperAdmin
-Route::get('/dashboard/superadmin/perusahaan', [SuperAdminController::class, 'perusahaan']);
-Route::get('/dashboard/superadmin/perusahaan/add/perusahaan', [SuperAdminController::class, 'perusahaan_add']);
-Route::get('/dashboard/superadmin/perusahaan/detail', [SuperAdminController::class, 'perusahaan_detail']);
-Route::get('/dashboard/superadmin/perusahaan/lowongan/detail', [SuperAdminController::class, 'lowongan_detail']);
-Route::get('/dashboard/superadmin/perusahaan/lowongan/add', [SuperAdminController::class, 'lowongan_add']);
-Route::get('/dashboard/superadmin/perusahaan/lowongan/edit', [SuperAdminController::class, 'lowongan_edit']);
+Route::get('/dashboard/superadmin/perusahaan', [SuperAdminController::class, 'perusahaan'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/perusahaan/add/perusahaan', [SuperAdminController::class, 'perusahaan_add'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/perusahaan/detail', [SuperAdminController::class, 'perusahaan_detail'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/perusahaan/lowongan/detail', [SuperAdminController::class, 'lowongan_detail'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/perusahaan/lowongan/add', [SuperAdminController::class, 'lowongan_add'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/perusahaan/lowongan/edit', [SuperAdminController::class, 'lowongan_edit'])->middleware('superadmin');
 
 // Data Recrutiment -Super Admin
-Route::get('/dashboard/superadmin/recrutiment', [SuperAdminController::class, 'recrutiment_detail']);
-Route::get('/dashboard/superadmin/recrutiment/edit', [SuperAdminController::class, 'recrutiment_edit']);
+Route::get('/dashboard/superadmin/recrutiment', [SuperAdminController::class, 'recrutiment_detail'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/recrutiment/edit', [SuperAdminController::class, 'recrutiment_edit'])->middleware('superadmin');
 
 //Data Talent Hunter -SuperAdmin
-Route::get('/dashboard/superadmin/talenthunter', [SuperAdminController::class, 'talent_hunter_detail']);
-Route::get('/dashboard/superadmin/perusahaan/add/talent_hunter', [SuperAdminController::class, 'talent_hunter_add']);
-Route::get('/dashboard/superadmin/talenthunter/edit', [SuperAdminController::class, 'talent_hunter_edit']);
+Route::get('/dashboard/superadmin/talenthunter', [SuperAdminController::class, 'talent_hunter_detail'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/perusahaan/add/talent_hunter', [SuperAdminController::class, 'talent_hunter_add'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/talenthunter/edit', [SuperAdminController::class, 'talent_hunter_edit'])->middleware('superadmin');
 
 // FInance - Super Admin
-Route::get('/dashboard/superadmin/finance', [SuperAdminController::class, 'finance']);
-Route::get('/dashboard/superadmin/finance/edit/paketkoin', [SuperAdminController::class, 'finance_edit_paket_koin']);
-Route::get('/dashboard/superadmin/finance/edit/paketpembayaran', [SuperAdminController::class, 'finance_edit_paket_pembayaran']);
-Route::get('/dashboard/superadmin/finance/edit/laporan', [SuperAdminController::class, 'finance_laporan']);
+Route::get('/dashboard/superadmin/finance', [SuperAdminController::class, 'finance'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/finance/edit/paketkoin', [SuperAdminController::class, 'finance_edit_paket_koin'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/finance/edit/paketpembayaran', [SuperAdminController::class, 'finance_edit_paket_pembayaran'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/finance/edit/laporan', [SuperAdminController::class, 'finance_laporan'])->middleware('superadmin');
 
 // Freeze Akun - Super Admin
-Route::get('/dashboard/superadmin/freeze', [SuperAdminController::class, 'freeze']);
-Route::get('/dashboard/superadmin/freeze/detail', [SuperAdminController::class, 'freeze_detail']);
+Route::get('/dashboard/superadmin/freeze', [SuperAdminController::class, 'freeze'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/freeze/detail', [SuperAdminController::class, 'freeze_detail'])->middleware('superadmin');
 
 // Tips Kerja - Super Admin
-Route::get('/dashboard/superadmin/tipskerja', [SuperAdminController::class, 'tipskerja']);
-Route::get('/dashboard/superadmin/tipskerja/add', [SuperAdminController::class, 'tipskerja_add']);
+Route::get('/dashboard/superadmin/tipskerja', [SuperAdminController::class, 'tipskerja'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/tipskerja/add', [SuperAdminController::class, 'tipskerja_add'])->middleware('superadmin');
 
 
 // Event -Super Admin
-Route::get('/dashboard/superadmin/event', [SuperAdminController::class, 'event']);
-Route::get('/dashboard/superadmin/event/detail', [SuperAdminController::class, 'event_detail']);
-Route::get('/dashboard/superadmin/event/add', [SuperAdminController::class, 'event_add']);
-Route::get('/dashboard/superadmin/event/edit', [SuperAdminController::class, 'event_edit']);
+Route::get('/dashboard/superadmin/event', [SuperAdminController::class, 'event'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/event/detail', [SuperAdminController::class, 'event_detail'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/event/add', [SuperAdminController::class, 'event_add'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/event/edit', [SuperAdminController::class, 'event_edit'])->middleware('superadmin');
 
 // Akun -Super Admin
-Route::get('/dashboard/superadmin/akun', [SuperAdminController::class, 'akun']);
-Route::get('/dashboard/superadmin/akun/view', [SuperAdminController::class, 'akun_view']);
-Route::get('/dashboard/superadmin/akun/add', [SuperAdminController::class, 'akun_add']);
-Route::get('/dashboard/superadmin/akun/edit', [SuperAdminController::class, 'akun_edit']);
+Route::get('/dashboard/superadmin/akun', [SuperAdminController::class, 'akun'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/akun/view', [SuperAdminController::class, 'akun_view'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/akun/add', [SuperAdminController::class, 'akun_add'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/akun/edit', [SuperAdminController::class, 'akun_edit'])->middleware('superadmin');
 
 
 // Link & Header - Super Admin
-Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page']);
-Route::get('/dashboard/superadmin/pengaturan', [SuperAdminController::class, 'pengaturan']);
+Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/pengaturan', [SuperAdminController::class, 'pengaturan'])->middleware('superadmin');
 
 
 // Dashboard Admin
@@ -235,3 +239,10 @@ Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, '
 Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat']);
 Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info']);
 Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah', [PerusahaanController::class, 'kandidat_bermasalah']);
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/nama', [PerusahaanController::class, 'kandidat_nama']);
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/laporan', [PerusahaanController::class, 'kandidat_laporan']);
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja']);
+
+Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event']);
+Route::get('/dashboard/perusahaan/gabung/event', [PerusahaanController::class, 'gabung_event']);
+Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong']);

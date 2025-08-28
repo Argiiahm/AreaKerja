@@ -22,7 +22,7 @@
                 <div class="bg-orange-500 text-white rounded-lg p-6 flex flex-col items-center text-center shadow-md">
                     <div class="text-3xl mb-4"><img src="{{ asset('Icon/check.png') }}" alt=""></div>
                     <h3 class="font-semibold mb-2">Laporan Harian Pekerja</h3>
-                    <a href="#"
+                    <a href="/dashboard/perusahaan/berlangganan/kandidat/info/laporan"
                         class="bg-white text-orange-500 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
                         Lebih Detail
                     </a>
@@ -31,7 +31,7 @@
                 <div class="bg-orange-500 text-white rounded-lg p-6 flex flex-col items-center text-center shadow-md">
                     <div class="text-4xl mb-4"><img src="{{ asset('Icon/usersearch.png') }}" alt=""></div>
                     <h3 class="font-semibold mb-2">Cari Nama Pekerja</h3>
-                    <a href="#"
+                    <a href="/dashboard/perusahaan/berlangganan/kandidat/info/nama"
                         class="bg-white text-orange-500 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
                         Lebih Detail
                     </a>
@@ -40,7 +40,7 @@
                 <div class="bg-orange-500 text-white rounded-lg p-6 flex flex-col items-center text-center shadow-md">
                     <div class="text-4xl mb-4"><img src="{{ asset('Icon/userwarning.png') }}" alt=""></div>
                     <h3 class="font-semibold mb-2">Laporan Harian Pekerja</h3>
-                    <a href="#"
+                    <a href="/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah"
                         class="bg-white text-orange-500 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
                         Lebih Detail
                     </a>

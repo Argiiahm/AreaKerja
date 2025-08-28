@@ -24,26 +24,34 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <tr class="border-b border-gray-200 hover:bg-gray-50">
-                            <td class="px-4 py-3 text-sm text-gray-900">1</td>
-                            <td class="px-4 py-3 text-sm text-gray-900">Admin</td>
-                            <td class="px-4 py-3 text-sm text-gray-900">useradmin5@gmail.com</td>
-                            <td class="px-4 py-3 text-sm text-gray-900">useradmin</td>
-                            <td class="px-4 py-3 text-sm text-gray-900">D.I Yogyakarta</td>
-                            <td class="px-4 py-3 text-sm">
-                                <div class="flex gap-1">
-                                    <a href="/dashboard/superadmin/akun/edit" class="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded text-xs">
-                                        <i class="ph ph-pencil"></i>
-                                    </a>
-                                    <a href="/dashboard/superadmin/akun/view" class="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded text-xs">
-                                        <i class="ph ph-eye"></i>
-                                    </a>
-                                    <button class="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded text-xs">
-                                        <i class="ph ph-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach ($Data as $d)
+                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="px-4 py-3 text-sm text-gray-900">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">{{ $d->role }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">{{ $d->email }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">{{ $d->username }}</td>
+                                @if ($d->superadmins->kota == null)
+                                    <td class="px-4 py-3 text-sm text-gray-900">Data Belum Terisi</td>
+                                @else
+                                    <td class="px-4 py-3 text-sm text-gray-900">{{ $d->superadmins->kota }}</td>
+                                @endif
+                                <td class="px-4 py-3 text-sm">
+                                    <div class="flex gap-1">
+                                        <a href="/dashboard/superadmin/akun/edit"
+                                            class="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded text-xs">
+                                            <i class="ph ph-pencil"></i>
+                                        </a>
+                                        <a href="/dashboard/superadmin/akun/view"
+                                            class="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded text-xs">
+                                            <i class="ph ph-eye"></i>
+                                        </a>
+                                        <button class="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded text-xs">
+                                            <i class="ph ph-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

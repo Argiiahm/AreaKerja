@@ -46,6 +46,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function superadmins() {
+        return $this->hasOne(SuperAdmin::class, 'user_id');
+    }
+
     public function pelamars() {
         return $this->hasMany(Pelamar::class, 'user_id');
     }

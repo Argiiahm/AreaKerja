@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SuperAdmin;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SuperAdminController extends Controller
 {
@@ -21,8 +24,38 @@ class SuperAdminController extends Controller
     public function profile_edit()
     {
         return view('Super-Admin.Profile_Super_Admin.pelamar-edit_super_admin', [
-            "title"  =>    "Profile"
+            "title"  =>    "Profile",
         ]);
+    }
+    public function profile_update(Request $request)
+    {
+        $vdataUser = $request->validate([
+            "username" => 'nullable|string',
+            "email"    => 'nullable|email',
+        ]);
+
+        $vdata = $request->validate([
+            "nama_lengkap"  => 'nullable|string',
+            "img_profile"   => 'nullable|string',
+            "provinsi"      => 'nullable|string',
+            "kota"          => 'nullable|string',
+            "kecamatan"     => 'nullable|string',
+            "desa"          => 'nullable|string',
+            "kode_pos"      => 'nullable',
+            "detail_alamat" => 'nullable|string'
+        ]);
+
+        $User = User::where('id', Auth::user()->id);
+        if ($User) {
+            $User->update($vdataUser);
+        }
+
+        $Superadmin = SuperAdmin::where('user_id', Auth::user()->id)->first();
+        if ($Superadmin) {
+            $Superadmin->update($vdata);
+        }
+
+        return redirect('/dashboard/superadmin/profile');
     }
 
 
@@ -240,7 +273,8 @@ class SuperAdminController extends Controller
     public function akun()
     {
         return view('Super-Admin.Akun.akun_index-superAdmin', [
-            "title"   =>  "Kelola Akun"
+            "title"   =>  "Kelola Akun",
+            "Data"    =>   User::all()
         ]);
     }
     public function akun_view()
@@ -263,13 +297,13 @@ class SuperAdminController extends Controller
     }
 
     //Link & Header
-     public function pengaturan_page()
+    public function pengaturan_page()
     {
         return view('Super-Admin.Pengaturan.pengaturan_page_superAdmin', [
             "title"   =>  "Image Header Social Media"
         ]);
     }
-     public function pengaturan()
+    public function pengaturan()
     {
         return view('Super-Admin.Pengaturan.pengaturan_superAdmin', [
             "title"   =>  "Pengaturan"

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role',['superadmin','admin','finance','perusahaan','pelamar']);
             $table->tinyInteger('verified')->default(1);
-            $table->string('alasan_freeze_akun');
+            $table->string('alasan_freeze_akun')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
