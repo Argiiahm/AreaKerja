@@ -51,7 +51,7 @@ class User extends Authenticatable
     }
 
     public function pelamars() {
-        return $this->hasMany(Pelamar::class, 'user_id');
+        return $this->hasOne(Pelamar::class, 'user_id');
     }
 
 }

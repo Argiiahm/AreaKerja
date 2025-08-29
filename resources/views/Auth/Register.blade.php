@@ -35,7 +35,6 @@
                     <img class="w-10 h-10" src="{{ asset('image/logo-areakerja.png') }}" alt="Logo" class="w-20">
                     <span class=" font-semibold text-[#fa6601]">AreaKerja.com</span>
                 </div>
-
                 <div class="w-full">
                     <h1 class=" font-bold text-2xl mb-4 text-center text-[#fa6601]">Buat Akun</h1>
                     <div class="flex gap-3 justify-center mb-6">
@@ -64,12 +63,14 @@
                             </button>
                         </div>
                     </div>
+
                     <!-- form regist Pelamar -->
-                    <form id="form-pelamar">
+                    <form id="form-pelamar" action="/buat" method="POST">
+                        @csrf
                         <label for="name" class="font-semibold">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
                             <input id="name" class="pl-2 w-full outline-none border-none" type="text"
-                                name="name" placeholder="Nama Pengguna" />
+                                name="username" placeholder="Nama Pengguna" />
                         </div>
 
                         <label for="email" class="font-semibold">E-Mail</label>
@@ -78,13 +79,17 @@
                                 name="email" placeholder="E-Mail" />
                         </div>
 
-                        <label for="phone" class="font-semibold">No. Tlp</label>
+                        <label for="tlp" class="font-semibold">No. Tlp</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="phone" class="pl-2 w-full outline-none border-none" type="number"
-                                name="phone" placeholder="No. Tlp" />
+                            <input id="tlp" class="pl-2 w-full outline-none border-none" type="text"
+                                name="telepon_pelamar" placeholder="No. Tlp" />
                         </div>
 
+                        <input id="text" class="pl-2 w-full outline-none border-none" type="hidden" name="role"
+                            value="pelamar" />
+
                         <label for="password" class="font-semibold">Kata Sandi</label>
+
                         <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
                             <input class="pl-2 w-full outline-none border-none" type="password" name="password"
                                 id="password" placeholder="Kata Sandi" />

@@ -244,4 +244,61 @@
     <div class="my-20 flex justify-center">
         <button class="bg-[#fa6601] px-12 py-2 text-white font-semibold rounded-md">Memuat</button>
     </div>
+
+    
+    @if (Auth::check() && Auth::user()->role === 'pelamar' && Auth::user()->pelamars->nama_pelamar == null)
+        <script>
+            window.onload = function() {
+                let intro = introJs();
+
+                intro.setOptions({
+                    steps: [{
+                            element: '#user-menu-button',
+                            intro: `
+                        <div style="max-width:180px; text-align:center">
+                            <img src="{{ asset('image/Lengkapi Profile.png') }}" 
+                                 style="width:100%; border-radius:12px;" />
+                        </div>
+                    `,
+                            position: 'right',
+                            tooltipClass: 'notif-profil'
+                        },
+                        {
+                            element: '#btn-profile',
+                            intro: `
+                        <div style="max-width:180px; text-align:center">
+                            <img src="{{ asset('image/Klik Profil.png') }}" 
+                                 style="width:100%; border-radius:12px;" />
+                        </div>
+                    `,
+                            position: 'right',
+                            tooltipClass: 'notif-profil'
+                        }
+                    ],
+                    showButtons: false,
+                    showBullets: false,
+                    showProgress: false,
+                    exitOnOverlayClick: false,
+                    showStepNumbers: false,
+                    disableInteraction: false
+                });
+
+                intro.onafterchange(function(targetElement) {
+                    if (targetElement.id === "btn-profile") {
+                        document.querySelector('#user-menu')?.classList.remove('hidden');
+                    }
+                });
+
+                document.querySelector('#user-menu-button').addEventListener('click', () => {
+                    intro.nextStep();
+                });
+
+                document.querySelector('#btn-profile').addEventListener('click', () => {
+                    intro.exit();
+                });
+
+                intro.start();
+            };
+        </script>
+    @endif
 @endsection

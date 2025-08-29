@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::create('pelamars', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('nama_pelamar');
-            $table->string('deskripsi_diri');
-            $table->date('tanggal_lahir');
-            $table->enum('gender',['laki-laki','perempuan'])->default(null);
-            $table->string('telepon_pelamar')->default(null);
-            $table->string('divisi')->default(null);
-            $table->date('mulai_pelatihan')->default(null);
-            $table->date('selesai_pelatihan')->default(null);
+            $table->string('nama_pelamar')->nullable();
+            $table->string('deskripsi_diri')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->enum('gender',['laki-laki','perempuan'])->nullable();
+            $table->string('telepon_pelamar')->nullable();
+            $table->string('divisi')->nullable();
+            $table->date('mulai_pelatihan')->nullable(); 
+            $table->date('selesai_pelatihan')->nullable();
             $table->string('img_profile')->default('black.png');
-            $table->enum('kategori',['pelamar','calon kandidat','kandidat aktif','kandidat nonaktif'])->default(null);
-            $table->string('gaji_minimal')->default(null);
-            $table->string('gaji_maksimal')->default(null);
+            $table->enum('kategori',['pelamar','calon kandidat','kandidat aktif','kandidat nonaktif'])->nullable();
+            $table->string('gaji_minimal')->nullable();
+            $table->string('gaji_maksimal')->nullable();
             $table->timestamps();
         });
     }

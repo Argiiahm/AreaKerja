@@ -68,12 +68,6 @@
                                 name="email" placeholder="E-Mail" />
                         </div>
 
-                        <label for="phone" class="font-semibold">No. Tlp</label>
-                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="phone" class="pl-2 w-full outline-none border-none" type="number"
-                                name="phone" placeholder="No. Tlp" />
-                        </div>
-
                         <label for="password" class="font-semibold">Kata Sandi</label>
                         <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
                             <input class="pl-2 w-full outline-none border-none" type="password" name="password"

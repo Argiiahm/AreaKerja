@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pelamar;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -13,10 +16,60 @@ class AuthController extends Controller
         return view('Auth.login');
     }
 
+    public function masuk(Request $request)
+    {
+        $v = $request->validate([
+            "username"   =>    "required",
+            "password"   =>    "required"
+        ]);
+        if (Auth::attempt($v)) {
+            if (Auth::user()->role == 'superadmin') {
+                return redirect('/dashboard/superadmin');
+            } elseif (Auth::user()->role == 'admin') {
+                return redirect('/dashboard/admin');
+            } elseif (Auth::user()->role == 'pelamar') {
+                return redirect('/');
+            }
+        } else {
+            return back();
+        }
+        return back();
+    }
+
     public function register()
     {
         return view('Auth.Register');
     }
+    public function buat(Request $request)
+    {
+        $validasi_data = $request->validate([
+            "username" => "required",
+            "email"    => "required|email",
+            "password" => "required",
+            "role"     => "required"
+        ]);
+
+        $validasi_data['password'] = Hash::make($request->password);
+        $user = User::create($validasi_data);
+
+        $validasi_dataPelamar = $request->validate([
+            "telepon_pelamar" => "required",
+        ]);
+
+        $user->pelamars()->create($validasi_dataPelamar);
+
+        return redirect('/login');
+    }
+
+
+    public function logout(Request $request)
+    {
+        $request->session()->regenerateToken();
+        $request->session()->invalidate();
+
+        return redirect('/');
+    }
+
 
     public function verifikasi()
     {
@@ -60,7 +113,7 @@ class AuthController extends Controller
     {
         return view('Auth.change-password-finance');
     }
-    
+
 
 
     //Auth Admin
@@ -102,19 +155,20 @@ class AuthController extends Controller
     {
         $validasi_data = $request->validate([
             "username"     =>     "required",
-            "password"         =>     "required"
+            "password"     =>     "required"
         ]);
 
-        if(Auth::attempt($validasi_data)) {
-            if(Auth::user()->role == "superadmin") {
+        if (Auth::attempt($validasi_data)) {
+            if (Auth::user()->role == "superadmin") {
                 return redirect('/dashboard/superadmin');
             }
-        }else {
+        } else {
             return back();
         }
     }
 
-    public function logout_super_admin(Request $request){
+    public function logout_super_admin(Request $request)
+    {
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
@@ -123,7 +177,7 @@ class AuthController extends Controller
 
 
 
-    
+
     public function register_super_admin()
     {
         return view('Auth.Register-super-admin');

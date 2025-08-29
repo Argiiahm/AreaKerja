@@ -14,12 +14,52 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/intro.js/minified/introjs.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
 </head>
+<style>
+    .notif-profil {
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 12px !important;
+        /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); */
+        background: transparent !important;
+    }
+
+    .notif-profil .introjs-skipbutton {
+        display: none !important;
+    }
+
+    .notif-profil .introjs-arrow {
+        display: none !important;
+    }
+
+    .notif-profil.introjs-tooltip {
+        transform: translateY(-25px) !important;
+    }
+
+    .introjs-overlay {
+        pointer-events: none !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .introjs-helperLayer,
+    .introjs-overlay {
+        pointer-events: none !important;
+    }
+
+    .introjs-tooltip {
+        pointer-events: auto !important;
+    }
+</style>
 
 <body>
 
     @include('Popup.pop-up_logout')
+    @include('Modals.tambah-organisasi')
+    @include('Modals.detail-modal-organisasi')
+    @include('Modals.tambah-pengalaman_kerja')
+    @include('Modals.detail-modal-pengalaman_kerja')
 
     <nav class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -92,57 +132,94 @@
                     {{-- End Drowpdown --}}
                     {{-- End Notifikasi --}}
 
-                    {{-- @if (Auth::check()) --}}
-                    {{-- Profile --}}
-                    <button type="button" id="user-menu-button" aria-expanded="false"
-                        data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-                        <span class="sr-only">Open user menu</span>
-                        <img class="w-10 h-10 rounded-full"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdjmL3nLNv9HOqsLUu6f2A8I0o6uRSDI3RyFeyhipqbyJGhzu_Xm0bjws4wT29JD5dTsU&usqp=CAU"
-                            alt="">
-                    </button>
-
-                    {{-- Dropdown Profile Nya --}}
-                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
-                        id="user-dropdown">
-                        <div class="flex items-center gap-2 mx-3">
+                    @if (Auth::check())
+                        {{-- Profile --}}
+                        <button type="button" id="user-menu-button" aria-expanded="false"
+                            data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                            <span class="sr-only">Open user menu</span>
                             <img class="w-10 h-10 rounded-full"
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdjmL3nLNv9HOqsLUu6f2A8I0o6uRSDI3RyFeyhipqbyJGhzu_Xm0bjws4wT29JD5dTsU&usqp=CAU"
+                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
                                 alt="">
-                            <div class="px-4 py-3">
-                                <span class="block text-sm text-gray-900">Bonnie Green</span>
-                                <span
-                                    class="block text-sm  text-gray-500 truncate dark:text-gray-400">Bonnie@gmail.com</span>
+                        </button>
+                        @if (Auth::user()->role == 'superadmin')
+                            {{-- Dropdown Profile Nya --}}
+                            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
+                                id="user-dropdown">
+                                <div class="flex items-center gap-2 mx-3">
+                                    <img class="w-10 h-10 rounded-full"
+                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                        alt="">
+                                    <div class="px-4 py-3">
+                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
+                                        <span
+                                            class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <ul class="py-2" aria-labelledby="user-menu-button">
+                                    <li class="px-3">
+                                        SuperAdmin
+                                    </li>
+                                    <li id="btn-profile">
+                                        <a href="/dashboard/superadmin"
+                                            class="block px-4 py-2 text-sm underline">Dashboard</a>
+                                    </li>
+                                    <li
+                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
+                                        <button data-modal-target="popup-modal-logout"
+                                            data-modal-toggle="popup-modal-logout" type="button">
+                                            Keluar
+                                        </button>
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                        <ul class="py-2" aria-labelledby="user-menu-button">
-                            <li>
-                                <a href="/profile" class="block px-4 py-2 text-sm">Profile</a>
-                            </li>
-                            <li>
-                                <a href="/lowongan/tersimpan" class="block px-4 py-2 text-sm">Lowongan Tersimpan</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 text-sm">Transaksi</a>
-                            </li>
-                            <li>
-                                <a href="/bantuan" class="block px-4 py-2 text-sm">Bantuan</a>
-                            </li>
-                            <li class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
-                                <button data-modal-target="popup-modal-logout" data-modal-toggle="popup-modal-logout"  type="button">
-                                    Keluar
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    {{-- End Drowpdown --}}
+                        @else
+                            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
+                                id="user-dropdown">
+                                <div class="flex items-center gap-2 mx-3">
+                                    <img class="w-10 h-10 rounded-full"
+                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                        alt="">
+                                    <div class="px-4 py-3">
+                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
+                                        <span
+                                            class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <ul class="py-2" aria-labelledby="user-menu-button">
+                                    <li id="btn-profile">
+                                        <a href="/profile" class="block px-4 py-2 text-sm">Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="/lowongan/tersimpan" class="block px-4 py-2 text-sm">Lowongan
+                                            Tersimpan</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 text-sm">Transaksi</a>
+                                    </li>
+                                    <li>
+                                        <a href="/bantuan" class="block px-4 py-2 text-sm">Bantuan</a>
+                                    </li>
+                                    <li
+                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
+                                        <button data-modal-target="popup-modal-logout"
+                                            data-modal-toggle="popup-modal-logout" type="button">
+                                            Keluar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        @endif
+                        {{-- End Drowpdown --}}
 
-                    {{-- End Profile --}}
-                    {{-- @else --}}
-                    {{-- Link Login --}}
-                    <a href="/login" class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
-                    {{-- End Link Login --}}
-                    {{-- @endif --}}
+                        {{-- End Profile --}}
+                    @else
+                        {{-- Link Login --}}
+                        <a href="/login"
+                            class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
+                        {{-- End Link Login --}}
+                    @endif
 
 
                 </div>
@@ -312,10 +389,13 @@
                 Copyright © 2024 areakerja.com
             </p>
         </div>
-        
+
     </footer>
+
+
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
 </body>
 
 </html>

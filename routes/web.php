@@ -12,7 +12,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TalentHunterController;
 use App\Http\Controllers\TipskerjaController;
-use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,9 +47,24 @@ Route::get('/lowongan/tersimpan/detail', [LowonganController::class, 'lowongan_t
 
 
 // Profile
-Route::get('/profile', [ProfileController::class, 'profile']);
-Route::get('/alamat', [ProfileController::class, 'alamat']);
-Route::get('/data/alamat', [ProfileController::class, 'form_data_alamat']);
+Route::get('/profile', [ProfileController::class, 'profile'])->middleware('auth');
+Route::get('/alamat', [ProfileController::class, 'alamat'])->middleware('auth');
+Route::get('/data/alamat', [ProfileController::class, 'form_data_alamat'])->middleware('auth');
+Route::post('/alamat/pelamar/create', [ProfileController::class, 'create_data_alamat'])->middleware('auth');
+Route::get('/alamat/pelamar/edit/{alamatpelamar:id}', [ProfileController::class, 'edit_data_alamat'])->middleware('auth');
+Route::put('/alamat/pelamar/update/{alamatpelamar:id}', [ProfileController::class, 'update_data_alamat'])->middleware('auth');
+
+
+Route::post('/tambah/organisasi', [ProfileController::class, 'add_organisasi'])->middleware('auth');
+Route::get('/edit/organisasi/{organisasi:id}', [ProfileController::class, 'edit_organisasi'])->middleware('auth');
+Route::put('/update/organisasi/{organisasi:id}', [ProfileController::class, 'update_organisasi'])->middleware('auth');
+
+
+Route::post('/tambah/pengalaman/kerja', [ProfileController::class, 'tambah_pengalaman'])->middleware('auth');
+Route::get('/edit/pengalaman/kerja/{pengalamankerja:id}', [ProfileController::class, 'edit_pengalaman'])->middleware('auth');
+Route::put('/update/pengalaman/kerja/{pengalamankerja:id}', [ProfileController::class, 'update_pengalaman'])->middleware('auth');
+
+
 // End Profile
 
 // FAQ
@@ -58,8 +72,16 @@ Route::get('/bantuan', [FaqController::class, 'index']);
 // END FAQ
 
 // Authorization
-Route::get('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
+Route::post('/masuk', [AuthController::class, 'masuk'])->middleware('guest');
+Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+
 Route::get('/register', [AuthController::class, 'register']);
+Route::post('/buat', [AuthController::class, 'buat']);
+
+
+
 Route::get('/verifikasi', [AuthController::class, 'verifikasi']);
 Route::get('/verifikasi/otp', [AuthController::class, 'verifikasi_otp']);
 Route::get('/change/password', [AuthController::class, 'change_password']);
@@ -110,7 +132,7 @@ Route::get('/dashboard/finance/laporan/penghasilan', [FinanceController::class, 
 
 
 // Dashboard SuperAdmin
-Route::get('/dashboard/superadmin', [SuperAdminController::class, 'index'])->middleware('superadmin');
+Route::get('/dashboard/superadmin', [SuperAdminController::class, 'index'])->middleware('superadmin')->name('superadmin');
 
 // Profile & Edit Profile Super Admin
 Route::get('/dashboard/superadmin/profile', [SuperAdminController::class, 'profile'])->middleware('superadmin');
@@ -174,9 +196,9 @@ Route::get('/dashboard/superadmin/event/edit', [SuperAdminController::class, 'ev
 
 // Akun -Super Admin
 Route::get('/dashboard/superadmin/akun', [SuperAdminController::class, 'akun'])->middleware('superadmin');
-Route::get('/dashboard/superadmin/akun/view', [SuperAdminController::class, 'akun_view'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/{user:id}/view', [SuperAdminController::class, 'akun_view'])->middleware('superadmin');
 Route::get('/dashboard/superadmin/akun/add', [SuperAdminController::class, 'akun_add'])->middleware('superadmin');
-Route::get('/dashboard/superadmin/akun/edit', [SuperAdminController::class, 'akun_edit'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/{user:id}/edit', [SuperAdminController::class, 'akun_edit'])->middleware('superadmin');
 
 
 // Link & Header - Super Admin

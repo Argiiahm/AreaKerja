@@ -184,8 +184,13 @@
                 <a href="/dashboard/superadmin/profile">
                     <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
                         <div>
+                            @if (Auth::user()->superadmins->img_profile == null)
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                            alt="Profile Picture" class="w-9 h-9 rounded-full object-cover border">
+                            @else
                             <img src="{{ Auth::user()->superadmins->img_profile }}"
-                                alt="" class="w-8 h-9 rounded-full">
+                            alt="" class="w-8 h-9 rounded-full">
+                            @endif
                         </div>
                         <div>
                             <p class="text-sm font-semibold">{{ Auth::user()->superadmins->nama_lengkap }}</p>

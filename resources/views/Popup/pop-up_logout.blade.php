@@ -16,10 +16,12 @@
                  <img class="mx-auto mb-4 text-gray-400" src="{{ asset('Icon/poplogout.png') }}" alt="">
                  <h3 class="mb-2 text-lg font-bold text-gray-800">
                      Konfirmasi Keluar</h3>
-                 <h3 class="mb-5 text-lg font-normal text-gray-500">
-                     Apakah anda yakin untuk keluar dari Userxxx</h3>
+                 @if (Auth::check())
+                     <h3 class="mb-5 text-lg font-normal text-gray-500">
+                         Apakah anda yakin untuk keluar dari {{ Auth::user()->username }}</h3>
+                 @endif
                  <div class="flex items-center gap-2 justify-center">
-                     <form action="">
+                     <form action="/logout" method="POST">
                          @csrf
                          @method('DELETE')
                          <button type="submit"

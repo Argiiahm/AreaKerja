@@ -7,7 +7,7 @@
             <div class="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
                 <div class="flex flex-col items-center">
                     <img class="w-32 sm:w-40 rounded-full mb-3"
-                        src="https://fisika.uad.ac.id/wp-content/uploads/blank-profile-picture-973460_1280.png"
+                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
                         alt="">
                     <div>
                         <select class="border-2 border-orange-500 w-32 sm:w-40 p-2 rounded-md text-orange-500 font-semibold">
@@ -18,15 +18,15 @@
 
                 <div class="flex flex-col lg:flex-row items-center w-full justify-between gap-6">
                     <div class="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
-                        <div
+                        <button
                             class="flex items-center gap-2 border-2 border-orange-500 px-6 py-2 rounded-lg w-full sm:w-auto justify-center">
                             <i class="ph ph-upload-simple text-2xl text-orange-500"></i>
                             <span class="text-orange-500">Upload</span>
-                        </div>
-                        <div class="flex items-center gap-2 border px-6 py-2 rounded-lg w-full sm:w-auto justify-center">
+                        </button>
+                        <button class="flex items-center gap-2 border px-6 py-2 rounded-lg w-full sm:w-auto justify-center">
                             <i class="ph ph-trash text-2xl"></i>
                             <span>Remove</span>
-                        </div>
+                        </button>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
@@ -97,42 +97,96 @@
                                 class="w-full border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                                 placeholder="Deskripsikan diri anda secara singkat"></textarea>
                         </div>
+                        @if (Auth::user()->pelamars->alamat_pelamars->count() >= 1)
+                            <a href="/alamat">
+                                <label class="block text-sm font-semibold text-gray-800 mb-1">Alamat <span
+                                        class="text-red-500">*</span></label>
+                                <div class="w-full bg-orange-500 text-white border border-orange-500 rounded-md p-2">
+                                    <span class="" href="">Alamat</span>
+                                </div>
+                            </a>
+                        @else
+                            <a href="/data/alamat">
+                                <label class="block text-sm font-semibold text-gray-800 mb-1">Alamat <span
+                                        class="text-red-500">*</span></label>
+                                <div class="w-full bg-orange-500 text-white border border-orange-500 rounded-md p-2">
+                                    <span class="" href="">Alamat</span>
+                                </div>
+                            </a>
+                        @endif
 
-                        <a href="/alamat">
-                            <label class="block text-sm font-semibold text-gray-800 mb-1">Alamat <span
-                                    class="text-red-500">*</span></label>
-                            <div class="w-full bg-orange-500 text-white border border-orange-500 rounded-md p-2">
-                                <span class="" href="">Alamat</span>
+                        @if (Auth::user()->pelamars->organisasi->count() > 0)
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-800 mb-1">Organisasi</label>
+                                <div class="flex gap-2 w-full">
+                                    <div class="bg-gray-100 rounded-lg w-full">
+                                        @foreach (Auth::user()->pelamars->organisasi as $or)
+                                            <div class="bg-gray-100 p-3 rounded-md">{{ $or->jabatan }} -
+                                                {{ $or->nama_organisasi }} ({{ $or->tahun_awal }} – {{ $or->tahun_akhir }})
+
+                                                <p class="font-normal text-gray-400">{{ $or->deskripsi }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div>
+                                        <button data-modal-target="detail_organisasi-modal" type="button"
+                                            data-modal-toggle="detail_organisasi-modal"
+                                            class="ph-fill ph-pencil-simple text-orange-500"></button>
+                                    </div>
+                                </div>
                             </div>
-                        </a>
-
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-800 mb-1">Organisasi</label>
-                            <div
-                                class="flex items-center justify-between border border-orange-500 rounded-md px-4 py-3 text-orange-500 font-semibold">
-                                <span>Tambahkan Organisasi</span>
-                                <button type="button" class="text-2xl font-bold">+</button>
+                        @else
+                            <div class="mb-4">
+                                <label class="block text-sm font-semibold text-gray-800 mb-1">Organisasi</label>
+                                <button data-modal-target="add_organisasi-modal" data-modal-toggle="add_organisasi-modal"
+                                    type="button"
+                                    class="flex items-center justify-between border border-orange-500 rounded-md w-full px-4 py-3 text-orange-500 font-semibold">
+                                    <span>Tambahkan Organisasi</span>
+                                    <span class="text-2xl font-bold">+</span>
+                                </button>
                             </div>
-                        </div>
+                        @endif
 
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-800 mb-1">Pengalaman Kerja</label>
-                            <div
-                                class="flex items-center justify-between border border-orange-500 rounded-md px-4 py-3 text-orange-500 font-semibold">
-                                <span>Tambahkan Pengalaman Kerja</span>
-                                <button type="button" class="text-2xl font-bold">+</button>
+                        @if (Auth::user()->pelamars->pengalaman_kerja->count() > 0)
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-800 mb-1">Pengalaman Kerja</label>
+                                <div class="flex gap-2 w-full">
+                                    <div class="bg-gray-100 rounded-lg w-full">
+                                        @foreach (Auth::user()->pelamars->pengalaman_kerja as $kerja)
+                                            <div class="bg-gray-100 p-3 rounded-md">{{ $kerja->posisi_pekerjaan }} -
+                                                {{ $kerja->jabatan_pekerjaan }} ({{ $kerja->tahun_awal }} –
+                                                {{ $kerja->tahun_akhir }})
+
+                                                <p class="font-normal text-gray-400">{{ $kerja->deskripsi }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div>
+                                        <button data-modal-target="detail_pengalaman_kerja" type="button"
+                                            data-modal-toggle="detail_pengalaman_kerja"
+                                            class="ph-fill ph-pencil-simple text-orange-500"></button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
+                        @else
+                            <div class="mb-4">
+                                <label class="block text-sm font-semibold text-gray-800 mb-1">Pengalaman Kerja</label>
+                                <button type="button" data-modal-target="add_pengalaman-modal"
+                                    data-modal-toggle="add_pengalaman-modal"
+                                    class="flex items-center justify-between border border-orange-500 rounded-md w-full px-4 py-3 text-orange-500 font-semibold">
+                                    <span>Tambahkan Pengalaman Kerja</span>
+                                    <span class="text-2xl font-bold">+</span>
+                                </button>
+                            </div>
+                        @endif
                         <div class="mb-4">
                             <label class="block text-sm font-semibold text-gray-800 mb-1">Skill <span
                                     class="text-red-500">*</span></label>
-                            <div
-                                class="flex items-center justify-between border border-orange-500 rounded-md px-4 py-3 text-orange-500 font-semibold">
+                            <button type="button"
+                                class="flex items-center justify-between border border-orange-500 rounded-md w-full px-4 py-3 text-orange-500 font-semibold">
                                 <span>Tambahkan Skill</span>
-                                <button type="button" class="text-2xl font-bold">+</button>
-                            </div>
+                                <span class="text-2xl font-bold">+</span>
+                            </button>
                         </div>
 
 
@@ -180,7 +234,7 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700">ID Pengguna</label>
-                            <input type="text" value="{{ rand(100000000, 999999999) }}" readonly
+                            <input type="text" value="{{ Auth::user()->id }}" readonly
                                 class="w-full border border-gray-200 rounded-md p-2 bg-gray-100 text-gray-500">
                         </div>
 
@@ -189,7 +243,7 @@
                                     class="text-red-500">*</span></label>
                             <input type="text" name="username"
                                 class="w-full border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                                placeholder="Nama Pengguna">
+                                placeholder="Nama Pengguna" value="{{ Auth::user()->username }}" readonly>
                         </div>
 
                         <div>
@@ -197,17 +251,15 @@
                                     class="text-red-500">*</span></label>
                             <input type="email" name="email"
                                 class="w-full border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                                placeholder="Email">
+                                placeholder="Email" value="{{ Auth::user()->email }}" readonly>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700">Kata Sandi <span
-                                    class="text-red-500">*</span></label>
-                            <input type="password" name="password"
-                                class="w-full border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                                placeholder="Kata Sandi">
-                        </div>
-
+                        <label class="block text-sm font-semibold text-gray-700">
+                            Kata Sandi <span class="text-red-500">*</span>
+                        </label>
+                        <input type="password" id="password" name="password"
+                            class="w-full border border-gray-300 rounded-md p-2 pr-10 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                            placeholder="Kata Sandi" value="{{ Auth::user()->password }}" readonly>
                         <div>
                             <div class="mt-6">
                                 <h1 class="text-lg font-bold text-gray-800 mb-2">Ekspetasi Gaji</h1>
@@ -221,9 +273,6 @@
                                         class="w-1/2 border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                                         placeholder="Rp. -">
                                 </div>
-
-                                {{-- <input type="range" min="1000000" max="20000000" step="500000"
-                                    class="w-full mt-3 accent-orange-500"> --}}
                             </div>
 
                             <div class="text-sm text-orange-500 mt-3 space-y-5">

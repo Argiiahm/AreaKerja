@@ -1,4 +1,4 @@
-@extends('Super-Admin.layouts.index')
+    @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
     <div class="rounded-lg border border-gray-300 p-8 w-full">
@@ -25,7 +25,7 @@
                         Email <span class="text-red-500">*</span>
                     </label>
                     <input type="email"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" value="{{ old('email', $Data->email) }}">
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                     Nama Lengkap <span class="text-red-500">*</span>
                 </label>
                 <input type="text"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" value="">
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -277,10 +277,11 @@ class SuperAdminController extends Controller
             "Data"    =>   User::all()
         ]);
     }
-    public function akun_view()
+    public function akun_view(User $user)
     {
         return view('Super-Admin.Akun.view_akun_super-Admin', [
-            "title"   =>  "Kelola Akun"
+            "title"   =>  "Kelola Akun",
+            "Data"    =>  $user
         ]);
     }
     public function akun_add()
@@ -289,10 +290,11 @@ class SuperAdminController extends Controller
             "title"   =>  "Kelola Akun"
         ]);
     }
-    public function akun_edit()
+    public function akun_edit(User $user)
     {
         return view('Super-Admin.Akun.edit-akun_superAdmin', [
-            "title"   =>  "Kelola Akun"
+            "title"   =>  "Kelola Akun",
+            "Data"    =>  $user
         ]);
     }
 

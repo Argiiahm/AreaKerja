@@ -54,7 +54,7 @@
             <div class="w-10/12 px-8 md:w-full lg:w-10/12">
                 <div class="w-full">
                     <h1 class="text-gray-800 font-bold text-2xl mb-3 text-center">Masuk</h1>
-                    <div class="flex gap-3 mt-4 md:mt-0 justify-center">
+                    <div class="flex gap-3 mt-4 md:mt-0 justify-center mb-8">
                         <a href="#"
                             class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
                             <i class="ph ph-facebook-logo"></i>
@@ -68,14 +68,13 @@
                             <i class="ph ph-linkedin-logo"></i>
                         </a>
                     </div>
-
-                    <p class="text-sm font-normal text-gray-600 mb-8 text-center mt-3">gunakan email anda untuk
-                        pendaftaran
+                        
                     </p>
-                    <form class="bg">
+                    <form class="" action="/masuk" method="POST">
+                        @csrf
                         <label for="name" class="font-semibold ">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-8 py-2 px-3">
-                            <input id="name" class=" pl-2 w-full outline-none border-none" type="text name="name"
+                            <input id="name" class=" pl-2 w-full outline-none border-none" type="text" name="username"
                                 placeholder="Nama Pengguna" required autofocus />
                         </div>
                         <label for="password" class="font-semibold">Kata Sandi</label>

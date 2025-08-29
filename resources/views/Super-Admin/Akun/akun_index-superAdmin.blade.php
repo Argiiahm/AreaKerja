@@ -30,18 +30,21 @@
                                 <td class="px-4 py-3 text-sm text-gray-900">{{ $d->role }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-900">{{ $d->email }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-900">{{ $d->username }}</td>
-                                @if ($d->superadmins->kota == null)
+                                @if ($d->superadmins?->kota === null || $d->pelamars?->alamat_pelamars?->kota === null)
                                     <td class="px-4 py-3 text-sm text-gray-900">Data Belum Terisi</td>
                                 @else
-                                    <td class="px-4 py-3 text-sm text-gray-900">{{ $d->superadmins->kota }}</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        {{ $d->superadmins?->kota ?? $d->pelamars?->alamat_pelamars?->kota }}
+                                    </td>
                                 @endif
+
                                 <td class="px-4 py-3 text-sm">
                                     <div class="flex gap-1">
-                                        <a href="/dashboard/superadmin/akun/edit"
+                                        <a href="/dashboard/superadmin/{{ $d->id }}/edit"
                                             class="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded text-xs">
                                             <i class="ph ph-pencil"></i>
                                         </a>
-                                        <a href="/dashboard/superadmin/akun/view"
+                                        <a href="/dashboard/superadmin/{{ $d->id }}/view"
                                             class="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded text-xs">
                                             <i class="ph ph-eye"></i>
                                         </a>

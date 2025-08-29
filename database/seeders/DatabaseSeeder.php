@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Pelamar;
 use App\Models\SuperAdmin;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -35,6 +36,20 @@ class DatabaseSeeder extends Seeder
         SuperAdmin::create([
            "user_id"            =>     1,
            "nama_lengkap"       =>     "Argi Ahmes Halepiyandra",
+        ]);
+
+        User::create([
+           "username"           =>    "Seno Roblox",
+           "email"              =>    "seno@gmail.com",
+           "password"           =>     Hash::make('123'),
+           "role"               =>     "pelamar",
+           "verified"           =>     1,
+           "alasan_freeze_akun" =>     null
+        ]);
+
+        Pelamar::create([
+           "user_id"            =>     2,
+           "telepon_pelamar"    =>     "082121212"
         ]);
 
     }

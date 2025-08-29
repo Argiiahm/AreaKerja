@@ -5,8 +5,12 @@
         <h2 class="text-lg font-semibold mb-6">Edit Profile</h2>
 
         <div class="flex items-center gap-4 mb-6">
-            <img src="{{ Auth::user()->superadmins->img_profile }}" alt="Profile Picture"
-                class="w-20 h-20 rounded-full object-cover border">
+            @if (Auth::user()->superadmins->img_profile == null)
+                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                    alt="Profile Picture" class="w-20 h-20 rounded-full object-cover border">
+            @else
+                <img src="" alt="Profile Picture" class="w-20 h-20 rounded-full object-cover border">
+            @endif
             <div>
                 <h3 class="font-semibold text-lg">{{ Auth::user()->superadmins->nama_lengkap }}</h3>
                 <p class="text-gray-500 text-sm">{{ Auth::user()->email }}</p>
@@ -31,9 +35,8 @@
 
         <div>
             <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
-            <input type="text" 
-                class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300" readonly
-                value="{{ Auth::user()->superadmins->nama_lengkap }}">
+            <input type="text" class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                readonly value="{{ Auth::user()->superadmins->nama_lengkap }}">
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -109,7 +112,7 @@
                     class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300"
                     value="Data Belum Terisi" readonly>
             @else
-                <input type="text" 
+                <input type="text"
                     class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300"
                     value="{{ Auth::user()->superadmins->detail_alamat }}" readonly>
             @endif

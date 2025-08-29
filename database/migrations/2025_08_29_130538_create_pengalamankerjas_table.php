@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('alamatpelamars', function (Blueprint $table) {
+        Schema::create('pengalaman_kerjas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pelamar_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('label')->nullable();
-            $table->string('desa')->nullable();
-            $table->string('kecamatan')->nullable();
-            $table->string('kota')->nullable();
-            $table->string('provinsi')->nullable();
-            $table->string('kode_pos')->nullable();
-            $table->string('detail')->nullable();
+            $table->string('posisi_kerja')->nullable();
+            $table->string('jabatan_kerja')->nullable();
+            $table->string('nama_perusahaan')->nullable();
+            $table->string('tahun_awal')->nullable();
+            $table->string('tahun_akhir')->nullable();
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('alamatpelamars');
+        Schema::dropIfExists('pengalaman_kerjas');
     }
 };
