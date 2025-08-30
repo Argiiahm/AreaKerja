@@ -21,6 +21,11 @@ class ProfileController extends Controller
     public function tambah_profile(Request $request, Pelamar $pelamar)
     {
 
+
+        if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
+            Storage::delete('public/' . $pelamar->img_profile);
+        }
+
         $vdata = $request->validate([
             "nama_pelamar"    =>      "nullable",
             "img_profile"     =>      "nullable|file|image",
@@ -52,9 +57,10 @@ class ProfileController extends Controller
         return view('Data-profile.profile');
     }
 
-    public function hapus_profile(Pelamar $pelamar){
-        
-        if($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
+    public function hapus_profile(Pelamar $pelamar)
+    {
+
+        if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
             Storage::delete('public/' . $pelamar->img_profile);
         }
 

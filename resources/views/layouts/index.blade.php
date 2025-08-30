@@ -51,6 +51,35 @@
     .introjs-tooltip {
         pointer-events: auto !important;
     }
+
+    .profile-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        cursor: pointer;
+        object-fit: cover;
+    }
+
+    /* modal background */
+    .modal {
+        display: none;
+        /* disembunyikan dulu */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* gambar di modal */
+    .modal img {
+        max-width: 90%;
+        max-height: 90%;
+    }
 </style>
 
 <body>
@@ -71,14 +100,12 @@
             </div>
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <div class="hidden lg:flex md:flex items-center gap-8">
-                    {{-- Notifikasi --}}
                     <button type="button" id="notifikasi" aria-expanded="false" data-dropdown-toggle="notif"
                         data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
                         <i class="ph-fill text-[#fa6601] ph-bell text-3xl"></i>
                     </button>
 
-                    {{-- Dropdown Notifikasi Nya --}}
                     <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
                         id="notif">
                         <div class="flex items-center px-4 py-3 justify-between">
@@ -131,17 +158,21 @@
                             </span>
                         </ul>
                     </div>
-                    {{-- End Drowpdown --}}
-                    {{-- End Notifikasi --}}
 
                     @if (Auth::check())
-                        {{-- Profile --}}
                         <button type="button" id="user-menu-button" aria-expanded="false"
                             data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                             <span class="sr-only">Open user menu</span>
-                            @if (Auth::user()->pelamars->img_profile)
-                                <img class="w-10 h-10 object-cover rounded-full"
-                                    src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}" alt="">
+                            @if (Auth::user()->role == 'pelamar')
+                                @if (Auth::user()->pelamars->img_profile)
+                                    <img class="w-10 h-10 object-cover rounded-full"
+                                        src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}"
+                                        alt="">
+                                @else
+                                    <img class="w-10 h-10 rounded-full"
+                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                        alt="">
+                                @endif
                             @else
                                 <img class="w-10 h-10 rounded-full"
                                     src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
@@ -184,9 +215,21 @@
                             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
                                 id="user-dropdown">
                                 <div class="flex items-center gap-2 mx-3">
-                                    <img class="w-10 h-10 rounded-full"
-                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
-                                        alt="">
+                                    @if (Auth::user()->role == 'pelamar')
+                                        @if (Auth::user()->pelamars->img_profile)
+                                            <img class="w-10 h-10 object-cover rounded-full"
+                                                src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}"
+                                                alt="">
+                                        @else
+                                            <img class="w-10 h-10 rounded-full"
+                                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                                alt="">
+                                        @endif
+                                    @else
+                                        <img class="w-10 h-10 rounded-full"
+                                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                            alt="">
+                                    @endif
                                     <div class="px-4 py-3">
                                         <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
                                         <span
@@ -218,14 +261,9 @@
                                 </ul>
                             </div>
                         @endif
-                        {{-- End Drowpdown --}}
-
-                        {{-- End Profile --}}
                     @else
-                        {{-- Link Login --}}
                         <a href="/login"
                             class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
-                        {{-- End Link Login --}}
                     @endif
 
 
@@ -268,14 +306,12 @@
                             Lowongan</a>
                     </li>
                     <li class="flex lg:hidden md:hidden justify-between items-center mt-4">
-                        {{-- Notifikasi --}}
                         <button type="button" id="notifikasi" aria-expanded="false" data-dropdown-toggle="notif-hp"
                             data-dropdown-placement="bottom">
                             <span class="sr-only">Open user menu</span>
                             <i class="ph-fill text-[#fa6601] ph-bell text-3xl"></i>
                         </button>
 
-                        {{-- Dropdown Notifikasi Nya --}}
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg transform translate-x-16 translate-y-[-4rem] w-80 h-56 overflow-auto"
                             id="notif-hp">
                             <div class="flex items-center px-4 py-3 justify-between">
@@ -329,10 +365,28 @@
                             </ul>
                         </div>
 
-                        {{-- End Drowpdown --}}
-                        {{-- End Notifikasi --}}
-                        <button type="button"
-                            class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</button>
+                        @if (Auth::check())
+                            @if (Auth::user()->role == 'pelamar')
+                                @if (Auth::user()->pelamars->img_profile)
+                                <a href="/profile">
+                                    <img class="w-10 h-10 object-cover rounded-full"
+                                        src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}"
+                                        alt="">
+                                </a>
+                                @else
+                                    <img class="w-10 h-10 rounded-full"
+                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                        alt="">
+                                @endif
+                            @else
+                                <img class="w-10 h-10 rounded-full"
+                                    src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                    alt="">
+                            @endif
+                        @else
+                            <a href="/login"
+                                class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
+                        @endif
                     </li>
                 </ul>
             </div>

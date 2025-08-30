@@ -14,10 +14,14 @@
             <div class="mt-10 border-2 border-orange-500 p-6 sm:p-10 rounded-lg">
                 <div class="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
                     <div class="flex flex-col items-center">
+                        <div class="modal" id="imgModal">
+                            <img id="modalImg" alt="Zoomed" class="w-40 h-40 sm:w-40 object-cover rounded-full">
+                        </div>
 
                         @if (Auth::user()->pelamars->img_profile)
-                            <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3"
-                                src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}" alt="">
+                            <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3 profile-img"
+                                src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}" alt=""
+                                alt="Profile">
                         @else
                             <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3"
                                 src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
@@ -87,22 +91,21 @@
 
                         @if (Auth::user()->pelamars && Auth::user()->pelamars->gender)
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700">Gender <span
-                                        class="text-red-500">*</span></label>
+                                <label class="block text-sm font-semibold text-gray-700">
+                                    Gender <span class="text-red-500">*</span>
+                                </label>
                                 <div class="flex space-x-6 mt-1">
                                     <label class="flex items-center space-x-2 cursor-pointer">
                                         <input type="radio" name="gender" value="Laki-laki"
-                                            class="w-4 h-4 border-2 text-orange-500 focus:ring-orange-400 focus:outline-none rounded-full 
-                                            {{ Auth::user()->pelamars->gender === 'laki-laki' ? 'border-orange-500 bg-orange-500' : 'border-gray-400' }}"
-                                            {{ Auth::user()->pelamars->gender === 'Laki-laki' ? 'checked' : '' }}>
+                                            class="w-4 h-4 text-orange-500 focus:ring-orange-500 border-gray-300"
+                                            {{ Auth::user()->pelamars->gender === 'laki-laki' ? 'checked' : '' }}>
                                         <span>Laki - Laki</span>
                                     </label>
 
                                     <label class="flex items-center space-x-2 cursor-pointer">
                                         <input type="radio" name="gender" value="Perempuan"
-                                            class="w-4 h-4 border-2 text-orange-500 border-gray focus:ring-orange-400 focus:outline-none rounded-full 
-                                            {{ Auth::user()->pelamars->gender === 'perempuan' ? 'border-orange-500 bg-orange-500' : 'border-gray-400' }}"
-                                            {{ Auth::user()->pelamars->gender === 'Perempuan' ? 'checked' : '' }}>
+                                            class="w-4 h-4 text-orange-500 focus:ring-orange-500 border-gray-300"
+                                            {{ Auth::user()->pelamars->gender === 'perempuan' ? 'checked' : '' }}>
                                         <span>Perempuan</span>
                                     </label>
                                 </div>
@@ -402,5 +405,6 @@
                     </div>
                 </div>
         </form>
+
     </section>
 @endsection

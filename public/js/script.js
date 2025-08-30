@@ -14,6 +14,19 @@
 //     }
 // }
 
+const profileImg = document.getElementById("previewImage");
+const imgModal = document.getElementById("imgModal");
+const modalImg = document.getElementById("modalImg");
+
+profileImg.onclick = () => {
+    imgModal.style.display = "flex";
+    modalImg.src = profileImg.src;
+};
+
+imgModal.onclick = () => {
+    imgModal.style.display = "none";
+};
+
 document
     .getElementById("fileInput")
     .addEventListener("change", function (event) {
