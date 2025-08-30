@@ -60,6 +60,8 @@
     @include('Modals.detail-modal-organisasi')
     @include('Modals.tambah-pengalaman_kerja')
     @include('Modals.detail-modal-pengalaman_kerja')
+    @include('Modals.tambah-skill')
+    @include('Modals.detail-modal-skill')
 
     <nav class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -137,9 +139,14 @@
                         <button type="button" id="user-menu-button" aria-expanded="false"
                             data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                             <span class="sr-only">Open user menu</span>
-                            <img class="w-10 h-10 rounded-full"
-                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
-                                alt="">
+                            @if (Auth::user()->pelamars->img_profile)
+                                <img class="w-10 h-10 object-cover rounded-full"
+                                    src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}" alt="">
+                            @else
+                                <img class="w-10 h-10 rounded-full"
+                                    src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                    alt="">
+                            @endif
                         </button>
                         @if (Auth::user()->role == 'superadmin')
                             {{-- Dropdown Profile Nya --}}

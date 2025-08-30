@@ -48,6 +48,10 @@ Route::get('/lowongan/tersimpan/detail', [LowonganController::class, 'lowongan_t
 
 // Profile
 Route::get('/profile', [ProfileController::class, 'profile'])->middleware('auth');
+Route::put('/hapus/profile/{pelamar:id}', [ProfileController::class, 'hapus_profile'])->middleware('auth');
+Route::put('/lengkapi/profile/{pelamar:id}', [ProfileController::class, 'tambah_profile'])->middleware('auth');
+
+
 Route::get('/alamat', [ProfileController::class, 'alamat'])->middleware('auth');
 Route::get('/data/alamat', [ProfileController::class, 'form_data_alamat'])->middleware('auth');
 Route::post('/alamat/pelamar/create', [ProfileController::class, 'create_data_alamat'])->middleware('auth');
@@ -63,6 +67,11 @@ Route::put('/update/organisasi/{organisasi:id}', [ProfileController::class, 'upd
 Route::post('/tambah/pengalaman/kerja', [ProfileController::class, 'tambah_pengalaman'])->middleware('auth');
 Route::get('/edit/pengalaman/kerja/{pengalamankerja:id}', [ProfileController::class, 'edit_pengalaman'])->middleware('auth');
 Route::put('/update/pengalaman/kerja/{pengalamankerja:id}', [ProfileController::class, 'update_pengalaman'])->middleware('auth');
+
+
+Route::post('/tambah/skill', [ProfileController::class, 'tambah_skill'])->middleware('auth');
+Route::get('/edit/skill/{skill:id}', [ProfileController::class, 'edit_skill'])->middleware('auth');
+Route::put('/update/skill/{skill:id}', [ProfileController::class, 'update_skill'])->middleware('auth');
 
 
 // End Profile

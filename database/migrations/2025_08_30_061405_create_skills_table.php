@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sosialmediapelamars', function (Blueprint $table) {
+        Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pelamar_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string("instagram")->nullable();
-            $table->string("linkedin")->nullable();
-            $table->string("website")->nullable();
-            $table->string("twitter")->nullable();
+            $table->string('skill')->nullable();
+            $table->string('experience_level')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sosialmediapelamars');
+        Schema::dropIfExists('skills');
     }
 };

@@ -27,4 +27,12 @@ class Pelamar extends Model
         return $this->hasMany(Alamatpelamar::class, 'pelamar_id');
     }
 
+    public function skill() {
+        return $this->hasMany(Skill::class, 'pelamar_id');
+    }
+
+    public function sosmed() {
+        return $this->hasOne(Sosialmediapelamar::class , 'pelamar_id');
+    }
+
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('divisi')->nullable();
             $table->date('mulai_pelatihan')->nullable(); 
             $table->date('selesai_pelatihan')->nullable();
-            $table->string('img_profile')->default('black.png');
+            $table->string('img_profile')->nullable();
             $table->enum('kategori',['pelamar','calon kandidat','kandidat aktif','kandidat nonaktif'])->nullable();
             $table->string('gaji_minimal')->nullable();
             $table->string('gaji_maksimal')->nullable();

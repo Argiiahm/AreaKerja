@@ -40,53 +40,23 @@
         </div>
         <div class=" mx-auto bg-white p-6">
             <h2 class="text-xl font-semibold text-gray-800 border-b-2 border-orange-500 pb-1 mb-6">
-                Edit Pengalaman Kerja
+                Edit Skill
             </h2>
-            <form class="space-y-4" action="/update/pengalaman/kerja/{{ $data->id }}" method="POST">
+            <form class="space-y-4" action="/update/skill/{{  $data->id }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div>
-                    <label for="posisi_kerja" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Posisi
-                        Kerja</label>
-                    <input type="text" name="posisi_kerja" id="posisi_kerja"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
-                        placeholder="posisi_kerja" value="{{ $data->posisi_kerja }}" />
+                    <label for="skill" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Skill</label>
+                    <input type="text" name="skill" id="skill"
+                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5" placeholder="skill"
+                        value="{{ $data->skill }}">
                 </div>
                 <div>
-                    <label for="jabatan_kerja"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">jabatan_kerja
-                        Kerja</label>
-                    <input type="text" name="jabatan_kerja" id="jabatan_kerja"
+                    <label for="experience_level"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Experience Level</label>
+                    <input type="text" name="experience_level" id="experience_level"
                         class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
-                        placeholder="jabatan_kerja" value="{{ $data->jabatan_kerja }}" />
-                </div>
-                <div>
-                    <label for="nama_perusahaan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Nama
-                        Perusahaan</label>
-                    <input type="text" name="nama_perusahaan" id="nama_perusahaan"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
-                        placeholder="nama_perusahaan" value="{{ $data->nama_perusahaan }}" />
-                </div>
-                <div>
-                    <label for="tahun_awal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Tahun
-                        Awal</label>
-                    <input type="text" name="tahun_awal" id="tahun_awal"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
-                        placeholder="tahun_awal" value="{{ $data->tahun_awal }}" />
-                </div>
-                <div>
-                    <label for="tahun_akhir" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Tahun
-                        Akhir</label>
-                    <input type="text" name="tahun_akhir" id="tahun_akhir"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
-                        placeholder="tahun_akhir" value="{{ $data->tahun_akhir }}" />
-                </div>
-                <div>
-                    <label for="deskripsi"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Deskripsi</label>
-                    <input type="text" name="deskripsi" id="deskripsi"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
-                        placeholder="deskripsi" value="{{ $data->deskripsi }}"></input>
+                        placeholder="experience_level" value="{{ $data->experience_level }}">
                 </div>
                 <button type="submit"
                     class="w-full text-white bg-orange-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>

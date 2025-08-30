@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Alamatpelamar;
 use App\Models\Organisasi;
+use App\Models\Pelamar;
 use App\Models\Pengalamankerja;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -15,12 +18,57 @@ class ProfileController extends Controller
         return view('Data-profile.profile');
     }
 
+    public function tambah_profile(Request $request, Pelamar $pelamar)
+    {
+
+        $vdata = $request->validate([
+            "nama_pelamar"    =>      "nullable",
+            "img_profile"     =>      "nullable|file|image",
+            "gender"          =>      "nullable",
+            "tanggal_lahir"   =>      "nullable",
+            "deskripsi_diri"  =>     "nullable",
+            "gaji_minimal"    =>     "nullable",
+            "gaji_maksimal"    =>     "nullable"
+        ]);
+
+        if ($request->hasFile('img_profile')) {
+            $vdata['img_profile'] = $request->file('img_profile')->store('images', 'public');
+        }
+
+
+        $vdata['user_id'] = Auth::user()->id;
+        $pelamar->update($vdata);
+
+        $sosmed = $request->validate([
+            "instagram" => 'nullable',
+            "linkedin" => 'nullable',
+            "website" => 'nullable',
+            "twitter" => 'nullable'
+        ]);
+
+        $pelamar->sosmed()->create($sosmed);
+        return redirect('/profile');
+
+        return view('Data-profile.profile');
+    }
+
+    public function hapus_profile(Pelamar $pelamar){
+        
+        if($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
+            Storage::delete('public/' . $pelamar->img_profile);
+        }
+
+        $pelamar->img_profile = null;
+        $pelamar->save();
+        return redirect('/profile');
+    }
+
+
+    //alamat
     public function alamat()
     {
         return view('Data-profile.alamat');
     }
-
-    //alamat
     public function form_data_alamat()
     {
         return view('Data-profile.form_data-alamat');
@@ -144,5 +192,36 @@ class ProfileController extends Controller
         $pengalamankerja->update($vdata);
         return redirect('/profile');
         return back();
+    }
+
+    //skill
+
+    public function tambah_skill(Request $request)
+    {
+        $vData = $request->validate([
+            "skill"   => 'nullable',
+            "experience_level"  => 'nullable'
+        ]);
+        $vData['pelamar_id'] = Auth::user()->pelamars->id;
+        Skill::create($vData);
+        return redirect('/profile');
+    }
+
+    public function edit_skill(Skill $skill)
+    {
+        return view('Data-profile.edit-skill', [
+            "data" => $skill
+        ]);
+    }
+
+    public function update_skill(Request $request, Skill $skill)
+    {
+        $vData = $request->validate([
+            "skill"   => 'nullable',
+            "experience_level"  => 'nullable'
+        ]);
+        $vData['pelamar_id'] = Auth::user()->pelamars->id;
+        $skill->update($vData);
+        return redirect('/profile');
     }
 }

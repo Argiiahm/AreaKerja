@@ -38,8 +38,8 @@
                     </div>
                     <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
                         Patut Kamu Coba</h1>
-                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Omnis, debitis.</p>
+                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
+                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
                     <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
                             Menit</span></span>
                 </a>
@@ -52,8 +52,8 @@
                     </div>
                     <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
                         Patut Kamu Coba</h1>
-                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Omnis, debitis.</p>
+                   <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
+                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
                     <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
                             Menit</span></span>
                 </div>
@@ -66,8 +66,8 @@
                     </div>
                     <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
                         Patut Kamu Coba</h1>
-                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Omnis, debitis.</p>
+                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
+                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
                     <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
                             Menit</span></span>
                 </div>
@@ -80,8 +80,8 @@
                     </div>
                     <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
                         Patut Kamu Coba</h1>
-                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Omnis, debitis.</p>
+                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
+                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
                     <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
                             Menit</span></span>
                 </div>
@@ -94,8 +94,8 @@
                     </div>
                     <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
                         Patut Kamu Coba</h1>
-                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Omnis, debitis.</p>
+                   <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
+                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
                     <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
                             Menit</span></span>
                 </div>
