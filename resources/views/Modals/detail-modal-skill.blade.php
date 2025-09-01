@@ -22,7 +22,7 @@
                 <div class="p-4 w-full md:p-5">
                     <div class="flex justify-between w-full">
                         <div class="space-y-2 w-full">
-                            @if (Auth::user()->role !== 'superadmin')
+                            @if (Auth::user()->role == 'pelamar')
                                 @foreach (Auth::user()->pelamars->skill as $s)
                                     <div class="flex bg-gray-100 rounded-lg justify-between px-2">
                                         <div class="bg-gray-100 p-3 rounded-md">{{ $s->skill }}

@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('content')
-    <div class="hidden">
+    <div class="">
         <div class="max-w-6xl mx-auto px-6 py-6 mt-24">
             <p class="text-sm text-orange-600 font-medium">Dashboard</p>
             <h1 class="text-2xl font-bold leading-snug">
@@ -103,54 +103,56 @@
         </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 py-6 mt-24">
-        <p class="text-sm text-orange-600 font-medium">Dashboard</p>
-        <h1 class="text-2xl font-bold leading-snug">
-            Selamat Datang Di Area Kerja <br> Seven Inc
-        </h1>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 mx-4 lg:mx-32 items-start">
-        <div class="col-span-2 bg-orange-500 rounded-xl p-6">
-            <h2 class="text-white font-semibold text-lg mb-4">Lowongan Saya</h2>
-
-            <div class="bg-white rounded-xl p-4 flex items-center justify-between mb-4">
-                <div class="flex items-start space-x-4">
-                    <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="">
-                    <div>
-                        <p class="text-gray-800 font-semibold">Seven Inc</p>
-                        <p class="text-black font-bold">UI UX Designer – WFO</p>
-                        <p class="text-sm text-gray-500">Yogyakarta</p>
-                        <p class="text-sm bg-gray-100 inline-block mt-1 px-2 py-0.5 rounded">
-                            Rp. 4.500.000 - Rp. 7.000.000 per bulan
-                        </p>
+    <div class="hidden">
+        <div class="max-w-6xl mx-auto px-6 py-6 mt-24">
+            <p class="text-sm text-orange-600 font-medium">Dashboard</p>
+            <h1 class="text-2xl font-bold leading-snug">
+                Selamat Datang Di Area Kerja <br> Seven Inc
+            </h1>
+        </div>
+    
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 mx-4 lg:mx-32 items-start">
+            <div class="col-span-2 bg-orange-500 rounded-xl p-6">
+                <h2 class="text-white font-semibold text-lg mb-4">Lowongan Saya</h2>
+    
+                <div class="bg-white rounded-xl p-4 flex items-center justify-between mb-4">
+                    <div class="flex items-start space-x-4">
+                        <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="">
+                        <div>
+                            <p class="text-gray-800 font-semibold">Seven Inc</p>
+                            <p class="text-black font-bold">UI UX Designer – WFO</p>
+                            <p class="text-sm text-gray-500">Yogyakarta</p>
+                            <p class="text-sm bg-gray-100 inline-block mt-1 px-2 py-0.5 rounded">
+                                Rp. 4.500.000 - Rp. 7.000.000 per bulan
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 border rounded-lg text-gray-700">Silver</span>
+                        <button class="bg-orange-500 text-white px-4 py-1 rounded-lg hover:bg-orange-600 transition">
+                            Lihat Pelamar
+                        </button>
                     </div>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <span class="px-3 py-1 border rounded-lg text-gray-700">Silver</span>
-                    <button class="bg-orange-500 text-white px-4 py-1 rounded-lg hover:bg-orange-600 transition">
-                        Lihat Pelamar
+    
+                <div class="flex justify-center mt-6">
+                    <button
+                        class="bg-white text-orange-600 font-semibold px-6 py-2 rounded-lg shadow hover:bg-gray-100 transition">
+                        Cari Kandidat
                     </button>
                 </div>
             </div>
-
-            <div class="flex justify-center mt-6">
+    
+            <div class="bg-orange-500 rounded-xl p-6 flex flex-col justify-center h-fit">
+                <h2 class="text-white font-semibold text-lg mb-6">Kandidat Saya</h2>
                 <button
-                    class="bg-white text-orange-600 font-semibold px-6 py-2 rounded-lg shadow hover:bg-gray-100 transition">
+                    class="bg-orange-500 text-white border-2 border-white font-semibold px-6 py-2 rounded-lg mb-3 hover:bg-orange-600 transition">
+                    Lihat Kandidat
+                </button>
+                <button class="bg-white text-black font-semibold px-6 py-2 rounded-lg shadow hover:bg-gray-100 transition">
                     Cari Kandidat
                 </button>
             </div>
-        </div>
-
-        <div class="bg-orange-500 rounded-xl p-6 flex flex-col justify-center h-fit">
-            <h2 class="text-white font-semibold text-lg mb-6">Kandidat Saya</h2>
-            <button
-                class="bg-orange-500 text-white border-2 border-white font-semibold px-6 py-2 rounded-lg mb-3 hover:bg-orange-600 transition">
-                Lihat Kandidat
-            </button>
-            <button class="bg-white text-black font-semibold px-6 py-2 rounded-lg shadow hover:bg-gray-100 transition">
-                Cari Kandidat
-            </button>
         </div>
     </div>
 @endsection

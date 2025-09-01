@@ -29,7 +29,9 @@ class AuthController extends Controller
                 return redirect('/dashboard/admin');
             } elseif (Auth::user()->role == 'pelamar') {
                 return redirect('/');
-            }
+            } elseif (Auth::user()->role == 'perusahaan') {
+                return redirect('/dashboard/perusahaan');
+            } 
         } else {
             return back();
         }
@@ -40,6 +42,9 @@ class AuthController extends Controller
     {
         return view('Auth.Register');
     }
+
+
+    //Pelamar
     public function buat(Request $request)
     {
         $validasi_data = $request->validate([
@@ -69,6 +74,36 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
+
+    // Perusahaan Register
+
+    public function buat_perusahaan(Request $request)
+    {
+        $v = $request->validate([
+            "username" => "required",
+            "email"    => "required|email",
+            "password" => "required",
+            "role"     => "required"
+        ]);
+
+        $v['password'] = Hash::make($request->password);
+        $user = User::create($v);
+
+        $v2 = $request->validate([
+            "telepon_perusahaan" => "required",
+            "nama_perusahaan"    => "nullable"
+        ]);
+
+        $v2['nama_perusahaan']  = $request->username;
+
+        $user->perusahaan()->create($v2);
+        return redirect('/login');
+    }
+
+
+
+
 
 
     public function verifikasi()

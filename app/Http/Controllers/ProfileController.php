@@ -22,9 +22,9 @@ class ProfileController extends Controller
     {
 
 
-        if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
-            Storage::delete('public/' . $pelamar->img_profile);
-        }
+        // if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
+        //     Storage::delete('public/' . $pelamar->img_profile);
+        // }
 
         $vdata = $request->validate([
             "nama_pelamar"    =>      "nullable",
@@ -37,6 +37,9 @@ class ProfileController extends Controller
         ]);
 
         if ($request->hasFile('img_profile')) {
+            if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
+                Storage::delete('public/' . $pelamar->img_profile);
+            }
             $vdata['img_profile'] = $request->file('img_profile')->store('images', 'public');
         }
 

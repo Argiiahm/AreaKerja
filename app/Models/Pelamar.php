@@ -34,5 +34,6 @@ class Pelamar extends Model
     public function sosmed() {
         return $this->hasOne(Sosialmediapelamar::class , 'pelamar_id');
     }
+    
 
 }

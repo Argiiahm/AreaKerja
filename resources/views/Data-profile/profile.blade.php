@@ -41,7 +41,8 @@
                                 class="flex items-center gap-2 border-2 border-orange-500 px-6 py-2 rounded-lg w-full sm:w-auto justify-center cursor-pointer">
                                 <i class="ph ph-upload-simple text-2xl text-orange-500"></i>
                                 <span class="text-orange-500">Upload</span>
-                                <input type="file" id="fileInput" name="img_profile" accept="image/*" class="hidden">
+                                <input value="" type="file" id="fileInput"
+                                    name="img_profile" accept="image/*" class="hidden">
                             </label>
 
                             <button form="hapus-profile" type="submit"
@@ -52,7 +53,6 @@
                         </div>
 
                         <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-
                             <button type="submit" class="bg-orange-500 px-6 py-2 rounded-lg text-center w-full sm:w-auto">
                                 <span class="text-white font-semibold">Simpan</span>
                             </button>
@@ -407,4 +407,31 @@
         </form>
 
     </section>
+    <script>
+        const profileImg = document.getElementById("previewImage");
+        const imgModal = document.getElementById("imgModal");
+        const modalImg = document.getElementById("modalImg");
+
+        profileImg.onclick = () => {
+            imgModal.style.display = "flex";
+            modalImg.src = profileImg.src;
+        };
+
+        imgModal.onclick = () => {
+            imgModal.style.display = "none";
+        };
+
+        document
+            .getElementById("fileInput")
+            .addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById("previewImage").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+    </script>
 @endsection

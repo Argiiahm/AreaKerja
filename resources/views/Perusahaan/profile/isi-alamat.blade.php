@@ -11,7 +11,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                     Nama Alamat <span class="text-red-500">*</span>
                 </label>
-                <input type="text" name="nama_alamat" placeholder="Nama Alamat"
+                <input type="text" name="label" placeholder="Nama Alamat"
                     class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
             </div>
 
@@ -27,11 +27,11 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Kabupaten <span class="text-red-500">*</span>
+                    Kota <span class="text-red-500">*</span>
                 </label>
                 <select name="kabupaten"
                     class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
-                    <option value="">Kabupaten</option>
+                    <option value="">Kota</option>
                 </select>
             </div>
 

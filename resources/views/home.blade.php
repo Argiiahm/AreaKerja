@@ -245,7 +245,6 @@
         <button class="bg-[#fa6601] px-12 py-2 text-white font-semibold rounded-md">Memuat</button>
     </div>
 
-    
     @if (Auth::check() && Auth::user()->role === 'pelamar' && Auth::user()->pelamars->nama_pelamar == null)
         <script>
             window.onload = function() {

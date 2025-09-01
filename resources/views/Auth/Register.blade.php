@@ -113,12 +113,16 @@
                     </form>
 
                     <!-- form login perusahaan -->
-                    <form id="form-perusahaan" class="hidden">
+                    <form action="/buat/perusahaan" method="POST" id="form-perusahaan" class="hidden">
+                        @csrf
                         <label for="name" class="font-semibold">Nama Perusahaan</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
                             <input id="name" class="pl-2 w-full outline-none border-none" type="text"
-                                name="name" placeholder="Nama Perusahaan" />
+                                name="username" placeholder="Nama Perusahaan" />
                         </div>
+
+                        <input class="pl-2 w-full outline-none border-none" type="text" name="nama_perusahaan"
+                            hidden />
 
                         <label for="email" class="font-semibold">E-Mail</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
@@ -126,11 +130,14 @@
                                 name="email" placeholder="E-Mail" />
                         </div>
 
-                        <label for="phone" class="font-semibold">No. Tlp Perusahaan</label>
+                        <label for="telepon_perusahaan" class="font-semibold">No. Tlp Perusahaan</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="phone" class="pl-2 w-full outline-none border-none" type="number"
-                                name="phone" placeholder="No. Tlp Perusahaan" />
+                            <input id="telepon_perusahaan" class="pl-2 w-full outline-none border-none"
+                                type="number" name="telepon_perusahaan" placeholder="No. Tlp Perusahaan" />
                         </div>
+
+                        <input id="role" hidden class="pl-2 w-full outline-none border-none" type="text"
+                            name="role" value="perusahaan" placeholder="" />
 
                         <label for="password" class="font-semibold">Kata Sandi</label>
                         <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">

@@ -81,13 +81,24 @@ Route::get('/bantuan', [FaqController::class, 'index']);
 // END FAQ
 
 // Authorization
+
+
 Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 Route::post('/masuk', [AuthController::class, 'masuk'])->middleware('guest');
+
 Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
-
+//Pelamar
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/buat', [AuthController::class, 'buat']);
+
+
+//Perusahaan
+Route::post('/buat/perusahaan', [AuthController::class, 'buat_perusahaan']);
+
+
+
+
 
 
 
@@ -245,35 +256,39 @@ Route::get('/dashboard/admin/event/edit', [AdminController::class, 'event_edit']
 
 
 //Perusahaan
-Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index']);
-Route::get('/dashboard/perusahaan/profile', [PerusahaanController::class, 'profile']);
-Route::get('/dashboard/perusahaan/edit/profile', [PerusahaanController::class, 'edit_profile']);
-Route::get('/dashboard/perusahaan/tambah/alamat', [PerusahaanController::class, 'tambah_alamat']);
-Route::get('/dashboard/perusahaan/isi/alamat', [PerusahaanController::class, 'isi_alamat']);
-Route::get('/dashboard/perusahaan/alamat/jadi', [PerusahaanController::class, 'alamat_jadi']);
+Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/profile', [PerusahaanController::class, 'profile'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/edit/profile', [PerusahaanController::class, 'edit_profile'])->middleware('perusahaan');
+Route::put('/dashboard/perusahaan/update/profile/{perusahaan:id}', [PerusahaanController::class, 'update_profile'])->middleware('perusahaan');
 
-Route::get('/dashboard/perusahaan/lowongan', [PerusahaanController::class, 'lowongan']);
-Route::get('/dashboard/perusahaan/isi/lowongan', [PerusahaanController::class, 'isi_lowongan']);
-Route::get('/dashboard/perusahaan/edit/lowongan', [PerusahaanController::class, 'edit_lowongan']);
-Route::get('/dashboard/perusahaan/lowongan/detail', [PerusahaanController::class, 'detail_lowongan']);
-Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat']);
-Route::get('/dashboard/perusahaan/kandidatak', [PerusahaanController::class, 'kandidat_ak']);
-Route::get('/dashboard/perusahaan/kandidatak/cv', [PerusahaanController::class, 'cv_kandidat']);
-Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan']);
-Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password']);
 
-Route::get('/dashboard/perusahaan/pelamar', [PerusahaanController::class, 'pelamar']);
-Route::get('/dashboard/perusahaan/konfirmasi/terima/lamaran', [PerusahaanController::class, 'konfirmasi_terima_lamaran']);
-Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim']);
 
-Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan']);
-Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat']);
-Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info']);
-Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah', [PerusahaanController::class, 'kandidat_bermasalah']);
-Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/nama', [PerusahaanController::class, 'kandidat_nama']);
-Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/laporan', [PerusahaanController::class, 'kandidat_laporan']);
-Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja']);
+Route::get('/dashboard/perusahaan/tambah/alamat', [PerusahaanController::class, 'tambah_alamat'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/isi/alamat', [PerusahaanController::class, 'isi_alamat'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/alamat/jadi', [PerusahaanController::class, 'alamat_jadi'])->middleware('perusahaan');
 
-Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event']);
-Route::get('/dashboard/perusahaan/gabung/event', [PerusahaanController::class, 'gabung_event']);
-Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong']);
+Route::get('/dashboard/perusahaan/lowongan', [PerusahaanController::class, 'lowongan'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/isi/lowongan', [PerusahaanController::class, 'isi_lowongan'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/edit/lowongan', [PerusahaanController::class, 'edit_lowongan'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/lowongan/detail', [PerusahaanController::class, 'detail_lowongan'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/kandidatak', [PerusahaanController::class, 'kandidat_ak'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/kandidatak/cv', [PerusahaanController::class, 'cv_kandidat'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password'])->middleware('perusahaan');
+
+Route::get('/dashboard/perusahaan/pelamar', [PerusahaanController::class, 'pelamar'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/konfirmasi/terima/lamaran', [PerusahaanController::class, 'konfirmasi_terima_lamaran'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->middleware('perusahaan');
+
+Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah', [PerusahaanController::class, 'kandidat_bermasalah'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/nama', [PerusahaanController::class, 'kandidat_nama'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/laporan', [PerusahaanController::class, 'kandidat_laporan'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja'])->middleware('perusahaan');
+
+Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/gabung/event', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');

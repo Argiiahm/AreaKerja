@@ -74,7 +74,7 @@
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
                         <p class="text-center text-zinc-700 font-bold">Multimedia</p>
-                    </div>
+                    </div>              
                 </div>
                 <div class="mt-5 flex flex-col pr-2 lg:pr-0 md:mr-5 gap-2 w-32">
                     <div
