@@ -265,6 +265,11 @@ Route::put('/dashboard/perusahaan/update/profile/{perusahaan:id}', [PerusahaanCo
 
 Route::get('/dashboard/perusahaan/tambah/alamat', [PerusahaanController::class, 'tambah_alamat'])->middleware('perusahaan');
 Route::get('/dashboard/perusahaan/isi/alamat', [PerusahaanController::class, 'isi_alamat'])->middleware('perusahaan');
+Route::post('/dashboard/perusahaan/create/alamat', [PerusahaanController::class, 'create_alamat'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/edit/alamat/{alamatperusahaan:id}', [PerusahaanController::class, 'edit_alamat'])->middleware('perusahaan');
+Route::put('/dashboard/perusahaan/update/alamat/{alamatperusahaan:id}', [PerusahaanController::class, 'update_alamat'])->middleware('perusahaan');
+
+
 Route::get('/dashboard/perusahaan/alamat/jadi', [PerusahaanController::class, 'alamat_jadi'])->middleware('perusahaan');
 
 Route::get('/dashboard/perusahaan/lowongan', [PerusahaanController::class, 'lowongan'])->middleware('perusahaan');

@@ -326,7 +326,7 @@
                             <div class="mb-2">
                                 <label class="block text-sm font-semibold text-gray-800 mb-1">Website</label>
                                 <input type="text" name="website"
-                                    calass="w-full border border-gray-300 rounded-md px-3 py-2 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                                     placeholder="Website"
                                     value="{{ Auth::user()->pelamars->sosmed()->latest()->first()->website ?? '' }}">
                             </div>
@@ -376,20 +376,20 @@
                                 class="w-full border border-gray-300 rounded-md p-2 pr-10 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                                 placeholder="Kata Sandi" value="{{ Auth::user()->password }}" readonly>
                             <div>
-                                <div class="mt-6">
-                                    <h1 class="text-lg font-bold text-gray-800 mb-2">Ekspetasi Gaji</h1>
-                                    <div class="border-t-2 border-orange-500 mb-4"></div>
-                                    <div class="flex items-center space-x-2">
-                                        <input type="number" name="gaji_minimal"
-                                            class="w-1/2 border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                                            placeholder="Rp. -" value="{{ Auth::user()->pelamars->gaji_minimal ?? '' }}">
-                                        <span>—</span>
-                                        <input type="number" name="gaji_maksimal"
-                                            class="w-1/2 border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                                            placeholder="Rp. -"
-                                            value="{{ Auth::user()->pelamars->gaji_maksimal ?? '' }}">
-                                    </div>
+                               <div class="mt-6 border-b border-gray-300 pb-4">
+                               <h1 class="text-lg font-bold text-gray-800 mb-2">Ekspetasi Gaji</h1>
+                              <div class="border-t-2 border-orange-500 mb-4"></div>
+                              <div class="flex items-center space-x-2">
+                              <input type="number" name="gaji_minimal"
+                                     class="w-1/2 border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                                     placeholder="Rp. -" value="{{ Auth::user()->pelamars->gaji_minimal ?? '' }}">
+                                      <span>—</span>
+                                    <input type="number" name="gaji_maksimal"
+                                     class="w-1/2 border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                                       placeholder="Rp. -" value="{{ Auth::user()->pelamars->gaji_maksimal ?? '' }}">
+                              </div>
                                 </div>
+
 
                                 <div class="text-sm text-orangea-500 mt-3 space-y-5">
                                     <p><i

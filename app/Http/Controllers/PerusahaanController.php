@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Perusahaan;
 use Illuminate\Http\Request;
+use App\Models\Alamatperusahaan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PerusahaanController extends Controller
@@ -62,10 +64,50 @@ class PerusahaanController extends Controller
     {
         return view('Perusahaan.profile.isi-alamat');
     }
-    public function alamat_jadi()
+
+    public function create_alamat(Request $request)
     {
-        return view('Perusahaan.profile.alamat-jadi');
+        $vData = $request->validate([
+            'label'  => 'nullable',
+            'desa'   => 'nullable',
+            'kecamatan' => 'nullable',
+            'kota'  =>  'nullable',
+            'provinsi' => 'nullable',
+            'kode_pos' => 'nullable',
+            'detail' =>   'nullable'
+        ]);
+
+        $vData['perusahaan_id'] = Auth::user()->perusahaan->id;
+
+        Alamatperusahaan::create($vData);
+        return redirect('/dashboard/perusahaan/tambah/alamat');
     }
+
+    public function edit_alamat(Alamatperusahaan $alamatperusahaan)
+    {
+        return view('Perusahaan.profile.edit-alamat', [
+            "Data"      =>     $alamatperusahaan
+        ]);
+    }
+
+    public function update_alamat(Request $request, Alamatperusahaan $alamatperusahaan)
+    {
+        $vData = $request->validate([
+            'label'  => 'nullable',
+            'desa'   => 'nullable',
+            'kecamatan' => 'nullable',
+            'kota'  =>  'nullable',
+            'provinsi' => 'nullable',
+            'kode_pos' => 'nullable',
+            'detail' =>   'nullable'
+        ]);
+
+        $vData['perusahaan_id'] = Auth::user()->perusahaan->id;
+
+        $alamatperusahaan->update($vData);
+        return redirect('/dashboard/perusahaan/tambah/alamat');
+    }
+
 
     //lowongan
     public function lowongan()

@@ -4,15 +4,16 @@
         <h3 class="font-semibold text-lg">Alamat</h3>
         <hr class="border-t-4 border-orange-300 mt-1">
 
-        <form action="/dashboard/perusahaan/create/alamat" method="POST" class="mt-6 space-y-5">
+        <form action="/dashboard/perusahaan/update/alamat/{{ $Data->id }}" method="POST" class="mt-6 space-y-5">
             @csrf
-
+            @method('PUT')
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                     Nama Alamat <span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="label" placeholder="Nama Alamat"
-                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    value="{{ $Data->label }}">
             </div>
 
             <div>
@@ -20,7 +21,8 @@
                     Kode Pos <span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="kode_pos" placeholder="Kode Pos"
-                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    value="{{ $Data->kode_pos }}">
             </div>
 
             <div>
@@ -28,7 +30,8 @@
                     desa<span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="desa" placeholder="desa"
-                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    value="{{ $Data->desa }}">
             </div>
 
             <div>
@@ -37,8 +40,12 @@
                 </label>
                 <select name="provinsi"
                     class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
-                    <option value="" selected disabled>Provinsi</option>
-                    <option value="jawa">jawa</option>
+                    @if ($Data->provinsi)
+                        <option value="{{ $Data->provinsi }}" selected disabled>{{ $Data->provinsi }}</option>
+                    @else
+                        <option value="" selected disabled>Provinsi</option>
+                        <option value="jawa">jawa</option>
+                    @endif
                 </select>
             </div>
 
@@ -48,8 +55,12 @@
                 </label>
                 <select name="kota"
                     class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
-                    <option value="" selected disabled>Kota</option>
-                    <option value="banjar">banjar</option>
+                    @if ($Data->kota)
+                        <option value="{{ $Data->kota }}" selected disabled>{{ $Data->kota }}</option>
+                    @else
+                        <option value="" selected disabled>Kota</option>
+                        <option value="banjar">banjar</option>
+                    @endif
                 </select>
             </div>
 
@@ -59,18 +70,31 @@
                 </label>
                 <select name="kecamatan"
                     class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
-                    <option value="" selected disabled>Kecamatan</option>
-                    <option value="padaherang">padaherang</option>
+                    @if ($Data->kecamatan)
+                        <option value="{{ $Data->kecamatan }}" selected disabled>{{ $Data->kecamatan }}</option>
+                    @else
+                        <option value="" selected disabled>Kecamatan</option>
+                        <option value="padaherang">padaherang</option>
+                    @endif
                 </select>
             </div>
 
-            <div>
+            @if (Auth::user()->perusahaan->alamatperusahaan)
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                     Detail Alamat <span class="text-red-500">*</span>
                 </label>
-                <textarea name="detail" rows="4" placeholder="Detail Alamat"
-                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"></textarea>
-            </div>
+                <input
+                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    type="text" name="detail" value="{{ $Data->detail }}">
+            @else
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Detail Alamat <span class="text-red-500">*</span>
+                    </label>
+                    <textarea name="detail" rows="4" placeholder="Detail Alamat"
+                        class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"></textarea>
+                </div>
+            @endif
 
             <div class="flex justify-end space-x-3 pt-4">
                 <button type="button"

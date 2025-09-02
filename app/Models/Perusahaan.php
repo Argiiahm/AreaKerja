@@ -15,7 +15,7 @@ class Perusahaan extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function perusahaan() {
+    public function alamatperusahaan() {
         return $this->hasMany(Alamatperusahaan::class, 'perusahaan_id');
     }
 }
