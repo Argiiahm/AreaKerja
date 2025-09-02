@@ -123,10 +123,15 @@
             </div>
 
             <div class="px-6 mb-6">
-                <a href="#" data-drawer-hide="logo-sidebar" class="flex items-center gap-2 hover:text-gray-200">
-                    <i class="ph ph-sign-out"></i>
-                    <span>Keluar</span>
-                </a>
+                <form action="/logout/finance" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" data-drawer-hide="logo-sidebar"
+                        class="flex items-center gap-2 hover:text-gray-200">
+                        <i class="ph ph-sign-out"></i>
+                        <span>Keluar</span>
+                    </button>
+                </form>
             </div>
         </div>
     </aside>
@@ -144,11 +149,20 @@
 
                 <div class="flex items-center gap-2 border border-orange-300 px-3 py-2 rounded-xl shadow-sm">
                     <div>
-                        <img src="{{ asset('Icon/seveninc2.png') }}" alt="Profile" class="w-8 h-9">
+                        @if (Auth::user()->finance->img_profile)
+                            <a href="/profile">
+                                <img class="w-10 h-10 object-cover rounded-full"
+                                    src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}" alt="">
+                            </a>
+                        @else
+                            <img class="w-10 h-10 rounded-full"
+                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                alt="">
+                        @endif
                     </div>
                     <div>
-                        <p class="text-sm font-semibold">Seven Inc</p>
-                        <p class="text-xs text-gray-500">financeseven@gmail.com</p>
+                        <p class="text-sm font-semibold">{{ Auth::user()->username }}</p>
+                        <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
             </div>

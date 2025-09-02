@@ -96,7 +96,7 @@
                                 class="w-52  bg-[#fa6601] mt-5 py-4 rounded-full hover:bg-[#fa6601] hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">MASUK</button>
                         </div>
                         <div class="flex justify-center mt-4">
-                            <span class="font-semibold text-black">Tidak Memiliki Acount? <a href="/register/admin"
+                            <span class="font-semibold text-black">Tidak Memiliki Acount? <a href="/register/super/admin"
                                     class="text-[#fa6601] font-semibold">Daftar Sekarang</a></span>
                         </div>
                     </form>

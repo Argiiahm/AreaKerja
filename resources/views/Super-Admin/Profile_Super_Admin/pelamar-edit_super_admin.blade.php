@@ -8,11 +8,17 @@
             @method('PUT')
             <div class="flex items-center gap-4 mb-6">
                 <div class="flex items-center gap-4">
-                    @if (Auth::user()->superadmins->img_profile == null)
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
-                            alt="Profile Picture" class="w-20 h-20 rounded-full object-cover border">
+                    <div class="modal" id="imgModal">
+                        <img id="modalImg" alt="Zoomed" class="w-40 h-40 sm:w-40 object-cover rounded-full">
+                    </div>
+                    @if (Auth::user()->superadmins->img_profile)
+                        <img id="previewImagesuperadmin" class="w-20 h-20 rounded-full object-cover border"
+                            src="{{ asset('storage/' . Auth::user()->superadmins->img_profile) }}" alt=""
+                            alt="Profile">
                     @else
-                        <img src="" alt="Profile Picture" class="w-20 h-20 rounded-full object-cover border">
+                        <img id="previewImagesuperadmin" class="w-20 h-20 rounded-full object-cover border"
+                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                            alt="" alt="Profile">
                     @endif
                     <div>
                         <h3 class="font-semibold text-lg">{{ Auth::user()->username }}</h3>
@@ -20,21 +26,17 @@
                     </div>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label for="file-upload"
+                    <label
                         class="flex items-center gap-1 bg-[#fa6601] hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm cursor-pointer">
-                        <i class="ph ph-upload-simple text-1xl"></i>
-                        Upload
+                        <i class="ph ph-upload-simple text-2xl"></i>
+                        <span class="text-white">Upload</span>
+                        <input type="file" id="fileInputsp" name="img_profile" accept="image/*" class="hidden">
                     </label>
-                    <input id="file-upload" type="file" class="hidden" name="img_profile">
 
-                    <button type="button"
+                    <button form="hapus-profile" type="submit"
                         class="flex items-center gap-1 border border-[#fa6601] text-[#fa6601] hover:bg-gray-100 px-4 py-2 rounded-md text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M8 7V4a4 4 0 018 0v3" />
-                        </svg>
-                        Remove
+                        <i class="ph ph-trash text-2xl"></i>
+                        <span>Remove</span>
                     </button>
                 </div>
             </div>
@@ -151,4 +153,32 @@
             </div>
         </form>
     </div>
+
+    <script>
+        const profileImg = document.getElementById("previewImagesuperadmin");
+        const imgModalp = document.getElementById("imgModal");
+        const modalImgp = document.getElementById("modalImg");
+
+        profileImg.onclick = () => {
+            imgModalp.style.display = "flex";
+            modalImgp.src = profileImg.src;
+        };
+
+        imgModalp.onclick = () => {
+            imgModalp.style.display = "none";
+        };
+
+        document
+            .getElementById("fileInputsp")
+            .addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById("previewImagesuperadmin").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+    </script>
 @endsection

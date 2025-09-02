@@ -98,17 +98,19 @@ Route::post('/buat/perusahaan', [AuthController::class, 'buat_perusahaan']);
 
 
 
-
-
-
-
 Route::get('/verifikasi', [AuthController::class, 'verifikasi']);
 Route::get('/verifikasi/otp', [AuthController::class, 'verifikasi_otp']);
 Route::get('/change/password', [AuthController::class, 'change_password']);
 
 //Auth Finance
 Route::get('/login/finance', [AuthController::class, 'login_finance']);
+Route::post('/masuk/finance', [AuthController::class, 'masuk_finance']);
+Route::delete('/logout/finance', [AuthController::class, 'logout_finance']);
+ 
 Route::get('/register/finance', [AuthController::class, 'register_finance']);
+Route::post('/buat/finance', [AuthController::class, 'buat_finance']);
+
+
 Route::get('/verifikasi/finance', [AuthController::class, 'verifikasi_finance']);
 Route::get('/verifikasi/finance/otp', [AuthController::class, 'verifikasi_finance_otp']);
 Route::get('/change/password/finance', [AuthController::class, 'change_password_finance']);
@@ -136,19 +138,22 @@ Route::delete('/logout/super/admin', [AuthController::class, 'logout_super_admin
 
 
 Route::get('/register/super/admin', [AuthController::class, 'register_super_admin']);
+Route::post('/buat/superadmin', [AuthController::class, 'buat_super_admin']);
+
+
 Route::get('/verifikasi/super/admin', [AuthController::class, 'verifikasi_super_admin']);
 Route::get('/verifikasi/super/admin/otp', [AuthController::class, 'verifikasi_super_admin_otp']);
 Route::get('/change/password/super/admin', [AuthController::class, 'change_password_super_admin']);
 
 // Dashboard Finance
-Route::get('/dashboard/finance', [FinanceController::class, 'index']);
-Route::get('/dashboard/finance/paketharga', [FinanceController::class, 'paket_harga']);
-Route::get('/dashboard/finance/omset', [FinanceController::class, 'omset']);
-Route::get('/dashboard/finance/catatantransaksi', [FinanceController::class, 'catatan_transaksi']);
-Route::get('/dashboard/finance/catatantransaksi/tunai', [FinanceController::class, 'catatan_transaksi_tunai_detail']);
-Route::get('/dashboard/finance/catatantransaksi/koin', [FinanceController::class, 'catatan_transaksi_koin_detail']);
-Route::get('/dashboard/finance/laporan', [FinanceController::class, 'catatan_laporan_transaksi']);
-Route::get('/dashboard/finance/laporan/penghasilan', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan']);
+Route::get('/dashboard/finance', [FinanceController::class, 'index'])->middleware('finance');
+Route::get('/dashboard/finance/paketharga', [FinanceController::class, 'paket_harga'])->middleware('finance');
+Route::get('/dashboard/finance/omset', [FinanceController::class, 'omset'])->middleware('finance')->middleware('finance');
+Route::get('/dashboard/finance/catatantransaksi', [FinanceController::class, 'catatan_transaksi'])->middleware('finance');
+Route::get('/dashboard/finance/catatantransaksi/tunai', [FinanceController::class, 'catatan_transaksi_tunai_detail'])->middleware('finance');
+Route::get('/dashboard/finance/catatantransaksi/koin', [FinanceController::class, 'catatan_transaksi_koin_detail'])->middleware('finance');
+Route::get('/dashboard/finance/laporan', [FinanceController::class, 'catatan_laporan_transaksi'])->middleware('finance');
+Route::get('/dashboard/finance/laporan/penghasilan', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('finance');
 
 
 // Dashboard SuperAdmin
@@ -268,7 +273,6 @@ Route::get('/dashboard/perusahaan/isi/alamat', [PerusahaanController::class, 'is
 Route::post('/dashboard/perusahaan/create/alamat', [PerusahaanController::class, 'create_alamat'])->middleware('perusahaan');
 Route::get('/dashboard/perusahaan/edit/alamat/{alamatperusahaan:id}', [PerusahaanController::class, 'edit_alamat'])->middleware('perusahaan');
 Route::put('/dashboard/perusahaan/update/alamat/{alamatperusahaan:id}', [PerusahaanController::class, 'update_alamat'])->middleware('perusahaan');
-
 
 Route::get('/dashboard/perusahaan/alamat/jadi', [PerusahaanController::class, 'alamat_jadi'])->middleware('perusahaan');
 

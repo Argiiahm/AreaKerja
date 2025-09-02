@@ -31,7 +31,9 @@ class AuthController extends Controller
                 return redirect('/');
             } elseif (Auth::user()->role == 'perusahaan') {
                 return redirect('/dashboard/perusahaan');
-            } 
+            } elseif (Auth::user()->role == 'finance') {
+                return redirect('/dashboard/finance');
+            }
         } else {
             return back();
         }
@@ -77,7 +79,6 @@ class AuthController extends Controller
 
 
     // Perusahaan Register
-
     public function buat_perusahaan(Request $request)
     {
         $v = $request->validate([
@@ -129,10 +130,52 @@ class AuthController extends Controller
         return view('Auth.login-finance');
     }
 
+    public function masuk_finance(Request $request)
+    {
+        $validasi_data = $request->validate([
+            "username"     =>     "required",
+            "password"     =>     "required"
+        ]);
+
+        Auth::attempt($validasi_data);
+        return redirect('/dashboard/finance');
+    }
+
+    public function logout_finance(Request $request)
+    {
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login/finance');
+    }
+
+
+
     public function register_finance()
     {
         return view('Auth.Register-finance');
     }
+
+    public function buat_finance(Request $request)
+    {
+        $v = $request->validate([
+            "username"      =>      "required",
+            "email"         =>      "required|email",
+            "role"          =>      "required",
+            "password"      =>      "required"
+        ]);
+
+        $v['password']      =    Hash::make($request->password);
+        $u = User::create($v);
+
+        $v2 = $request->validate([
+            "nama_lengkap"      =>      "nullable",
+        ]);
+
+        $u->finance()->create($v2);
+
+        return redirect('/login/finance');
+    }
+
 
     public function verifikasi_finance()
     {
@@ -210,13 +253,31 @@ class AuthController extends Controller
     }
 
 
-
-
-
     public function register_super_admin()
     {
         return view('Auth.Register-super-admin');
     }
+
+    public function buat_super_admin(Request $request)
+    {
+        $v = $request->validate([
+            "username"      =>      "required",
+            "email"         =>      "required|email",
+            "role"          =>      "required",
+            "password"      =>      "required"
+        ]);
+
+
+        $v['password']      =    Hash::make($request->password);
+        $u =  User::create($v);
+
+        $v2 = $request->validate(["nama_lengkap"  =>      "nullable"]);
+
+        $u->superadmins()->create($v2);
+        return redirect('/login/super/admin');
+
+    }
+
 
     public function verifikasi_super_admin()
     {

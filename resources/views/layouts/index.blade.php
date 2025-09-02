@@ -18,6 +18,10 @@
     @vite('resources/css/app.css')
 </head>
 <style>
+    html {
+        scroll-behavior: smooth;
+    }
+
     .notif-profil {
         margin: 0 !important;
         padding: 0 !important;
@@ -214,6 +218,37 @@
                                     </li>
                                 </ul>
                             </div>
+                        @elseif (Auth::user()->role == 'finance')
+                            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
+                                id="user-dropdown">
+                                <div class="flex items-center gap-2 mx-3">
+                                    <img class="w-10 h-10 rounded-full"
+                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                        alt="">
+                                    <div class="px-4 py-3">
+                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
+                                        <span
+                                            class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <ul class="py-2" aria-labelledby="user-menu-button">
+                                    <li class="px-3">
+                                        Finance
+                                    </li>
+                                    <li id="btn-profile">
+                                        <a href="/dashboard/finance"
+                                            class="block px-4 py-2 text-sm underline">Dashboard</a>
+                                    </li>
+                                    <li
+                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
+                                        <button data-modal-target="popup-modal-logout"
+                                            data-modal-toggle="popup-modal-logout" type="button">
+                                            Keluar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
                         @elseif (Auth::user()->role == 'perusahaan')
                             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
                                 id="user-dropdown">
@@ -238,7 +273,8 @@
                                 </div>
                                 <ul class="py-2" aria-labelledby="user-menu-button">
                                     <li id="btn-profile">
-                                        <a href="/dashboard/perusahaan/profile" class="block px-4 py-2 text-sm">Profile Perusahaan</a>
+                                        <a href="/dashboard/perusahaan/profile"
+                                            class="block px-4 py-2 text-sm">Profile Perusahaan</a>
                                     </li>
                                     <li>
                                         <a href="" class="block px-4 py-2 text-sm">Koin Area Kerja</a>
@@ -328,7 +364,7 @@
             </div>
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:mt-0 md:border-0 ">
-                    @if (Auth::check() && Auth::user()->role == 'perusahaan') 
+                    @if (Auth::check() && Auth::user()->role == 'perusahaan')
                         <li>
                             <a href=""
                                 class="block {{ Request()->is('') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Berlangganan</a>
@@ -376,90 +412,90 @@
                                 class="block {{ Request()->is('pasanglowongan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Pasang
                                 Lowongan</a>
                         </li>
-                        @endif
-                        <li class="flex lg:hidden md:hidden justify-between items-center mt-4">
-                            <button type="button" id="notifikasi" aria-expanded="false"
-                                data-dropdown-toggle="notif-hp" data-dropdown-placement="bottom">
-                                <span class="sr-only">Open user menu</span>
-                                <i class="ph-fill text-[#fa6601] ph-bell text-3xl"></i>
-                            </button>
+                    @endif
+                    <li class="flex lg:hidden md:hidden justify-between items-center mt-4">
+                        <button type="button" id="notifikasi" aria-expanded="false" data-dropdown-toggle="notif-hp"
+                            data-dropdown-placement="bottom">
+                            <span class="sr-only">Open user menu</span>
+                            <i class="ph-fill text-[#fa6601] ph-bell text-3xl"></i>
+                        </button>
 
-                            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg transform translate-x-16 translate-y-[-4rem] w-80 h-56 overflow-auto"
-                                id="notif-hp">
-                                <div class="flex items-center px-4 py-3 justify-between">
-                                    <span class="block text-sm text-gray-900">Notifikasi</span>
-                                    <span class="block text-sm  text-orange-500">Lihat Semua</span>
-                                </div>
-                                <ul class="py-2" aria-labelledby="user-menu-button">
-                                    <li class="border-b">
-                                        <div class="flex items-center gap-2 ">
-                                            <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
-                                                <img class="w-8"
-                                                    src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
-                                                    alt="">
-                                                <p>Selamat! Lamaran yang anda
-                                                    ajukan ke Seven Inc divisi
-                                                    Videografi Diterima.</p>
-                                            </a>
-                                            <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
-                                        </div>
-                                    </li>
-                                    <li class="border-b">
-                                        <div class="flex items-center gap-2 ">
-                                            <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
-                                                <img class="w-8"
-                                                    src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
-                                                    alt="">
-                                                <p>Selamat! Lamaran yang anda
-                                                    ajukan ke Seven Inc divisi
-                                                    Videografi Diterima.</p>
-                                            </a>
-                                            <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
-                                        </div>
-                                    </li>
-                                    <li class="border-b">
-                                        <div class="flex items-center gap-2 ">
-                                            <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
-                                                <img class="w-8"
-                                                    src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
-                                                    alt="">
-                                                <p>Selamat! Lamaran yang anda
-                                                    ajukan ke Seven Inc divisi
-                                                    Videografi Diterima.</p>
-                                            </a>
-                                            <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
-                                        </div>
-                                    </li>
-                                    <span class="px-4 flex items-center justify-end gap-2 py-3">
-                                        <i class="ph ph-checks text-blue-500 font-bold text-2xl"></i>
-                                        <p class="text-[14px] font-semibold">Tandai baca</p>
-                                    </span>
-                                </ul>
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg transform translate-x-16 translate-y-[-4rem] w-80 h-56 overflow-auto"
+                            id="notif-hp">
+                            <div class="flex items-center px-4 py-3 justify-between">
+                                <span class="block text-sm text-gray-900">Notifikasi</span>
+                                <span class="block text-sm  text-orange-500">Lihat Semua</span>
                             </div>
-
-                            @if (Auth::check())
-                                @if (Auth::user()->role == 'pelamar')
-                                    @if (Auth::user()->pelamars->img_profile)
-                                        <a href="/profile">
-                                            <img class="w-10 h-10 object-cover rounded-full"
-                                                src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}"
+                            <ul class="py-2" aria-labelledby="user-menu-button">
+                                <li class="border-b">
+                                    <div class="flex items-center gap-2 ">
+                                        <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
+                                            <img class="w-8"
+                                                src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
                                                 alt="">
+                                            <p>Selamat! Lamaran yang anda
+                                                ajukan ke Seven Inc divisi
+                                                Videografi Diterima.</p>
                                         </a>
-                                    @else
-                                        <img class="w-10 h-10 rounded-full"
-                                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                        <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
+                                    </div>
+                                </li>
+                                <li class="border-b">
+                                    <div class="flex items-center gap-2 ">
+                                        <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
+                                            <img class="w-8"
+                                                src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
+                                                alt="">
+                                            <p>Selamat! Lamaran yang anda
+                                                ajukan ke Seven Inc divisi
+                                                Videografi Diterima.</p>
+                                        </a>
+                                        <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
+                                    </div>
+                                </li>
+                                <li class="border-b">
+                                    <div class="flex items-center gap-2 ">
+                                        <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
+                                            <img class="w-8"
+                                                src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
+                                                alt="">
+                                            <p>Selamat! Lamaran yang anda
+                                                ajukan ke Seven Inc divisi
+                                                Videografi Diterima.</p>
+                                        </a>
+                                        <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
+                                    </div>
+                                </li>
+                                <span class="px-4 flex items-center justify-end gap-2 py-3">
+                                    <i class="ph ph-checks text-blue-500 font-bold text-2xl"></i>
+                                    <p class="text-[14px] font-semibold">Tandai baca</p>
+                                </span>
+                            </ul>
+                        </div>
+
+                        @if (Auth::check())
+                            @if (Auth::user()->role == 'pelamar')
+                                @if (Auth::user()->pelamars->img_profile)
+                                    <a href="/profile">
+                                        <img class="w-10 h-10 object-cover rounded-full"
+                                            src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}"
                                             alt="">
-                                    @endif
+                                    </a>
                                 @else
                                     <img class="w-10 h-10 rounded-full"
                                         src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
                                         alt="">
                                 @endif
                             @else
-                                <a href="/login"
-                                    class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
+                                <img class="w-10 h-10 rounded-full"
+                                    src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                    alt="">
                             @endif
-                        </li>
+                        @else
+                            <a href="/login"
+                                class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
+                        @endif
+                    </li>
                 </ul>
             </div>
         </div>

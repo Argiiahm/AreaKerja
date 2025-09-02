@@ -55,11 +55,12 @@
 
 
 
-                    <form id="form-pelamar">
-                        <label for="name" class="font-semibold">Nama Pengguna</label>
+                    <form id="form-pelamar" action="/buat/superadmin" method="POST">
+                        @csrf
+                        <label for="username" class="font-semibold">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="name" class="pl-2 w-full outline-none border-none" type="text"
-                                name="name" placeholder="Nama Pengguna" />
+                            <input id="username" class="pl-2 w-full outline-none border-none" type="text"
+                                name="username" placeholder="Nama Pengguna" />
                         </div>
 
                         <label for="email" class="font-semibold">E-Mail</label>
@@ -67,6 +68,8 @@
                             <input id="email" class="pl-2 w-full outline-none border-none" type="email"
                                 name="email" placeholder="E-Mail" />
                         </div>
+
+                        <input type="text" hidden name="role" value="superadmin">
 
                         <label for="password" class="font-semibold">Kata Sandi</label>
                         <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">

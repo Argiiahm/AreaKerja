@@ -14,14 +14,14 @@
                     Dapatkan Karyawan berkualitas<br>
                     untuk perusahaan anda
                 </p>
-                <a href="#"
+                <a href="#pasanglowongan"
                     class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-md shadow-md">
                     Daftar
                 </a>
             </div>
         </div>
     </section>
-    <section class="mx-0 lg:mx-20  mt-10">
+    <section id="pasanglowongan" class="mx-0 lg:mx-20  mt-10">
         <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
                 <div class="bg-yellow-500 p-5">

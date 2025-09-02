@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SuperAdmin;
 use App\Models\User;
+use App\Models\SuperAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SuperAdminController extends Controller
 {
@@ -36,7 +37,7 @@ class SuperAdminController extends Controller
 
         $vdata = $request->validate([
             "nama_lengkap"  => 'nullable|string',
-            "img_profile"   => 'nullable|string',
+            "img_profile"   => 'nullable',
             "provinsi"      => 'nullable|string',
             "kota"          => 'nullable|string',
             "kecamatan"     => 'nullable|string',
@@ -46,11 +47,22 @@ class SuperAdminController extends Controller
         ]);
 
         $User = User::where('id', Auth::user()->id);
+
         if ($User) {
             $User->update($vdataUser);
         }
 
+
+
         $Superadmin = SuperAdmin::where('user_id', Auth::user()->id)->first();
+
+        if ($request->hasFile('img_profile')) {
+            if ($Superadmin->img_profile && Storage::exists('public/' . $Superadmin->img_profile)) {
+                Storage::delete('public/' . $Superadmin->img_profile);
+            }
+            $vdata['img_profile'] = $request->file('img_profile')->store('images', 'public');
+        }
+
         if ($Superadmin) {
             $Superadmin->update($vdata);
         }

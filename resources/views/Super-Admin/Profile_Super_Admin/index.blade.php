@@ -5,11 +5,11 @@
         <h2 class="text-lg font-semibold mb-6">Edit Profile</h2>
 
         <div class="flex items-center gap-4 mb-6">
-            @if (Auth::user()->superadmins->img_profile == null)
+            @if (Auth::user()->superadmins->img_profile)
+                <img src="{{ asset('storage/' . Auth::user()->superadmins->img_profile) }}" alt="Profile Picture" class="w-20 h-20 rounded-full object-cover border">
+            @else
                 <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
                     alt="Profile Picture" class="w-20 h-20 rounded-full object-cover border">
-            @else
-                <img src="" alt="Profile Picture" class="w-20 h-20 rounded-full object-cover border">
             @endif
             <div>
                 <h3 class="font-semibold text-lg">{{ Auth::user()->superadmins->nama_lengkap }}</h3>
