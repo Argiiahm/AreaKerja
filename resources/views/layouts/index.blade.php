@@ -249,6 +249,37 @@
                                     </li>
                                 </ul>
                             </div>
+                        @elseif (Auth::user()->role == 'admin')
+                            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
+                                id="user-dropdown">
+                                <div class="flex items-center gap-2 mx-3">
+                                    <img class="w-10 h-10 rounded-full"
+                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                        alt="">
+                                    <div class="px-4 py-3">
+                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
+                                        <span
+                                            class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <ul class="py-2" aria-labelledby="user-menu-button">
+                                    <li class="px-3">
+                                        Admin
+                                    </li>
+                                    <li id="btn-profile">
+                                        <a href="/dashboard/admin"
+                                            class="block px-4 py-2 text-sm underline">Dashboard</a>
+                                    </li>
+                                    <li
+                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
+                                        <button data-modal-target="popup-modal-logout"
+                                            data-modal-toggle="popup-modal-logout" type="button">
+                                            Keluar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
                         @elseif (Auth::user()->role == 'perusahaan')
                             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
                                 id="user-dropdown">

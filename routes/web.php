@@ -32,7 +32,7 @@ Route::get('/detail/job', [HomeController::class, 'viewjob']);
 Route::get('/talenthunter', [TalentHunterController::class, 'index']);
 
 Route::get('/tipskerja', [TipskerjaController::class, 'index']);
-Route::get('/tipskerja/details', [TipskerjaController::class, 'details']);
+Route::get('/tipskerja/details/{tipskerja:id}', [TipskerjaController::class, 'details']);
 
 Route::get('/daftarkandidat', [KandidatController::class, 'index']);
 
@@ -117,7 +117,14 @@ Route::get('/change/password/finance', [AuthController::class, 'change_password_
 
 //Auth Admin
 Route::get('/login/admin', [AuthController::class, 'login_admin']);
+Route::post('/masuk/admin', [AuthController::class, 'masuk_admin']);
+
+
+
 Route::get('/register/admin', [AuthController::class, 'register_admin']);
+Route::post('/buat/admin', [AuthController::class, 'buat_admin']);
+
+
 Route::get('/verifikasi/admin', [AuthController::class, 'verifikasi_admin']);
 Route::get('/verifikasi/admin/otp', [AuthController::class, 'verifikasi_admin_otp']);
 Route::get('/change/password/admin', [AuthController::class, 'change_password_admin']);
@@ -232,32 +239,37 @@ Route::get('/dashboard/superadmin/pengaturan', [SuperAdminController::class, 'pe
 
 
 // Dashboard Admin
-Route::get('/dashboard/admin', [AdminController::class, 'index']);
+Route::get('/dashboard/admin', [AdminController::class, 'index'])->middleware('admin');
 
-Route::get('/dashboard/admin/profile', [AdminController::class, 'profile']);
-Route::get('/dashboard/admin/profile/edit', [AdminController::class, 'profile_edit']);
+Route::get('/dashboard/admin/profile', [AdminController::class, 'profile'])->middleware('admin');
+Route::get('/dashboard/admin/profile/edit/{admin:id}', [AdminController::class, 'profile_edit'])->middleware('admin');
+Route::put('/dashboard/admin/profile/update/{admin:id}', [AdminController::class, 'profile_update'])->middleware('admin');
 
-Route::get('/dashboard/admin/pelamar', [AdminController::class, 'pelamar']);
-Route::get('/dashboard/admin/kandidat/view', [AdminController::class, 'kandidat_view_cv']);
-Route::get('/dashboard/admin/nonkandidat/view', [AdminController::class, 'non_kandidat_view_cv']);
-Route::get('/dashboard/admin/calonkandidat/view', [AdminController::class, 'calon_kandidat_view']);
+Route::get('/dashboard/admin/pelamar', [AdminController::class, 'pelamar'])->middleware('admin');
+Route::get('/dashboard/admin/kandidat/view', [AdminController::class, 'kandidat_view_cv'])->middleware('admin');
+Route::get('/dashboard/admin/nonkandidat/view', [AdminController::class, 'non_kandidat_view_cv'])->middleware('admin');
+Route::get('/dashboard/admin/calonkandidat/view', [AdminController::class, 'calon_kandidat_view'])->middleware('admin');
 
-Route::get('/dashboard/admin/perusahaan', [AdminController::class, 'perusahaan']);
-Route::get('/dashboard/admin/perusahaan/view', [AdminController::class, 'perusahaan_view']);
-Route::get('/dashboard/admin/perusahaan/view/lowongan', [AdminController::class, 'perusahaan_view_lowongan']);
-Route::get('/dashboard/admin/perusahaan/view/cv', [AdminController::class, 'perusahaan_view_cv']);
-Route::get('/dashboard/admin/perusahaan/view/talenthunter', [AdminController::class, 'perusahaan_view_talenthunter']);
+Route::get('/dashboard/admin/perusahaan', [AdminController::class, 'perusahaan'])->middleware('admin');
+Route::get('/dashboard/admin/perusahaan/view', [AdminController::class, 'perusahaan_view'])->middleware('admin');
+Route::get('/dashboard/admin/perusahaan/view/lowongan', [AdminController::class, 'perusahaan_view_lowongan'])->middleware('admin');
+Route::get('/dashboard/admin/perusahaan/view/cv', [AdminController::class, 'perusahaan_view_cv'])->middleware('admin');
+Route::get('/dashboard/admin/perusahaan/view/talenthunter', [AdminController::class, 'perusahaan_view_talenthunter'])->middleware('admin');
 
-Route::get('/dashboard/admin/finance', [AdminController::class, 'finance']);
+Route::get('/dashboard/admin/finance', [AdminController::class, 'finance'])->middleware('admin');
 
-Route::get('/dashboard/admin/tipskerja', [AdminController::class, 'tips_kerja']);
-Route::get('/dashboard/admin/tipskerja/addpost', [AdminController::class, 'tips_kerja_add_post']);
+Route::get('/dashboard/admin/tipskerja', [AdminController::class, 'tips_kerja'])->middleware('admin');
+Route::get('/dashboard/admin/tipskerja/addpost', [AdminController::class, 'tips_kerja_add_post'])->middleware('admin');
+Route::put('/ubah/status', [AdminController::class, 'ubah_status'])->middleware('admin');
+Route::delete('/delete', [AdminController::class, 'hapus'])->middleware('admin');
+
+Route::post('/dashboard/admin/tipskerja/create/post', [AdminController::class, 'tips_kerja_create_post'])->middleware('admin')->name('tipskerja.store');
 
 
-Route::get('/dashboard/admin/event', [AdminController::class, 'event']);
-Route::get('/dashboard/admin/event/detail', [AdminController::class, 'event_detail']);
-Route::get('/dashboard/admin/event/add', [AdminController::class, 'event_add']);
-Route::get('/dashboard/admin/event/edit', [AdminController::class, 'event_edit']);
+Route::get('/dashboard/admin/event', [AdminController::class, 'event'])->middleware('admin');
+Route::get('/dashboard/admin/event/detail', [AdminController::class, 'event_detail'])->middleware('admin');
+Route::get('/dashboard/admin/event/add', [AdminController::class, 'event_add'])->middleware('admin');
+Route::get('/dashboard/admin/event/edit', [AdminController::class, 'event_edit'])->middleware('admin');
 
 
 //Perusahaan
@@ -265,8 +277,6 @@ Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index'])->mid
 Route::get('/dashboard/perusahaan/profile', [PerusahaanController::class, 'profile'])->middleware('perusahaan');
 Route::get('/dashboard/perusahaan/edit/profile', [PerusahaanController::class, 'edit_profile'])->middleware('perusahaan');
 Route::put('/dashboard/perusahaan/update/profile/{perusahaan:id}', [PerusahaanController::class, 'update_profile'])->middleware('perusahaan');
-
-
 
 Route::get('/dashboard/perusahaan/tambah/alamat', [PerusahaanController::class, 'tambah_alamat'])->middleware('perusahaan');
 Route::get('/dashboard/perusahaan/isi/alamat', [PerusahaanController::class, 'isi_alamat'])->middleware('perusahaan');

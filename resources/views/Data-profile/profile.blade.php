@@ -1,4 +1,4 @@
-@extends('layouts.index')
+    @extends('layouts.index')
 
 @section('content')
     <section class="pt-40 mx-10">

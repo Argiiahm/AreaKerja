@@ -37,7 +37,7 @@ class SuperAdminController extends Controller
 
         $vdata = $request->validate([
             "nama_lengkap"  => 'nullable|string',
-            "img_profile"   => 'nullable',
+            "img_profile"   => 'nullable|file|image|mimes:png,jpg,jpeg',
             "provinsi"      => 'nullable|string',
             "kota"          => 'nullable|string',
             "kecamatan"     => 'nullable|string',

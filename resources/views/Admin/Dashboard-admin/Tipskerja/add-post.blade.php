@@ -2,7 +2,8 @@
 
 @section('admin-content')
     <div class="mx-auto p-6">
-        <form action="">
+        <form action="/dashboard/admin/tipskerja/create/post" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="mb-4">
                 <input type="text" name="title" placeholder="Judul artikel..."
                     class="w-full border border-gray-300 rounded-lg px-3 py-2">
@@ -13,11 +14,11 @@
                     class="cursor-pointer px-4 py-2 bg-gray-100 border rounded-lg shadow hover:bg-gray-200 text-sm font-medium">
                     Tambahkan Media
                 </label>
-                <input id="uploadMedia" type="file" hidden>
+                <input id="uploadMedia" type="file" name="image" hidden>
             </div>
 
             <div class="">
-                <input id="x" type="hidden" name="">
+                <input id="x" type="hidden" name="content">
                 <trix-editor input="x" class="trix-content"></trix-editor>
             </div>
 

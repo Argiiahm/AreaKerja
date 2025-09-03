@@ -19,6 +19,32 @@
     trix-toolbar [data-trix-button-group="file-tools"] {
         display: none;
     }
+        .profile-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        cursor: pointer;
+        object-fit: cover;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* gambar di modal */
+    .modal img {
+        max-width: 90%;
+        max-height: 90%;
+    }
 </style>
 
 <body class="bg-gray-50">
@@ -110,10 +136,14 @@
         </div>
 
         <div class="px-6 mb-6">
-            <a href="/logout" class="flex items-center gap-2 hover:text-gray-200">
-                <i class="ph ph-sign-out text-lg"></i>
-                <span>Keluar</span>
-            </a>
+            <form action="/logout" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="flex items-center gap-2 hover:text-gray-200 cursor-pointer">
+                    <i class="ph ph-sign-out text-lg"></i>
+                    <span>Keluar</span>
+                </button>
+            </form>
         </div>
     </aside>
 
@@ -130,12 +160,18 @@
 
                 <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
                     <div>
-                        <img src="https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8"
-                            alt="Profile" class="w-8 h-9 rounded-full">
+                        @if (Auth::user()->admin->img_profile)
+                            <img class="w-10 h-10 object-cover rounded-full"
+                                src="{{ asset('storage/' . Auth::user()->admin->img_profile) }}" alt="">
+                        @else
+                            <img class="w-10 h-10 rounded-full"
+                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                alt="">
+                        @endif
                     </div>
                     <div>
-                        <p class="text-sm font-semibold">Rehan Roblox</p>
-                        <p class="text-xs text-gray-500">admin@gmail.com</p>
+                        <p class="text-sm font-semibold">{{ Auth::user()->username }}</p>
+                        <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
             </div>

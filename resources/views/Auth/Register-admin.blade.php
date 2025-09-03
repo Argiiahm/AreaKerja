@@ -55,24 +55,21 @@
 
 
 
-                    <form id="form-pelamar">
-                        <label for="name" class="font-semibold">Nama Pengguna</label>
+                    <form id="form-pelamar" action="/buat/admin" method="POST">
+                        @csrf
+                        <label for="username" class="font-semibold">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="name" class="pl-2 w-full outline-none border-none" type="text"
-                                name="name" placeholder="Nama Pengguna" />
+                            <input id="username" class="pl-2 w-full outline-none border-none" type="text"
+                                name="username" placeholder="Nama Pengguna" />
                         </div>
 
                         <label for="email" class="font-semibold">E-Mail</label>
                         <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
                             <input id="email" class="pl-2 w-full outline-none border-none" type="email"
                                 name="email" placeholder="E-Mail" />
-                        </div>
-
-                        <label for="phone" class="font-semibold">No. Tlp</label>
-                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="phone" class="pl-2 w-full outline-none border-none" type="number"
-                                name="phone" placeholder="No. Tlp" />
-                        </div>
+                            </div>
+                            <input id="role" hidden class="pl-2 w-full outline-none border-none" type="role"
+                                name="role" value="admin"/>
 
                         <label for="password" class="font-semibold">Kata Sandi</label>
                         <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
@@ -112,7 +109,7 @@
                 </p>
 
                 <div class="flex justify-center mt-6">
-                    <a href="/login"
+                    <a href="/login/admin"
                         class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
                         Masuk
                     </a>

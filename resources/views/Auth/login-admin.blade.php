@@ -72,10 +72,11 @@
                     <p class="text-sm font-normal text-gray-600 mb-8 text-center mt-3">gunakan email anda untuk
                         pendaftaran
                     </p>
-                    <form class="bg">
-                        <label for="name" class="font-semibold ">Nama Pengguna</label>
+                    <form class="bg" action="/masuk/admin" method="POST">
+                        @csrf
+                        <label for="username" class="font-semibold ">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-8 py-2 px-3">
-                            <input id="name" class=" pl-2 w-full outline-none border-none" type="text name="name"
+                            <input id="username" class=" pl-2 w-full outline-none border-none" type="text" name="username"
                                 placeholder="Nama Pengguna" required autofocus />
                         </div>
                         <label for="password" class="font-semibold">Kata Sandi</label>

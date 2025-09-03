@@ -29,76 +29,24 @@
         <div class="mt-8 mx-5 lg:mx-0">
             <h1 class="my-4 text-2xl font-bold">Tips Kerja</h1>
             <div class="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-4 gap-5">
-                <a href="/tipskerja/details" class="">
-                    <img class="w-52 h-52 object-cover rounded-lg"
-                        src="{{ asset('image/13819-lowongan-kerja-jasa-raharja-freepik 2.png') }}" alt="">
-                    <div class="flex mt-2 items-center gap-1 text-gray-500 font-semibold">
-                        <img class="w-8" src="{{ asset('image/logo-areakerja.png') }}" alt="">
-                        <span class="text-[10px]">AreaKerja.com - 14 Oktober 2024</span>
-                    </div>
-                    <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
-                        Patut Kamu Coba</h1>
-                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
-                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
-                    <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
-                            Menit</span></span>
-                </a>
-                <div class="">
-                    <img class="w-52 h-52 object-cover rounded-lg"
-                        src="{{ asset('image/13819-lowongan-kerja-jasa-raharja-freepik 2.png') }}" alt="">
-                    <div class="flex mt-2 items-center gap-1 text-gray-500 font-semibold">
-                        <img class="w-8" src="{{ asset('image/logo-areakerja.png') }}" alt="">
-                        <span class="text-[10px]">AreaKerja.com - 14 Oktober 2024</span>
-                    </div>
-                    <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
-                        Patut Kamu Coba</h1>
-                   <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
-                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
-                    <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
-                            Menit</span></span>
-                </div>
-                <div class="">
-                    <img class="w-52 h-52 object-cover rounded-lg"
-                        src="{{ asset('image/13819-lowongan-kerja-jasa-raharja-freepik 2.png') }}" alt="">
-                    <div class="flex mt-2 items-center gap-1 text-gray-500 font-semibold">
-                        <img class="w-8" src="{{ asset('image/logo-areakerja.png') }}" alt="">
-                        <span class="text-[10px]">AreaKerja.com - 14 Oktober 2024</span>
-                    </div>
-                    <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
-                        Patut Kamu Coba</h1>
-                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
-                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
-                    <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
-                            Menit</span></span>
-                </div>
-                <div class="">
-                    <img class="w-52 h-52 object-cover rounded-lg"
-                        src="{{ asset('image/13819-lowongan-kerja-jasa-raharja-freepik 2.png') }}" alt="">
-                    <div class="flex mt-2 items-center gap-1 text-gray-500 font-semibold">
-                        <img class="w-8" src="{{ asset('image/logo-areakerja.png') }}" alt="">
-                        <span class="text-[10px]">AreaKerja.com - 14 Oktober 2024</span>
-                    </div>
-                    <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
-                        Patut Kamu Coba</h1>
-                    <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
-                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
-                    <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
-                            Menit</span></span>
-                </div>
-                <div class="">
-                    <img class="w-52 h-52 object-cover rounded-lg"
-                        src="{{ asset('image/13819-lowongan-kerja-jasa-raharja-freepik 2.png') }}" alt="">
-                    <div class="flex mt-2 items-center gap-1 text-gray-500 font-semibold">
-                        <img class="w-8" src="{{ asset('image/logo-areakerja.png') }}" alt="">
-                        <span class="text-[10px]">AreaKerja.com - 14 Oktober 2024</span>
-                    </div>
-                    <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">4 Rekomendasi Kerja Freelance Yang
-                        Patut Kamu Coba</h1>
-                   <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">Banyak jenis pekerjaan freelance, tentu hanya ada beberapa yang memiliki prospek dan menjanjikan di masa mendatang. 
-                         Ini tentu akan jadi pertimbangan kamu sebagai calon pekerja lepas.</p>
-                    <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> - 20
-                            Menit</span></span>
-                </div>
+                @foreach ($Data as $d)
+                    @if ($d->status == 'terbit')
+                        <a href="/tipskerja/details/{{ $d->id }}" class="">
+                            <img class="w-52 h-52 object-cover rounded-lg" src="{{ asset('storage/' . $d->image) }}"
+                                alt="">
+                            <div class="flex mt-2 items-center gap-1 text-gray-500 font-semibold">
+                                <img class="w-8" src="{{ asset('image/logo-areakerja.png') }}" alt="">
+                                <span class="text-[10px]">{{ $d->penulis }} - {{ $d->created_at->format('d M Y') }}</span>
+                            </div>
+                            <h1 class="w-40 lg:w-52 md:w-52 pl-1 text-gray-800 font-bold mb-3">{{ $d->title }}</h1>
+                            <p class="w-40 lg:w-52 md:w-52 pl-1 text-gray-500">{{ $d->intro }}.</p>
+                            <span class="text-[#fa6601] pl-1 font-bold text-[13px]">Tips <span class="text-gray-400"> -
+                                    {{ $d->updated_at->diffForHumans() }}</span></span>
+                        </a>
+                    @else
+                        <p>Belum Ada Postingan</p>
+                    @endif
+                @endforeach
             </div>
             <a href="#" class="float-right cursor-pointer">
                 <i class="ph ph-caret-up p-5 text-white rounded-full aspect-square bg-[#fa6601]"></i>

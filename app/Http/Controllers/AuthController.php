@@ -200,10 +200,42 @@ class AuthController extends Controller
         return view('Auth.login-admin');
     }
 
+
+    public function masuk_admin(Request $request){
+        $v = $request->validate([
+            "username"  =>   'required',
+            "password"  =>   'required'
+        ]);
+        Auth::attempt($v);
+        return redirect('/dashboard/admin');
+    }
+
+
     public function register_admin()
     {
         return view('Auth.Register-admin');
     }
+
+
+    public function buat_admin(Request $request){
+        $v = $request->validate([
+            "username"  =>   'required',
+            "email"    =>    'required|email',
+            "role"    =>    'required',
+            "password"  =>   'required',
+        ]);
+
+        $v['password']   =  Hash::make($request->password);
+        $user = User::create($v);
+        
+        $v2  = $request->validate([
+            "nama_lengkap"  =>      "nullable"
+        ]);
+        
+        $user->admin()->create($v2);
+        return redirect('/login/admin');
+    }
+
 
     public function verifikasi_admin()
     {

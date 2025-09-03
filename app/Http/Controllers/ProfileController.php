@@ -28,7 +28,7 @@ class ProfileController extends Controller
 
         $vdata = $request->validate([
             "nama_pelamar"    =>      "nullable",
-            "img_profile"     =>      "nullable|file|image",
+            "img_profile"     =>      'nullable|file|image|mimes:png,jpg,jpeg',
             "gender"          =>      "nullable",
             "tanggal_lahir"   =>      "nullable",
             "deskripsi_diri"  =>     "nullable",

@@ -33,7 +33,7 @@
                             <span class="text-orange-500">Upload</span>
                             <input type="file" id="fileInputPerusahaan" name="img_profile" accept="image/*"
                                 class="hidden">
-                        </label>
+                        </label>    
 
                         <button form="hapus-profile" type="submit"
                             class="flex items-center gap-2 border px-6 py-2 rounded-lg w-full sm:w-auto justify-center">
@@ -64,7 +64,7 @@
             </div>
 
             @if (Auth::user()->perusahaan->deskripsi)
-            <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-start gap-4">
                 <label class="w-40 font-medium">Deskripsi <span class="text-red-500">*</span></label>
                 <input value="{{ Auth::user()->perusahaan->deskripsi }}" class="flex-1 border border-orange-400 rounded-md p-2 focus:ring-2 focus:ring-orange-400"
                     name="deskripsi" type="text" id="">
