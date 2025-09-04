@@ -4,17 +4,17 @@
     <div class="p-6">
         <div class="flex flex-wrap items-center mb-3 space-x-2 text-sm">
             <span>Semua ({{ $all }})</span>
-            <span class="text-blue-500 cursor-pointer">| Telah Terbit ({{ $terbit }})</span>
-            <span class="text-blue-500 cursor-pointer">| Draf ({{ $noterbit }})</span>
+            <span id="btn_terbit" class="text-blue-500 cursor-pointer">| Telah Terbit ({{ $terbit }})</span>
+            <span id="btn_blmterbit" class="text-blue-500 cursor-pointer">| Draf ({{ $noterbit }})</span>
         </div>
 
         <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-3">
             <div class="flex flex-wrap items-center gap-2">
                 <div class="relative">
-                    <select
+                    <select id="filterSelect"
                         class="appearance-none border border-gray-300 rounded-md px-3 h-9 pr-6 text-sm text-gray-700 focus:outline-none">
-                        <option>Tanggal</option>
-                        <option>Nama</option>
+                        <option value="tanggal">Tanggal</option>
+                        <option value="nama">Nama</option>
                     </select>
                 </div>
 
@@ -44,12 +44,12 @@
             <input type="hidden" name="_method" id="formMethod">
             <input type="hidden" name="status" id="statusField">
 
-            <div class="overflow-x-auto rounded-lg shadow">
+            <div id="sudah_terbit" class="overflow-x-auto rounded-lg shadow">
                 <table class="w-full text-sm text-left border-collapse">
                     <thead class="bg-gray-700 text-white">
                         <tr>
                             <th class="px-4 py-3">
-                                <input type="checkbox" id="checkAll" class="w-4 h-4">
+                                <input type="checkbox" id="checkAllTerbit" class="w-4 h-4">
                             </th>
                             <th class="px-4 py-3">Judul</th>
                             <th class="px-4 py-3">Penulis</th>
@@ -57,7 +57,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($Data as $d)
+                        @foreach ($sudah_terbit as $d)
+                            <tr class="bg-gray-200">
+                                <td class="px-4 py-3">
+                                    <input name="ids[]" type="checkbox" value="{{ $d->id }}" class="w-4 h-4">
+                                </td>
+                                <td class="px-4 py-3 text-blue-600 font-medium cursor-pointer">{{ $d->title }}</td>
+                                <td class="px-4 py-3">{{ $d->penulis }}</td>
+                                <td class="px-4 py-3">{{ $d->created_at->format('d M Y') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="belum_terbit" class="overflow-x-auto rounded-lg shadow hidden">
+                <table class="w-full text-sm text-left border-collapse">
+                    <thead class="bg-gray-700 text-white">
+                        <tr>
+                            <th class="px-4 py-3">
+                                <input type="checkbox" id="checkAllBelum" class="w-4 h-4">
+                            </th>
+                            <th class="px-4 py-3">Judul</th>
+                            <th class="px-4 py-3">Penulis</th>
+                            <th class="px-4 py-3">Tanggal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($belum_terbit as $d)
                             <tr class="bg-gray-200">
                                 <td class="px-4 py-3">
                                     <input name="ids[]" type="checkbox" value="{{ $d->id }}" class="w-4 h-4">
@@ -74,6 +101,22 @@
     </div>
 
     <script>
+        let btn_terbit = document.getElementById("btn_terbit");
+        let btn_blmterbit = document.getElementById("btn_blmterbit");
+
+        let belum_terbit = document.getElementById('belum_terbit');
+        let sudah_terbit = document.getElementById('sudah_terbit');
+
+        btn_blmterbit.addEventListener("click", () => {
+            sudah_terbit.classList.add('hidden');
+            belum_terbit.classList.remove('hidden');
+        });
+
+        btn_terbit.addEventListener("click", () => {
+            belum_terbit.classList.add('hidden');
+            sudah_terbit.classList.remove('hidden');
+        });
+
         function setAction(action) {
             let form = document.getElementById('bulkAction');
 
@@ -89,9 +132,12 @@
             form.submit();
         }
 
-        // Select all
-        document.getElementById("checkAll").addEventListener("change", function() {
-            document.querySelectorAll("input[name='ids[]']").forEach(cb => cb.checked = this.checked);
+        document.getElementById("checkAllTerbit").addEventListener("change", function() {
+            document.querySelectorAll("#sudah_terbit input[name='ids[]']").forEach(cb => cb.checked = this.checked);
+        });
+
+        document.getElementById("checkAllBelum").addEventListener("change", function() {
+            document.querySelectorAll("#belum_terbit input[name='ids[]']").forEach(cb => cb.checked = this.checked);
         });
     </script>
 @endsection

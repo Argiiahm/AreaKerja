@@ -135,11 +135,12 @@ class AdminController extends Controller
     public function tips_kerja()
     {
         return view('Admin.Dashboard-admin.Tipskerja.index', [
-            "title"   =>   "Tips Kerja",
-            "Data"    =>    Tipskerja::all(),
-            "all"     =>    Tipskerja::count(),
-            "terbit"  =>    Tipskerja::where('status','terbit')->count(),
+            "title"     =>   "Tips Kerja",
+            "all"       =>    Tipskerja::count(),
+            "terbit"    =>    Tipskerja::where('status','terbit')->count(),
             "noterbit"  =>    Tipskerja::where('status','belum terbit')->count(),
+            "sudah_terbit"  =>    Tipskerja::where('status','terbit')->get(),
+            "belum_terbit"  =>    Tipskerja::where('status','belum terbit')->get(),
         ]);
     }
     public function tips_kerja_add_post()
