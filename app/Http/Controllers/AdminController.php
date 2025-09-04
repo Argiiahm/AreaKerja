@@ -137,10 +137,10 @@ class AdminController extends Controller
         return view('Admin.Dashboard-admin.Tipskerja.index', [
             "title"     =>   "Tips Kerja",
             "all"       =>    Tipskerja::count(),
-            "terbit"    =>    Tipskerja::where('status','terbit')->count(),
-            "noterbit"  =>    Tipskerja::where('status','belum terbit')->count(),
-            "sudah_terbit"  =>    Tipskerja::where('status','terbit')->get(),
-            "belum_terbit"  =>    Tipskerja::where('status','belum terbit')->get(),
+            "terbit"    =>    Tipskerja::where('status', 'terbit')->count(),
+            "noterbit"  =>    Tipskerja::where('status', 'belum terbit')->count(),
+            "sudah_terbit"  =>    Tipskerja::where('status', 'terbit')->get(),
+            "belum_terbit"  =>    Tipskerja::where('status', 'belum terbit')->get(),
         ]);
     }
     public function tips_kerja_add_post()
@@ -203,29 +203,27 @@ class AdminController extends Controller
 
     public function ubah_status(Request $request,)
     {
-   $ids = $request->ids;
+        $ids = $request->ids;
 
-    // Cek kalau ada ID yang dipilih
-    if (!$ids) {
-        return redirect()->back()->with('error', 'Tidak ada data yang dipilih!');
-    }
+        if (!$ids) {
+            return redirect()->back()->with('error', 'Tidak ada data yang dipilih!');
+        }
 
-    // Update status massal
-    TipsKerja::whereIn('id', $ids)->update([
-        'status' => $request->status
-    ]);
+        TipsKerja::whereIn('id', $ids)->update([
+            'status' => $request->status
+        ]);
         return redirect('/dashboard/admin/tipskerja');
     }
 
     public function hapus(Request $request)
     {
-$ids = $request->ids;
+        $ids = $request->ids;
 
-    if (!$ids) {
-        return redirect()->back()->with('error', 'Tidak ada data yang dipilih!');
-    }
+        if (!$ids) {
+            return redirect()->back()->with('error', 'Tidak ada data yang dipilih!');
+        }
 
-    TipsKerja::whereIn('id', $ids)->delete();
+        TipsKerja::whereIn('id', $ids)->delete();
 
         return redirect('/dashboard/admin/tipskerja');
     }

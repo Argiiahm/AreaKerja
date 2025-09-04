@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HargaKoin;
+use App\Models\HargaPembayaran;
 use Illuminate\Http\Request;
 
 class FinanceController extends Controller
@@ -14,7 +16,9 @@ class FinanceController extends Controller
 
     public function paket_harga() {
         return view('Dashboard-finance.paket-harga_finance',[
-            "title"   =>    "Paket Harga"
+            "title"   =>    "Paket Harga",
+            "koin"    =>   HargaKoin::all(),
+            "tunai"   =>  HargaPembayaran::all()
         ]);
     }
 

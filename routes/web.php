@@ -218,6 +218,10 @@ Route::get('/dashboard/superadmin/freeze/detail', [SuperAdminController::class, 
 // Tips Kerja - Super Admin
 Route::get('/dashboard/superadmin/tipskerja', [SuperAdminController::class, 'tipskerja'])->middleware('superadmin');
 Route::get('/dashboard/superadmin/tipskerja/add', [SuperAdminController::class, 'tipskerja_add'])->middleware('superadmin');
+Route::post('/dashboard/superadmin/tipskerja/create/post', [SuperAdminController::class, 'tipskerja_create'])->middleware('superadmin');
+Route::put('/ubah/status/tipskerja', [SuperAdminController::class, 'ubah_status'])->middleware('superadmin');
+Route::delete('/delete/tipskerja', [SuperAdminController::class, 'hapus'])->middleware('superadmin');
+
 
 
 // Event -Super Admin
@@ -262,7 +266,6 @@ Route::get('/dashboard/admin/tipskerja', [AdminController::class, 'tips_kerja'])
 Route::get('/dashboard/admin/tipskerja/addpost', [AdminController::class, 'tips_kerja_add_post'])->middleware('admin');
 Route::put('/ubah/status', [AdminController::class, 'ubah_status'])->middleware('admin');
 Route::delete('/delete', [AdminController::class, 'hapus'])->middleware('admin');
-
 Route::post('/dashboard/admin/tipskerja/create/post', [AdminController::class, 'tips_kerja_create_post'])->middleware('admin')->name('tipskerja.store');
 
 

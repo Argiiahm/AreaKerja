@@ -13,8 +13,8 @@
                 <div class="relative">
                     <select id="filterSelect"
                         class="appearance-none border border-gray-300 rounded-md px-3 h-9 pr-6 text-sm text-gray-700 focus:outline-none">
-                        <option value="tanggal">Tanggal</option>
-                        <option value="nama">Nama</option>
+                        <option value="created_at">Tanggal</option>
+                        <option value="title">Nama</option>
                     </select>
                 </div>
 
@@ -29,9 +29,10 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
-                <input type="text" placeholder="nama/tanggal..."
+                <input id="searchInput" type="text" placeholder="nama/tanggal..."
                     class="border border-gray-300 rounded-md px-3 h-9 text-sm focus:outline-none w-full md:w-48">
-                <button class="bg-gray-700 text-white px-5 h-9 rounded-md text-sm">Cari</button>
+                <button type="button" onclick="searchTable()"
+                    class="bg-gray-700 text-white px-5 h-9 rounded-md text-sm">Cari</button>
                 <a href="/dashboard/admin/tipskerja/addpost"
                     class="bg-blue-500 text-white px-6 py-2 rounded-md text-sm text-center">
                     Buat Post
@@ -44,6 +45,7 @@
             <input type="hidden" name="_method" id="formMethod">
             <input type="hidden" name="status" id="statusField">
 
+            <!-- Sudah Terbit -->
             <div id="sudah_terbit" class="overflow-x-auto rounded-lg shadow">
                 <table class="w-full text-sm text-left border-collapse">
                     <thead class="bg-gray-700 text-white">
@@ -71,6 +73,7 @@
                 </table>
             </div>
 
+            <!-- Belum Terbit -->
             <div id="belum_terbit" class="overflow-x-auto rounded-lg shadow hidden">
                 <table class="w-full text-sm text-left border-collapse">
                     <thead class="bg-gray-700 text-white">
@@ -139,5 +142,25 @@
         document.getElementById("checkAllBelum").addEventListener("change", function() {
             document.querySelectorAll("#belum_terbit input[name='ids[]']").forEach(cb => cb.checked = this.checked);
         });
+
+        function searchTable() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let filterBy = document.getElementById("filterSelect").value;
+
+            let table = document.querySelector("#sudah_terbit:not(.hidden) table, #belum_terbit:not(.hidden) table");
+            let rows = table.querySelectorAll("tbody tr");
+
+            rows.forEach(row => {
+                let colText = "";
+
+                if (filterBy === "title") {
+                    colText = row.cells[2].innerText.toLowerCase();
+                } else if (filterBy === "created_at") {
+                    colText = row.cells[3].innerText.toLowerCase();
+                }
+
+                row.style.display = colText.includes(input) ? "" : "none";
+            });
+        }
     </script>
 @endsection

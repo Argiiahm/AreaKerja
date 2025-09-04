@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Tipskerja;
 use App\Models\SuperAdmin;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -245,7 +247,12 @@ class SuperAdminController extends Controller
     public function tipskerja()
     {
         return view('Super-Admin.Tipskerja-superadmin.tipskerja_index', [
-            "title"   =>  "Tips Kerja"
+            "title"     =>   "Tips Kerja",
+            "all"       =>    Tipskerja::count(),
+            "terbit"    =>    Tipskerja::where('status', 'terbit')->count(),
+            "noterbit"  =>    Tipskerja::where('status', 'belum terbit')->count(),
+            "sudah_terbit"  =>    Tipskerja::where('status', 'terbit')->get(),
+            "belum_terbit"  =>    Tipskerja::where('status', 'belum terbit')->get(),
         ]);
     }
     public function tipskerja_add()
@@ -253,6 +260,83 @@ class SuperAdminController extends Controller
         return view('Super-Admin.Tipskerja-superadmin.add-post_tipsKerja_superAdmin', [
             "title"   =>  "Buat Post Baru"
         ]);
+    }
+
+    public function tipskerja_create(Request $request)
+    {
+        $data = $request->validate([
+            'title'   => 'nullable|string',
+            'content' => 'nullable|string',
+            'penulis' => 'nullable|string',
+            'image'   => 'nullable|file|image|mimes:png,jpg,jpeg',
+            'status'  => 'nullable',
+            'intro'   => 'nullable|string',
+            'section' => 'nullable|json',
+        ]);
+
+        $data['penulis']  = Auth::user()->username;
+        $data['status'] = 'belum terbit';
+
+        if (empty($request->intro) && !empty($request->content)) {
+            $data['intro'] = Str::limit(strip_tags($request->content), 150);
+        } else {
+            $data['intro'] = $request->intro;
+        }
+
+        if (empty($request->section) && !empty($request->content)) {
+            $paragraphs = preg_split('/\r\n|\r|\n/', strip_tags($request->content));
+
+            $sections = [];
+            foreach ($paragraphs as $index => $p) {
+                if (trim($p) !== '') {
+                    $sections[] = [
+                        "judul" => "Bagian " . ($index + 1),
+                        "isi"   => $p,
+                    ];
+                }
+            }
+
+            $data['section'] = json_encode($sections);
+        } else {
+            $data['section'] = $request->section;
+        }
+
+        if ($request->hasFile('image')) {
+            if ($request->image && Storage::exists('public/' . $request->image)) {
+                Storage::delete('public/' . $request->image);
+            }
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        Tipskerja::create($data);
+        return redirect('/dashboard/superadmin/tipskerja');
+    }
+
+    public function ubah_status(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!$ids) {
+            return redirect()->back()->with('error', 'Tidak ada data yang dipilih!');
+        }
+
+        TipsKerja::whereIn('id', $ids)->update([
+            'status' => $request->status
+        ]);
+        return redirect('/dashboard/superadmin/tipskerja');
+    }
+
+    public function hapus(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!$ids) {
+            return redirect()->back()->with('error', 'Tidak ada data yang dipilih!');
+        }
+
+        TipsKerja::whereIn('id', $ids)->delete();
+
+        return redirect('/dashboard/superadmin/tipskerja');
     }
 
     // Event

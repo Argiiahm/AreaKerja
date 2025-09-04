@@ -2,7 +2,7 @@
 
 @section('super_admin-content')
     <div class="mx-auto p-6">
-        <form action="/dashboard/admin/tipskerja/create/post" method="POST" enctype="multipart/form-data">
+        <form action="/dashboard/superadmin/tipskerja/create/post" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
                 <input type="text" name="title" placeholder="Judul artikel..."
@@ -21,8 +21,6 @@
                 <input id="x" type="hidden" name="content">
                 <trix-editor input="x" class="trix-content"></trix-editor>
             </div>
-
-            
 
             <div class="flex justify-end gap-3 mt-4">
                 <button class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow">
