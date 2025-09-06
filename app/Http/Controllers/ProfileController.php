@@ -6,6 +6,7 @@ use App\Models\Alamatpelamar;
 use App\Models\Organisasi;
 use App\Models\Pelamar;
 use App\Models\Pengalamankerja;
+use App\Models\RiwayatPendidikan;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -162,6 +163,48 @@ class ProfileController extends Controller
         $organisasi->update($v);
         return redirect('/profile');
         return back();
+    }
+
+    // RIwayat Pendiidkan
+
+    public function add_pendidikan(Request $request)
+    {
+        $v = $request->validate([
+            "pendidikan"          =>      "nullable",
+            "jurusan"             =>      "nullable",
+            "asal_pendidikan"     =>      "nullable",
+            "tahun_awal"          =>      "nullable",
+            "tahun_akhir"         =>      "nullable",
+        ]);
+
+        $v['pelamar_id']  =  Auth::user()->pelamars->id;
+        RiwayatPendidikan::create($v);
+
+        return redirect('/profile');
+
+    }
+
+    public function edit_pendidikan(RiwayatPendidikan $pendidikan) {
+        return view('Data-profile.edit_pendidikan',[
+            "Data"   =>    $pendidikan
+        ]);
+    }
+
+    public function update_pendidikan(Request $request, RiwayatPendidikan $pendidikan)
+    {
+        $v = $request->validate([
+            "pendidikan"          =>      "nullable",
+            "jurusan"             =>      "nullable",
+            "asal_pendidikan"     =>      "nullable",
+            "tahun_awal"          =>      "nullable",
+            "tahun_akhir"         =>      "nullable",
+        ]);
+
+        $v['pelamar_id']  =  Auth::user()->pelamars->id;
+        $pendidikan->update($v);
+
+        return redirect('/profile');
+
     }
 
     //Pengalaman Kerja

@@ -6,7 +6,7 @@
             <h2 class="text-base font-semibold mb-4">Tampilkan Omset Perusahaan</h2>
             <div class="flex items-center gap-2 mb-3">
                 <select class="border border-orange-500 rounded-md px-3 py-1 text-sm focus:ring-2 focus:ring-orange-400">
-                    <option>Bulan</option>
+                    <option disabled selected >Bulan</option>
                     <option>Januari</option>
                     <option>Februari</option>
                     <option>Maret</option>

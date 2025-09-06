@@ -7,7 +7,7 @@ let btnAdd = document.getElementById("btnAdd");
 
 let kandidat_table = document.getElementById("kandidat");
 let non_kandidat_table = document.getElementById("non_kandidat");
-let calon_kandidat_table = document.getElementById("calon_kandidat");
+let calon_pelamar_table = document.getElementById("calon_pelamar");
 
 if (selectKategori) {
     selectKategori.addEventListener("change", () => {
@@ -18,21 +18,21 @@ if (selectKategori) {
         if (val === "kandidat") {
             kandidat_table.classList.remove("hidden");
             non_kandidat_table.classList.add("hidden");
-            calon_kandidat_table.classList.add("hidden");
+            calon_pelamar_table.classList.add("hidden");
 
             title.innerHTML = "Data Kandidat";
         } else if (val === "non_kandidat") {
             kandidat_table.classList.add("hidden");
             non_kandidat_table.classList.remove("hidden");
-            calon_kandidat_table.classList.add("hidden");
+            calon_pelamar_table.classList.add("hidden");
 
             title.innerHTML = "Data Non Kandidat";
-        } else if (val === "calon_kandidat") {
+        } else if (val === "calon_pelamar") {
             kandidat_table.classList.add("hidden");
             non_kandidat_table.classList.add("hidden");
-            calon_kandidat_table.classList.remove("hidden");
+            calon_pelamar_table.classList.remove("hidden");
 
-            title.innerHTML = "Data Calon Kandidat";
+            title.innerHTML = "Data Calon Pelamar";
         }
     });
 }
@@ -60,6 +60,7 @@ if (selectKategoriPerusahaan) {
             perusahaan_table.classList.remove("hidden");
             recruitment_table.classList.add("hidden");
             talent_hunter_table.classList.add("hidden");
+            table_panggilan.classList.add("hidden");
 
             title.innerHTML = "Data Perusahaan";
         } else if (values === "recruitment") {

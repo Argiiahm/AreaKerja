@@ -93,6 +93,8 @@
     @include('Modals.detail-modal-pengalaman_kerja')
     @include('Modals.tambah-skill')
     @include('Modals.detail-modal-skill')
+    @include('Modals.tambah_riwayat_pendidikan')
+    @include('Modals.detail-modal-pendidikan')
 
     <nav class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">

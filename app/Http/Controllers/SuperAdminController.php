@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pelamar;
 use App\Models\User;
 use App\Models\Tipskerja;
 use App\Models\SuperAdmin;
@@ -54,8 +55,6 @@ class SuperAdminController extends Controller
             $User->update($vdataUser);
         }
 
-
-
         $Superadmin = SuperAdmin::where('user_id', Auth::user()->id)->first();
 
         if ($request->hasFile('img_profile')) {
@@ -76,7 +75,8 @@ class SuperAdminController extends Controller
     public function pelamar()
     {
         return view('Super-Admin.Pelamar.pelamar_super_admin', [
-            "title"   =>  "Data Kandidat"
+            "title"   =>  "Data Kandidat",
+            "pelamar" =>  Pelamar::all()
         ]);
     }
 
@@ -103,10 +103,11 @@ class SuperAdminController extends Controller
 
 
     //Bagian NON KANDIDAT
-    public function non_kandidat_view()
+    public function non_kandidat_view(Pelamar $pelamar)
     {
         return view('Super-Admin.Pelamar.Non_kandidat.non_kandidat-view', [
-            "title"   =>    "Detail Non Kandidat"
+            "title"   =>    "Detail Non Kandidat",
+            "Data"    =>    $pelamar
         ]);
     }
 

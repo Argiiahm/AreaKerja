@@ -5,7 +5,8 @@
         <div class="mb-10">
             <div class="flex justify-between items-center mx-2 my-2">
                 <h2 class="text-lg font-semibold mb-3">Paket Harga Koin</h2>
-                <a class="bg-orange-500 px-8 py-1 text-white rounded-lg" href="">Edit</a>
+                <a class="bg-orange-500 px-8 py-1 text-white rounded-lg"
+                    href="/dashboard/finance/paketharga/edit/koin">Edit</a>
             </div>
             <div class="overflow-x-auto bg-white rounded-xl shadow-md">
                 <table class="w-full border-collapse">
@@ -30,7 +31,7 @@
         <div class="mb-10">
             <div class="flex justify-between items-center mx-2 my-2">
                 <h2 class="text-lg font-semibold mb-3">Paket Harga Pembayaran</h2>
-                <a class="bg-orange-500 px-8 py-1 text-white rounded-lg" href="">Edit</a>
+                <a class="bg-orange-500 px-8 py-1 text-white rounded-lg" href="/dashboard/finance/paketharga/edit/harga">Edit</a>
             </div>
             <div class="overflow-x-auto bg-white rounded-xl shadow-md">
                 <table class="w-full border-collapse">

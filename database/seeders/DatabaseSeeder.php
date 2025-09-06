@@ -59,6 +59,27 @@ class DatabaseSeeder extends Seeder
             "harga"    =>      150
         ]);
 
+        HargaKoin::create([
+            "nama"     =>      "Pasang Lowongan Silver",
+            "harga"    =>      150
+        ]);
+        HargaKoin::create([
+            "nama"     =>      "Pasang Lowongan Gold",
+            "harga"    =>      150
+        ]);
+        HargaKoin::create([
+            "nama"     =>      "Open Talent Hunter",
+            "harga"    =>      150
+        ]);
+        HargaKoin::create([
+            "nama"     =>      "Open CV",
+            "harga"    =>      150
+        ]);
+        HargaKoin::create([
+            "nama"     =>      "Berlangganan",
+            "harga"    =>      150
+        ]);
+
         HargaPembayaran::create([
             "nama"     =>    "Pendaftaran Kandidat",
             "harga"       => 200000
@@ -69,6 +90,25 @@ class DatabaseSeeder extends Seeder
             "jumlah_koin" =>  10,
             "harga"       => 10000
         ]);
-
+        HargaPembayaran::create([
+            "nama"     =>    "Top Up 100 Koin Area Kerja",
+            "jumlah_koin" =>  100,
+            "harga"       => 100000
+        ]);
+        HargaPembayaran::create([
+            "nama"     =>    "Top Up 100 Koin Area Kerja",
+            "jumlah_koin" =>  1000,
+            "harga"       => 500000
+        ]);
+        HargaPembayaran::create([
+            "nama"     =>    "Top Up 100 Koin Area Kerja",
+            "jumlah_koin" =>  10000,
+            "harga"       => 1000000
+        ]);
+        HargaPembayaran::create([
+            "nama"     =>    "Top Up 100 Koin Area Kerja",
+            "jumlah_koin" =>  100000,
+            "harga"       => 1500000
+        ]);
     }
 }

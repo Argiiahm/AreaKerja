@@ -14,10 +14,10 @@
                     Ikuti pelatihan terakreditasi Areakerja.com<br>
                     dan dapatkan pekerjaan impian anda!
                 </p>
-                <a href="#"
+                <button data-modal-target="formModal" data-modal-toggle="formModal"
                     class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-md shadow-md">
                     Daftar
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -69,7 +69,6 @@
                         <span class="text-lg font-bold"> →</span>
                     </div>
                 </div>
-
                 <div class="flex-1 flex items-center justify-between ml-20">
                     <div class="divide-y divide-gray-300 text-gray-700 w-full">
                         <p class="py-3">Klik Daftar untuk registrasi kandidat</p>
@@ -79,7 +78,110 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
+    {{-- Modal Daftar Kandidat --}}
+    <div id="formModal" tabindex="-1" aria-hidden="true"
+        class="hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full bg-black/50">
+        <div class="relative w-full max-w-md p-4">
+            <!-- Konten Modal -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">Daftar Kandidat</h3>
+                    <button type="button" class="text-gray-500 hover:text-gray-700" data-modal-hide="formModal">✕</button>
+                </div>
+
+                <label for="divisi" class="block mb-2 text-sm font-medium text-gray-900">Bidang yang diminati</label>
+
+                <form>
+                    <div id="dropdownWrapper" class="relative">
+                        <button id="dropdownBtn" type="button"
+                            class="w-full flex flex-wrap gap-2 items-center px-3 py-2 border rounded-lg bg-white text-gray-700">
+                            <span id="placeholder" class="text-gray-400">Divisi</span>
+                            <span id="selectedChips" class="flex flex-wrap gap-2"></span>
+                            <svg class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+
+                        <div id="dropdownMenu"
+                            class="hidden absolute z-50 mt-2 w-full bg-white border rounded-lg shadow-lg">
+                            <ul class="max-h-48 overflow-y-auto text-sm text-gray-700">
+                                <li>
+                                    <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                        <input type="checkbox" value="UI UX Designer"
+                                            class="checkbox w-4 h-4 text-orange-500 rounded">
+                                        <span class="ml-2">UI UX Designer</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                        <input type="checkbox" value="Design Grafis"
+                                            class="checkbox w-4 h-4 text-orange-500 rounded">
+                                        <span class="ml-2">Design Grafis</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                        <input type="checkbox" value="UX Designer"
+                                            class="checkbox w-4 h-4 text-orange-500 rounded">
+                                        <span class="ml-2">UX Designer</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                        <input type="checkbox" value="UX Research"
+                                            class="checkbox w-4 h-4 text-orange-500 rounded">
+                                        <span class="ml-2">UX Research</span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+                <div class="flex justify-between mt-6">
+                    <button type="button" data-modal-hide="formModal"
+                        class="text-orange-500 font-medium">Kembali</button>
+                    <button type="submit"
+                        class="text-orange-500 font-medium">Selanjutnya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const btn = dropdownBtn,
+              menu = dropdownMenu,
+              chips = selectedChips,
+              ph = placeholder;
+
+        btn.onclick = () => menu.classList.toggle("hidden");
+
+        menu.onchange = e => {
+            if (e.target.type !== "checkbox") return;
+            const val = e.target.value;
+            if (e.target.checked) {
+                ph.classList.add("hidden");
+                chips.insertAdjacentHTML("beforeend",
+                    `<span data-v="${val}" class="flex items-center bg-gray-100 px-2 py-1 rounded text-sm">${val}<button class="ml-2">✕</button></span>`
+                );
+            } else chips.querySelector(`[data-v="${val}"]`)?.remove();
+            if (!chips.children.length) ph.classList.remove("hidden");
+        };
+
+        chips.onclick = e => {
+            if (e.target.tagName === "BUTTON") {
+                const chip = e.target.parentElement;
+                menu.querySelector(`[value="${chip.dataset.v}"]`).checked = false;
+                chip.remove();
+                if (!chips.children.length) ph.classList.remove("hidden");
+            }
+        };
+
+        window.onclick = e => {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) menu.classList.add("hidden");
+        };
+    </script>
 @endsection

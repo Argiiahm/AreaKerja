@@ -58,8 +58,10 @@
                     <div>
                         <p class="px-6 text-sm font-semibold text-white/80">Umum</p>
                         <a href="/dashboard/finance" data-drawer-hide="logo-sidebar"
-                            class="flex items-center {{ Request()->is('dashboard/finance') ? ' bg-white text-orange-600 font-semibold shadow-md mx-5 my-2' : 'transition-all duration-300 hover:bg-orange-600 hover:translate-x-1' }} gap-2 px-6 py-2 rounded-md
-                                 ">
+                            class="flex items-center gap-2 px-6 
+                                {{ Request()->is('dashboard/finance') 
+                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-gauge"></i>
                             <span>Dashboard</span>
                         </a>
@@ -69,52 +71,56 @@
                         <p class="px-6 text-sm font-semibold text-white/80 my-3">Finance</p>
 
                         <a href="/dashboard/finance/paketharga" data-drawer-hide="logo-sidebar"
-                            class="flex items-center {{ Request()->is('dashboard/finance/paketharga') ? ' bg-white text-orange-600 font-semibold shadow-md mx-5 my-2' : 'transition-all duration-300 hover:bg-orange-600 hover:translate-x-1' }} gap-2 px-6 py-2 rounded-md
-                                 ">
+                            class="flex items-center gap-2 px-6 
+                                {{ Request()->is('dashboard/finance/paketharga') 
+                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-credit-card"></i>
                             <span>Paket Harga</span>
                         </a>
 
                         <a href="/dashboard/finance/omset" data-drawer-hide="logo-sidebar"
-                            class="flex items-center {{ Request()->is('dashboard/finance/omset') ? ' bg-white text-orange-600 font-semibold shadow-md mx-5 my-2' : 'transition-all duration-300 hover:bg-orange-600 hover:translate-x-1' }} gap-2 px-6 py-2 rounded-md
-                                 ">
+                            class="flex items-center gap-2 px-6 
+                                {{ Request()->is('dashboard/finance/omset') 
+                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-hand-coins"></i>
                             <span>Omset Perusahaan</span>
                         </a>
 
                         <details class="group">
                             <summary
-                                class="flex items-center gap-2 px-2 py-2 mx-5 my-2 rounded-md cursor-pointer {{ Request()->is('dashboard/finance/catatantransaksi')
-                                    ? 'bg-white text-orange-600 font-semibold shadow-md'
-                                    : 'transition-all duration-300 hover:bg-orange-600 hover:text-white' }}">
+                                class="flex items-center gap-2 px-6 cursor-pointer
+                                    {{ Request()->is('dashboard/finance/catatantransaksi') 
+                                        ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                 <i class="ph ph-notebook"></i>
-                                <a href="/dashboard/finance/catatantransaksi" class="flex-1">
-                                    Catatan Transaksi
-                                </a>
+                                <span>Catatan Transaksi</span>
                                 <span class="ml-auto transition-transform group-open:rotate-180">▼</span>
                             </summary>
                             <div class="ml-12 mt-2 flex flex-col gap-1">
                                 <a href="/dashboard/finance/catatantransaksi/tunai"
-                                    class="flex items-center gap-2 px-2 py-2 mx-5 my-2 rounded-md cursor-pointer {{ Request()->is('dashboard/finance/catatantransaksi/tunai')
-                                        ? 'bg-white text-orange-600 font-semibold shadow-md'
-                                        : 'transition-all duration-300 hover:bg-orange-600 hover:text-white' }}">
+                                    class="flex items-center gap-2 px-6 
+                                        {{ Request()->is('dashboard/finance/catatantransaksi/tunai') 
+                                            ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                            : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                     Riwayat Tunai
                                 </a>
                                 <a href="/dashboard/finance/catatantransaksi/koin"
-                                    class="flex items-center gap-2 px-2 py-2 mx-5 my-2 rounded-md cursor-pointer {{ Request()->is('dashboard/finance/catatantransaksi/koin')
-                                        ? 'bg-white text-orange-600 font-semibold shadow-md'
-                                        : 'transition-all duration-300 hover:bg-orange-600 hover:text-white' }}">
+                                    class="flex items-center gap-2 px-6 
+                                        {{ Request()->is('dashboard/finance/catatantransaksi/koin') 
+                                            ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                            : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                     Riwayat Koin
                                 </a>
                             </div>
                         </details>
 
-
-
                         <a href="/dashboard/finance/laporan" data-drawer-hide="logo-sidebar"
-                            class="flex items-center gap-2 px-2 py-2 mx-5 my-2 rounded-md cursor-pointer {{ Request()->is('dashboard/finance/laporan')
-                                ? 'bg-white text-orange-600 font-semibold shadow-md'
-                                : 'transition-all duration-300 hover:bg-orange-600 hover:text-white' }}">
+                            class="flex items-center gap-2 px-6 
+                                {{ Request()->is('dashboard/finance/laporan') 
+                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-file-text"></i>
                             <span>Laporan Transaksi</span>
                         </a>
@@ -127,7 +133,7 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" data-drawer-hide="logo-sidebar"
-                        class="flex items-center gap-2 hover:text-gray-200">
+                        class="flex items-center gap-2 hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg px-6">
                         <i class="ph ph-sign-out"></i>
                         <span>Keluar</span>
                     </button>

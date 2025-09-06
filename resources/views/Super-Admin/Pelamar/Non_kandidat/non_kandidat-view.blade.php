@@ -3,68 +3,88 @@
 @section('super_admin-content')
     <div class="mx-auto bg-white shadow-md rounded-xl p-6">
         <div class="flex items-start gap-4">
-            <img src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg" class="w-20 h-20 rounded-full object-cover">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
+                class="w-20 h-20 rounded-full object-cover">
             <div>
-                <h2 class="text-xl font-semibold">Bambang Kurnia</h2>
+                <h2 class="text-xl font-semibold">{{ $Data->users->username }}</h2>
                 <p class="text-gray-600 text-sm">
-                    Saya adalah lulusan Teknik Informatika di Universitas Gadjah Mada yang memiliki minat besar dalam
-                    pengembangan web dan aplikasi.
+                    {{ $Data->deskripsi_diri ?? 'Deskripsi Belum Di Isi' }}
                 </p>
             </div>
         </div>
-
         <div class="grid grid-cols-2 gap-4 mt-6 text-sm">
             <div>
-                <p><span class="font-medium">User ID:</span> 7469180000</p>
-                <p><span class="font-medium">Nama Lengkap:</span> Bambang Kurnia</p>
-                <p><span class="font-medium">Alamat:</span> Jl. RE Martadinata RT10 No.80</p>
-                <p><span class="font-medium">No.Telepon:</span> 089653653021</p>
-                <p><span class="font-medium">Social Media:</span></p>
-                <ul class="ml-4 list-disc">
-                    <li>Instagram : bambang_kurnia</li>
-                    <li>LinkedIn : bambang_kurnia</li>
-                    <li>Website : www.bambangkurnia.com</li>
-                    <li>Twitter : bambang_kurnia</li>
-                </ul>
+                <p><span class="font-medium">User ID: </span> {{ $Data->users->id }}</p>
+                <p><span class="font-medium">Nama Lengkap: </span>{{ $Data->nama_pelamar }}</p>
+                <p><span class="font-medium">Alamat: </span>
+                    {{ $Data->alamat_pelamars->sortByDesc('created_at')->first()->detail ?? 'belum ada data' }}</p>
+                <p><span class="font-medium">No.Telepon: </span> {{ $Data->telepon_pelamar }}</p>
+                <p><span class="font-medium">Social Media: </span></p>
+                @if ($Data->sosmed)
+                    <ul class="ml-4 list-disc">
+                        <li>Instagram : <a class="text-blue-500"
+                                href="{{ $Data->sosmed->latest()->first()->instagram ?? 'tidak ada data' }}">{{ $Data->sosmed->latest()->first()->instagram ?? 'tidak ada data' }}</a>
+                        </li>
+                        <li>LinkedIn : <a class="text-blue-500"
+                                href="{{ $Data->sosmed->latest()->first()->linkedin ?? 'tidak ada data' }}">{{ $Data->sosmed->latest()->first()->linkedin ?? 'tidak ada data' }}</a>
+                        </li>
+                        <li>Website : <a class="text-blue-500"
+                                href="{{ $Data->sosmed->latest()->first()->website ?? 'tidak ada data' }}">{{ $Data->sosmed->latest()->first()->website ?? 'tidak ada data' }}</a>
+                        </li>
+                        <li>Twitter : <a class="text-blue-500"
+                                href="{{ $Data->sosmed->latest()->first()->twitter ?? 'tidak ada data' }}">{{ $Data->sosmed->latest()->first()->twitter ?? 'tidak ada data' }}</a>
+                        </li>
+                    </ul>
+                @else
+                  <p>Data Masih Kosong</p>
+                @endif
             </div>
             <div>
-                <p><span class="font-medium">Username:</span> bambang_kurnia</p>
-                <p><span class="font-medium">Email:</span> bambang_kurnia@gmail.com</p>
-                <p><span class="font-medium">Gender:</span> Laki-laki</p>
-                <p><span class="font-medium">Keahlian:</span> Front-end Developer</p>
+                <p><span class="font-medium">Username:</span> {{ $Data->users->username}}</p>
+                <p><span class="font-medium">Email:</span> {{ $Data->users->email}}</p>
+                <p><span class="font-medium">Gender:</span> {{ $Data->gender  ?? 'Data belum di atur' }}</p>
+                <p><span class="font-medium">Keahlian:</span>
+                    {{ $Data->skill->sortByDesc('created_at')->first()->skill ?? 'belum ada data' }}</p>
             </div>
         </div>
-
         <div class="mt-6">
             <h3 class="font-semibold">Organisasi</h3>
             <ul class="list-decimal ml-6">
-                <li>Nama Organisasi | Jabatan | 20xx–20xx</li>
-                <li>Nama Organisasi | Jabatan | 20xx–20xx</li>
+                @forelse ($Data->organisasi as $o)
+                    <li>{{ $o->nama_organisasi ?? 'belum ada data' }} | {{ $o->jabatan ?? 'belum ada data' }}
+                        |{{ $o->tahun_awal ?? 'belum ada data' }} - {{ $o->tahun_akhir ?? 'belum ada data' }}</li>
+                @empty
+                    <p>Belum Ada Data</p>
+                @endforelse
             </ul>
         </div>
-
         <div class="mt-4">
             <h3 class="font-semibold">Pengalaman Kerja</h3>
             <ul class="list-decimal ml-6">
-                <li>Nama Pekerjaan | Nama Perusahaan | Lokasi | 20xx–20xx</li>
-                <li>Nama Pekerjaan | Nama Perusahaan | Lokasi | 20xx–20xx</li>
+                @forelse ($Data->pengalaman_kerja as $k)
+                    <li>{{ $k->posisi_kerja ?? 'belum ada data' }} | {{ $k->nama_perusahaan ?? 'belum ada data' }} |
+                        {{ $k->tahun_awal ?? 'belum ada data' }} - {{ $k->tahun_akhir ?? 'belum ada data' }}</li>
+                @empty
+                    <p>Belum Ada Data</p>
+                @endforelse
             </ul>
         </div>
-
         <div class="mt-4">
             <h3 class="font-semibold">Riwayat Pendidikan</h3>
             <ul class="list-decimal ml-6">
-                <li>SMA N 1 Yogyakarta | Teknik Komputer dan Jaringan | 20xx–20xx</li>
-                <li>Universitas Amikom Yogyakarta | Informatika | 20xx–20xx</li>
+                @forelse ($Data->riwayat_pendidikan as $r)
+                    <li>{{ $r->pendidikan }} | {{ $r->jurusan }} | {{ $r->tahun_awal }} - {{ $r->tahun_akhir }}</li>
+                @empty
+                    <p>Belum Ada Data</p>
+                @endforelse
             </ul>
         </div>
-
         <div class="flex justify-center gap-4 mt-6">
-            <a href="/dashboard/superadmin/pelamar/edit/non_kandidat" class="px-6 py-2 bg-cyan-500 text-white rounded-md">Edit</a>
+            <a href="/dashboard/superadmin/pelamar/edit/non_kandidat"
+                class="px-6 py-2 bg-cyan-500 text-white rounded-md">Edit</a>
             <a href="#" class="px-6 py-2 bg-green-500 text-white rounded-md">Unduh</a>
             <a href="#" class="px-6 py-2 bg-red-500 text-white rounded-md">Hapus</a>
         </div>
-
         <div class="mt-10">
             <div class="max-w-screen-md mx-auto p-4 md:p-10">
                 <div class="flex flex-col md:flex-row items-center md:items-start md:justify-between gap-6 border-b pb-6">
@@ -72,9 +92,8 @@
                         <img src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
                             alt="Profile"
                             class="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border-4 border-gray-300">
-
                         <div>
-                            <h1 class="text-2xl md:text-3xl font-bold text-orange-600">Bambang Kurnia</h1>
+                            <h1 class="text-2xl md:text-3xl font-bold text-orange-600">{{ $Data->users->username }}</h1>
                             <p class="text-sm text-gray-700 mt-2 leading-snug">
                                 Jalan Prapatan Dalam No. 04 Rt. 47 <br>
                                 BALIKPAPAN KOTA, KOTA BALIKPAPAN, <br>
@@ -97,9 +116,7 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mt-8">
-
                     <div class="col-span-1 space-y-8">
                         <div>
                             <h2 class="text-lg font-bold text-orange-600 uppercase">
@@ -114,7 +131,6 @@
                                 dalam pengembangan web dan aplikasi...
                             </p>
                         </div>
-
                         <div>
                             <h2 class="text-lg font-bold text-orange-600 uppercase">
                                 Keahlian & Kompetensi
@@ -131,7 +147,6 @@
                                 <li>• JavaScript — <span class="font-semibold">Expert</span></li>
                             </ul>
                         </div>
-
                         <div>
                             <h2 class="text-lg font-bold text-orange-600 uppercase">
                                 Organisasi
@@ -157,7 +172,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-span-2 space-y-8">
                         <div>
                             <h2 class="text-lg font-bold text-orange-600 uppercase">
@@ -188,7 +202,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div>
                             <h2 class="text-lg font-bold text-orange-600 uppercase">
                                 Latar Belakang Pendidikan

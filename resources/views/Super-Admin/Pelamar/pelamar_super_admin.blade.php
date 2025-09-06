@@ -11,7 +11,7 @@
                     id="">
                     <option id="kandidat_opt" value="kandidat">Kandidat</option>
                     <option id="non_kandidat_opt" value="non_kandidat">Non Kandidat</option>
-                    <option id="calon_kandidat_opt" value="calon_kandidat">Calon Pelamar</option>
+                    <option id="calon_pelamar_opt" value="calon_pelamar">Calon Pelamar</option>
                 </select>
             </div>
 
@@ -65,23 +65,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="/dashboard/superadmin/nonkandidat_view">
-                        <td class="px-6 py-3 text-gray-700">0</td>
-                        <td class="px-6 py-3 text-gray-700">Brahim Diaz</td>
-                        <td class="px-6 py-3 text-gray-700">S1</td>
-                        <td class="px-6 py-3 text-gray-700">UI UX Designer</td>
-                        <td class="px-6 py-3 text-gray-700">Jawa Tengah</td>
-                        <td class="px-6 py-4">
-                            <a href="/dashboard/superadmin/nonkandidat_view"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">
-                                View
-                            </a>
-                        </td>
+                    @foreach ($pelamar as $p)
+                        <tr class="/dashboard/superadmin/nonkandidat_view">
+                            <td class="px-6 py-3 text-gray-700">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-3 text-gray-700">{{ $p->nama_pelamar ?? 'belum terisi' }}</td>
+                            <td class="px-6 py-3 text-gray-700">
+                                {{ $p->riwayat_pendidikan->sortByDesc('created_at')->first()->pendidikan ?? 'belum ada data' }}</td>
+                            <td class="px-6 py-3 text-gray-700">
+                                {{ $p->skill->sortByDesc('created_at')->first()->skill ?? 'belum ada data' }}</td>
+                            <td class="px-6 py-3 text-gray-700">
+                                {{ $p->alamat_pelamars->sortByDesc('created_at')->first()->detail ?? 'belum ada data' }}</td>
+                            <td class="px-6 py-4">
+                                <a href="/dashboard/superadmin/nonkandidat_view/{{ $p->id }}"
+                                    class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">
+                                    View
+                                </a>
+                            </td>
+                    @endforeach
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div id="calon_kandidat" class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto">
+        <div id="calon_pelamar" class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto">
             <table class="w-full">
                 <thead>
                     <tr class="text-left">

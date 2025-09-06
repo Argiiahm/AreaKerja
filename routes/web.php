@@ -59,6 +59,11 @@ Route::get('/alamat/pelamar/edit/{alamatpelamar:id}', [ProfileController::class,
 Route::put('/alamat/pelamar/update/{alamatpelamar:id}', [ProfileController::class, 'update_data_alamat'])->middleware('auth');
 
 
+Route::post('/tambah/pendidikan', [ProfileController::class, 'add_pendidikan'])->middleware('auth');
+Route::get('/edit/pendidikan/{pendidikan:id}', [ProfileController::class, 'edit_pendidikan'])->middleware('auth');
+Route::put('/update/pendidikan/{pendidikan:id}', [ProfileController::class, 'update_pendidikan'])->middleware('auth');
+
+
 Route::post('/tambah/organisasi', [ProfileController::class, 'add_organisasi'])->middleware('auth');
 Route::get('/edit/organisasi/{organisasi:id}', [ProfileController::class, 'edit_organisasi'])->middleware('auth');
 Route::put('/update/organisasi/{organisasi:id}', [ProfileController::class, 'update_organisasi'])->middleware('auth');
@@ -106,7 +111,7 @@ Route::get('/change/password', [AuthController::class, 'change_password']);
 Route::get('/login/finance', [AuthController::class, 'login_finance']);
 Route::post('/masuk/finance', [AuthController::class, 'masuk_finance']);
 Route::delete('/logout/finance', [AuthController::class, 'logout_finance']);
- 
+
 Route::get('/register/finance', [AuthController::class, 'register_finance']);
 Route::post('/buat/finance', [AuthController::class, 'buat_finance']);
 
@@ -155,6 +160,13 @@ Route::get('/change/password/super/admin', [AuthController::class, 'change_passw
 // Dashboard Finance
 Route::get('/dashboard/finance', [FinanceController::class, 'index'])->middleware('finance');
 Route::get('/dashboard/finance/paketharga', [FinanceController::class, 'paket_harga'])->middleware('finance');
+Route::get('/dashboard/finance/paketharga/edit/koin', [FinanceController::class, 'edit_koin'])->middleware('finance');
+Route::get('/dashboard/finance/paketharga/edit/harga', [FinanceController::class, 'edit_harga'])->middleware('finance');
+Route::put('/update/harga/koin', [FinanceController::class, 'update_koin'])->middleware('finance');
+Route::put('/update/harga/harga', [FinanceController::class, 'update_harga'])->middleware('finance');
+
+
+
 Route::get('/dashboard/finance/omset', [FinanceController::class, 'omset'])->middleware('finance')->middleware('finance');
 Route::get('/dashboard/finance/catatantransaksi', [FinanceController::class, 'catatan_transaksi'])->middleware('finance');
 Route::get('/dashboard/finance/catatantransaksi/tunai', [FinanceController::class, 'catatan_transaksi_tunai_detail'])->middleware('finance');
@@ -180,7 +192,7 @@ Route::get('/dashboard/superadmin/pelamar/add/kandidat', [SuperAdminController::
 Route::get('/dashboard/superadmin/pelamar/edit/kandidat', [SuperAdminController::class, 'edit_kandidat'])->middleware('superadmin');
 
 //View, Add Dan Edit Non Kandidat - SuperAdmin
-Route::get('/dashboard/superadmin/nonkandidat_view', [SuperAdminController::class, 'non_kandidat_view'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/nonkandidat_view/{pelamar:id}', [SuperAdminController::class, 'non_kandidat_view'])->middleware('superadmin');
 Route::get('/dashboard/superadmin/pelamar/add/non_kandidat', [SuperAdminController::class, 'add_non_kandidat'])->middleware('superadmin');
 Route::get('/dashboard/superadmin/pelamar/edit/non_kandidat', [SuperAdminController::class, 'edit_non_kandidat'])->middleware('superadmin');
 
@@ -313,4 +325,4 @@ Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [Pe
 
 Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event'])->middleware('perusahaan');
 Route::get('/dashboard/perusahaan/gabung/event', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
-Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');
+Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan'); 
