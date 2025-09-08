@@ -33,7 +33,7 @@
                     <img class="w-10" src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="">
                     <span class="ml-2 font-semibold">AreaKerja.com</span>
                 </div>
-                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Admin AreaKerja</h1>
+                <h1 class="text-white font-bold text-4xl font-sans text-center mb-8">Hallo, Pekerja</h1>
                 <p class="text-white mt-1 text-center font-semibold">
                     Untuk tetap terhubung dengan kami, silahkan
                 </p>
@@ -56,7 +56,13 @@
                 <p class="text-gray-500 text-center mb-6">
                     kata sandi Anda akan diatur ulang melalui email
                 </p>
-                <form action="" method="POST" class="space-y-4">
+                @if (session('error'))
+                    <div class="bg-red-500 text-white p-2 rounded mb-3">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                <form action="/verifikasi/kode" method="POST" class="space-y-4">
                     @csrf
                     <div>
                         <label for="email" class="block text-sm font-semibold mb-1">E-mail</label>
@@ -68,8 +74,7 @@
                         class="w-full bg-[#fa6601] text-white font-semibold py-2 rounded-lg hover:bg-gray-500 hover:-translate-y-1 transition-all duration-500 v">
                         Lanjutkan
                     </button>
-                    <a href="/login"
-                        class="block text-center text-[#fa6601] font-semibold mt-2 hover:underline">
+                    <a href="/login" class="block text-center text-[#fa6601] font-semibold mt-2 hover:underline">
                         Kembali
                     </a>
                 </form>

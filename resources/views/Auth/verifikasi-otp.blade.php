@@ -54,15 +54,22 @@
                         Silahkan verifikasi akun anda terlebih dahulu <br>
                         untuk bisa melakukan penggantian kata sandi
                     </p>
-    
+
                     <p class="text-gray-600">
                         Kode verifikasi telah dikirim ke email <br>
-                        <span class="font-semibold">emailpengguna@gmail.com</span>
+                        @if ($email_otp)
+                            <span class="font-semibold">{{ $email_otp }}</span>
+                        @endif
+                    </p>
+                    <p class="text-red-500">
+                        @if (session('error'))
+                            {{ session('error') }}
+                        @endif
                     </p>
                 </div>
 
                 <p class="mt-6 font-semibold text-center">Kode Verifikasi</p>
-                <form action="" method="POST" class="mt-4 lg:text-center md:text-center">
+                <form action="/verifikasi/kodeotp" method="POST" class="mt-4 lg:text-center md:text-center">
                     @csrf
                     <div class="flex justify-center gap-3 mb-6">
                         @for ($i = 0; $i < 6; $i++)
@@ -75,8 +82,7 @@
                     <p class="text-sm text-gray-600 mb-2">
                         Belum menerima kode verifikasi melalui email?
                     </p>
-                    <button type="button" id="resendBtn" class="text-sm text-gray-500 hover:text-black font-medium"
-                        disabled>
+                    <button type="button" id="resendBtn" class="text-sm text-gray-500 hover:text-black font-medium ">
                         Kirim Ulang Kode Verifikasi <span id="timer"
                             class="text-orange-600 font-semibold">(00:45)</span>
                     </button>
@@ -84,23 +90,19 @@
                         class="w-full bg-[#fa6601] text-white mt-2 font-semibold py-2 rounded-lg hover:bg-gray-500 hover:-translate-y-1 transition-all duration-500 v">
                         Lanjutkan
                     </button>
-                    <a href="/login"
-                        class="block text-center text-[#fa6601] font-semibold mt-2 hover:underline">
+                    <a href="/verifikasi" class="block text-center text-[#fa6601] font-semibold mt-2 hover:underline">
                         Ubah E-mail
                     </a>
+                </form>
+                <form id="resendOtp" action="/verifikasi/kode" method="POST">
+                    @csrf
+                    <input hidden type="email" name="email" id="" value="{{ $email_otp }}">
                 </form>
             </div>
         </div>
     </div>
 
     <script>
-        function moveNext(current, index) {
-            if (current.value.length === 1) {
-                let next = current.parentElement.children[index];
-                if (next) next.focus();
-            }
-        }
-
         let timeLeft = 45;
         let timerEl = document.getElementById("timer");
         let resendBtn = document.getElementById("resendBtn");
@@ -114,10 +116,26 @@
                 clearInterval(countdown);
                 timerEl.textContent = "";
                 resendBtn.disabled = false;
-                resendBtn.classList.remove("text-gray-500");
-                resendBtn.classList.add("text-orange-600");
+                resendBtn.classList.remove("text-gray-500", "cursor-not-allowed");
+                resendBtn.classList.add("text-orange-600", "hover:text-black");
             }
         }, 1000);
+
+        resendBtn.addEventListener("click", () => {
+            fetch("/verifikasi/kode", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
+                }
+            }).then(() => {
+                alert("Kode OTP baru sudah dikirim ke email kamu.");
+                location.reload();
+            });
+        });
+
+        document.getElementById("resendBtn").addEventListener("click", function() {
+            document.getElementById("resendOtp").submit();
+        });
     </script>
 </body>
 

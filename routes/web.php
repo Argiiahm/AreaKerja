@@ -77,8 +77,6 @@ Route::put('/update/pengalaman/kerja/{pengalamankerja:id}', [ProfileController::
 Route::post('/tambah/skill', [ProfileController::class, 'tambah_skill'])->middleware('auth');
 Route::get('/edit/skill/{skill:id}', [ProfileController::class, 'edit_skill'])->middleware('auth');
 Route::put('/update/skill/{skill:id}', [ProfileController::class, 'update_skill'])->middleware('auth');
-
-
 // End Profile
 
 // FAQ
@@ -86,53 +84,39 @@ Route::get('/bantuan', [FaqController::class, 'index']);
 // END FAQ
 
 // Authorization
-
-
 Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 Route::post('/masuk', [AuthController::class, 'masuk'])->middleware('guest');
-
 Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth');
-
-//Pelamar
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/buat', [AuthController::class, 'buat']);
-
-
-//Perusahaan
 Route::post('/buat/perusahaan', [AuthController::class, 'buat_perusahaan']);
-
-
-
 Route::get('/verifikasi', [AuthController::class, 'verifikasi']);
 Route::get('/verifikasi/otp', [AuthController::class, 'verifikasi_otp']);
 Route::get('/change/password', [AuthController::class, 'change_password']);
 
+Route::post('/verifikasi/kode',[AuthController::class, 'sendOtp']);
+Route::post('/verifikasi/kodeotp',[AuthController::class, 'verifikasi_kodeotp']);
+Route::put('/update/password',[AuthController::class, 'update_password']);
+
+
 //Auth Finance
-Route::get('/login/finance', [AuthController::class, 'login_finance']);
-Route::post('/masuk/finance', [AuthController::class, 'masuk_finance']);
+// Route::get('/login/finance', [AuthController::class, 'login_finance']);
+// Route::post('/masuk/finance', [AuthController::class, 'masuk_finance']);
 Route::delete('/logout/finance', [AuthController::class, 'logout_finance']);
-
-Route::get('/register/finance', [AuthController::class, 'register_finance']);
-Route::post('/buat/finance', [AuthController::class, 'buat_finance']);
-
-
-Route::get('/verifikasi/finance', [AuthController::class, 'verifikasi_finance']);
-Route::get('/verifikasi/finance/otp', [AuthController::class, 'verifikasi_finance_otp']);
-Route::get('/change/password/finance', [AuthController::class, 'change_password_finance']);
+// Route::get('/register/finance', [AuthController::class, 'register_finance']);
+// Route::post('/buat/finance', [AuthController::class, 'buat_finance']);
+// Route::get('/verifikasi/finance', [AuthController::class, 'verifikasi_finance']);
+// Route::get('/verifikasi/finance/otp', [AuthController::class, 'verifikasi_finance_otp']);
+// Route::get('/change/password/finance', [AuthController::class, 'change_password_finance']);
 
 //Auth Admin
-Route::get('/login/admin', [AuthController::class, 'login_admin']);
-Route::post('/masuk/admin', [AuthController::class, 'masuk_admin']);
-
-
-
-Route::get('/register/admin', [AuthController::class, 'register_admin']);
-Route::post('/buat/admin', [AuthController::class, 'buat_admin']);
-
-
-Route::get('/verifikasi/admin', [AuthController::class, 'verifikasi_admin']);
-Route::get('/verifikasi/admin/otp', [AuthController::class, 'verifikasi_admin_otp']);
-Route::get('/change/password/admin', [AuthController::class, 'change_password_admin']);
+// Route::get('/login/admin', [AuthController::class, 'login_admin']);
+// Route::post('/masuk/admin', [AuthController::class, 'masuk_admin']);
+// Route::get('/register/admin', [AuthController::class, 'register_admin']);
+// Route::post('/buat/admin', [AuthController::class, 'buat_admin']);
+// Route::get('/verifikasi/admin', [AuthController::class, 'verifikasi_admin']);
+// Route::get('/verifikasi/admin/otp', [AuthController::class, 'verifikasi_admin_otp']);
+// Route::get('/change/password/admin', [AuthController::class, 'change_password_admin']);
 
 
 // Kandidat
@@ -144,18 +128,14 @@ Route::get('/kandidat/status', [KandidatController::class, 'status']);
 
 
 //Auth super Admin
-Route::get('/login/super/admin', [AuthController::class, 'login_super_admin']);
-Route::post('/login/super/admin/masuk', [AuthController::class, 'masuk_super_admin']);
+// Route::get('/login/super/admin', [AuthController::class, 'login_super_admin']);
+// Route::post('/login/super/admin/masuk', [AuthController::class, 'masuk_super_admin']);
 Route::delete('/logout/super/admin', [AuthController::class, 'logout_super_admin']);
-
-
-Route::get('/register/super/admin', [AuthController::class, 'register_super_admin']);
-Route::post('/buat/superadmin', [AuthController::class, 'buat_super_admin']);
-
-
-Route::get('/verifikasi/super/admin', [AuthController::class, 'verifikasi_super_admin']);
-Route::get('/verifikasi/super/admin/otp', [AuthController::class, 'verifikasi_super_admin_otp']);
-Route::get('/change/password/super/admin', [AuthController::class, 'change_password_super_admin']);
+// Route::get('/register/super/admin', [AuthController::class, 'register_super_admin']);
+// Route::post('/buat/superadmin', [AuthController::class, 'buat_super_admin']);
+// Route::get('/verifikasi/super/admin', [AuthController::class, 'verifikasi_super_admin']);
+// Route::get('/verifikasi/super/admin/otp', [AuthController::class, 'verifikasi_super_admin_otp']);
+// Route::get('/change/password/super/admin', [AuthController::class, 'change_password_super_admin']);
 
 // Dashboard Finance
 Route::get('/dashboard/finance', [FinanceController::class, 'index'])->middleware('finance');

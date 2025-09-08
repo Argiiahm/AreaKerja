@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pelamar;
 use App\Models\User;
+use App\Models\Pelamar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -102,23 +105,124 @@ class AuthController extends Controller
         return redirect('/login');
     }
 
-
-
-
-
-
     public function verifikasi()
     {
         return view('Auth.verifikasi');
     }
 
+    public function sendOtp(Request $request)
+    {
+        $request->validate([
+            "email"   =>    "required|email"
+        ]);
+
+        $cek = User::where('email', $request->input('email'))->first();
+
+        if (!$cek) {
+            return back()->with('error', 'Akun Tidak Tersedia!');
+        }
+
+        $otp =  rand(100000, 999999);
+
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email'  =>    $request->email],
+            [
+                'token'  =>   $otp,
+                'created_at'  =>  now()
+            ]
+        );
+
+        Mail::raw("Kode OTP Anda Adalah: $otp", function ($message) use ($request) {
+            $message->to($request->input('email'))->subject('Kode OTP Reset Password');
+        });
+
+        session()->put('email_otp', $request->email);
+
+        return redirect('/verifikasi/otp');
+    }
+
+
     public function verifikasi_otp()
     {
-        return view('Auth.verifikasi-otp');
+
+        if (!session('email_otp')) {
+            return redirect('/verifikasi')->with('error', 'isi email terlebih dahulu!');
+        }
+
+        $data = DB::table('password_reset_tokens')
+            ->latest('created_at')
+            ->first();
+
+        return view('Auth.verifikasi-otp', [
+            'email_otp' => $data->email
+        ]);
     }
+
+    public function update_password(Request $request)
+    {
+        $request->validate([
+            'password' => 'required'
+        ]);
+
+        $email = session('reset_email');
+        if (!$email) {
+            return redirect('/forgot')->with('error', 'Sesi reset password tidak valid.');
+        }
+
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            return redirect('/forgot')->with('error', 'Akun tidak ditemukan.');
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        session()->forget(['reset_email', 'email_otp']);
+
+        return redirect('/login')->with('success', 'Password berhasil diganti, silakan login.');
+    }
+
+
+    public function verifikasi_kodeotp(Request $request)
+    {
+        $otp_input = implode('', $request->otp);
+
+        $email = session('email_otp');
+        if (!$email) {
+            return redirect('/verifikasi')->with('error', 'Sesi OTP tidak ditemukan, silakan coba lagi.');
+        }
+
+        $data = DB::table('password_reset_tokens')
+            ->where('email', $email)
+            ->latest('created_at')
+            ->first();
+
+        if (!$data) {
+            return back()->with('error', 'Kode OTP tidak ditemukan.');
+        }
+
+        if ($data->token != $otp_input) {
+            return back()->with('error', 'Kode OTP salah.');
+        }
+
+        if (now()->diffInMinutes($data->created_at) > 10) {
+            return back()->with('error', 'Kode OTP sudah kadaluarsa.');
+        }
+
+        session()->put('reset_email', $email);
+
+        return redirect('/change/password')->with('success', 'OTP valid, silakan ganti password.');
+    }
+
+
 
     public function change_password()
     {
+
+        if (!session('email_otp')) {
+            return redirect('/verifikasi')->with('error', 'Harus verifikasi OTP dulu!');
+        }
+
         return view('Auth.change-password');
     }
 
@@ -201,7 +305,8 @@ class AuthController extends Controller
     }
 
 
-    public function masuk_admin(Request $request){
+    public function masuk_admin(Request $request)
+    {
         $v = $request->validate([
             "username"  =>   'required',
             "password"  =>   'required'
@@ -217,7 +322,8 @@ class AuthController extends Controller
     }
 
 
-    public function buat_admin(Request $request){
+    public function buat_admin(Request $request)
+    {
         $v = $request->validate([
             "username"  =>   'required',
             "email"    =>    'required|email',
@@ -227,11 +333,11 @@ class AuthController extends Controller
 
         $v['password']   =  Hash::make($request->password);
         $user = User::create($v);
-        
+
         $v2  = $request->validate([
             "nama_lengkap"  =>      "nullable"
         ]);
-        
+
         $user->admin()->create($v2);
         return redirect('/login/admin');
     }
@@ -307,7 +413,6 @@ class AuthController extends Controller
 
         $u->superadmins()->create($v2);
         return redirect('/login/super/admin');
-
     }
 
 

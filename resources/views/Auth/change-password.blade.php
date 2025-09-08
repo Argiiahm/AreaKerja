@@ -81,18 +81,20 @@
                     </div>
                 </div>
 
-                <form action="" method="POST" class="space-y-4">
+                <form action="/update/password" method="POST" class="space-y-4">
                     @csrf
-
+                    @method('PUT')
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1">Kata Sandi Baru</label>
                         <div class="relative">
                             <input type="password" name="password"
                                 class="w-full border rounded-md p-3 pr-10 focus:ring-2 focus:ring-[#616161] focus:outline-none placeholder-gray-400"
                                 placeholder="Kata Sandi">
-                            <button type="button" class="absolute inset-y-0 right-3 flex items-center text-gray-500">
-                                0
+                            <button type="button" id="btn_password"
+                                class="absolute inset-y-0 right-3 flex items-center text-gray-500">
+                                <i class="ph ph-eye-slash"></i>
                             </button>
+
                         </div>
                     </div>
 
@@ -102,8 +104,9 @@
                             <input type="password" name="password_confirmation"
                                 class="w-full border rounded-md p-3 pr-10 focus:ring-2 focus:ring-[#616161] focus:outline-none placeholder-gray-400"
                                 placeholder="Kata Sandi">
-                            <button type="button" class="absolute inset-y-0 right-3 flex items-center text-gray-500">
-                                0
+                            <button id="btn_konfirmasi" type="button"
+                                class="absolute inset-y-0 right-3 flex items-center text-gray-500">
+                                <i class="ph ph-eye-slash"></i>
                             </button>
                         </div>
                     </div>
@@ -117,5 +120,50 @@
         </div>
     </div>
 </body>
+
+<script>
+    const btnPassword = document.getElementById('btn_password');
+    const btnKonfirmasi = document.getElementById('btn_konfirmasi');
+
+    function togglePassword(btn) {
+        btn.addEventListener("click", function() {
+            let input = this.previousElementSibling;
+            let icon = this.querySelector("i");
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("ph-eye-slash");
+                icon.classList.add("ph-eye");
+            } else {
+                input.type = "password";
+                icon.classList.add("ph-eye-slash");
+                icon.classList.remove("ph-eye");
+            }
+        });
+    }
+
+    if (btnPassword) togglePassword(btnPassword);
+    if (btnKonfirmasi) togglePassword(btnKonfirmasi);
+
+    const form = document.querySelector("form");
+    const passwordInput = document.querySelector("input[name='password']");
+    const confirmInput = document.querySelector("input[name='password_confirmation']");
+
+    const errorMsg = document.createElement("p");
+    errorMsg.className = "text-red-500 text-sm mt-1 hidden";
+    errorMsg.innerText = "Konfirmasi kata sandi tidak sama.";
+    confirmInput.parentElement.appendChild(errorMsg);
+
+    form.addEventListener("submit", function(e) {
+        if (confirmInput.value !== passwordInput.value) {
+            e.preventDefault();
+            errorMsg.classList.remove("hidden");
+            confirmInput.focus();
+        } else {
+            errorMsg.classList.add("hidden");
+        }
+    });
+</script>
+
 
 </html>
