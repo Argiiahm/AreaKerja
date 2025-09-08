@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Admin;
+use App\Models\Finance;
 use App\Models\HargaKoin;
 use App\Models\HargaPembayaran;
 use App\Models\Pelamar;
@@ -27,31 +29,49 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         User::create([
-           "username"           =>    "Argii",
-           "email"              =>    "argi@gmail.com",
-           "password"           =>     Hash::make('123'),
-           "role"               =>     "superadmin",
-           "verified"           =>     1,
-           "alasan_freeze_akun" =>     null
+            "username"           =>    "Argii",
+            "email"              =>    "argi@gmail.com",
+            "password"           =>     Hash::make('123'),
+            "role"               =>     "superadmin",
+            "verified"           =>     1,
+            "alasan_freeze_akun" =>     null
         ]);
 
         SuperAdmin::create([
-           "user_id"            =>     1,
-           "nama_lengkap"       =>     "Argi Ahmes Halepiyandra",
+            "user_id"            =>     1,
+            "nama_lengkap"       =>     "Argi Ahmes Halepiyandra",
+            "provinsi"           =>     "Jawa Tengah"
         ]);
+
 
         User::create([
-           "username"           =>    "Seno Roblox",
-           "email"              =>    "seno@gmail.com",
-           "password"           =>     Hash::make('123'),
-           "role"               =>     "pelamar",
-           "verified"           =>     1,
-           "alasan_freeze_akun" =>     null
+            "username"           =>    "Seno Roblox",
+            "email"              =>    "seno@gmail.com",
+            "password"           =>     Hash::make('123'),
+            "role"               =>     "admin",
+            "verified"           =>     1,
+            "alasan_freeze_akun" =>     null
+        ]);
+        
+        Admin::create([
+            "user_id"            =>     2,
+            "nama_lengkap"       =>    "Seno Adi Wijaya",
+            "provinsi"           =>    "Jawa Barat"
+        ]);
+        
+        User::create([
+            "username"           =>    "Rehan",
+            "email"              =>    "rehan@gmail.com",
+            "password"           =>     Hash::make('123'),
+            "role"               =>     "finance",
+            "verified"           =>     1,
+            "alasan_freeze_akun" =>     null
         ]);
 
-        Pelamar::create([
-           "user_id"            =>     2,
-           "telepon_pelamar"    =>     "082121212"
+        Finance::create([
+            "user_id"            =>   3,
+            "nama_lengkap"       =>  'Rayhan Nazril',
+            "provinsi"           =>  'Jawa Barat'
         ]);
 
         HargaKoin::create([

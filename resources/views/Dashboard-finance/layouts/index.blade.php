@@ -129,7 +129,7 @@
             </div>
 
             <div class="px-6 mb-6">
-                <form action="/logout/finance" method="POST">
+                <form action="/logout" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" data-drawer-hide="logo-sidebar"

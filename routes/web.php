@@ -102,7 +102,7 @@ Route::put('/update/password',[AuthController::class, 'update_password']);
 //Auth Finance
 // Route::get('/login/finance', [AuthController::class, 'login_finance']);
 // Route::post('/masuk/finance', [AuthController::class, 'masuk_finance']);
-Route::delete('/logout/finance', [AuthController::class, 'logout_finance']);
+// Route::delete('/logout/finance', [AuthController::class, 'logout_finance']);
 // Route::get('/register/finance', [AuthController::class, 'register_finance']);
 // Route::post('/buat/finance', [AuthController::class, 'buat_finance']);
 // Route::get('/verifikasi/finance', [AuthController::class, 'verifikasi_finance']);
@@ -130,7 +130,7 @@ Route::get('/kandidat/status', [KandidatController::class, 'status']);
 //Auth super Admin
 // Route::get('/login/super/admin', [AuthController::class, 'login_super_admin']);
 // Route::post('/login/super/admin/masuk', [AuthController::class, 'masuk_super_admin']);
-Route::delete('/logout/super/admin', [AuthController::class, 'logout_super_admin']);
+// Route::delete('/logout/super/admin', [AuthController::class, 'logout_super_admin']);
 // Route::get('/register/super/admin', [AuthController::class, 'register_super_admin']);
 // Route::post('/buat/superadmin', [AuthController::class, 'buat_super_admin']);
 // Route::get('/verifikasi/super/admin', [AuthController::class, 'verifikasi_super_admin']);
@@ -205,14 +205,19 @@ Route::get('/dashboard/superadmin/finance/edit/laporan', [SuperAdminController::
 
 // Freeze Akun - Super Admin
 Route::get('/dashboard/superadmin/freeze', [SuperAdminController::class, 'freeze'])->middleware('superadmin');
-Route::get('/dashboard/superadmin/freeze/detail', [SuperAdminController::class, 'freeze_detail'])->middleware('superadmin');
+Route::get('/dashboard/superadmin/freeze/detail/{user:id}', [SuperAdminController::class, 'freeze_detail'])->middleware('superadmin');
+
+Route::put('/dashboard/superadmin/unbanned/{user:id}', [SuperAdminController::class, 'unbanned'])->middleware('superadmin');
+Route::put('/dashboard/superadmin/banned/{user:id}', [SuperAdminController::class, 'banned'])->middleware('superadmin');
+Route::delete('/dashboard/superadmin/hapus/{user:id}', [SuperAdminController::class, 'delete_akun'])->middleware('superadmin');
+
 
 // Tips Kerja - Super Admin
 Route::get('/dashboard/superadmin/tipskerja', [SuperAdminController::class, 'tipskerja'])->middleware('superadmin');
 Route::get('/dashboard/superadmin/tipskerja/add', [SuperAdminController::class, 'tipskerja_add'])->middleware('superadmin');
 Route::post('/dashboard/superadmin/tipskerja/create/post', [SuperAdminController::class, 'tipskerja_create'])->middleware('superadmin');
 Route::put('/ubah/status/tipskerja', [SuperAdminController::class, 'ubah_status'])->middleware('superadmin');
-Route::delete('/delete/tipskerja', [SuperAdminController::class, 'hapus'])->middleware('superadmin');
+Route::delete('/delete/tipskerja', [SuperAdminController::class, 'delete'])->middleware('superadmin');
 
 
 

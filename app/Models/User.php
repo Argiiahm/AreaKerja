@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'role',
         'verified',
+        'status',
         'alasan_freeze_akun'
     ];
 

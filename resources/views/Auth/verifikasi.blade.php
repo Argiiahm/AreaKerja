@@ -48,7 +48,6 @@
                 </div>
             </div>
 
-
         </div>
         <div class="col-span-3 flex justify-center items-center bg-white ">
             <div class="w-full max-w-md bg-white shadow-md rounded-xl p-8">

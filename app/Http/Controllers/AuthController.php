@@ -18,30 +18,37 @@ class AuthController extends Controller
     {
         return view('Auth.login');
     }
-
     public function masuk(Request $request)
     {
         $v = $request->validate([
-            "username"   =>    "required",
-            "password"   =>    "required"
+            "username" => "required",
+            "password" => "required"
         ]);
+
         if (Auth::attempt($v)) {
-            if (Auth::user()->role == 'superadmin') {
-                return redirect('/dashboard/superadmin');
-            } elseif (Auth::user()->role == 'admin') {
-                return redirect('/dashboard/admin');
-            } elseif (Auth::user()->role == 'pelamar') {
-                return redirect('/');
-            } elseif (Auth::user()->role == 'perusahaan') {
-                return redirect('/dashboard/perusahaan');
-            } elseif (Auth::user()->role == 'finance') {
-                return redirect('/dashboard/finance');
+            $user = Auth::user();
+
+            if ($user->status === 0) {
+                if ($user->role == 'superadmin') {
+                    return redirect('/dashboard/superadmin');
+                } elseif ($user->role == 'admin') {
+                    return redirect('/dashboard/admin');
+                } elseif ($user->role == 'pelamar') {
+                    return redirect('/');
+                } elseif ($user->role == 'perusahaan') {
+                    return redirect('/dashboard/perusahaan');
+                } elseif ($user->role == 'finance') {
+                    return redirect('/dashboard/finance');
+                }
+            } else {
+                Auth::logout();
+                return back()->with('error', 'Akun dibekukan');
             }
         } else {
-            return back();
+            return back()->with('error', 'Username atau password salah');
         }
-        return back();
     }
+
 
     public function register()
     {

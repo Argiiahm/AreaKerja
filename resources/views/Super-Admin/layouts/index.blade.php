@@ -188,7 +188,7 @@
         </div>
 
         <div class="px-6 my-6">
-            <form action="/logout/super/admin" class="flex items-center gap-2 " method="post">
+            <form action="/logout" class="flex items-center gap-2 " method="post">
                 @csrf
                 @method('DELETE')
                 <i class="ph ph-sign-out text-lg"></i>

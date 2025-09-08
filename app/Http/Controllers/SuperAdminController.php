@@ -236,13 +236,45 @@ class SuperAdminController extends Controller
     public function freeze()
     {
         return view('Super-Admin.Freeze-Akun.freeze_akun_superAdmin', [
-            "title"   =>  "Akun Freeze"
+            "title"   =>  "Akun Freeze",
+            "Data"    =>  User::all()
         ]);
     }
-    public function freeze_detail()
+
+
+    public function banned(Request $request, User $user) {
+        // dd($request->all());
+        $data = $request->validate([
+            "status"    =>    "required|boolean"
+        ]);
+        
+        $user->update($data);
+        return redirect('/dashboard/superadmin/freeze');
+    }
+
+    
+    public function unbanned(Request $request, User $user){
+        // dd($request->all());
+        $data = $request->validate([
+            "status"  =>  'required|boolean'
+        ]);
+
+        $user->update($data);
+        return redirect('/dashboard/superadmin/freeze');
+    }
+
+    public function delete_akun(User $user){
+        $user->delete($user->id);
+        return redirect('/dashboard/superadmin/freeze');
+    }
+
+    
+    
+    public function freeze_detail(User $user)
     {
         return view('Super-Admin.Freeze-Akun.detail_freeze_akun_superAdmin', [
-            "title"   =>  "Akun Freeze"
+            "title"   =>  "Akun Freeze",
+            "data"    =>   $user
         ]);
     }
     public function tipskerja()
@@ -327,7 +359,7 @@ class SuperAdminController extends Controller
         return redirect('/dashboard/superadmin/tipskerja');
     }
 
-    public function hapus(Request $request)
+    public function delete(Request $request)
     {
         $ids = $request->ids;
 
