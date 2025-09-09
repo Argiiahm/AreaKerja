@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatatanCash;
+use App\Models\CatatanKoin;
 use App\Models\HargaKoin;
 use App\Models\HargaPembayaran;
 use Illuminate\Http\Request;
@@ -84,13 +86,15 @@ class FinanceController extends Controller
     public function catatan_transaksi_tunai_detail()
     {
         return view('Dashboard-finance.riwayat-transaksi_tunai', [
-            "title"   =>     "Catatan Transaksi"
+            "title"   =>     "Catatan Transaksi",
+            "data"    =>     CatatanCash::all()
         ]);
     }
     public function catatan_transaksi_koin_detail()
     {
         return view('Dashboard-finance.riwayat-transaksi_koin', [
-            "title"   =>     "Catatan Transaksi"
+            "title"   =>     "Catatan Transaksi",
+            "data"    =>     CatatanKoin::all() 
         ]);
     }
 

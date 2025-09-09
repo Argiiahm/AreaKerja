@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('harga_pembayarans', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->string('nama')->nullable();
-            $table->integer('jumlah_koin')->nullable();
-            $table->integer('harga')->nullable();
-            $table->string('icon')->nullable();
+            $table->string('nama_bank')->nullable();
+            $table->string('owner')->nullable();
+            $table->string('no_rek')->nullable();
+            $table->string('logo_img')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('harga_pembayarans');
+        Schema::dropIfExists('banks');
     }
 };

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\HargaPembayaran;
 use App\Models\Tipskerja;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;

@@ -22,7 +22,6 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y">
-                      
                     </tbody>
                 </table>
             </div>

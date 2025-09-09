@@ -67,6 +67,13 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class, 'user_id');
     }
 
+    public function pembayaran() {
+        return $this->hasMany(CatatanCash::class, 'user_id');
+    }
+
+    public function catatan_koin() {
+        return $this->hasMany(CatatanKoin::class, 'user_id');
+    }
     
 
 }

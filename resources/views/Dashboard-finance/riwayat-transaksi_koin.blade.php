@@ -5,24 +5,36 @@
         <div class="mb-10">
             <div class="flex justify-between items-center mx-2 my-2">
                 <h2 class="text-lg font-semibold mb-3">Riwayat Koin</h2>
-                <a class="bg-orange-500 px-8 py-1 text-white rounded-lg" href="">Edit</a>
             </div>
             <div class="overflow-x-auto bg-white rounded-xl shadow-md">
                 <table class="w-full border-collapse">
                     <thead>
                         <tr class="bg-orange-500 text-white">
-                            <th class="py-3 px-4 text-left">No</th>
-                            <th class="py-3 text-left">No.Refrensi</th>
-                            <th class="py-3 text-left">Jenis</th>
-                            <th class="py-3 text-left">Dari</th>
-                            <th class="py-3 text-left">Sumber Dana</th>
-                            <th class="py-3 text-left">Total Koin</th>
-                            <th class="py-3 text-left">Detail</th>
-                            <th class="py-3 text-left">Status</th>
+                            <th class="py-3 px-4 text-center">No</th>
+                            <th class="py-3 text-center">No.Refrensi</th>
+                            <th class="py-3 text-center">Jenis</th>
+                            <th class="py-3 text-center">Dari</th>
+                            <th class="py-3 text-center">Sumber Dana</th>
+                            <th class="py-3 text-center">Total Koin</th>
+                            <th class="py-3 text-center">Detail</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y">
-
+                        @foreach ($data as $d)
+                        <tr>
+                            <td class="py-3 text-center">{{$d->id}}</td>
+                            <td class="py-3 text-center">{{$d->no_referensi}}</td>
+                            <td class="py-3 text-center">{{$d->pesanan}}</td>
+                            <td class="py-3 text-center">{{$d->dari}}</td>
+                            <td class="py-3 text-center">{{$d->sumber_dana}}</td>
+                            <td class="py-3 text-center">{{$d->total}}</td>
+                            <td class="px-6 py-4 flex justify-center">
+                                <a href="/dashboard/superadmin/freeze/detail/{{ $d->id }}" class="">
+                                    <img src="{{ asset('Icon/fzd.png') }}" alt="">
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

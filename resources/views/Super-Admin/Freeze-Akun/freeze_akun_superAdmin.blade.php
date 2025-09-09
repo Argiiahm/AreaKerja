@@ -17,6 +17,7 @@
                         <th class="px-6 py-3 font-semibold text-gray-700">No</th>
                         <th class="px-6 py-3 font-semibold text-gray-700">Username</th>
                         <th class="px-6 py-3 font-semibold text-gray-700">Email</th>
+                        <th class="px-6 py-3 font-semibold text-gray-700">role</th>
                         <th class="px-6 py-3 font-semibold text-gray-700">Telepon</th>
                         <th class="px-6 py-3 font-semibold text-gray-700">Alamat</th>
                         <th class="px-6 py-3 font-semibold text-gray-700">Status</th>
@@ -29,6 +30,7 @@
                             <td class="px-6 py-3 text-gray-700">{{ $d->id }}</td>
                             <td class="px-6 py-3 text-gray-700">{{ $d->username }}</td>
                             <td class="px-6 py-3 text-gray-700">{{ $d->email }}</td>
+                            <td class="px-6 py-3 text-gray-700">{{ $d->role }}</td>
                             <td>
                                 @if ($d->role == 'pelamar')
                                     {{ $d->pelamars->telepon_pelamar ?? '-' }}
@@ -71,7 +73,7 @@
             </table>
         </div>
     </div>
-<script>
+<script>  
 document.getElementById("searchInput").addEventListener("keyup", function() {
     let input = this.value.toLowerCase();
     let rows = document.querySelectorAll("#myTable tbody tr");

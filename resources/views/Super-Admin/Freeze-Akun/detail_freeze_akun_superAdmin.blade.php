@@ -1,10 +1,59 @@
-@extends('Super-Admin.layouts.index')
+    @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
     <div class="mx-auto mt-10">
         <div class=" border-2 rounded-xl relative">
             <div class="flex items-center space-x-4 mb-6 pb-3 p-10 border-b rounded-b-2xl shadow-md">
-                <img src="https://via.placeholder.com/100" alt="Profile" class="w-20 h-20 rounded-full border" />
+                <div class="modal" id="imgModal">
+                    <img id="modalImg" alt="Zoomed" class="w-40 h-40 sm:w-40 object-cover rounded-full">
+                </div>
+                @if ($data->pelamars)
+                    @if ($data->pelamars->img_profile)
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3 profile-img"
+                            src="{{ asset('storage/' . $data->pelamars->img_profile) }}" alt="" alt="Profile">
+                    @else
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3"
+                            src="https://ui-avatars.com/api/?name={{ urlencode($data->username) }}&background=random&color=fff&size=128"
+                            alt="">
+                    @endif
+                @elseif($data->perusahaan)
+                    @if ($data->perusahaan->img_profile)
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3 profile-img"
+                            src="{{ asset('storage/' . $data->perusahaan->img_profile) }}" alt="" alt="Profile">
+                    @else
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3"
+                            src="https://ui-avatars.com/api/?name={{ urlencode($data->username) }}&background=random&color=fff&size=128"
+                            alt="">
+                    @endif
+                @elseif($data->finance)
+                    @if ($data->finance->img_profile)
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3 profile-img"
+                            src="{{ asset('storage/' . $data->finance->img_profile) }}" alt="" alt="Profile">
+                    @else
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3"
+                            src="https://ui-avatars.com/api/?name={{ urlencode($data->username) }}&background=random&color=fff&size=128"
+                            alt="">
+                    @endif
+                @elseif($data->admin)
+                    @if ($data->admin->img_profile)
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3 profile-img"
+                            src="{{ asset('storage/' . $data->admin->img_profile) }}" alt="" alt="Profile">
+                    @else
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3"
+                            src="https://ui-avatars.com/api/?name={{ urlencode($data->username) }}&background=random&color=fff&size=128"
+                            alt="">
+                    @endif
+                @elseif($data->superadmins)
+                    @if ($data->superadmins->img_profile)
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3 profile-img"
+                            src="{{ asset('storage/' . $data->superadmins->img_profile) }}" alt="" alt="Profile">
+                    @else
+                        <img id="previewImage" class="w-40 h-40 sm:w-40 object-cover rounded-full mb-3"
+                            src="https://ui-avatars.com/api/?name={{ urlencode($data->username) }}&background=random&color=fff&size=128"
+                            alt="">
+                    @endif
+                @endif
+
 
                 <form id="hapus" action="/dashboard/superadmin/hapus/{{ $data->id }}" method="POST">
                     @csrf
@@ -25,15 +74,18 @@
 
                 <div class="flex space-x-2">
                     @if ($data->status === 0)
-                        <button form="banned" type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg">
+                        <button form="banned" type="submit"
+                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg">
                             Banned
                         </button>
                     @else
-                        <button form="unbanned" type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-1.5 rounded-lg">
+                        <button form="unbanned" type="submit"
+                            class="bg-green-500 hover:bg-green-600 text-white px-4 py-1.5 rounded-lg">
                             Unbanned
                         </button>
                     @endif
-                    <button form="hapus" type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg">
+                    <button form="hapus" type="submit"
+                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg">
                         Hapus Akun
                     </button>
                 </div>
@@ -79,4 +131,31 @@
             </div>
         </div>
     </div>
+    <script>
+        const profileImg = document.getElementById("previewImage");
+        const imgModal = document.getElementById("imgModal");
+        const modalImg = document.getElementById("modalImg");
+
+        profileImg.onclick = () => {
+            imgModal.style.display = "flex";
+            modalImg.src = profileImg.src;
+        };
+
+        imgModal.onclick = () => {
+            imgModal.style.display = "none";
+        };
+
+        document
+            .getElementById("fileInput")
+            .addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById("previewImage").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+    </script>
 @endsection

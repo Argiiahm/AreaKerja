@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Admin;
+use App\Models\Bank;
 use App\Models\Finance;
 use App\Models\HargaKoin;
 use App\Models\HargaPembayaran;
@@ -108,27 +109,53 @@ class DatabaseSeeder extends Seeder
         HargaPembayaran::create([
             "nama"     =>    "Top Up 10 Koin Area Kerja",
             "jumlah_koin" =>  10,
-            "harga"       => 10000
+            "harga"       => 10000,
+            "icon"        => "topup_icon/1.png"
         ]);
         HargaPembayaran::create([
             "nama"     =>    "Top Up 100 Koin Area Kerja",
             "jumlah_koin" =>  100,
-            "harga"       => 100000
+            "harga"       => 100000,
+            "icon"        => "topup_icon/2.png"
+
         ]);
         HargaPembayaran::create([
-            "nama"     =>    "Top Up 100 Koin Area Kerja",
+            "nama"     =>    "Top Up 1000 Koin Area Kerja",
             "jumlah_koin" =>  1000,
-            "harga"       => 500000
+            "harga"       => 500000,
+            "icon"        => "topup_icon/3.png"
         ]);
         HargaPembayaran::create([
-            "nama"     =>    "Top Up 100 Koin Area Kerja",
+            "nama"     =>    "Top Up 10000 Koin Area Kerja",
             "jumlah_koin" =>  10000,
-            "harga"       => 1000000
+            "harga"       => 1000000,
+            "icon"        => "topup_icon/4.png"
+            
         ]);
         HargaPembayaran::create([
-            "nama"     =>    "Top Up 100 Koin Area Kerja",
+            "nama"     =>    "Top Up 100000 Koin Area Kerja",
             "jumlah_koin" =>  100000,
-            "harga"       => 1500000
+            "harga"       => 1500000,
+            "icon"        => "topup_icon/5.png"
+        ]);
+        HargaPembayaran::create([
+            "nama"     =>    "Top Up 1000000 Koin Area Kerja",
+            "jumlah_koin" =>  1000000,
+            "harga"       => 2000000,
+            "icon"        => "topup_icon/6.png"
+        ]);
+
+        Bank::create([
+            "nama_bank"  =>    "BCA",
+            "owner"      =>     "Areakerja",
+            "no_rek"     =>     "009912212",
+            "logo_img"   =>     "topup_icon/Bca.png"
+        ]);
+        Bank::create([
+            "nama_bank"  =>    "BRI",
+            "owner"      =>     "Areakerja",
+            "no_rek"     =>     "0021222112",
+            "logo_img"   =>     "topup_icon/Bri.png"
         ]);
     }
 }

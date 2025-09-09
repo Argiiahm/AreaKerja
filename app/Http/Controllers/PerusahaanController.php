@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Models\Alamatperusahaan;
+use App\Models\Bank;
+use App\Models\CatatanCash;
+use App\Models\HargaPembayaran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,7 +15,46 @@ class PerusahaanController extends Controller
 {
     public function index()
     {
-        return view('Perusahaan.dashboard-perusahaan');
+        return view('Perusahaan.dashboard-perusahaan', [
+            "data"      =>      HargaPembayaran::all(),
+            "payment"      =>    Bank::all(),
+        ]);
+    }
+
+    public function topup(Request $request)
+    {
+        // dd($request->all());
+
+        $koin = HargaPembayaran::where('id', $request->id_koin)->get()->first();
+        $bank = Bank::where('id', $request->id_bank)->get()->first();
+        $noref =  rand(1000000000, 9999999999);
+
+        $validasi = $request->validate([
+            'no_referensi'  =>   "nullable",
+            'pesanan'       =>   "nullable",
+            'dari'          =>   "nullable",
+            'sumber_dana'   =>   "nullable",
+            'total'         =>   "nullable",
+            'status'        =>   "nullable"
+        ]);
+
+        $validasi['user_id']  =   Auth::user()->id;
+        $validasi['no_referensi'] = $noref;
+        $validasi['pesanan'] = $koin->nama;
+        $validasi['dari']  =   Auth::user()->username;
+        $validasi['sumber_dana'] = $bank->nama_bank;
+        $validasi['total'] = $koin->jumlah_koin;
+        $validasi['status'] = 'pending';
+
+       $transaksi = CatatanCash::create($validasi);
+        return redirect('/dashboard/perusahaan')->with('success_topup', [
+            "id"          =>   $transaksi->id,
+            'no_referensi' => $noref,
+            'pesanan' => $koin->nama,
+            'dari' => Auth::user()->username,
+            'sumber_dana' => $bank->nama_bank,
+            'total' => $koin->harga + 2000,
+        ]);
     }
 
     //profile
