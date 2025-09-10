@@ -29,7 +29,7 @@
                             <td class="py-3 text-center">{{$d->sumber_dana}}</td>
                             <td class="py-3 text-center">{{$d->total}}</td>
                             <td class="px-6 py-4 flex justify-center">
-                                <a href="/dashboard/superadmin/freeze/detail/{{ $d->id }}" class="">
+                                <a href="/dashboard/finance/catatantransaksi/tunai/detail/{{ $d->id }}" class="">
                                     <img src="{{ asset('Icon/fzd.png') }}" alt="">
                                 </a>
                             </td>

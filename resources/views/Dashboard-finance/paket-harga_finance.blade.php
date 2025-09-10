@@ -45,7 +45,7 @@
                         @foreach ($tunai as $t)
                             <tr>
                                 <td class="py-3 px-4">{{ $t->nama }}</td>
-                                <td class="py-3">Rp. {{ $t->harga }}</td>
+                                <td class="py-3">Rp. {{ number_format($t->harga, 0, ',', '.')  }}</td>
                             </tr>
                         @endforeach
                     </tbody>

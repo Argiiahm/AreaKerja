@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('total')->nullable();
             $table->enum('status',['pending','diterima','ditolak'])->nullable();
             $table->string('bukti')->nullable();
+            $table->timestamp('expired_date')->nullable();
             $table->timestamps();
         });
     }

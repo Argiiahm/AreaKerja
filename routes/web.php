@@ -319,5 +319,8 @@ Route::middleware(['status'])->group(function () {
 
     // Transaksi Top Up
     Route::post('/dashboard/perusahaan/topup',[PerusahaanController::class, 'topup'])->middleware('perusahaan');
+    Route::get('/detail/pembayaran/{trx:id}', [PerusahaanController::class, 'detail_pembayaran'])->middleware('perusahaan');
+    Route::put('/upload/bukti/pembayaran/{bukti:id}',[PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
+    Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
 
 });

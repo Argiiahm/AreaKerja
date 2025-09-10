@@ -12,10 +12,25 @@ class FinanceController extends Controller
 {
     public function index()
     {
+        $cash = CatatanCash::all();
+        $koin = CatatanKoin::all();
+
+        $totalOmset = 0;
+        foreach ($cash->where('status', 'diterima') as $trx) {
+            $harga = HargaPembayaran::where('jumlah_koin', $trx->total)->first();
+            if ($harga) {
+                $totalOmset += $harga->harga;
+            }
+        }
+
         return view('Dashboard-finance.dashboard', [
-            "title"    =>     "Dashboard"
+            "title"      => "Dashboard",
+            "koin"       => $koin,
+            "cash"       => $cash,
+            "totalOmset" => $totalOmset
         ]);
     }
+
 
     public function paket_harga()
     {
@@ -42,7 +57,6 @@ class FinanceController extends Controller
 
     public function update_koin(Request $request)
     {
-
 
         foreach ($request->id as $i => $id) {
             $koin = HargaKoin::find($id);
@@ -90,11 +104,26 @@ class FinanceController extends Controller
             "data"    =>     CatatanCash::all()
         ]);
     }
+
+    public function updateStatus(Request $request)
+    {
+        $data = CatatanCash::find($request->id);
+        if (!$data) {
+            return back()->with('error', 'Data tidak ditemukan!');
+        }
+
+        $data->status = $request->status;
+        $data->save();
+
+        return back()->with('success', 'Status berhasil diperbarui!');
+    }
+
+
     public function catatan_transaksi_koin_detail()
     {
         return view('Dashboard-finance.riwayat-transaksi_koin', [
             "title"   =>     "Catatan Transaksi",
-            "data"    =>     CatatanKoin::all() 
+            "data"    =>     CatatanKoin::all()
         ]);
     }
 

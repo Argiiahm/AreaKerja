@@ -24,8 +24,8 @@
                             <span
                                 @php
 $koin1 = Auth::user()->pembayaran()->where('status', 'diterima')->sum('total');
-                                $koin2 = Auth::user()->catatan_koin->sum('total');
-                                $hasil = $koin1 - $koin2 @endphp
+                                    $koin2 = Auth::user()->catatan_koin->sum('total');
+                                    $hasil = $koin1 - $koin2 @endphp
                                 class="text-orange-500 font-bold text-4xl">{{ $hasil }}</span>
                             <img src="{{ asset('Icon/coin perusahaan.png') }}" alt="coin" class="w-10 h-8">
                         </div>
@@ -170,7 +170,8 @@ $koin1 = Auth::user()->pembayaran()->where('status', 'diterima')->sum('total');
                                         <img src="{{ asset($d->icon) }}" alt="">
                                     </div>
                                     <p class="text-orange-500 font-bold text-lg mt-2">{{ $d->jumlah_koin }}</p>
-                                    <p class="bg-orange-500 text-white py-1 rounded-b-xl">Rp. {{ $d->harga }}</p>
+                                    <p class="bg-orange-500 text-white py-1 rounded-b-xl">Rp.
+                                        {{ number_format($d->harga, 0, ',', '.') }}</p>
                                 </label>
                             @endif
                         @endforeach
@@ -197,7 +198,8 @@ $koin1 = Auth::user()->pembayaran()->where('status', 'diterima')->sum('total');
                             <span class="text-orange-500">⇄</span>
                             <span>Transfer Bank</span>
                         </div>
-                        <span id="btn_list" class="text-gray-500">▼</span>
+                        <span id="btn_list" class="text-gray-600 text-xl">⮟</span>
+
                     </div>
                     <div id="list_p" class="space-y-3 hidden">
                         @foreach ($payment as $p)
@@ -212,17 +214,25 @@ $koin1 = Auth::user()->pembayaran()->where('status', 'diterima')->sum('total');
                             </div>
                         @endforeach
                         <div class="flex justify-between mt-6 text-sm font-semibold">
-                            <button id="btn_kembali" class="text-orange-500 hover:underline">Kembali</button>
+
+                        <button type="button" id="btn_kembali"
+                                class="px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition">
+                                Kembali
+                            </button>
+
                             <button type="submit" form="transaksi"
-                                class="text-orange-500 hover:underline">Selanjutnya</button>
+                                class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">
+                                Selanjutnya
+                            </button>
                         </div>
+
                     </div>
                 </div>
-            </div>
+            </div> 
         </form>
     </div>
 
-
+ b 
     @if (session('success_topup'))
         <div id="modalKonfirmasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-2xl p-6 w-[450px] shadow-lg relative">

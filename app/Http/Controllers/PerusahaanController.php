@@ -27,7 +27,7 @@ class PerusahaanController extends Controller
 
         $koin = HargaPembayaran::where('id', $request->id_koin)->get()->first();
         $bank = Bank::where('id', $request->id_bank)->get()->first();
-        $noref =  rand(1000000000, 9999999999);
+        $noref = "AK" . rand(1000000000, 9999999999);
 
         $validasi = $request->validate([
             'no_referensi'  =>   "nullable",
@@ -45,8 +45,9 @@ class PerusahaanController extends Controller
         $validasi['sumber_dana'] = $bank->nama_bank;
         $validasi['total'] = $koin->jumlah_koin;
         $validasi['status'] = 'pending';
+        $validasi['expired_date'] = now()->addHours(24);
 
-       $transaksi = CatatanCash::create($validasi);
+        $transaksi = CatatanCash::create($validasi);
         return redirect('/dashboard/perusahaan')->with('success_topup', [
             "id"          =>   $transaksi->id,
             'no_referensi' => $noref,
@@ -56,6 +57,47 @@ class PerusahaanController extends Controller
             'total' => $koin->harga + 2000,
         ]);
     }
+
+    public function detail_pembayaran(CatatanCash $trx)
+    {
+        if ($trx->status === 'pending' && now()->greaterThan($trx->expired_date)) {
+            abort(404, 'Halaman Tidak Tersedia!');
+        }
+
+        if ($trx->status !== 'pending') {
+            abort(404, 'Halaman Tidak Tersedia!');
+        }
+
+        $bank = Bank::where('nama_bank', $trx->sumber_dana)->first();
+        $pembayaran = HargaPembayaran::where('jumlah_koin', $trx->total)->first();
+        $pembayaran = HargaPembayaran::where('jumlah_koin', $trx->total)->first();
+
+        return view('Detail-tf_pembayaran.detail-transaksi_pembayaran', [
+            "Data"   =>    $trx,
+            "Bank"   =>    $bank,
+            "pembayaran" =>   $pembayaran
+        ]);
+    }
+
+    public function uploadBukti(Request $request, CatatanCash $bukti)
+    {
+        $validasi = $request->validate([
+            "bukti"    =>     "required|file|image|mimes:png,jpg,jpeg"
+        ]);
+
+        if ($request->hasFile('bukti')) {
+            if ($bukti->$bukti && Storage::exists('public/' . $bukti->$bukti)) {
+                Storage::delete('public/' . $bukti->$bukti);
+            }
+            $validasi['bukti'] = $request->file('bukti')->store('images', 'public');
+        }
+
+        $bukti->update($validasi);
+
+        return back();
+    }
+
+
 
     //profile
     public function profile()
