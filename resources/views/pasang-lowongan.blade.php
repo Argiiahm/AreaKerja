@@ -44,8 +44,13 @@
                         <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn</li>
                         <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
                     </ul>
-                    <button class="bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
-                        Lowongan</button>
+                    @foreach ($Data as $d)
+                        @if ($d->nama === 'Pasang Lowongan Gold')
+                            <button class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
+                                Lowongan</button>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
@@ -71,8 +76,13 @@
                         <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn</li>
                         <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
                     </ul>
-                    <button class="bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
-                        Lowongan</button>
+                    @foreach ($Data as $d)
+                        @if ($d->nama === 'Pasang Lowongan Silver')
+                            <button class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
+                                Lowongan</button>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
@@ -97,8 +107,13 @@
                         <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn</li>
                         <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
                     </ul>
-                    <button class="bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
-                        Lowongan</button>
+                    @foreach ($Data as $d)
+                        @if ($d->nama === 'Pasang Lowongan Bronze')
+                            <button class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
+                                Lowongan</button>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -128,24 +143,122 @@
     </section>
     <section class="mx-0 mt-20">
         <div class="flex justify-center mb-8">
-            <h1 class="text-2xl border-b-4 pb-4 w-fit text-orange-500 font-bold border-orange-500">Kenapa Harus AreaKerja?</h1>
+            <h1 class="text-2xl border-b-4 pb-4 w-fit text-orange-500 font-bold border-orange-500">Kenapa Harus AreaKerja?
+            </h1>
         </div>
         <div class="block lg:flex md:flex items-center justify-between">
             <img src="{{ asset('image/2.png') }}" alt="">
             <div class="pr-0 mt-10 space-y-5 lg:pr-52 md:pr-10 lg:mt-0 md:mt-0 lg:space-y-0">
                 <div class="flex items-center gap-2">
                     <img class="w-20" src="{{ asset('Icon/1.png') }}" alt="">
-                    <p class="w-full lg:w-96 md:w-96 text-orange-500">Website kami menjangkau ratusan perusahaan yang siap menerima ribuan pencari kerja</p>
+                    <p class="w-full lg:w-96 md:w-96 text-orange-500">Website kami menjangkau ratusan perusahaan yang siap
+                        menerima ribuan pencari kerja</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <img class="w-20" src="{{ asset('Icon/3.png') }}" alt="">
-                    <p class="w-full lg:w-96 md:w-96 text-orange-500">Akun media social kami diikuti ratusan ribu pencari kerja serta memiliki jaringan social media yang lengkap</p>
+                    <p class="w-full lg:w-96 md:w-96 text-orange-500">Akun media social kami diikuti ratusan ribu pencari
+                        kerja serta memiliki jaringan social media yang lengkap</p>
                 </div>
                 <div class="flex items-center gap-2 text-orange-500">
                     <img class="w-20" src="{{ asset('Icon/2.png') }}" alt="">
-                    <p class="w-full lg:w-96 md:w-96">Harga yang ramah bagi para pencari kerja tetapi dengan keuntungan peluang yang besar</p>
+                    <p class="w-full lg:w-96 md:w-96">Harga yang ramah bagi para pencari kerja tetapi dengan keuntungan
+                        peluang yang besar</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <div id="modalDetails"
+        class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div
+            class="bg-white w-full max-w-md p-8 relative mx-10 shadow-lg max-h-[calc(100vh-3rem)] overflow-y-auto rounded-lg">
+            <button onclick="closeDetail()"
+                class="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+
+            <h2 class="text-xl font-bold text-center mb-10">Pasang Lowongan</h2>
+
+            <form id="formBeli" action="" method="POST">
+                @csrf
+                <div class="flex justify-between border-b border-dashed pb-2">
+                    <span>Nama Paket</span>
+                    <input type="text" disabled id="d_nama"
+                        class="font-medium border-none bg-transparent text-right" value="">
+                    <input type="hidden" name="pesanan" id="pesanan_hidden">
+                </div>
+
+                <div class="flex justify-between border-b border-dashed pt-2 pb-2">
+                    <span>Harga</span>
+                    <input type="text" disabled id="d_harga"
+                        class="bg-orange-500 text-white text-center text-xs px-3 py-1 rounded-full" value="">
+                    <input type="hidden" name="total" id="total_hidden">
+                </div>
+
+                <div class="flex justify-between border-b border-dashed pt-2 pb-2">
+                    <div class="flex items-center gap-2">
+                        <span>Saldo Koin Anda</span>
+                        <span id="saldo_koin"
+                            class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full">{{ $totalKoin }}</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <input class="border-2" type="checkbox" required>
+                        <p id="p" class="text-zinc-600"></p>
+                    </div>
+                </div>
+
+                <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded w-full">Beli</button>
+            </form>
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+        const detailBtns = document.querySelectorAll(".open-detail");
+        const modalDetails = document.getElementById("modalDetails");
+        const d_nama = document.getElementById("d_nama");
+        const d_harga = document.getElementById("d_harga");
+        const saldoKoin = document.getElementById("saldo_koin");
+        const formBeli = document.getElementById("formBeli");
+        const pesananHidden = document.getElementById("pesanan_hidden");
+        const totalHidden = document.getElementById("total_hidden");
+        const submitBtn = formBeli.querySelector("button[type='submit']");
+        const checkboxKoin = formBeli.querySelector("input[type='checkbox']");
+        const pesan = document.getElementById("p");
+
+        detailBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const nama = btn.dataset.nama;
+                const harga = parseInt(btn.dataset.harga);
+
+                d_nama.value = nama;
+                d_harga.value = new Intl.NumberFormat("id-ID").format(harga) + " Koin";
+                pesananHidden.value = nama;
+                totalHidden.value = harga;
+
+                const koin = parseInt(saldoKoin.textContent);
+                if (koin < harga) {
+                    checkboxKoin.checked = false;
+                    checkboxKoin.disabled = true;
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add("opacity-50", "cursor-not-allowed");
+                    pesan.innerHTML = "Saldo Tidak Mencukupi"
+                } else {
+                    checkboxKoin.checked = true;
+                    checkboxKoin.disabled = false;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+                    pesan.innerHTML = "Saldo Mencukupi"
+
+
+                }
+
+                formBeli.setAttribute("action", "/topup/lowongan");
+                modalDetails.classList.remove("hidden");
+            });
+        });
+
+        function closeDetail() {
+            modalDetails.classList.add("hidden");
+        }
+    </script>
 @endsection

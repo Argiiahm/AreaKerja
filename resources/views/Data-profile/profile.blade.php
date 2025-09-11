@@ -401,12 +401,17 @@
                                         placeholder="Nama Pengguna" value="{{ Auth::user()->username }}" readonly>
                                 </div>
 
-                                <div>
-                                    <label class="block text-sm font-semibold text-gray-700">Email <span
-                                            class="text-red-500">*</span></label>
-                                    <input type="email"
-                                        class="w-full border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                                        placeholder="Email" value="{{ Auth::user()->email }}" readonly>
+                                <div class="flex items-center gap-2 w-full">
+                                    <div class="w-full">
+                                        <label class="block text-sm font-semibold text-gray-700">Email <span
+                                                class="text-red-500">*</span></label>
+                                        <input type="email"
+                                            class="w-full border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                                            placeholder="Email" value="{{ Auth::user()->email }}" readonly>
+                                    </div>
+                                    <div>
+                                        <i class="ph ph-pencil-simple text-orange-500"></i>
+                                    </div>
                                 </div>
 
                                 <label class="block text-sm font-semibold text-gray-700">

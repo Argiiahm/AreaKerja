@@ -323,4 +323,6 @@ Route::middleware(['status'])->group(function () {
     Route::put('/upload/bukti/pembayaran/{bukti:id}',[PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
 
+    Route::post('/topup/lowongan',[LowonganController::class, 'topup'])->middleware('perusahaan');
+
 });

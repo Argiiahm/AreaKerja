@@ -22,11 +22,11 @@
                     <div class="bg-white text-center rounded-md px-4 py-4 w-full md:w-fit mx-auto float-left">
                         <div class="flex items-center justify-center gap-3 ">
                             <span
-                                @php
+                                {{-- @php
 $koin1 = Auth::user()->pembayaran()->where('status', 'diterima')->sum('total');
                                     $koin2 = Auth::user()->catatan_koin->sum('total');
-                                    $hasil = $koin1 - $koin2 @endphp
-                                class="text-orange-500 font-bold text-4xl">{{ $hasil }}</span>
+                                    $hasil = $koin1 - $koin2 @endphp --}}
+                                class="text-orange-500 font-bold text-4xl">{{ $totalSaldo }}</span>
                             <img src="{{ asset('Icon/coin perusahaan.png') }}" alt="coin" class="w-10 h-8">
                         </div>
                         <button id="btn_topup"
@@ -215,7 +215,7 @@ $koin1 = Auth::user()->pembayaran()->where('status', 'diterima')->sum('total');
                         @endforeach
                         <div class="flex justify-between mt-6 text-sm font-semibold">
 
-                        <button type="button" id="btn_kembali"
+                            <button type="button" id="btn_kembali"
                                 class="px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition">
                                 Kembali
                             </button>
@@ -228,11 +228,10 @@ $koin1 = Auth::user()->pembayaran()->where('status', 'diterima')->sum('total');
 
                     </div>
                 </div>
-            </div> 
+            </div>
         </form>
     </div>
 
- b 
     @if (session('success_topup'))
         <div id="modalKonfirmasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-2xl p-6 w-[450px] shadow-lg relative">
