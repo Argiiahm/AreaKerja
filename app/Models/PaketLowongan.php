@@ -11,8 +11,4 @@ class PaketLowongan extends Model
     protected $table = 'paket_lowongans';
     protected $guarded = [];
 
-    public function lowongan() {
-        return $this->hasMany(LowonganPerusahaan::class, 'paket_id');
-    }
-
 }

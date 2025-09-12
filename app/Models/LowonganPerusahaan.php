@@ -15,8 +15,5 @@ class LowonganPerusahaan extends Model
         return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
     }
 
-    public function paket() {
-        return $this->belongsTo(PaketLowongan::class, 'paket_id');
-    }
 
 }

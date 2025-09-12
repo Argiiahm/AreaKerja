@@ -93,32 +93,32 @@ class DatabaseSeeder extends Seeder
         ]);
 
         PaketLowongan::create([
-            "nama"    =>      "GOLD",
+            "nama"    =>      "Gold",
             "publikasi"  =>    5,
             "batas_listing"  => 5
         ]);
         PaketLowongan::create([
-            "nama"    =>      "SILVER",
+            "nama"    =>      "Silver",
             "publikasi"  =>    3,
             "batas_listing"  => 3
         ]);
         PaketLowongan::create([
-            "nama"    =>      "BRONZE",
+            "nama"    =>      "Bronze",
             "publikasi"  =>    1,
             "batas_listing"  => 1
         ]);
 
         HargaKoin::create([
-            "nama"     =>      "Pasang Lowongan Bronze",
+            "nama"     =>      "Bronze",
             "harga"    =>      150
         ]);
 
         HargaKoin::create([
-            "nama"     =>      "Pasang Lowongan Silver",
+            "nama"     =>      "Silver",
             "harga"    =>      150
         ]);
         HargaKoin::create([
-            "nama"     =>      "Pasang Lowongan Gold",
+            "nama"     =>      "Gold",
             "harga"    =>      150
         ]);
         HargaKoin::create([

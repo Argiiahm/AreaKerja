@@ -15,18 +15,10 @@
                     <div
                         class="bg-white flex flex-col md:flex-row justify-between items-center rounded-md px-4 py-3 mb-4 gap-3">
                         <span class="font-semibold text-black text-center md:text-left">Lowongan Belum Terpasang</span>
-                        @if (Auth::user()->perusahaan->pasanglowongan->sum('paket_id'))
-                            <a href="/dashboard/perusahaan/lowongan"
-                                class="text-orange-500 border border-orange-500 px-4 py-2 rounded-md text-sm">
-                                Tambah Lowongan
-                            </a>
-                        @else
-                            <a href="/pasanglowongan"
-                                class="text-orange-500 border border-orange-500 px-4 py-2 rounded-md text-sm">
-                                Tambah Lowongan
-                            </a>
-                        @endif
-
+                        <a href="/dashboard/perusahaan/lowongan"
+                            class="text-orange-500 border border-orange-500 px-4 py-2 rounded-md text-sm">
+                            Tambah Lowongan
+                        </a>
                     </div>
                     <div class="bg-white text-center rounded-md px-4 py-4 w-full md:w-fit mx-auto float-left">
                         <div class="flex items-center justify-center gap-3 ">

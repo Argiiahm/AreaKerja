@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Perusahaan;
-use Illuminate\Http\Request;
-use App\Models\Alamatperusahaan;
 use App\Models\Bank;
+use App\Models\Perusahaan;
 use App\Models\CatatanCash;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Models\HargaPembayaran;
+use App\Models\Alamatperusahaan;
+use App\Models\CatatanKoin;
+use App\Models\LowonganPerusahaan;
+use App\Models\PaketLowongan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,7 +20,7 @@ class PerusahaanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status','diterima')->sum('total');
+        $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status', 'diterima')->sum('total');
 
         return view('Perusahaan.dashboard-perusahaan', [
             "data"      =>      HargaPembayaran::all(),
@@ -200,19 +204,62 @@ class PerusahaanController extends Controller
     //lowongan
     public function lowongan()
     {
-        return view('Perusahaan.Lowongan_saya.lowongan');
+        $user = Auth::user()->id;
+
+        $koin = CatatanKoin::where('user_id', $user)->pluck('pesanan');
+
+        $paket = PaketLowongan::whereIn('nama', $koin)->get();
+
+        return view('Perusahaan.Lowongan_saya.lowongan', [
+            "Data"  => LowonganPerusahaan::all(),
+            "paket" => $paket
+        ]);
     }
     public function isi_lowongan()
     {
         return view('Perusahaan.Lowongan_saya.isi-lowongan');
     }
+
+    public function publishLowongan(Request $request, $id)
+    {
+        $lowongan = LowonganPerusahaan::findOrFail($id);
+
+        $lowongan->paket_id = $request->paket_id;
+        $lowongan->save();
+
+        return back()->with('success', 'Lowongan berhasil dipublish.');
+    }
+
+    public function create_lowongan(Request $request)
+    {
+        $v = $request->validate([
+            "nama"    =>    "required",
+            "alamat"  =>    "required",
+            "jenis"   =>    "required",
+            "gaji_awal"  =>   "required",
+            "gaji_akhir"  =>   "required",
+            "deskripsi"   =>    "required",
+            "syarat_pekerjaan"  =>   "required",
+            "batas_lamaran"        =>   "required"
+        ]);
+
+        $v['perusahaan_id']  = Auth::user()->perusahaan->id;
+        $v['slug']  = Str::slug($request->nama);
+        $v['tanggung_jawab']  = Auth::user()->perusahaan->nama_perusahaan;
+        LowonganPerusahaan::create($v);
+        return redirect('/dashboard/perusahaan/lowongan');
+    }
+
     public function edit_lowongan()
     {
         return view('Perusahaan.Lowongan_saya.edit-lowongan');
     }
-    public function detail_lowongan()
+    public function detail_lowongan(LowonganPerusahaan $lowongan)
     {
-        return view('Perusahaan.Lowongan_saya.detail-lowongan');
+        return view('Perusahaan.Lowongan_saya.detail-lowongan', [
+            "data"    =>   $lowongan,
+            "Data"    =>   LowonganPerusahaan::all()
+        ]);
     }
     public function kandidat()
     {
