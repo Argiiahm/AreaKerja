@@ -16,7 +16,7 @@ class PerusahaanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $totalSaldo = CatatanCash::where('user_id', $user->id)->sum('total');
+        $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status','diterima')->sum('total');
 
         return view('Perusahaan.dashboard-perusahaan', [
             "data"      =>      HargaPembayaran::all(),

@@ -291,7 +291,10 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/alamat/jadi', [PerusahaanController::class, 'alamat_jadi'])->middleware('perusahaan');
 
     Route::get('/dashboard/perusahaan/lowongan', [PerusahaanController::class, 'lowongan'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/isi/lowongan', [PerusahaanController::class, 'isi_lowongan'])->middleware('perusahaan');
+
+    Route::get('/dashboard/perusahaan/isi/lowongan/{paket_id}', [PerusahaanController::class, 'isi_lowongan'])
+        ->name('perusahaan.lowongan.create');
+
     Route::get('/dashboard/perusahaan/edit/lowongan', [PerusahaanController::class, 'edit_lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/lowongan/detail', [PerusahaanController::class, 'detail_lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat'])->middleware('perusahaan');
@@ -318,11 +321,10 @@ Route::middleware(['status'])->group(function () {
 
 
     // Transaksi Top Up
-    Route::post('/dashboard/perusahaan/topup',[PerusahaanController::class, 'topup'])->middleware('perusahaan');
+    Route::post('/dashboard/perusahaan/topup', [PerusahaanController::class, 'topup'])->middleware('perusahaan');
     Route::get('/detail/pembayaran/{trx:id}', [PerusahaanController::class, 'detail_pembayaran'])->middleware('perusahaan');
-    Route::put('/upload/bukti/pembayaran/{bukti:id}',[PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
+    Route::put('/upload/bukti/pembayaran/{bukti:id}', [PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
 
-    Route::post('/topup/lowongan',[LowonganController::class, 'topup'])->middleware('perusahaan');
-
+    Route::post('/topup/lowongan', [LowonganController::class, 'topup'])->middleware('perusahaan');
 });

@@ -9,7 +9,7 @@
             <div>
                 <h2 class="text-lg font-bold">Seven_Inc</h2>
                 <p class="text-sm text-gray-600">Jasa TI dan Konsultan TI</p>
-                <p class="text-sm text-gray-500">Jakarta Timur, DKI Jakarta, Indonesia</p>
+                <p class="text-sm text-gray-500">Jakarta Timur, DKI Jakarta, Indonesiasssdasm</p>
             </div>
         </div>
 

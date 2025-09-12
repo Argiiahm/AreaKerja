@@ -4,14 +4,14 @@
     <section class="mx-auto pt-10 px-4 sm:px-10">
         <div class="mt-8 w-full py-12 sm:py-20 space-y-8">
             
-            {{-- Tombol Ganti Password (sejajar dengan input) --}}
-            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-                <label class="sm:w-60"></label> {{-- label kosong buat sejajar --}}
-                <a href="#"
-                   class="flex-1 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow block text-center sm:text-left">
-                    Ganti Password
-                </a>
-            </div>
+          {{-- Tombol Ganti Password full kiri–kanan --}}
+<div class="w-full">
+    <button type="button"
+        class="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow text-center">
+        Ganti Password
+    </button>
+</div>
+
 
 
             <!-- {{-- Tombol Ganti Password (full kiri–kanan) --}}

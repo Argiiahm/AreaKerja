@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HargaKoin;
+use App\Models\Perusahaan;
 use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
-use App\Models\HargaKoin;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PaketLowongan;
+use App\Models\LowonganPerusahaan;
 use Illuminate\Support\Facades\Auth;
 
 class LowonganController extends Controller
@@ -19,7 +23,8 @@ class LowonganController extends Controller
         return view('pasang-lowongan', [
             "Data"   =>    HargaKoin::all(),
             "data"   =>    $koin,
-            "totalKoin"   =>   $totalKoin
+            "totalKoin"   =>   $totalKoin,
+            "Pakets"   =>    PaketLowongan::all()
         ]);
     }
 
@@ -49,6 +54,7 @@ class LowonganController extends Controller
         }
 
         $noref = "AK" . rand(1000000000, 9999999999);
+
         CatatanKoin::create([
             "user_id"      => $user->id,
             "no_referensi" => $noref,
@@ -62,7 +68,8 @@ class LowonganController extends Controller
         $cashRecords = CatatanCash::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
 
         foreach ($cashRecords as $record) {
-            if ($sisaKurang <= 0) break;
+            if ($sisaKurang <= 0)
+                break;
 
             if ($record->total <= $sisaKurang) {
                 $sisaKurang -= $record->total;
@@ -74,6 +81,17 @@ class LowonganController extends Controller
 
             $record->save();
         }
-        return back();
+
+
+        $paket = PaketLowongan::findOrFail($request->paket_id);
+        $perusahaan = auth()->user()->perusahaan;
+
+
+        LowonganPerusahaan::create([
+            'perusahaan_id' => $perusahaan->id,
+            'paket_id'      => $paket->id,
+        ]);
+
+        return back()->with('success', 'Berhasil membeli paket lowongan!');
     }
 }

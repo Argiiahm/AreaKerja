@@ -23,99 +23,166 @@
     </section>
     <section id="pasanglowongan" class="mx-0 lg:mx-20  mt-10">
         <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
-                <div class="bg-yellow-500 p-5">
-                    <h2 class="text-xl font-bold text-white">GOLD</h2>
-                </div>
-                <div class="p-6">
-                    <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
-                    <p class="text-sm text-gray-500 mb-6 border-b pb-5">5 Kali Publikasi di semua jaringan AreaKerja.com</p>
-                    <ul class="space-y-2 text-gray-600 mb-6">
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Website & Aplikasi</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Instagram Post & Story
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Highlight Story Favorit
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Google Jobs & Bisnis
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Facebook Post & Story
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Twitter</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
-                    </ul>
-                    @foreach ($Data as $d)
-                        @if ($d->nama === 'Pasang Lowongan Gold')
-                            <button class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
-                                data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                Lowongan</button>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
+            @foreach ($Pakets as $paket)
+                @if ($paket->nama === 'GOLD')
+                    <div
+                        class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
+                        <div class="bg-yellow-500 p-5">
+                            <h2 class="text-xl font-bold text-white">{{ $paket->nama }}</h2>
+                        </div>
+                        <div class="p-6">
+                            <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
+                            <p class="text-sm text-gray-500 mb-6 border-b pb-5">{{ $paket->publikasi }} Kali Publikasi di
+                                semua jaringan
+                                AreaKerja.com
+                            </p>
+                            <ul class="space-y-2 text-gray-600 mb-6">
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Website &
+                                    Aplikasi
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Instagram Post
+                                    &
+                                    Story
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Highlight Story
+                                    Favorit
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Google Jobs &
+                                    Bisnis
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Facebook Post &
+                                    Story
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Twitter</li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn</li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
+                            </ul>
+                            @foreach ($Data as $d)
+                                @if ($d->nama === 'Pasang Lowongan Gold')
+                                    <button
+                                        class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                        data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}"
+                                        data-paket="{{ $paket->id }}">Pasang
+                                        Lowongan</button>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            @endforeach
 
-            <div
-                class="bg-white rounded-lg shadow-md transform  lg:translate-y-[-1rem] md:translate-y-[-1rem] translate-y-0 border text-center hover:-translate-y-6 transition-all duration-500 ">
-                <div class="bg-[#979aa0] p-5">
-                    <h2 class="text-xl font-bold text-white">Silver</h2>
-                </div>
-                <div class="p-6">
-                    <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
-                    <p class="text-sm text-gray-500 mb-6 border-b pb-5">3 Kali Publikasi di semua jaringan AreaKerja.com</p>
-                    <ul class="space-y-2 text-gray-600 mb-6">
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Website & Aplikasi</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Instagram Post & Story
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Highlight Story Favorit
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Google Jobs & Bisnis
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Facebook Post & Story
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Twitter</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
-                    </ul>
-                    @foreach ($Data as $d)
-                        @if ($d->nama === 'Pasang Lowongan Silver')
-                            <button class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
-                                data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                Lowongan</button>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
+            @foreach ($Pakets as $paket)
+                @if ($paket->nama === 'SILVER')
+                    <div
+                        class="bg-white rounded-lg shadow-md transform  lg:translate-y-[-1rem] md:translate-y-[-1rem] translate-y-0 border text-center hover:-translate-y-6 transition-all duration-500 ">
+                        <div class="bg-[#979aa0] p-5">
+                            <h2 class="text-xl font-bold text-white">{{ $paket->nama }}</h2>
+                        </div>
+                        <div class="p-6">
+                            <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
+                            <p class="text-sm text-gray-500 mb-6 border-b pb-5">{{ $paket->publikasi }} Kali Publikasi
+                                di semua jaringan
+                                AreaKerja.com
+                            </p>
+                            <ul class="space-y-2 text-gray-600 mb-6">
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Website &
+                                    Aplikasi
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Instagram
+                                    Post
+                                    &
+                                    Story
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Highlight
+                                    Story
+                                    Favorit
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Google Jobs
+                                    &
+                                    Bisnis
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Facebook
+                                    Post &
+                                    Story
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Twitter
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram
+                                </li>
+                            </ul>
+                            @foreach ($Data as $d)
+                                @if ($d->nama === 'Pasang Lowongan Silver')
+                                    <button
+                                        class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                        data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}"
+                                        data-paket="{{ $paket->id }}">Pasang
+                                        Lowongan</button>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            @endforeach
 
-            <div class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
-                <div class="bg-[#71665d] p-5">
-                    <h2 class="text-xl font-bold text-white">Bronze </h2>
-                </div>
-                <div class="p-6">
-                    <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
-                    <p class="text-sm text-gray-500 mb-6 border-b pb-5">1 Kali Publikasi di semua jaringan AreaKerja.com</p>
-                    <ul class="space-y-2 text-gray-600 mb-6">
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Website & Aplikasi</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Instagram Post & Story
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Highlight Story Favorit
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Google Jobs & Bisnis
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Facebook Post & Story
-                        </li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Twitter</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
-                    </ul>
-                    @foreach ($Data as $d)
-                        @if ($d->nama === 'Pasang Lowongan Bronze')
-                            <button class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
-                                data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                Lowongan</button>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
+
+            @foreach ($Pakets as $paket)
+                @if ($paket->nama === 'BRONZE')
+                    <div
+                        class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
+                        <div class="bg-[#71665d] p-5">
+                            <h2 class="text-xl font-bold text-white">{{ $paket->nama }}</h2>
+                        </div>
+                        <div class="p-6">
+                            <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
+                            <p class="text-sm text-gray-500 mb-6 border-b pb-5">{{ $paket->publikasi }} Kali Publikasi di
+                                semua jaringan
+                                AreaKerja.com
+                            </p>
+                            <ul class="space-y-2 text-gray-600 mb-6">
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Website &
+                                    Aplikasi
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Instagram Post
+                                    &
+                                    Story
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Highlight Story
+                                    Favorit
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Google Jobs &
+                                    Bisnis
+                                </li>
+
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Facebook Post &
+                                    Story
+                                </li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Twitter</li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>LinkedIn</li>
+                                <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
+                            </ul>
+                            @if ($paket->lowongan->isEmpty())
+                                @foreach ($Data as $d)
+                                    @if ($d->nama === 'Pasang Lowongan Bronze')
+                                        <button
+                                            class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                            data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}"
+                                            data-paket="{{ $paket->id }}">
+                                            Pasang Lowongan
+                                        </button>
+                                    @endif
+                                @endforeach
+                            @else
+                                <button class="bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full">
+                                    Anda Sudah Berlangganan
+                                </button>
+                            @endif
+
+                        </div>
+                    </div>
+                @endif
+            @endforeach
         </div>
     </section>
     <section class="mx-0 lg:mx-20 md:mx-20">
@@ -205,6 +272,7 @@
                     </div>
                 </div>
 
+                <input type="hidden" name="paket_id" id="paket_id_hidden">
                 <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded w-full">Beli</button>
             </form>
         </div>
@@ -224,16 +292,19 @@
         const submitBtn = formBeli.querySelector("button[type='submit']");
         const checkboxKoin = formBeli.querySelector("input[type='checkbox']");
         const pesan = document.getElementById("p");
+        const paketHidden = document.getElementById("paket_id_hidden");
 
         detailBtns.forEach(btn => {
             btn.addEventListener("click", () => {
                 const nama = btn.dataset.nama;
                 const harga = parseInt(btn.dataset.harga);
+                const paketId = btn.dataset.paket;
 
                 d_nama.value = nama;
                 d_harga.value = new Intl.NumberFormat("id-ID").format(harga) + " Koin";
                 pesananHidden.value = nama;
                 totalHidden.value = harga;
+                paketHidden.value = paketId;
 
                 const koin = parseInt(saldoKoin.textContent);
                 if (koin < harga) {
@@ -241,15 +312,13 @@
                     checkboxKoin.disabled = true;
                     submitBtn.disabled = true;
                     submitBtn.classList.add("opacity-50", "cursor-not-allowed");
-                    pesan.innerHTML = "Saldo Tidak Mencukupi"
+                    pesan.innerHTML = "Saldo Tidak Mencukupi";
                 } else {
                     checkboxKoin.checked = true;
                     checkboxKoin.disabled = false;
                     submitBtn.disabled = false;
                     submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
-                    pesan.innerHTML = "Saldo Mencukupi"
-
-
+                    pesan.innerHTML = "Saldo Mencukupi";
                 }
 
                 formBeli.setAttribute("action", "/topup/lowongan");

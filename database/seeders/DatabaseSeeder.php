@@ -9,7 +9,9 @@ use App\Models\Bank;
 use App\Models\Finance;
 use App\Models\HargaKoin;
 use App\Models\HargaPembayaran;
+use App\Models\PaketLowongan;
 use App\Models\Pelamar;
+use App\Models\Perusahaan;
 use App\Models\SuperAdmin;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -53,13 +55,13 @@ class DatabaseSeeder extends Seeder
             "verified"           =>     1,
             "alasan_freeze_akun" =>     null
         ]);
-        
+
         Admin::create([
             "user_id"            =>     2,
             "nama_lengkap"       =>    "Seno Adi Wijaya",
             "provinsi"           =>    "Jawa Barat"
         ]);
-        
+
         User::create([
             "username"           =>    "Rehan",
             "email"              =>    "rehan@gmail.com",
@@ -73,6 +75,37 @@ class DatabaseSeeder extends Seeder
             "user_id"            =>   3,
             "nama_lengkap"       =>  'Rayhan Nazril',
             "provinsi"           =>  'Jawa Barat'
+        ]);
+
+        User::create([
+            "username"           =>    "Seven Inc",
+            "email"              =>    "seveninc@gmail.com",
+            "password"           =>     Hash::make('123'),
+            "role"               =>     "perusahaan",
+            "verified"           =>     1,
+            "alasan_freeze_akun" =>     null
+        ]);
+
+        Perusahaan::create([
+            "user_id"    =>    4,
+            "nama_perusahaan" =>  "Seven Inc",
+            "telepon_perusahaan" =>  "0821212121"
+        ]);
+
+        PaketLowongan::create([
+            "nama"    =>      "GOLD",
+            "publikasi"  =>    5,
+            "batas_listing"  => 5
+        ]);
+        PaketLowongan::create([
+            "nama"    =>      "SILVER",
+            "publikasi"  =>    3,
+            "batas_listing"  => 3
+        ]);
+        PaketLowongan::create([
+            "nama"    =>      "BRONZE",
+            "publikasi"  =>    1,
+            "batas_listing"  => 1
         ]);
 
         HargaKoin::create([
@@ -130,7 +163,7 @@ class DatabaseSeeder extends Seeder
             "jumlah_koin" =>  10000,
             "harga"       => 1000000,
             "icon"        => "topup_icon/4.png"
-            
+
         ]);
         HargaPembayaran::create([
             "nama"     =>    "Top Up 100000 Koin Area Kerja",

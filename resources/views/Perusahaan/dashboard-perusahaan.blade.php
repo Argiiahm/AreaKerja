@@ -15,18 +15,22 @@
                     <div
                         class="bg-white flex flex-col md:flex-row justify-between items-center rounded-md px-4 py-3 mb-4 gap-3">
                         <span class="font-semibold text-black text-center md:text-left">Lowongan Belum Terpasang</span>
-                        <button class="text-orange-500 border border-orange-500 px-4 py-2 rounded-md text-sm">
-                            Tambah Lowongan
-                        </button>
+                        @if (Auth::user()->perusahaan->pasanglowongan->sum('paket_id'))
+                            <a href="/dashboard/perusahaan/lowongan"
+                                class="text-orange-500 border border-orange-500 px-4 py-2 rounded-md text-sm">
+                                Tambah Lowongan
+                            </a>
+                        @else
+                            <a href="/pasanglowongan"
+                                class="text-orange-500 border border-orange-500 px-4 py-2 rounded-md text-sm">
+                                Tambah Lowongan
+                            </a>
+                        @endif
+
                     </div>
                     <div class="bg-white text-center rounded-md px-4 py-4 w-full md:w-fit mx-auto float-left">
                         <div class="flex items-center justify-center gap-3 ">
-                            <span
-                                {{-- @php
-$koin1 = Auth::user()->pembayaran()->where('status', 'diterima')->sum('total');
-                                    $koin2 = Auth::user()->catatan_koin->sum('total');
-                                    $hasil = $koin1 - $koin2 @endphp --}}
-                                class="text-orange-500 font-bold text-4xl">{{ $totalSaldo }}</span>
+                            <span class="text-orange-500 font-bold text-4xl">{{ $totalSaldo }}</span>
                             <img src="{{ asset('Icon/coin perusahaan.png') }}" alt="coin" class="w-10 h-8">
                         </div>
                         <button id="btn_topup"
