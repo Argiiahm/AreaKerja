@@ -26,7 +26,7 @@
             @foreach ($Pakets as $p)
                 @if ($p->nama === 'Gold')
                     <div
-                        class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
+                        class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500">
                         <div class="bg-yellow-500 p-5">
                             <h2 class="text-xl font-bold text-white">GOLD</h2>
                         </div>
@@ -54,9 +54,9 @@
                                 <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
                             </ul>
                             @foreach ($Data as $d)
-                                @if ($d->nama === 'Gold')
+                                @if ($d->nama === 'Pasang Lowongan Gold')
                                     <button
-                                        class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                        class="open-detail bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full"
                                         data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
                                         Lowongan</button>
                                 @endif
@@ -100,9 +100,9 @@
                                 <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
                             </ul>
                             @foreach ($Data as $d)
-                                @if ($d->nama === 'Silver')
+                                @if ($d->nama === 'Pasang Lowongan Silver')
                                     <button
-                                        class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                        class="open-detail bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full"
                                         data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
                                         Lowongan</button>
                                 @endif
@@ -149,9 +149,9 @@
                                 <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Telegram</li>
                             </ul>
                             @foreach ($Data as $d)
-                                @if ($d->nama === 'Bronze')
+                                @if ($d->nama === 'Pasang Lowongan Bronze')
                                     <button
-                                        class="open-detail bg-yellow-400 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                        class="open-detail bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full"
                                         data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
                                         Lowongan</button>
                                 @endif
@@ -212,6 +212,7 @@
         </div>
     </section>
 
+    <!-- Modal -->
     <div id="modalDetails"
         class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div
@@ -221,7 +222,7 @@
 
             <h2 class="text-xl font-bold text-center mb-10">Pasang Lowongan</h2>
 
-            <form id="formBeli" action="" method="POST">
+            <form id="formBeli" action="/topup/lowongan" method="POST">
                 @csrf
                 <div class="flex justify-between border-b border-dashed pb-2">
                     <span>Nama Paket</span>
@@ -237,6 +238,44 @@
                     <input type="hidden" name="total" id="total_hidden">
                 </div>
 
+                <input type="hidden" name="paket_id" id="paket_id_hidden">
+
+                <div class="overflow-x-auto rounded-lg shadow my-2">
+                    <table class="w-full text-sm text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-3">Pilih</th>
+                                <th class="px-4 py-3">Lowongan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $lowongan = Auth::user()->perusahaan->pasanglowongan;
+                                $tanpaPaket = $lowongan->whereNull('paket_id');
+                            @endphp
+
+                            @if ($tanpaPaket->count() > 0)
+                                @foreach ($tanpaPaket as $p)
+                                    <tr class="bg-gray-200">
+                                        <td class="px-4 py-3">
+                                            <input name="id_lowongan" type="radio" value="{{ $p->id }}"
+                                                class="w-4 h-4">
+                                        </td>
+                                        <td class="px-4 py-3 text-blue-600 font-medium cursor-pointer">{{ $p->nama }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <span class="w-full flex justify-center py-2">
+                                    <a class="bg-zinc-700 px-8 py-1 text-white rounded-md" href="/dashboard/perusahaan/lowongan">Tambah Lowongan</a>
+                                </span>
+                            @endif
+
+
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="flex justify-between border-b border-dashed pt-2 pb-2">
                     <div class="flex items-center gap-2">
                         <span>Saldo Koin Anda</span>
@@ -244,7 +283,7 @@
                             class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full">{{ $totalKoin }}</span>
                     </div>
                     <div class="flex items-center gap-1">
-                        <input class="border-2" type="checkbox" required>
+                        <input class="border-2" type="checkbox" id="konfirmasi" required>
                         <p id="p" class="text-zinc-600"></p>
                     </div>
                 </div>
@@ -252,8 +291,6 @@
                 <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded w-full">Beli</button>
             </form>
         </div>
-    </div>
-
     </div>
 
     <script>
@@ -265,8 +302,9 @@
         const formBeli = document.getElementById("formBeli");
         const pesananHidden = document.getElementById("pesanan_hidden");
         const totalHidden = document.getElementById("total_hidden");
+        const paketIdHidden = document.getElementById("paket_id_hidden");
         const submitBtn = formBeli.querySelector("button[type='submit']");
-        const checkboxKoin = formBeli.querySelector("input[type='checkbox']");
+        const checkboxKoin = document.getElementById("konfirmasi");
         const pesan = document.getElementById("p");
 
         detailBtns.forEach(btn => {
@@ -279,24 +317,29 @@
                 pesananHidden.value = nama;
                 totalHidden.value = harga;
 
+                if (nama === "Pasang Lowongan Gold") {
+                    paketIdHidden.value = 1;
+                } else if (nama === "Pasang Lowongan Silver") {
+                    paketIdHidden.value = 2;
+                } else if (nama === "Pasang Lowongan Bronze") {
+                    paketIdHidden.value = 3;
+                }
+
                 const koin = parseInt(saldoKoin.textContent);
                 if (koin < harga) {
                     checkboxKoin.checked = false;
                     checkboxKoin.disabled = true;
                     submitBtn.disabled = true;
                     submitBtn.classList.add("opacity-50", "cursor-not-allowed");
-                    pesan.innerHTML = "Saldo Tidak Mencukupi"
+                    pesan.innerHTML = "Saldo Tidak Mencukupi";
                 } else {
                     checkboxKoin.checked = true;
                     checkboxKoin.disabled = false;
                     submitBtn.disabled = false;
                     submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
-                    pesan.innerHTML = "Saldo Mencukupi"
-
-
+                    pesan.innerHTML = "Saldo Mencukupi";
                 }
 
-                formBeli.setAttribute("action", "/topup/lowongan");
                 modalDetails.classList.remove("hidden");
             });
         });

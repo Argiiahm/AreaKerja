@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text('syarat_pekerjaan')->nullable();
             $table->text('tanggung_jawab')->nullable();
             $table->text('benefit')->nullable();
-            $table->integer('paket_id')->nullable();
+            $table->foreignId('paket_id')->nullable()->constrained('paket_lowongans')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();   
         });
     }

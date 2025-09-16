@@ -27,20 +27,20 @@
             @method('PUT')
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <div>
-    <label class="block text-sm font-medium mb-1">Email</label>
-    <input type="email" name="email" value="{{ Auth::user()->email }}"
-        class="w-full border-2 border-gray rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-100"
-        disabled>
-</div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Email</label>
+                    <input type="email" name="email" value="{{ Auth::user()->email }}"
+                        class="w-full border-2 border-gray rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-100"
+                        disabled>
+                </div>
 
 
-               <div>
-    <label class="block text-sm font-medium mb-1">Username</label>
-    <input type="text" name="username" value="{{ Auth::user()->username }}"
-        class="w-full border-2 border-gray rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-100"
-        disabled>
-</div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Username</label>
+                    <input type="text" name="username" value="{{ Auth::user()->username }}"
+                        class="w-full border-2 border-gray rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-100"
+                        disabled>
+                </div>
 
             </div>
 
@@ -48,7 +48,7 @@
                 <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
                 <input type="text" name="nama_lengkap" value="{{ Auth()->user()->admin->nama_lengkap }}"
                     class="w-full border-2 border-gray rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-100"
-        disabled>
+                    disabled>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -89,7 +89,7 @@
                     <label class="block text-sm font-medium mb-1">Desa</label>
                     <input type="text" name="desa" value="{{ Auth::user()->admin->desa }}"
                         class="w-full border-2 border-gray rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-100"
-                         disabled>
+                        disabled>
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-1">Kode Pos</label>

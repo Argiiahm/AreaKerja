@@ -109,17 +109,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         HargaKoin::create([
-            "nama"     =>      "Bronze",
-            "harga"    =>      150
+            "nama"     =>      "Pasang Lowongan Bronze",
+            "harga"    =>      100
         ]);
 
         HargaKoin::create([
-            "nama"     =>      "Silver",
+            "nama"     =>      "Pasang Lowongan Silver",
             "harga"    =>      150
         ]);
         HargaKoin::create([
-            "nama"     =>      "Gold",
-            "harga"    =>      150
+            "nama"     =>      "Pasang Lowongan Gold",
+            "harga"    =>      200
         ]);
         HargaKoin::create([
             "nama"     =>      "Open Talent Hunter",
@@ -127,11 +127,11 @@ class DatabaseSeeder extends Seeder
         ]);
         HargaKoin::create([
             "nama"     =>      "Open CV",
-            "harga"    =>      150
+            "harga"    =>      200
         ]);
         HargaKoin::create([
             "nama"     =>      "Berlangganan",
-            "harga"    =>      150
+            "harga"    =>      300
         ]);
 
         HargaPembayaran::create([

@@ -204,30 +204,14 @@ class PerusahaanController extends Controller
     //lowongan
     public function lowongan()
     {
-        $user = Auth::user()->id;
-
-        $koin = CatatanKoin::where('user_id', $user)->pluck('pesanan');
-
-        $paket = PaketLowongan::whereIn('nama', $koin)->get();
-
         return view('Perusahaan.Lowongan_saya.lowongan', [
             "Data"  => LowonganPerusahaan::all(),
-            "paket" => $paket
         ]);
     }
+
     public function isi_lowongan()
     {
         return view('Perusahaan.Lowongan_saya.isi-lowongan');
-    }
-
-    public function publishLowongan(Request $request, $id)
-    {
-        $lowongan = LowonganPerusahaan::findOrFail($id);
-
-        $lowongan->paket_id = $request->paket_id;
-        $lowongan->save();
-
-        return back()->with('success', 'Lowongan berhasil dipublish.');
     }
 
     public function create_lowongan(Request $request)

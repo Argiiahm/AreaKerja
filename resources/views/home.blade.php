@@ -1,4 +1,4 @@
-@extends('layouts.index')
+     @extends('layouts.index')
 
 @section('content')
     <section class="container max-w-screen-lg mx-auto pt-40">

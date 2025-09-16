@@ -99,20 +99,18 @@
                                 </button>
                             </div>
                         </div>
+                  </div>
+                 @endif
+                 @empty
+                 <p class="text-center text-gray-500 mt-6">Belum ada lowongan.</p>
+                @endforelse
+             </div>
             </div>
-    @endif
-@empty
-    <p class="text-center text-gray-500 mt-6">Belum ada lowongan.</p>
-    @endforelse
-    </div>
-
-    </div>
-
-    <div class="flex justify-center mt-8">
-        <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded-lg shadow">
-            Memuat
-        </button>
-    </div>
+            <div class="flex justify-center mt-8">
+                <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded-lg shadow">
+                    Memuat
+                </button>
+            </div>
     </div>
 @else
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-24">
@@ -170,37 +168,11 @@
         <div class="bg-white p-6 rounded-md w-96 relative">
             <h2 class="text-lg font-bold mb-4">Konfirmasi Publish</h2>
             <p>Apakah Anda yakin ingin mem-publish lowongan ini?</p>
-            <form id="publishForm" method="POST" action="">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="lowongan_id" id="modalLowonganId">
-                <div class="my-5">
-                    @if ($paket->count() > 0)
-                    <p class="text-zinc-500">Anda Memiliki Paket: </p>
-                        @foreach ($paket as $p)
-                            @php
-                                $used = $Data->where('paket_id', $p->id)->count();
-                                $displayPublikasi = $p->publikasi - $used;
-                            @endphp
-                            <div class="flex items-center justify-between">
-                                {{ $p->nama }}
-                                <div>
-                                    <input class="border" type="radio" name="paket_id" value="{{ $p->id }}"
-                                        {{ $displayPublikasi <= 0 ? 'disabled' : '' }}>
-                                    <span>Tersisa {{ $displayPublikasi }} Publikasi</span>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <p class="text-red-500 mt-2">Anda tidak mempunyai paket.</p>
-                    @endif
 
-                </div>
-                <div class="mt-4 flex justify-end gap-3">
-                    <button type="button" id="closeModal" class="px-4 py-2 border rounded-md">Batal</button>
-                    <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md">Ya, Publish</button>
-                </div>
-            </form>
+            <div class="mt-4 flex justify-end gap-3">
+                <button type="button" id="closeModal" class="px-4 py-2 border rounded-md">Batal</button>
+                <a href="/pasanglowongan" class="px-4 py-2 bg-orange-500 text-white rounded-md">Ya, Publish</a>
+            </div>
         </div>
     </div>
 
@@ -208,14 +180,9 @@
         const publishButtons = document.querySelectorAll('.publish-btn');
         const modal = document.getElementById('publishModal');
         const closeModal = document.getElementById('closeModal');
-        const modalInput = document.getElementById('modalLowonganId');
-        const publishForm = document.getElementById('publishForm');
 
         publishButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                const lowonganId = btn.getAttribute('data-id');
-                modalInput.value = lowonganId;
-                publishForm.action = `/lowongan/publish/${lowonganId}`;
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
             });

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HargaKoin;
 use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
-use App\Models\HargaKoin;
-use App\Models\PaketLowongan;
+use App\Models\LowonganPerusahaan;
 use Illuminate\Http\Request;
+use App\Models\PaketLowongan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class LowonganController extends Controller
@@ -38,18 +40,22 @@ class LowonganController extends Controller
     public function topup(Request $request)
     {
         $request->validate([
-            "pesanan" => "required",
-            "total"   => "required|numeric"
+            "pesanan"   => "required",
+            "total"     => "required|numeric",
+            "paket_id"  => "required",
+            "id_lowongan" => "required" // wajib pilih lowongan
         ]);
 
         $user = Auth::user();
 
+        // hitung total saldo user
         $totalSaldo = CatatanCash::where('user_id', $user->id)->sum('total');
 
         if ($totalSaldo < $request->total) {
             return back()->with('error', 'Saldo koin tidak mencukupi!');
         }
 
+        // simpan catatan koin
         $noref = "AK" . rand(1000000000, 9999999999);
         CatatanKoin::create([
             "user_id"      => $user->id,
@@ -60,12 +66,12 @@ class LowonganController extends Controller
             "total"        => $request->total,
         ]);
 
+        // potong saldo cash user
         $sisaKurang = $request->total;
         $cashRecords = CatatanCash::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
 
         foreach ($cashRecords as $record) {
-            if ($sisaKurang <= 0)
-                 break;
+            if ($sisaKurang <= 0) break;
 
             if ($record->total <= $sisaKurang) {
                 $sisaKurang -= $record->total;
@@ -74,9 +80,16 @@ class LowonganController extends Controller
                 $record->total -= $sisaKurang;
                 $sisaKurang = 0;
             }
-
             $record->save();
         }
-        return back();
+
+        // update paket_id pada lowongan
+        $lowongan = LowonganPerusahaan::find($request->id_lowongan);
+        if ($lowongan) {
+            $lowongan->paket_id = $request->paket_id;
+            $lowongan->save();
+        }
+
+        return back()->with('success', 'Lowongan berhasil dipasang dengan paket ' . $request->pesanan);
     }
 }

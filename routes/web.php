@@ -148,15 +148,12 @@ Route::middleware(['status'])->group(function () {
     Route::put('/update/harga/koin', [FinanceController::class, 'update_koin'])->middleware('finance');
     Route::put('/update/harga/harga', [FinanceController::class, 'update_harga'])->middleware('finance');
 
-
-
     Route::get('/dashboard/finance/omset', [FinanceController::class, 'omset'])->middleware('finance')->middleware('finance');
     Route::get('/dashboard/finance/catatantransaksi', [FinanceController::class, 'catatan_transaksi'])->middleware('finance');
     Route::get('/dashboard/finance/catatantransaksi/tunai', [FinanceController::class, 'catatan_transaksi_tunai_detail'])->middleware('finance');
     Route::get('/dashboard/finance/catatantransaksi/koin', [FinanceController::class, 'catatan_transaksi_koin_detail'])->middleware('finance');
     Route::get('/dashboard/finance/laporan', [FinanceController::class, 'catatan_laporan_transaksi'])->middleware('finance');
     Route::get('/dashboard/finance/laporan/penghasilan', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('finance');
-
 
     // Dashboard SuperAdmin
     Route::get('/dashboard/superadmin', [SuperAdminController::class, 'index'])->middleware('superadmin')->name('superadmin');
@@ -191,7 +188,6 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/perusahaan/lowongan/add', [SuperAdminController::class, 'lowongan_add'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/perusahaan/lowongan/edit', [SuperAdminController::class, 'lowongan_edit'])->middleware('superadmin');
 
-
     // Data Recrutiment -Super Admin
     Route::get('/dashboard/superadmin/recrutiment', [SuperAdminController::class, 'recrutiment_detail'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/recrutiment/edit', [SuperAdminController::class, 'recrutiment_edit'])->middleware('superadmin');
@@ -215,15 +211,12 @@ Route::middleware(['status'])->group(function () {
     Route::put('/dashboard/superadmin/banned/{user:id}', [SuperAdminController::class, 'banned'])->middleware('superadmin');
     Route::delete('/dashboard/superadmin/hapus/{user:id}', [SuperAdminController::class, 'delete_akun'])->middleware('superadmin');
 
-
     // Tips Kerja - Super Admin
     Route::get('/dashboard/superadmin/tipskerja', [SuperAdminController::class, 'tipskerja'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/tipskerja/add', [SuperAdminController::class, 'tipskerja_add'])->middleware('superadmin');
     Route::post('/dashboard/superadmin/tipskerja/create/post', [SuperAdminController::class, 'tipskerja_create'])->middleware('superadmin');
     Route::put('/ubah/status/tipskerja', [SuperAdminController::class, 'ubah_status'])->middleware('superadmin');
     Route::delete('/delete/tipskerja', [SuperAdminController::class, 'delete'])->middleware('superadmin');
-
-
 
     // Event -Super Admin
     Route::get('/dashboard/superadmin/event', [SuperAdminController::class, 'event'])->middleware('superadmin');
@@ -237,11 +230,9 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/akun/add', [SuperAdminController::class, 'akun_add'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/{user:id}/edit', [SuperAdminController::class, 'akun_edit'])->middleware('superadmin');
 
-
     // Link & Header - Super Admin
     Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pengaturan', [SuperAdminController::class, 'pengaturan'])->middleware('superadmin');
-
 
     // Dashboard Admin
     Route::get('/dashboard/admin', [AdminController::class, 'index'])->middleware('admin');
@@ -269,12 +260,10 @@ Route::middleware(['status'])->group(function () {
     Route::delete('/delete', [AdminController::class, 'hapus'])->middleware('admin');
     Route::post('/dashboard/admin/tipskerja/create/post', [AdminController::class, 'tips_kerja_create_post'])->middleware('admin')->name('tipskerja.store');
 
-
     Route::get('/dashboard/admin/event', [AdminController::class, 'event'])->middleware('admin');
     Route::get('/dashboard/admin/event/detail', [AdminController::class, 'event_detail'])->middleware('admin');
     Route::get('/dashboard/admin/event/add', [AdminController::class, 'event_add'])->middleware('admin');
     Route::get('/dashboard/admin/event/edit', [AdminController::class, 'event_edit'])->middleware('admin');
-
 
     //Perusahaan
     Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index'])->middleware('perusahaan');
@@ -316,7 +305,6 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/gabung/event', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');
-
 
     // Transaksi Top Up
     Route::post('/dashboard/perusahaan/topup',[PerusahaanController::class, 'topup'])->middleware('perusahaan');
