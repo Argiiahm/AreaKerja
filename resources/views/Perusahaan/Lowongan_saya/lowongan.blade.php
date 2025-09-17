@@ -68,7 +68,8 @@
                                             Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }} per bulan
                                         </span>
                                         <span class="block mt-3 text-[#565656] pl-0 lg:pl-10 md:pl-10">
-                                            {{ $d->created_at->diffForHumans() }}
+                                            <p class="countdown text-red-500 font-medium"
+                                                data-expired="{{ $d->expired_date }}"></p>
                                         </span>
                                     </div>
                                 </div>
@@ -99,18 +100,18 @@
                                 </button>
                             </div>
                         </div>
-                  </div>
-                 @endif
-                 @empty
-                 <p class="text-center text-gray-500 mt-6">Belum ada lowongan.</p>
-                @endforelse
-             </div>
-            </div>
-            <div class="flex justify-center mt-8">
-                <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded-lg shadow">
-                    Memuat
-                </button>
-            </div>
+                    </div>
+                @endif
+            @empty
+           <p class="text-center text-gray-500 mt-6">Belum ada lowongan.</p>
+           @endforelse
+       </div>
+    </div>
+    <div class="flex justify-center mt-8">
+        <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded-lg shadow">
+            Memuat
+        </button>
+    </div>
     </div>
 @else
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-24">
@@ -162,8 +163,7 @@
             </div>
         </div>
     </div>
-    @endif
-
+    @endif 
     <div id="publishModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
         <div class="bg-white p-6 rounded-md w-96 relative">
             <h2 class="text-lg font-bold mb-4">Konfirmasi Publish</h2>
@@ -174,12 +174,39 @@
                 <a href="/pasanglowongan" class="px-4 py-2 bg-orange-500 text-white rounded-md">Ya, Publish</a>
             </div>
         </div>
-    </div>
-
+    </div> 
+       
     <script>
         const publishButtons = document.querySelectorAll('.publish-btn');
         const modal = document.getElementById('publishModal');
         const closeModal = document.getElementById('closeModal');
+
+        function startCountdown(element) {
+            const expiredAt = new Date(element.dataset.expired).getTime();
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = expiredAt - now;
+
+                if (distance < 0) {
+                    element.innerHTML = "Expired";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                element.innerHTML =
+                    days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds + " Detik";
+            }
+
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+
+        document.querySelectorAll('.countdown').forEach(startCountdown);
 
         publishButtons.forEach(btn => {
             btn.addEventListener('click', () => {

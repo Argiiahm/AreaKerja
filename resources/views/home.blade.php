@@ -1,4 +1,4 @@
-     @extends('layouts.index')
+@extends('layouts.index')
 
 @section('content')
     <section class="container max-w-screen-lg mx-auto pt-40">
@@ -110,96 +110,40 @@
         <p class="my-10 font-semibold text-gray-500 text-center lg:text-left md:text-left">Lowongan berdasarkan pada
             aktivitas anda di areakerja</p>
         <div id="section-umpan-lowongan" class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3">
-            <a href="/detail/job" class="border p-8">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="bg-[#fdedf4] w-fit p-2 text-[#9d2b6b] font-semibold rounded-md text-[12px]">dibutuhkan
-                            segera</p>
-                        <h1 class="font-bold text-[18px] my-3">Lead Graphic Designer - WFH </h1>
+            @foreach ($Data as $d) 
+               @if ($d->paket_id)    
+                <a href="/detail/job/{{ $d->slug }}" class="border p-8">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="bg-[#fdedf4] w-fit p-2 text-[#9d2b6b] font-semibold rounded-md text-[12px]">dibutuhkan
+                                segera</p>
+                            <h1 class="font-bold text-[18px] my-3">{{ $d->nama }} - {{ $d->jenis }} </h1>
+                        </div>
+                        <div class="text-5xl font-bold">
+                            <i class="ph ph-dots-three-vertical"></i>
+                        </div>
                     </div>
-                    <div class="text-5xl font-bold">
-                        <i class="ph ph-dots-three-vertical"></i>
+                    <p class="text-gray-500 font-semibold">{{ $d->perusahaan->nama_perusahaan }}</p>
+                    <p class="text-gray-500 font-semibold">{{ $d->alamat }}</p>
+                    <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. {{ $d->gaji_awal }} – Rp. {{ $d->gaji_akhir }}
+                        per
+                        bulan
+                    </p>
+                    <div class="flex items-center gap-2 my-4">
+                        <i class="ph-fill ph-paper-plane-right text-blue-600 text-2xl"></i>
+                        <span>Lamar Dengan Cepat</span>
                     </div>
-                </div>
-                <p class="text-gray-500 font-semibold">Capital Club</p>
-                <p class="text-gray-500 font-semibold">Jakarta</p>
-                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 4.500.000 – Rp. 7.000.000
-                    per
-                    bulan
-                </p>
-                <div class="flex items-center gap-2 my-4">
-                    <i class="ph-fill ph-paper-plane-right text-blue-600 text-2xl"></i>
-                    <span>Lamar Dengan Cepat</span>
-                </div>
 
-                <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
-                    <li>Gaji – Rp6.000.000 – Rp11.894.293 per bulan Tergantung Pengalaman.</li>
-                    <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
-                    <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1
-                        menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).</li>
-                </ul>
-                <span>Aktif 2jam lalu</span>
-            </a>
-            <div class="border p-8">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="bg-[#fdedf4] w-fit p-2 text-[#9d2b6b] font-semibold rounded-md text-[12px]">dibutuhkan
-                            segera</p>
-                        <h1 class="font-bold text-[18px] my-3">Lead Graphic Designer - WFH </h1>
-                    </div>
-                    <div class="text-5xl font-bold">
-                        <i class="ph ph-dots-three-vertical"></i>
-                    </div>
-                </div>
-                <p class="text-gray-500 font-semibold">Eduwork.id</p>
-                <p class="text-gray-500 font-semibold">Yogyakarta</p>
-                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 4.500.000 – Rp. 7.000.000
-                    per
-                    bulan
-                </p>
-                <div class="flex items-center gap-2 my-4">
-                    <i class="ph-fill ph-paper-plane-right text-blue-600 text-2xl"></i>
-                    <span>Lamar Dengan Cepat</span>
-                </div>
-
-                <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
-                    <li>Gaji – Rp6.000.000 – Rp11.894.293 per bulan Tergantung Pengalaman.</li>
-                    <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
-                    <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1
-                        menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).</li>
-                </ul>
-                <span>Aktif 2jam lalu</span>
-            </div>
-            <div class="border p-8">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="bg-[#fdedf4] w-fit p-2 text-[#9d2b6b] font-semibold rounded-md text-[12px]">dibutuhkan
-                            segera</p>
-                        <h1 class="font-bold text-[18px] my-3">UI/UX Designer WFO</h1>
-                    </div>
-                    <div class="text-5xl font-bold">
-                        <i class="ph ph-dots-three-vertical"></i>
-                    </div>
-                </div>
-                <p class="text-gray-500 font-semibold">Permata Solutions</p>
-                <p class="text-gray-500 font-semibold">Jakarta</p>
-                <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. 7.000.000 – Rp.
-                    15.000.000 per
-                    bulan
-                </p>
-                <div class="flex items-center gap-2 my-4">
-                    <i class="ph-fill ph-paper-plane-right text-blue-600 text-2xl"></i>
-                    <span>Lamar Dengan Cepat</span>
-                </div>
-
-                <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
-                    <li>Mengembangkan dan menerapkan pengujian kegunaan</li>
-                    <li>Komunikasikan konsep desain yang kompleks dan interaktif dengan jelas dan persuasif</li>
-                    <li>Menciptakan antarmuka dan pengalaman yang berpusat pada pengguna dengan mempertimbangkan analisis
-                        pasar, data, umpan balik pelanggan, riset pengguna, dan kendala/peluang teknis</li>
-                </ul>
-                <span>Aktif 2jam lalu</span>
-            </div>
+                    <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
+                        <li>Gaji – Rp{{ $d->gaji_awal }} – Rp{{ $d->gaji_akhir }} per bulan Tergantung Pengalaman.</li>
+                        <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
+                        <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1
+                            menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).</li>
+                    </ul>
+                    <span>Aktif 2jam lalu</span>
+                </a>
+               @endif
+            @endforeach
         </div>
 
 

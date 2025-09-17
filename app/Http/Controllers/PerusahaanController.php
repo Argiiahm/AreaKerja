@@ -204,8 +204,17 @@ class PerusahaanController extends Controller
     //lowongan
     public function lowongan()
     {
+        $data = LowonganPerusahaan::all();
+        foreach ($data as $d) {
+            if (now()->greaterThan($d->expired_date)) {
+                $d->paket_id = null;
+                $d->expired_date = null;
+                $d->save();
+            }
+        }
+
         return view('Perusahaan.Lowongan_saya.lowongan', [
-            "Data"  => LowonganPerusahaan::all(),
+            "Data"  => $data
         ]);
     }
 

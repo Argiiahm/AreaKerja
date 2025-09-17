@@ -29,6 +29,7 @@ return new class extends Migration
             $table->text('tanggung_jawab')->nullable();
             $table->text('benefit')->nullable();
             $table->foreignId('paket_id')->nullable()->constrained('paket_lowongans')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamp('expired_date')->nullable();
             $table->timestamps();   
         });
     }

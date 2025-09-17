@@ -440,11 +440,13 @@
                                 class="block {{ Request()->is('daftarkandidat') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Daftar
                                 Kandidat</a>
                         </li>
+                        {{-- @can('perusahaan') --}}
                         <li>
                             <a href="/pasanglowongan"
                                 class="block {{ Request()->is('pasanglowongan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Pasang
                                 Lowongan</a>
                         </li>
+                        {{-- @endcan --}}
                     @endif
                     <li class="flex lg:hidden md:hidden justify-between items-center mt-4">
                         <button type="button" id="notifikasi" aria-expanded="false" data-dropdown-toggle="notif-hp"

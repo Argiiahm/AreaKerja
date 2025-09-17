@@ -15,7 +15,7 @@ class LowonganController extends Controller
 {
     public function index()
     {
-        $user = Auth::user()->id;
+        $user = Auth::check() && Auth::user()->id;
         $koin = CatatanCash::where('user_id', $user)->where('status', 'diterima')->get();
         $totalKoin = CatatanCash::where('user_id', Auth::id())->where('status', 'diterima')->sum('total');
 
@@ -43,19 +43,18 @@ class LowonganController extends Controller
             "pesanan"   => "required",
             "total"     => "required|numeric",
             "paket_id"  => "required",
-            "id_lowongan" => "required" // wajib pilih lowongan
+            "id_lowongan" => "required"
         ]);
 
         $user = Auth::user();
 
-        // hitung total saldo user
+
         $totalSaldo = CatatanCash::where('user_id', $user->id)->sum('total');
 
         if ($totalSaldo < $request->total) {
             return back()->with('error', 'Saldo koin tidak mencukupi!');
         }
 
-        // simpan catatan koin
         $noref = "AK" . rand(1000000000, 9999999999);
         CatatanKoin::create([
             "user_id"      => $user->id,
@@ -66,7 +65,7 @@ class LowonganController extends Controller
             "total"        => $request->total,
         ]);
 
-        // potong saldo cash user
+
         $sisaKurang = $request->total;
         $cashRecords = CatatanCash::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
 
@@ -83,10 +82,12 @@ class LowonganController extends Controller
             $record->save();
         }
 
-        // update paket_id pada lowongan
+
         $lowongan = LowonganPerusahaan::find($request->id_lowongan);
+        $paket  = PaketLowongan::find($request->paket_id);
         if ($lowongan) {
             $lowongan->paket_id = $request->paket_id;
+            $lowongan->expired_date = now()->addDays($paket->batas_listing);
             $lowongan->save();
         }
 

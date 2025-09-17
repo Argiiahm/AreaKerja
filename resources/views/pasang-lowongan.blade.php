@@ -55,10 +55,19 @@
                             </ul>
                             @foreach ($Data as $d)
                                 @if ($d->nama === 'Pasang Lowongan Gold')
-                                    <button
-                                        class="open-detail bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full"
-                                        data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                        Lowongan</button>
+                                    @if (Auth::check() && Auth::user()->role === 'perusahaan')
+                                        <button
+                                            class="open-detail bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full"
+                                            data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
+                                            Lowongan</button> 
+                                    @else
+                                     @auth
+                                        <button onclick="window.location='/'" class="bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>    
+                                     @endauth
+                                      @guest
+                                        <button onclick="window.location='/register'" class="bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>    
+                                      @endguest
+                                    @endif
                                 @endif
                             @endforeach
                         </div>
@@ -101,10 +110,19 @@
                             </ul>
                             @foreach ($Data as $d)
                                 @if ($d->nama === 'Pasang Lowongan Silver')
-                                    <button
-                                        class="open-detail bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full"
-                                        data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                        Lowongan</button>
+                                      @if (Auth::check() && Auth::user()->role === 'perusahaan')
+                                        <button
+                                            class="open-detail bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full"
+                                            data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
+                                            Lowongan</button> 
+                                    @else
+                                       @auth
+                                       <button  onclick="window.location='/'" class="bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>    
+                                       @endauth
+                                       @guest
+                                          <button  onclick="window.location='/register'" class="bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>    
+                                       @endguest
+                                    @endif
                                 @endif
                             @endforeach
                         </div>
@@ -150,12 +168,21 @@
                             </ul>
                             @foreach ($Data as $d)
                                 @if ($d->nama === 'Pasang Lowongan Bronze')
+                                    @if (Auth::check() && Auth::user()->role === 'perusahaan')
                                     <button
                                         class="open-detail bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full"
                                         data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                        Lowongan</button>
+                                        Lowongan</button> 
+                                    @else
+                                    @auth
+                                     <button  onclick="window.location='/'" class="bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>
+                                    @endauth
+                                    @guest
+                                     <button  onclick="window.location='/register'" class="bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>  
+                                    @endguest
+                                    @endif
                                 @endif
-                            @endforeach
+                         @endforeach
                         </div>
                     </div>
                 @endif
@@ -213,6 +240,7 @@
     </section>
 
     <!-- Modal -->
+    @if (Auth::check() && Auth::user()->role === 'perusahaan') 
     <div id="modalDetails"
         class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div
@@ -270,8 +298,6 @@
                                     <a class="bg-zinc-700 px-8 py-1 text-white rounded-md" href="/dashboard/perusahaan/lowongan">Tambah Lowongan</a>
                                 </span>
                             @endif
-
-
                         </tbody>
                     </table>
                 </div>
@@ -292,6 +318,7 @@
             </form>
         </div>
     </div>
+    @endif
 
     <script>
         const detailBtns = document.querySelectorAll(".open-detail");

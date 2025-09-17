@@ -45,7 +45,7 @@ Route::put('/update/password', [AuthController::class, 'update_password']);
 Route::middleware(['status'])->group(function () {
     // Route Landing Page
     Route::get('/', [HomeController::class, 'index']);
-    Route::get('/detail/job', [HomeController::class, 'viewjob']);
+    Route::get('/detail/job/{job:slug}', [HomeController::class, 'viewjob']);
 
     Route::get('/talenthunter', [TalentHunterController::class, 'index']);
 
@@ -306,13 +306,13 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/gabung/event', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');
 
-    // Transaksi Top Up
+    // Transaksi Top Up  
     Route::post('/dashboard/perusahaan/topup',[PerusahaanController::class, 'topup'])->middleware('perusahaan');
     Route::get('/detail/pembayaran/{trx:id}', [PerusahaanController::class, 'detail_pembayaran'])->middleware('perusahaan');
     Route::put('/upload/bukti/pembayaran/{bukti:id}',[PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
 
-    Route::put('/lowongan/publish/{id}',[PerusahaanController::class, 'publishLowongan'])->middleware('perusahaan');
+    // Route::put('/lowongan/publish/{id}',[PerusahaanController::class, 'publishLowongan'])->middleware('perusahaan');
 
     Route::post('/topup/lowongan',[LowonganController::class, 'topup'])->middleware('perusahaan');
 

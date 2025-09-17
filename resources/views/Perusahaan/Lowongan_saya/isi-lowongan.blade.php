@@ -117,7 +117,7 @@
                 <button type="submit" class="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600">
                     Simpan
                 </button>
-            </div>
+            </div>`
         </form>
     </div>
 @endsection

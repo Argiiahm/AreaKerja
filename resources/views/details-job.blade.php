@@ -27,7 +27,7 @@
             </button>
         </div>
 
-
+ 
         <div class="flex justify-center my-10">
             <p class="text-[#fa6601] font-semibold text-center lg:text-left md:text-left">Lamar Pekerjaan Kamu ~ <span
                     class="font-normal block lg:inline md:inline text-zinc-600">Dengan Waktu
@@ -110,10 +110,10 @@
         <div class="border rounded-lg shadow bg-white">
             <div class="flex justify-between items-start p-6">
                 <div>
-                    <h1 class="font-bold text-xl">UI/UX Designer</h1>
-                    <p class="text-gray-500">Permata Solutions | Jakarta</p>
+                    <h1 class="font-bold text-xl">{{ $Data->nama }}</h1>
+                    <p class="text-gray-500">{{ $Data->perusahaan->nama_perusahaan }} | {{ $Data->alamat }}</p>
                     <p class="bg-gray-200 w-fit my-3 px-3 py-1 text-gray-700 font-semibold rounded-md">
-                        Rp. 7.000.000 – Rp. 15.000.000 perbulan
+                        Rp. {{ $Data->gaji_awal }} – Rp. {{ $Data->gaji_akhir }} perbulan
                     </p>
                     <div class="flex items-center gap-10">
                         <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
@@ -124,7 +124,7 @@
                 </div>
 
                 {{-- <div class="relative text-3xl cursor-pointer">
-                    <i class="ph ph-dots-three-vertical"></i>
+                    <i class="ph ph-dots-three-vertical">pp</i>
                     <div class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg hidden group-hover:block">
                         <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"><i
                                 class="ph ph-linkedin-logo"></i> Linkedin</a>
@@ -144,37 +144,26 @@
 
                 <div class="flex items-center gap-3 mb-3 border-b pb-5">
                     <i class="ph ph-briefcase text-gray-500 text-lg"></i>
-                    <span class="bg-gray-200 px-3 py-1 rounded-md text-sm font-semibold">Full Time</span>
+                    <span class="bg-gray-200 px-3 py-1 rounded-md text-sm font-semibold">{{ $Data->jenis }}</span>
                 </div>
 
                 <div class="flex items-center gap-3 mb-5 border-b pb-5">
                     <i class="ph ph-map-pin text-gray-500 text-lg"></i>
-                    <span>Jakarta</span>
+                    <span>{{ $Data->alamat }}</span>
                 </div>
 
                 <div class="mb-6 border-b pb-5">
                     <h3 class="font-semibold text-lg mb-2">Deskripsi Lowongan</h3>
                     <p class="font-bold">Requirements</p>
                     <ul class="list-disc list-inside space-y-1 text-gray-600">
-                        <li>Terbukti 2 tahun pengalaman sebagai Desainer UX/UI.</li>
-                        <li>Latar belakang portofolio proyek desain gratis yang terkait dengan pembuatan web dan seluler.
-                        </li>
-                        <li>Kemampuan untuk membuat wireframe, mockup HTML & CSS.</li>
-                        <li>Pemahaman UX kuat dan keterampilan komunikasi efektif.</li>
-                        <li>Keterampilan berpikir desain yang kuat.</li>
+                        <li>{{ $Data->syarat_pekerjaan }}</li>
                     </ul>
                 </div>
 
                 <div class="">
                     <h3 class="font-semibold text-lg mb-2">Responsibilities</h3>
                     <ul class="list-disc list-inside space-y-1 text-gray-600">
-                        <li>Kumpulkan dan periksa kebutuhan pengguna.</li>
-                        <li>Konsultasi dengan insinyur dan desainer produk mengenai produk.</li>
-                        <li>Mendesain dan mengembangkan desain visual untuk aplikasi.</li>
-                        <li>Bekerja sama dengan tim produk dan engineering.</li>
-                        <li>Uji prototipe dengan pengguna.</li>
-                        <li>Buat wireframe, user flow, dan spesifikasi desain.</li>
-                        <li>Kolaborasi erat dengan tim pengembangan produk.</li>
+                        <li>{{ $Data->tanggung_jawab }}</li>
                     </ul>
                 </div>
             </div>

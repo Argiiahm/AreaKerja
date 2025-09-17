@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LowonganPerusahaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,11 +10,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        return view('home',[
+            "Data"  =>    LowonganPerusahaan::all()
+        ]);
     }
 
-    public function viewjob()
+    public function viewjob(LowonganPerusahaan $job)
     {
-        return view('details-job');
+        return view('details-job',[
+            "Data"  =>   $job
+        ]);
     }
 }

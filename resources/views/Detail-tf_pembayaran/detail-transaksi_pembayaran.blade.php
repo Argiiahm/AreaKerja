@@ -15,10 +15,17 @@
                     <p class="text-gray-800">{{ $Data->no_referensi }}</p>
                 </div>
                 <div>
+                    @if ($Data->bukti)
                     <p class="font-semibold">Status Tagihan</p>
                     <span class="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded-md text-xs font-medium">
                         Menunggu Konfirmasi
                     </span>
+                    @else
+                    <p class="font-semibold">Status Tagihan</p>
+                    <span class="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded-md text-xs font-medium">
+                        Menunggu Pembayaran
+                    </span>
+                    @endif
                 </div>
                 <div>
                     <p class="font-semibold">Batas Pembayaran</p>
@@ -85,7 +92,7 @@
                 <p class="flex justify-between font-bold border-t pt-2"><span>Total Tagihan</span>
                     <span>Rp. {{ number_format($output, 0, ',', '.') }}</span>
                 </p>
-            </div>
+            </div>  
         </div>
 
         <div class="mt-8 px-4">

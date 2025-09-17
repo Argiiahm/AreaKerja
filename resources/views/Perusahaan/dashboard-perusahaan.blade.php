@@ -327,9 +327,9 @@
             list_pembayaran.classList.toggle("hidden");
         });
 
-        document.addEventListener("click", (e) => {
-            const modal = document.getElementById("modalKonfirmasi");
-            if (modal && e.target === modal) modal.remove();
-        });
+        // document.addEventListener("click", (e) => {
+        //     const modal = document.getElementById("modalKonfirmasi");
+        //     if (modal && e.target === modal) modal.remove();
+        // });
     </script>
 @endsection
