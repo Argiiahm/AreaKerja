@@ -128,7 +128,7 @@
                         <p class="text-orange-500 font-semibold hidden lg:flex md:flex">Lihat Semua</p>
                     </div>
                     <div class="grid grid-cols-1 gap-5 mt-4">
-                        @foreach ($Data as $d)
+                        @foreach (Auth::user()->perusahaan->pasanglowongan as $d)
                             @if ($d->id != $data->id)
                                 <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}">
                                     <div class="flex shadow-md p-4 gap-2">

@@ -5,7 +5,7 @@
         <div class="max-w-6xl mx-auto px-6 py-6 mt-32">
             <p class="text-sm text-orange-600 font-medium">Dashboard</p>
             <h1 class="text-2xl font-bold leading-snug">
-                Selamat Datang Di Area Kerja <br> Seven Inc
+                Selamat Datang Di Area Kerja <br> {{ Auth::user()->perusahaan->nama_perusahaan }}
             </h1>
         </div>
         <div>
