@@ -53,13 +53,13 @@ Route::middleware(['status'])->group(function () {
     Route::get('/tipskerja/details/{tipskerja:id}', [TipskerjaController::class, 'details']);
 
     Route::get('/daftarkandidat', [KandidatController::class, 'index']);
-
     // End Route Landing Page
 
 
     // Pasang Lowongan
     Route::get('/pasanglowongan', [LowonganController::class, 'index']);
     Route::get('/lowongan/tersimpan', [LowonganController::class, 'lowongan_tersimpan']);
+    Route::post('/simpanlowongan/{lowongan:slug}', [LowonganController::class, 'simpan_lowongan']);
     Route::get('/lowongan/tersimpan/detail', [LowonganController::class, 'lowongan_tersimpan_detail']);
     // End Pasang Lowongan
 
@@ -184,7 +184,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/perusahaan', [SuperAdminController::class, 'perusahaan'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/perusahaan/add/perusahaan', [SuperAdminController::class, 'perusahaan_add'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/perusahaan/detail', [SuperAdminController::class, 'perusahaan_detail'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/perusahaan/lowongan/detail', [SuperAdminController::class, 'lowongan_detail'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/perusahaan/detail', [SuperAdminController::class, 'lowongan_detail'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/perusahaan/lowongan/add', [SuperAdminController::class, 'lowongan_add'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/perusahaan/lowongan/edit', [SuperAdminController::class, 'lowongan_edit'])->middleware('superadmin');
 
@@ -282,8 +282,9 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/lowongan', [PerusahaanController::class, 'lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/isi/lowongan', [PerusahaanController::class, 'isi_lowongan'])->middleware('perusahaan');
     Route::post('/dashboard/perusahaan/create/lowongan', [PerusahaanController::class, 'create_lowongan'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/edit/lowongan', [PerusahaanController::class, 'edit_lowongan'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/lowongan/detail/{lowongan:id}', [PerusahaanController::class, 'detail_lowongan'])->middleware('perusahaan');
+    Route::post('/dashboard/perusahaan/edit/lowongan/{lowongan:slug}', [PerusahaanController::class, 'edit_lowongan'])->middleware('perusahaan');
+    Route::put('/dashboard/perusahaan/update/lowongan/{lowongan:slug}', [PerusahaanController::class, 'update_lowongan'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/lowongan/detail/{lowongan:slug}', [PerusahaanController::class, 'detail_lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak', [PerusahaanController::class, 'kandidat_ak'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak/cv', [PerusahaanController::class, 'cv_kandidat'])->middleware('perusahaan');
@@ -307,13 +308,10 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');
 
     // Transaksi Top Up  
-    Route::post('/dashboard/perusahaan/topup',[PerusahaanController::class, 'topup'])->middleware('perusahaan');
+    Route::post('/dashboard/perusahaan/topup', [PerusahaanController::class, 'topup'])->middleware('perusahaan');
     Route::get('/detail/pembayaran/{trx:id}', [PerusahaanController::class, 'detail_pembayaran'])->middleware('perusahaan');
-    Route::put('/upload/bukti/pembayaran/{bukti:id}',[PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
+    Route::put('/upload/bukti/pembayaran/{bukti:id}', [PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
-
     // Route::put('/lowongan/publish/{id}',[PerusahaanController::class, 'publishLowongan'])->middleware('perusahaan');
-
-    Route::post('/topup/lowongan',[LowonganController::class, 'topup'])->middleware('perusahaan');
-
+    Route::post('/topup/lowongan', [LowonganController::class, 'topup'])->middleware('perusahaan');
 });

@@ -68,14 +68,14 @@
                             <i class="ph ph-linkedin-logo"></i>
                         </a>
                     </div>
-                        
+
                     </p>
                     <form class="" action="/masuk" method="POST">
                         @csrf
                         <label for="name" class="font-semibold ">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-8 py-2 px-3">
-                            <input id="name" class=" pl-2 w-full outline-none border-none" type="text" name="username"
-                                placeholder="Nama Pengguna" required autofocus />
+                            <input id="name" class=" pl-2 w-full outline-none border-none" type="text"
+                                name="username" placeholder="Nama Pengguna" required autofocus />
                         </div>
                         <label for="password" class="font-semibold">Kata Sandi</label>
                         <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
@@ -101,6 +101,27 @@
             </div>
         </div>
     </div>
+
+    @if (session('success'))
+        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
+
+                <h2 class="text-lg font-bold my-2">Selamat! Kata Sandi Berhasil Diubah.</h2>
+                <div class="flex justify-center mb-2">
+                    <img src="{{ asset('Icon/regis.png') }}" alt="Success Illustration"
+                        class="w-40 h-40 object-contain">
+                </div>
+
+                <div>
+                    <a href="/login"
+                        class="inline-block w-40 py-3 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-800 transition">
+                        Masuk
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endif
+
 </body>
 
 </html>

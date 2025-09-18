@@ -27,7 +27,7 @@
             </button>
         </div>
 
- 
+
         <div class="flex justify-center my-10">
             <p class="text-[#fa6601] font-semibold text-center lg:text-left md:text-left">Lamar Pekerjaan Kamu ~ <span
                     class="font-normal block lg:inline md:inline text-zinc-600">Dengan Waktu
@@ -74,7 +74,7 @@
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
                         <p class="text-center text-zinc-700 font-bold">Multimedia</p>
-                    </div>              
+                    </div>
                 </div>
                 <div class="mt-5 flex flex-col pr-2 lg:pr-0 md:mr-5 gap-2 w-32">
                     <div
@@ -115,12 +115,32 @@
                     <p class="bg-gray-200 w-fit my-3 px-3 py-1 text-gray-700 font-semibold rounded-md">
                         Rp. {{ $Data->gaji_awal }} – Rp. {{ $Data->gaji_akhir }} perbulan
                     </p>
-                    <div class="flex items-center gap-10">
-                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
-                            Lamar Cepat
-                        </button>
-                        <i class="ph ph-bookmark-simple text-4xl text-gray-800"></i>
-                    </div>
+                    @if (Auth::check() && Auth::user()->role === 'pelamar')
+                        <div class="flex items-center gap-10">
+                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
+                                Lamar Cepat
+                            </button>
+                            <form action="/simpanlowongan/{{ $Data->slug }}" method="POST">
+                                @csrf
+                                <button type="submit">
+                                    @if (Auth::user()->pelamars->simpan_lowongan->contains($Data->id))
+                                        <i class="ph-fill ph-bookmark-simple text-4xl text-orange-500"></i>
+                                    @else
+                                        <i class="ph ph-bookmark-simple text-4xl text-gray-800"></i>
+                                    @endif
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <div class="flex items-center gap-10">
+                            <button onclick="window.location='/login'"
+                                class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
+                                Lamar Cepat
+                            </button>
+                            <button onclick="window.location='/login'"
+                                class="ph ph-bookmark-simple text-4xl text-gray-800"></button>
+                        </div>
+                    @endif
                 </div>
 
                 {{-- <div class="relative text-3xl cursor-pointer">
@@ -153,7 +173,16 @@
                 </div>
 
                 <div class="mb-6 border-b pb-5">
-                    <h3 class="font-semibold text-lg mb-2">Deskripsi Lowongan</h3>
+                    <div class="mb-3 my-8 py-4">
+                        <h3 class="font-semibold text-lg mb-2">Deskripsi Lowongan</h3>
+                        <ul class="list-disc pl-6">
+                            @foreach (explode("\n", $Data->deskripsi) as $baris)
+                                @if (trim($baris) != '')
+                                    <li>{{ $baris }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
                     <p class="font-bold">Requirements</p>
                     <ul class="list-disc list-inside space-y-1 text-gray-600">
                         <li>{{ $Data->syarat_pekerjaan }}</li>

@@ -5,7 +5,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-24">
             <div class="flex items-start gap-4 w-full py-5 justify-between">
                 <div class="flex gap-5 justify-between w-10/12 md:w-11/12 lg:w-11/12 items-center">
-                    <div class="flex">
+                    <div class="flex items-center gap-2">
                         @if (Auth::user()->perusahaan->img_profile)
                             <div class="w-32 h-32  flex items-center justify-center">
                                 <img class="object-contain w-full"
@@ -52,12 +52,23 @@
                     </div>
                 </div>
 
-                @forelse ($Data as $d)
+                @forelse (Auth::user()->perusahaan->pasanglowongan as $d)
                     @if ($d->paket_id)
-                        <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->id }}">
-                            <div class="flex shadow-md p-4">
+                        <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}">
+                            <div class="flex shadow-md p-4 gap-5">
                                 <div>
-                                    <img src="{{ asset('Icon/seveninc.png') }}" alt="">
+                                    @if ($d->perusahaan->img_profile)
+                                        <div class="w-28 h-28  flex items-center justify-center">
+                                            <img class="object-contain w-full"
+                                                src="{{ asset('storage/' . $d->perusahaan->img_profile) }}" alt="">
+                                        </div>
+                                    @else
+                                        <div class="w-28 h -28  flex justify-center">
+                                            <img class="w-20 h-20 rounded-full"
+                                                src="https://ui-avatars.com/api/?name={{ urlencode($d->username) }}&background=random&color=fff&size=128"
+                                                alt="">
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="w-full">
                                     <p>Seven Inc</p>
@@ -65,7 +76,7 @@
                                     <span>Yogyakarta</span>
                                     <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
                                         <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">
-                                            Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }} per bulan
+                                            Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }}
                                         </span>
                                         <span class="block mt-3 text-[#565656] pl-0 lg:pl-10 md:pl-10">
                                             <p class="countdown text-red-500 font-medium"
@@ -79,22 +90,33 @@
                         <div class="flex justify-between items-end text-center gap-3 my-5">
                             <h3 class="font-semibold text-center text-orange-500">Lowongan Non Publish</h3>
                         </div>
-                        <div class="flex shadow-md p-4">
+                        <div class="flex shadow-md p-4 gap-5">
                             <div>
-                                <img src="{{ asset('Icon/seveninc.png') }}" alt="">
+                                @if ($d->perusahaan->img_profile)
+                                    <div class="w-24 h-2w-24  flex items-center justify-center">
+                                        <img class="object-contain w-full"
+                                            src="{{ asset('storage/' . $d->perusahaan->img_profile) }}" alt="">
+                                    </div>
+                                @else
+                                    <div class="w-24 h-2w-24  flex justify-center">
+                                        <img class="w-20 h-20 rounded-full"
+                                            src="https://ui-avatars.com/api/?name={{ urlencode($d->username) }}&background=random&color=fff&size=128"
+                                            alt="">
+                                    </div>
+                                @endif
                             </div>
                             <div class="w-full">
-                                <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->id }}">
+                                <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}">
                                     <p>{{ Auth::user()->perusahaan->nama_perusahaan }}</p>
                                     <h1 class="font-semibold">{{ $d->nama }} - {{ $d->jenis }}</h1>
                                     <span>Yogyakarta</span>
                                     <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                                        <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">
-                                            Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }} per bulan
+                                        <span class="px-2 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">
+                                            Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }}
                                         </span>
                                 </a>
                                 <button type="button"
-                                    class="publish-btn block mt-3 pl-0 lg:pl-10 md:pl-10 bg-orange-500 px-10 py-2 rounded-md text-white"
+                                    class="publish-btn block mt-3 bg-orange-500 px-10 py-2 rounded-md text-white"
                                     data-id="{{ $d->id }}">
                                     Publish
                                 </button>
@@ -102,11 +124,11 @@
                         </div>
                     </div>
                 @endif
-            @empty
-           <p class="text-center text-gray-500 mt-6">Belum ada lowongan.</p>
-           @endforelse
-       </div>
-    </div>
+              @empty
+             <p class="text-center text-gray-500 mt-6">Belum ada lowongan.</p>
+             @endforelse
+             </div>
+         </div>
     <div class="flex justify-center mt-8">
         <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded-lg shadow">
             Memuat
@@ -163,7 +185,7 @@
             </div>
         </div>
     </div>
-    @endif 
+    @endif
     <div id="publishModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
         <div class="bg-white p-6 rounded-md w-96 relative">
             <h2 class="text-lg font-bold mb-4">Konfirmasi Publish</h2>
@@ -174,8 +196,8 @@
                 <a href="/pasanglowongan" class="px-4 py-2 bg-orange-500 text-white rounded-md">Ya, Publish</a>
             </div>
         </div>
-    </div> 
-       
+    </div>
+
     <script>
         const publishButtons = document.querySelectorAll('.publish-btn');
         const modal = document.getElementById('publishModal');

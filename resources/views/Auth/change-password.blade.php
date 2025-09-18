@@ -94,8 +94,10 @@
                                 class="absolute inset-y-0 right-3 flex items-center text-gray-500">
                                 <i class="ph ph-eye-slash"></i>
                             </button>
-
                         </div>
+                        @error('password')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
@@ -109,7 +111,11 @@
                                 <i class="ph ph-eye-slash"></i>
                             </button>
                         </div>
+                        @error('password_confirmation')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
+
 
                     <button type="submit"
                         class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-md">
@@ -119,6 +125,7 @@
             </div>
         </div>
     </div>
+
 </body>
 
 <script>

@@ -185,8 +185,33 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+    @if (session('success'))
+        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
+
+                <h2 class="text-lg font-bold my-2">Selamat! Akun anda berhasil dibuat.</h2>
+                <p class="text-gray-600 text-sm mb-2">
+                    Setelah ini anda hanya perlu login <br> untuk terhubung dengan areakerja
+                </p>
+
+                <div class="flex justify-center mb-2">
+                    <img src="{{ asset('Icon/regis.png') }}" alt="Success Illustration"
+                        class="w-40 h-40 object-contain">
+                </div>
+
+                <div>
+                    <a href="/login"
+                        class="inline-block w-40 py-3 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-800 transition">
+                        Masuk
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
     <script src="{{ asset('js/Auth.js') }}"></script>
 </body>
 

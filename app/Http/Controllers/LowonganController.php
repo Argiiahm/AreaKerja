@@ -8,7 +8,6 @@ use App\Models\CatatanKoin;
 use App\Models\LowonganPerusahaan;
 use Illuminate\Http\Request;
 use App\Models\PaketLowongan;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class LowonganController extends Controller
@@ -29,7 +28,24 @@ class LowonganController extends Controller
 
     public function lowongan_tersimpan()
     {
-        return view('Lowongan-tersimpan.index');
+        $Data = Auth::user()->pelamars->simpan_lowongan;
+
+        return view('Lowongan-tersimpan.index', [
+            "Data"  =>   $Data
+        ]);
+    }
+
+    public function simpan_lowongan(LowonganPerusahaan $lowongan)
+    {
+        $pelamar = Auth::user()->pelamars;
+
+        if ($pelamar->simpan_lowongan()->where('lowongan_id', $lowongan->id)->exists()) {
+            $pelamar->simpan_lowongan()->detach($lowongan->id);
+            return back();
+        } else {
+            $pelamar->simpan_lowongan()->attach($lowongan->id);
+            return back();
+        }
     }
 
     public function lowongan_tersimpan_detail()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alamatpelamar;
+use App\Models\LowonganPerusahaan;
 use App\Models\Organisasi;
 use App\Models\Pelamar;
 use App\Models\Pengalamankerja;
@@ -181,11 +182,11 @@ class ProfileController extends Controller
         RiwayatPendidikan::create($v);
 
         return redirect('/profile');
-
     }
 
-    public function edit_pendidikan(RiwayatPendidikan $pendidikan) {
-        return view('Data-profile.edit_pendidikan',[
+    public function edit_pendidikan(RiwayatPendidikan $pendidikan)
+    {
+        return view('Data-profile.edit_pendidikan', [
             "Data"   =>    $pendidikan
         ]);
     }
@@ -204,7 +205,6 @@ class ProfileController extends Controller
         $pendidikan->update($v);
 
         return redirect('/profile');
-
     }
 
     //Pengalaman Kerja
@@ -276,4 +276,5 @@ class ProfileController extends Controller
         $skill->update($vData);
         return redirect('/profile');
     }
+
 }

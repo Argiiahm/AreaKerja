@@ -75,7 +75,7 @@ class AuthController extends Controller
 
         $user->pelamars()->create($validasi_dataPelamar);
 
-        return redirect('/login');
+        return back()->with('success', 'Akun Berhasil Dibuat');
     }
 
 
@@ -109,7 +109,7 @@ class AuthController extends Controller
         $v2['nama_perusahaan']  = $request->username;
 
         $user->perusahaan()->create($v2);
-        return redirect('/login');
+        return back()->with('success', 'Akun Berhasil Dibuat');
     }
 
     public function verifikasi()
@@ -168,7 +168,21 @@ class AuthController extends Controller
     public function update_password(Request $request)
     {
         $request->validate([
-            'password' => 'required'
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[A-Z]/',
+                'regex:/[a-z]/',       
+                'regex:/[0-9]/',     
+                'regex:/[@$!%*#?&]/',  
+                'confirmed',      
+            ],
+        ], [
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol.',
+            'password.confirmed' => 'Konfirmasi password tidak sama.',
         ]);
 
         $email = session('reset_email');
@@ -188,6 +202,8 @@ class AuthController extends Controller
 
         return redirect('/login')->with('success', 'Password berhasil diganti, silakan login.');
     }
+
+
 
 
     public function verifikasi_kodeotp(Request $request)

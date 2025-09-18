@@ -243,10 +243,34 @@ class PerusahaanController extends Controller
         return redirect('/dashboard/perusahaan/lowongan');
     }
 
-    public function edit_lowongan()
+    public function edit_lowongan(LowonganPerusahaan $lowongan)
     {
-        return view('Perusahaan.Lowongan_saya.edit-lowongan');
+        
+        return view('Perusahaan.Lowongan_saya.edit-lowongan',[
+            "data"   =>  $lowongan
+        ]);
     }
+
+    public function update_lowongan(Request $request, LowonganPerusahaan $lowongan){
+            $v = $request->validate([
+            "nama"    =>    "required",
+            "alamat"  =>    "required",
+            "jenis"   =>    "required",
+            "gaji_awal"  =>   "required",
+            "gaji_akhir"  =>   "required",
+            "deskripsi"   =>    "required",
+            "syarat_pekerjaan"  =>   "required",
+            "batas_lamaran"        =>   "required"
+        ]);
+
+        $v['perusahaan_id'] = Auth::user()->perusahaan->id;
+
+        $lowongan->update($v);
+        return redirect('/dashboard/perusahaan/lowongan');
+
+    }
+
+
     public function detail_lowongan(LowonganPerusahaan $lowongan)
     {
         return view('Perusahaan.Lowongan_saya.detail-lowongan', [

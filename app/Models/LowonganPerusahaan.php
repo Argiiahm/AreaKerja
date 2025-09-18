@@ -19,5 +19,9 @@ class LowonganPerusahaan extends Model
         return $this->belongsTo(PaketLowongan::class, 'paket_id');
     }
 
+    public function simpan_lowongan() {
+         return $this->belongsToMany(Pelamar::class, 'pelamar_lowongan', 'lowongan_id', 'pelamar_id');
+    }
+
 
 }

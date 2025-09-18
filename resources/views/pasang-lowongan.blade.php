@@ -59,14 +59,18 @@
                                         <button
                                             class="open-detail bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full"
                                             data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                            Lowongan</button> 
+                                            Lowongan</button>
                                     @else
-                                     @auth
-                                        <button onclick="window.location='/'" class="bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>    
-                                     @endauth
-                                      @guest
-                                        <button onclick="window.location='/register'" class="bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>    
-                                      @endguest
+                                        @auth
+                                            <button onclick="window.location='/'"
+                                                class="bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
+                                                Lowongan</button>
+                                        @endauth
+                                        @guest
+                                            <button onclick="window.location='/register'"
+                                                class="bg-yellow-500 text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
+                                                Lowongan</button>
+                                        @endguest
                                     @endif
                                 @endif
                             @endforeach
@@ -110,18 +114,22 @@
                             </ul>
                             @foreach ($Data as $d)
                                 @if ($d->nama === 'Pasang Lowongan Silver')
-                                      @if (Auth::check() && Auth::user()->role === 'perusahaan')
+                                    @if (Auth::check() && Auth::user()->role === 'perusahaan')
                                         <button
                                             class="open-detail bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full"
                                             data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                            Lowongan</button> 
+                                            Lowongan</button>
                                     @else
-                                       @auth
-                                       <button  onclick="window.location='/'" class="bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>    
-                                       @endauth
-                                       @guest
-                                          <button  onclick="window.location='/register'" class="bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>    
-                                       @endguest
+                                        @auth
+                                            <button onclick="window.location='/'"
+                                                class="bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
+                                                Lowongan</button>
+                                        @endauth
+                                        @guest
+                                            <button onclick="window.location='/register'"
+                                                class="bg-[#979aa0] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
+                                                Lowongan</button>
+                                        @endguest
                                     @endif
                                 @endif
                             @endforeach
@@ -169,20 +177,24 @@
                             @foreach ($Data as $d)
                                 @if ($d->nama === 'Pasang Lowongan Bronze')
                                     @if (Auth::check() && Auth::user()->role === 'perusahaan')
-                                    <button
-                                        class="open-detail bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full"
-                                        data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
-                                        Lowongan</button> 
+                                        <button
+                                            class="open-detail bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full"
+                                            data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}">Pasang
+                                            Lowongan</button>
                                     @else
-                                    @auth
-                                     <button  onclick="window.location='/'" class="bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>
-                                    @endauth
-                                    @guest
-                                     <button  onclick="window.location='/register'" class="bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang Lowongan</button>  
-                                    @endguest
+                                        @auth
+                                            <button onclick="window.location='/'"
+                                                class="bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
+                                                Lowongan</button>
+                                        @endauth
+                                        @guest
+                                            <button onclick="window.location='/register'"
+                                                class="bg-[#71665d] text-white px-6 py-2 rounded-md font-semibold w-full">Pasang
+                                                Lowongan</button>
+                                        @endguest
                                     @endif
                                 @endif
-                         @endforeach
+                            @endforeach
                         </div>
                     </div>
                 @endif
@@ -240,84 +252,108 @@
     </section>
 
     <!-- Modal -->
-    @if (Auth::check() && Auth::user()->role === 'perusahaan') 
-    <div id="modalDetails"
-        class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div
-            class="bg-white w-full max-w-md p-8 relative mx-10 shadow-lg max-h-[calc(100vh-3rem)] overflow-y-auto rounded-lg">
-            <button onclick="closeDetail()"
-                class="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    @if (Auth::check() && Auth::user()->role === 'perusahaan')
+        <div id="modalDetails"
+            class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div
+                class="bg-white w-full max-w-md p-8 relative mx-10 shadow-lg max-h-[calc(100vh-3rem)] overflow-y-auto rounded-lg">
+                <button onclick="closeDetail()"
+                    class="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
 
-            <h2 class="text-xl font-bold text-center mb-10">Pasang Lowongan</h2>
+                <h2 class="text-xl font-bold text-center mb-10">Pasang Lowongan</h2>
 
-            <form id="formBeli" action="/topup/lowongan" method="POST">
-                @csrf
-                <div class="flex justify-between border-b border-dashed pb-2">
-                    <span>Nama Paket</span>
-                    <input type="text" disabled id="d_nama"
-                        class="font-medium border-none bg-transparent text-right" value="">
-                    <input type="hidden" name="pesanan" id="pesanan_hidden">
-                </div>
-
-                <div class="flex justify-between border-b border-dashed pt-2 pb-2">
-                    <span>Harga</span>
-                    <input type="text" disabled id="d_harga"
-                        class="bg-orange-500 text-white text-center text-xs px-3 py-1 rounded-full" value="">
-                    <input type="hidden" name="total" id="total_hidden">
-                </div>
-
-                <input type="hidden" name="paket_id" id="paket_id_hidden">
-
-                <div class="overflow-x-auto rounded-lg shadow my-2">
-                    <table class="w-full text-sm text-left border-collapse">
-                        <thead>
-                            <tr>
-                                <th class="px-4 py-3">Pilih</th>
-                                <th class="px-4 py-3">Lowongan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $lowongan = Auth::user()->perusahaan->pasanglowongan;
-                                $tanpaPaket = $lowongan->whereNull('paket_id');
-                            @endphp
-
-                            @if ($tanpaPaket->count() > 0)
-                                @foreach ($tanpaPaket as $p)
-                                    <tr class="bg-gray-200">
-                                        <td class="px-4 py-3">
-                                            <input name="id_lowongan" type="radio" value="{{ $p->id }}"
-                                                class="w-4 h-4">
-                                        </td>
-                                        <td class="px-4 py-3 text-blue-600 font-medium cursor-pointer">{{ $p->nama }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <span class="w-full flex justify-center py-2">
-                                    <a class="bg-zinc-700 px-8 py-1 text-white rounded-md" href="/dashboard/perusahaan/lowongan">Tambah Lowongan</a>
-                                </span>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="flex justify-between border-b border-dashed pt-2 pb-2">
-                    <div class="flex items-center gap-2">
-                        <span>Saldo Koin Anda</span>
-                        <span id="saldo_koin"
-                            class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full">{{ $totalKoin }}</span>
+                <form id="formBeli" action="/topup/lowongan" method="POST">
+                    @csrf
+                    <div class="flex justify-between border-b border-dashed pb-2">
+                        <span>Nama Paket</span>
+                        <input type="text" disabled id="d_nama"
+                            class="font-medium border-none bg-transparent text-right" value="">
+                        <input type="hidden" name="pesanan" id="pesanan_hidden">
                     </div>
-                    <div class="flex items-center gap-1">
-                        <input class="border-2" type="checkbox" id="konfirmasi" required>
-                        <p id="p" class="text-zinc-600"></p>
-                    </div>
-                </div>
 
-                <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded w-full">Beli</button>
-            </form>
+                    <div class="flex justify-between border-b border-dashed pt-2 pb-2">
+                        <span>Harga</span>
+                        <input type="text" disabled id="d_harga"
+                            class="bg-orange-500 text-white text-center text-xs px-3 py-1 rounded-full" value="">
+                        <input type="hidden" name="total" id="total_hidden">
+                    </div>
+
+                    <input type="hidden" name="paket_id" id="paket_id_hidden">
+
+                    <div class="overflow-x-auto rounded-lg shadow my-2">
+                        <table class="w-full text-sm text-left border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-3">Pilih</th>
+                                    <th class="px-4 py-3">Lowongan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $lowongan = Auth::user()->perusahaan->pasanglowongan;
+                                    $tanpaPaket = $lowongan->whereNull('paket_id');
+                                @endphp
+
+                                @if ($tanpaPaket->count() > 0)
+                                    @foreach ($tanpaPaket as $p)
+                                        <tr class="bg-gray-200">
+                                            <td class="px-4 py-3">
+                                                <input name="id_lowongan" type="radio" value="{{ $p->id }}"
+                                                    class="w-4 h-4">
+                                            </td>
+                                            <td class="px-4 py-3 text-blue-600 font-medium cursor-pointer">
+                                                {{ $p->nama }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <span class="w-full flex justify-center py-2">
+                                        <a class="bg-zinc-700 px-8 py-1 text-white rounded-md"
+                                            href="/dashboard/perusahaan/lowongan">Tambah Lowongan</a>
+                                    </span>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="flex justify-between border-b border-dashed pt-2 pb-2">
+                        <div class="flex items-center gap-2">
+                            <span>Saldo Koin Anda</span>
+                            <span id="saldo_koin"
+                                class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full">{{ $totalKoin }}</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <input class="border-2" type="checkbox" id="konfirmasi" required>
+                            <p id="p" class="text-zinc-600"></p>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded w-full">Beli</button>
+                </form>
+            </div>
         </div>
-    </div>
+    @endif
+
+
+    @if (session('success'))
+        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
+                <div class="flex justify-center">
+                    <img src="{{ asset('topup_icon/Ceklis.png') }}" alt="" class="w-12 object-contain">
+                </div>
+                <h2 class="mt-2">Selamat! Lowongan Berhasil Di Beli.</h2>
+                <p class="text-zinc-400">Lowongan Anda Sekarang Telah Ter Publish!</p>
+                <div class="flex justify-center mb-2">
+                </div>
+
+                <div>
+                    <a href="/dashboard/perusahaan/lowongan"
+                        class="inline-block py-2 px-20 bg-gray-700 text-white font-semibold hover:bg-gray-800 transition">
+                        Kembali Ke Lowongan Saya
+                    </a>
+                </div>
+            </div>
+        </div>
     @endif
 
     <script>
