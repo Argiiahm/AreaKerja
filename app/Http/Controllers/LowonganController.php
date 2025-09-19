@@ -48,9 +48,16 @@ class LowonganController extends Controller
         }
     }
 
-    public function lowongan_tersimpan_detail()
+    public function lowongan_tersimpan_detail(LowonganPerusahaan $lowongan)
     {
-        return view('Lowongan-tersimpan.lowongan-tersimpan_detail');
+        $rekomendasi = LowonganPerusahaan::where('perusahaan_id', $lowongan->perusahaan_id)
+            ->where('id', '!=', $lowongan->id)
+            ->get();
+
+        return view('Lowongan-tersimpan.lowongan-tersimpan_detail', [
+            "Data"  =>   $lowongan,
+            "Rekomendasi"  =>   $rekomendasi
+        ]);
     }
 
     public function topup(Request $request)

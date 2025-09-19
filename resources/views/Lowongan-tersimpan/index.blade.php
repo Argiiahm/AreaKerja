@@ -20,7 +20,7 @@
     <section class="container max-w-screen-lg mx-auto mt-10">
         <div class="grid grid-cols-1 gap-5">
             @foreach ($Data as $d)
-                <a href="/lowongan/tersimpan/detail">
+                <a href="/lowongan/tersimpan/detail/{{ $d->slug }}">
                     <div class="flex gap-5 shadow-md p-4">
                         <div>
                             <img class="w-20" src="{{ asset('storage/' . $d->perusahaan->img_profile) }}" alt="">

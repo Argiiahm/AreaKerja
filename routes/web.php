@@ -52,12 +52,17 @@ Route::middleware(['status'])->group(function () {
     Route::get('/daftarkandidat', [KandidatController::class, 'index']);
     // End Route Landing Page
 
+    // CV
+    Route::get('/cv/{pelamar:id}/unduh',[SuperAdminController::class, 'unduhCv'])->name('cv.unduh');
+    Route::get('/cv/{pelamar:id}/preview', [SuperAdminController::class, 'cvPreview'])
+    ->name('cv.preview');
+
 
     // Pasang Lowongan
     Route::get('/pasanglowongan', [LowonganController::class, 'index']);
     Route::get('/lowongan/tersimpan', [LowonganController::class, 'lowongan_tersimpan']);
     Route::post('/simpanlowongan/{lowongan:slug}', [LowonganController::class, 'simpan_lowongan']);
-    Route::get('/lowongan/tersimpan/detail', [LowonganController::class, 'lowongan_tersimpan_detail']);
+    Route::get('/lowongan/tersimpan/detail/{lowongan:slug}', [LowonganController::class, 'lowongan_tersimpan_detail']);
     // End Pasang Lowongan
 
 
@@ -97,7 +102,6 @@ Route::middleware(['status'])->group(function () {
     // FAQ
     Route::get('/bantuan', [FaqController::class, 'index']);
     // END FAQ
-
 
     //Auth Finance
     // Route::get('/login/finance', [AuthController::class, 'login_finance']);

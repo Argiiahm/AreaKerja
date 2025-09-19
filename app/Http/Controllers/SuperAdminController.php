@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pelamar;
 use App\Models\User;
+use App\Models\Pelamar;
 use App\Models\Tipskerja;
 use App\Models\SuperAdmin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Spatie\Browsershot\Browsershot;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 
 class SuperAdminController extends Controller
@@ -110,6 +112,48 @@ class SuperAdminController extends Controller
             "Data"    =>    $pelamar
         ]);
     }
+
+    public function cvPreview(Pelamar $pelamar)
+    {
+        return view('CV_PELAMAR.cv_pelamar', [
+            "Data" => $pelamar
+        ]);
+    }
+
+
+    public function unduhCv(Pelamar $pelamar)
+    {
+        $html = View::make('CV_PELAMAR.cv_pelamar', [
+            "Data" => $pelamar,
+            "pdf" => true
+        ])->render();
+
+
+        $htmlWithCss = '
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>CV Pelamar</title>
+                <script src="https://cdn.tailwindcss.com"></script>
+            </head>
+            <body>
+                ' . $html . '
+            </body>
+            </html>
+            ';
+
+        $pdf = Browsershot::html($htmlWithCss)
+            ->format('A4')
+            ->margins(10, 10, 10, 10)
+            ->pdf();
+
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="cv-' . $pelamar->id . '.pdf"');
+    }
+
+
 
     public function add_non_kandidat()
     {
@@ -242,18 +286,20 @@ class SuperAdminController extends Controller
     }
 
 
-    public function banned(Request $request, User $user) {
+    public function banned(Request $request, User $user)
+    {
         // dd($request->all());
         $data = $request->validate([
             "status"    =>    "required|boolean"
         ]);
-        
+
         $user->update($data);
         return redirect('/dashboard/superadmin/freeze');
     }
 
-    
-    public function unbanned(Request $request, User $user){
+
+    public function unbanned(Request $request, User $user)
+    {
         // dd($request->all());
         $data = $request->validate([
             "status"  =>  'required|boolean'
@@ -263,13 +309,14 @@ class SuperAdminController extends Controller
         return redirect('/dashboard/superadmin/freeze');
     }
 
-    public function delete_akun(User $user){
+    public function delete_akun(User $user)
+    {
         $user->delete($user->id);
         return redirect('/dashboard/superadmin/freeze');
     }
 
-    
-    
+
+
     public function freeze_detail(User $user)
     {
         return view('Super-Admin.Freeze-Akun.detail_freeze_akun_superAdmin', [

@@ -6,19 +6,20 @@
             <div class="bg-white">
                 <div class="flex justify-between items-start p-6">
                     <div>
-                        <div class="flex">
+                        <div class="flex gap-5">
                             <div>
-                                <img src="{{ asset('Icon/seveninc.png') }}" alt="">
+                                <img class="w-20" src="{{ asset('storage/' . $Data->perusahaan->img_profile) }}"
+                                    alt="">
                             </div>
                             <div>
-                                <h1 class="font-bold text-xl">UI/UX Designer</h1>
-                                <p class="text-gray-500">Seven Inc</p>
-                                <p class="text-gray-500">Jakarta</p>
+                                <h1 class="font-bold text-xl">{{ $Data->nama }}</h1>
+                                <p class="text-gray-500">{{ $Data->perusahaan->nama_perusahaan }}</p>
+                                <p class="text-gray-500">{{ $Data->alamat }}</p>
                                 <p class="bg-gray-200 w-fit my-3 px-3 py-1 text-gray-700 font-semibold rounded-md">
-                                    Rp. 7.000.000 – Rp. 15.000.000 perbulan
+                                    Rp. {{ $Data->gaji_awal }} – Rp. {{ $Data->gaji_akhir }} perbulan
                                 </p>
                                 <div class="flex items-center gap-3">
-                                    <button
+                                    <button id="openModalBtn"
                                         class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-sm font-semibold">
                                         Lamar Cepat
                                     </button>
@@ -84,63 +85,80 @@
             </div>
             <div class="mx-3">
                 <div class="flex justify-between items-center">
-                    <h1 class="font-semibold text-2xl">Lowongan Seven inc Lainya</h1>
+                    <h1 class="font-semibold text-2xl">Lowongan {{ $Data->perusahaan->nama_perusahaan }} Lainya</h1>
                     <p class="text-orange-500 font-semibold hidden lg:flex md:flex">Lihat Semua</p>
                 </div>
                 <div class="grid grid-cols-1 gap-5 mt-4">
-                    <a href="/lowongan/tersimpan/detail">
-                        <div class="flex shadow-md p-4">
-                            <div>
-                                <img src="{{ asset('Icon/seveninc.png') }}" alt="">
-                            </div>
-                            <div class="w-full">
-                                <p>Seven Inc</p>
-                                <h1 class="font-semibold">UI UX Designer - WFO</h1>
-                                <span>Yogyakarta</span>
-                                <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                                    <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.xxxxx - Rp.xxxxx per
-                                        bulan</span>
-                                    <span class="block mt-3 text-[#565656] pl-0 lg:pl-10 md:pl-10">Aktif 2jam lalu</span>
+                    @foreach ($Rekomendasi as $s)
+                        @if ($Data->count() > 1 && $s->sum('id') != $s->id)
+                            <a href="/lowongan/tersimpan/detail/{{ $s->slug }}">
+                                <div class="flex gap-5 shadow-md p-4">
+                                    <div>
+                                        <img class="w-16" src="{{ asset('storage/' . $Data->perusahaan->img_profile) }}" alt="">
+                                    </div>
+                                    <div class="w-full">
+                                        <p>{{ $s->perusahaan->nama_perusahaan }}</p>
+                                        <h1 class="font-semibold">{{ $s->nama }} - {{ $s->jenis }}</h1>
+                                        <span>Yogyakarta</span>
+                                        <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
+                                            <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.{{ $s->gaji_awal }} -
+                                                Rp.{{ $s->gaji_akhir }}
+                                                per
+                                                bulan</span>
+                                            <span class="block mt-3 text-[#565656] pl-0 lg:pl-10 md:pl-10">Aktif 2jam
+                                                lalu</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/lowongan/tersimpan/detail">
-                        <div class="flex shadow-md p-4">
-                            <div>
-                                <img src="{{ asset('Icon/seveninc.png') }}" alt="">
-                            </div>
-                            <div class="w-full">
-                                <p>Seven Inc</p>
-                                <h1 class="font-semibold">UI UX Designer - WFO</h1>
-                                <span>Yogyakarta</span>
-                                <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                                    <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.xxxxx - Rp.xxxxx per
-                                        bulan</span>
-                                    <span class="block mt-3 text-[#565656] pl-0 lg:pl-10 md:pl-10">Aktif 2jam lalu</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/lowongan/tersimpan/detail">
-                        <div class="flex shadow-md p-4">
-                            <div>
-                                <img src="{{ asset('Icon/seveninc.png') }}" alt="">
-                            </div>
-                            <div class="w-full">
-                                <p>Seven Inc</p>
-                                <h1 class="font-semibold">UI UX Designer - WFO</h1>
-                                <span>Yogyakarta</span>
-                                <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                                    <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.xxxxx - Rp.xxxxx per
-                                        bulan</span>
-                                    <span class="block mt-3 text-[#565656] pl-0 lg:pl-10 md:pl-10">Aktif 2jam lalu</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                            </a>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
     </section>
+
+
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] border-2 border-purple-500">
+            <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+            <p class="text-center mb-6">
+                CV akan dikirimkan ke <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+            </p>
+
+            <div class="flex justify-center gap-4">
+                <button class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                    Kirim
+                </button>
+                <button id="closeModalBtn"
+                    class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const modal = document.getElementById("modal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        openModalBtn.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+        });
+
+        closeModalBtn.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+
+        document.getElementById("kirimBtn").addEventListener("click", () => {
+            alert("CV berhasil dikirim!");
+            modal.classList.add("hidden");
+        });
+    </script>
 @endsection

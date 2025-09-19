@@ -244,7 +244,7 @@
                                 </div>
                             @endif
 
-                            @if (Auth::user()->pelamars->riwayat_pendidikan)
+                            @if (Auth::user()->pelamars->riwayat_pendidikan->count() > 0)
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-1">Riwayat
                                         Pendidikan</label>

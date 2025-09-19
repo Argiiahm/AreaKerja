@@ -117,7 +117,7 @@
                     </p>
                     @if (Auth::check() && Auth::user()->role === 'pelamar')
                         <div class="flex items-center gap-10">
-                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
+                            <button id="openModalBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
                                 Lamar Cepat
                             </button>
                             <form action="/simpanlowongan/{{ $Data->slug }}" method="POST">
@@ -198,4 +198,47 @@
             </div>
         </div>
     </section>
+
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] border-2 border-purple-500">
+            <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+            <p class="text-center mb-6">
+                CV akan dikirimkan ke <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+            </p>
+
+            <div class="flex justify-center gap-4">
+                <button class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                    Kirim
+                </button>
+                <button id="closeModalBtn" class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const modal = document.getElementById("modal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        openModalBtn.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+        });
+
+        closeModalBtn.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+
+        document.getElementById("kirimBtn").addEventListener("click", () => {
+            alert("CV berhasil dikirim!");
+            modal.classList.add("hidden");
+        });
+    </script>
+
 @endsection
