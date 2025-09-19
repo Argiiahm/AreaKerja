@@ -122,7 +122,7 @@
             </div>
             <div class="mx-3">
                 @if ($Data->count() > 1 && $Data->sum('id') != $data->id)
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between gap-5 items-center">
                         <h2 class="font-semibold text-2xl">Lowongan {{ Auth::user()->perusahaan->nama_perusahaan }} Lainya
                         </h2>
                         <p class="text-orange-500 font-semibold hidden lg:flex md:flex">Lihat Semua</p>
