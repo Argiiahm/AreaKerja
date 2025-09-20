@@ -25,11 +25,11 @@
                     <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-30">
 
                     <div>
-                        <p class="text-gray-500 text-sm">Seven Inc</p>
-                        <h2 class="text-lg font-semibold text-gray-900">UI UX Designer - WFO</h2>
-                        <p class="text-gray-500 text-sm">Yogyakarta</p>
+                        <p class="text-gray-500 text-sm">{{ $data->perusahaan->nama_perusahaan }}</p>
+                        <h2 class="text-lg font-semibold text-gray-900">{{ $data->nama }} - {{ $data->jenis }}</h2>
+                        <p class="text-gray-500 text-sm">{{ $data->alam }}</p>
                         <span class="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded-md inline-block mt-1">
-                            Rp. 4.500.000 - Rp. 7.000.000 per bulan
+                            Rp.{{ $data->gaji_awal }} - Rp. {{ $data->gaji_akhir }} per bulan
                         </span>
                     </div>
                 </div>
@@ -51,43 +51,39 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y">
-                            @for ($i = 0; $i < 8; $i++)
+                            @foreach ($data->Pelamar as $d)
                                 <tr>
-                                    <td class="px-4 py-3 text-gray-700">25 Juni, 2024</td>
-                                    <td class="px-4 py-3 text-gray-700">Bambang Kurnia</td>
+                                    <td class="px-4 py-3 text-gray-700"> {{ $d->created_at?->format('d M Y') }}</td>
+                                    <td class="px-4 py-3 text-gray-700">{{ $d->nama_pelamar }}</td>
                                     <td class="px-4 py-3">
                                         <a href="#" class="text-orange-500 hover:text-orange-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" 
-                                                 class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
                                             </svg>
                                         </a>
                                     </td>
                                     <td class="px-4 py-3 flex gap-2">
-                                        @if ($i == 0)
-                                            <button class="bg-green-600 text-white px-4 py-1 rounded-md text-sm">Terima</button>
-                                            <button class="bg-red-600 text-white px-4 py-1 rounded-md text-sm">Tolak</button>
-                                        @else
-                                            <button class="bg-gray-300 text-gray-700 px-4 py-1 rounded-md text-sm">Terima</button>
-                                            <button class="bg-gray-300 text-gray-700 px-4 py-1 rounded-md text-sm">Tolak</button>
-                                        @endif
+                                        <button onclick="window.location='/dashboard/perusahaan/konfirmasi/terima/lamaran/{{ $d->id }}'" class="bg-green-600 text-white px-4 py-1 rounded-md text-sm">Terima</button>
+                                        <button class="bg-red-600 text-white px-4 py-1 rounded-md text-sm">Tolak</button>
                                     </td>
                                     <td class="px-4 py-3 text-gray-700">30 Hari</td>
                                 </tr>
-                            @endfor
+                            @endforeach
                         </tbody>
+
                     </table>
                 </div>
 
                 <div class="flex items-start gap-2 mt-6 text-sm text-orange-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 mt-0.5" 
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L4.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 mt-0.5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L4.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                     <p>
-                        Informasi pelamar akan hilang dalam waktu 30 hari setelah anda konfirmasi 
+                        Informasi pelamar akan hilang dalam waktu 30 hari setelah anda konfirmasi
                         <span class="font-semibold">Terima.</span>
                     </p>
                 </div>

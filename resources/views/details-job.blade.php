@@ -117,7 +117,8 @@
                     </p>
                     @if (Auth::check() && Auth::user()->role === 'pelamar')
                         <div class="flex items-center gap-10">
-                            <button id="openModalBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
+                            <button id="openModalBtn"
+                                class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
                                 Lamar Cepat
                             </button>
                             <form action="/simpanlowongan/{{ $Data->slug }}" method="POST">
@@ -138,7 +139,7 @@
                                 Lamar Cepat
                             </button>
                             <button onclick="window.location='/login'"
-                                class="ph ph-bookmark-simple text-4xl text-gray-800"></button>
+                                class="ph ph-bookmark-simple text-4xl  text-gray-800"></button>
                         </div>
                     @endif
                 </div>
@@ -201,21 +202,87 @@
 
     <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] border-2 border-purple-500">
-            <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
-            <p class="text-center mb-6">
-                CV akan dikirimkan ke <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
-            </p>
+            @php
+                $pelamar = Auth::user()->pelamars; // relasi ke tabel pelamars
+                $profilLengkap = $pelamar && $pelamar->nama_pelamar && $pelamar->deskripsi_diri && $pelamar->tanggal_lahir && $pelamar->gender && $pelamar->telepon_pelamar && $pelamar->img_profile && $pelamar->gaji_minimal && $pelamar->gaji_maksimal ;
+            @endphp
+            @if (!$profilLengkap)
+                <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+                <p class="text-center mb-3">Lengkapi Profile anda Terlebih Dahulu</p>
+                <div class="flex justify-center">
+                    <button onclick="window.location='/profile'"
+                        class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                        Lengkapi
+                    </button>
+                </div>
+            @else
+                @if (!Auth::user()->pelamars->lowongan_perusahaan->contains($Data->id))
+                    <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+                    <p class="text-center mb-6">
+                        CV akan dikirimkan ke <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+                    </p>
 
-            <div class="flex justify-center gap-4">
-                <button class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
-                    Kirim
-                </button>
-                <button id="closeModalBtn" class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
-                    Batal
-                </button>
-            </div>
+                    <div class="flex justify-center gap-4">
+                        <form action="/lamar/cepat" method="POST">
+                            @csrf
+                            <input type="text" name="lowongan_id" value="{{ $Data->id }}" id="" hidden>
+                            <button
+                                class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                Kirim
+                            </button>
+                        </form>
+                        <button id="closeModalBtn"
+                            class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                            Batal
+                        </button>
+                    </div>
+                @else
+                    <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+                    <p class="text-center mb-1">
+                        Anda Sudah Mengirim Lamaran Ke <br> <span
+                            class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+                    </p>
+                    <p class="text-center mb-3">Tunggu Respon dari perusahaan</p>
+                    <div class="flex justify-center">
+                        <button id="closeModalBtn"
+                            class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                            Selesai
+                        </button>
+                    </div>
+                @endif
+            @endif
         </div>
     </div>
+
+    @if (session('success'))
+        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
+                <h2 class="mt-2">Lamaran Anda Berhasil Terkirim</h2>
+                <p class="text-zinc-400">Silahkan Menunggu Informasi Selanjutnya <br> Melalui Sytem Kamu.</p>
+                <div class="flex justify-center mb-2">
+                    <img class="my-8" src="{{ asset('Icon/poplogout.png') }}" alt="">
+                </div>
+
+                <div>
+                    <button id="closeSuccessModal"
+                        class="inline-block rounded-md py-2 px-10 bg-orange-500 text-white font-semibold hover:bg-gray-800 transition">
+                        Selesai
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const modalSuccess = document.getElementById("modalSuccess");
+            const closeSuccessModal = document.getElementById("closeSuccessModal");
+
+            closeSuccessModal.addEventListener("click", () => {
+                modalSuccess.classList.add("hidden");
+            });
+        </script>
+    @endif
+
+
     <script>
         const modal = document.getElementById("modal");
         const openModalBtn = document.getElementById("openModalBtn");

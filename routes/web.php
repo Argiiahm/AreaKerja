@@ -7,6 +7,7 @@ use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KandidatController;
 use App\Http\Controllers\LowonganController;
+use App\Http\Controllers\PelamarController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuperAdminController;
@@ -292,7 +293,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password'])->middleware('perusahaan');
 
-    Route::get('/dashboard/perusahaan/pelamar', [PerusahaanController::class, 'pelamar'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/pelamar/{lowongan:slug}', [PerusahaanController::class, 'pelamar'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/konfirmasi/terima/lamaran', [PerusahaanController::class, 'konfirmasi_terima_lamaran'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->middleware('perusahaan');
 
@@ -315,4 +316,9 @@ Route::middleware(['status'])->group(function () {
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
     // Route::put('/lowongan/publish/{id}',[PerusahaanController::class, 'publishLowongan'])->middleware('perusahaan');
     Route::post('/topup/lowongan', [LowonganController::class, 'topup'])->middleware('perusahaan');
+
+
+    //Lamar Cepat
+    Route::post('/lamar/cepat', [PelamarController::class, 'lamar_cepat']);
+
 });

@@ -50,4 +50,8 @@ class Pelamar extends Model
     {
         return $this->belongsToMany(LowonganPerusahaan::class, 'simpan_lowongans', 'pelamar_id', 'lowongan_id');
     }
+
+    public function lowongan_perusahaan() {
+        return $this->belongsToMany(LowonganPerusahaan::class, 'pelamar_lowongans','pelamar_id', 'lowongan_id');
+    }
 }

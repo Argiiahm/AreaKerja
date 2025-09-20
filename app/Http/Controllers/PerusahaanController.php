@@ -294,9 +294,12 @@ class PerusahaanController extends Controller
     }
 
     //pelamar
-    public function pelamar()
+    public function pelamar(LowonganPerusahaan $lowongan)
     {
-        return view('Perusahaan.Pelamar.pelamar');
+
+        return view('Perusahaan.Pelamar.pelamar',[
+            "data"  =>  $lowongan
+        ]);
     }
     public function konfirmasi_terima_lamaran()
     {
