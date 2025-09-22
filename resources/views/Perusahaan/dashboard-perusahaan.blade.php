@@ -19,7 +19,8 @@
                                     <div class="flex items-start space-x-4">
                                         <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="">
                                         <div>
-                                            <p class="text-gray-800 font-semibold">{{ $datas->perusahaan->nama_perusahaan }}</p>
+                                            <p class="text-gray-800 font-semibold">{{ $datas->perusahaan->nama_perusahaan }}
+                                            </p>
                                             <p class="text-black font-bold">{{ $datas->nama }} – {{ $datas->jenis }}</p>
                                             <p class="text-sm text-gray-500">{{ $datas->alamat }}</p>
                                             <p class="text-sm bg-gray-100 inline-block mt-1 px-2 py-0.5 rounded">
@@ -28,8 +29,10 @@
                                         </div>
                                     </div>
                                     <div class="flex items-center space-x-3">
-                                        <span class="px-3 py-1 border rounded-lg text-gray-700">{{ $datas->paket->nama }}</span>
-                                        <button onclick="window.location='/dashboard/perusahaan/pelamar/{{ $datas->slug }}'"
+                                        <span
+                                            class="px-3 py-1 border rounded-lg text-gray-700">{{ $datas->paket->nama }}</span>
+                                        <button
+                                            onclick="window.location='/dashboard/perusahaan/pelamar/{{ $datas->slug }}'"
                                             class="bg-orange-500 text-white px-4 py-1 rounded-lg hover:bg-orange-600 transition">
                                             Lihat Pelamar
                                         </button>

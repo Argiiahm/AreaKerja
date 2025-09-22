@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BrowserPath;
 use App\Models\User;
 use App\Models\Pelamar;
 use App\Models\Tipskerja;
@@ -103,7 +104,6 @@ class SuperAdminController extends Controller
         ]);
     }
 
-
     //Bagian NON KANDIDAT
     public function non_kandidat_view(Pelamar $pelamar)
     {
@@ -119,7 +119,6 @@ class SuperAdminController extends Controller
             "Data" => $pelamar
         ]);
     }
-
 
     public function unduhCv(Pelamar $pelamar)
     {
@@ -143,7 +142,15 @@ class SuperAdminController extends Controller
             </html>
             ';
 
+        $browserPath = BrowserPath::detect();
+        if (!$browserPath) {
+            return response()->json([
+                "error"   =>    "Error"
+            ], 500);
+        }
+
         $pdf = Browsershot::html($htmlWithCss)
+            ->setOption('executablePath', $browserPath)
             ->format('A4')
             ->margins(10, 10, 10, 10)
             ->pdf();

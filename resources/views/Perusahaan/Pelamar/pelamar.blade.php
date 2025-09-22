@@ -51,25 +51,45 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y">
-                            @foreach ($data->Pelamar as $d)
-                                <tr>
-                                    <td class="px-4 py-3 text-gray-700"> {{ $d->created_at?->format('d M Y') }}</td>
-                                    <td class="px-4 py-3 text-gray-700">{{ $d->nama_pelamar }}</td>
-                                    <td class="px-4 py-3">
-                                        <a href="#" class="text-orange-500 hover:text-orange-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
-                                            </svg>
-                                        </a>
-                                    </td>
-                                    <td class="px-4 py-3 flex gap-2">
-                                        <button onclick="window.location='/dashboard/perusahaan/konfirmasi/terima/lamaran/{{ $d->id }}'" class="bg-green-600 text-white px-4 py-1 rounded-md text-sm">Terima</button>
-                                        <button class="bg-red-600 text-white px-4 py-1 rounded-md text-sm">Tolak</button>
-                                    </td>
-                                    <td class="px-4 py-3 text-gray-700">30 Hari</td>
-                                </tr>
+                            @foreach ($datas->sortBy(function ($item) {
+            return $item->status === 'diterima' ? 1 : 0;
+        }) as $d)
+                                @if ($d->lowongan_id === $data->id)
+                                    <tr>
+                                        <td class="px-4 py-3 text-gray-700"> {{ $d->created_at?->format('d M Y') }}</td>
+                                        @php
+                                            $namapelamar = \App\Models\Pelamar::find($d->pelamar_id);
+                                            $perusahaan = \App\Models\LowonganPerusahaan::find($d->lowongan_id);
+                                        @endphp
+                                        <td class="px-4 py-3 text-gray-700">{{ $namapelamar->nama_pelamar }}</td>
+                                        <td class="px-4 py-3">
+                                            <a href="/cv/{{ $namapelamar->id }}/unduh"
+                                                class="text-orange-500 hover:text-orange-600">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                        @if ($d->status === 'diterima')
+                                            <td class="px-4 py-3 flex gap-2">
+                                                <button
+                                                    class="bg-gray-500 cursor-no-drop text-white px-4 py-1 rounded-md text-sm">Terima</button>
+                                                <button
+                                                    class="bg-gray-500 cursor-no-drop text-white px-4 py-1 rounded-md text-sm">Tolak</button>
+                                            @else
+                                            <td class="px-4 py-3 flex gap-2">
+                                                <button
+                                                    onclick="window.location='/dashboard/perusahaan/form/terima/lamaran/{{ $d->id }}'"
+                                                    class="bg-green-600 text-white px-4 py-1 rounded-md text-sm">Terima</button>
+                                                <button
+                                                    class="bg-red-600 text-white px-4 py-1 rounded-md text-sm">Tolak</button>
+                                            </td>
+                                        @endif
+                                        <td class="px-4 py-3 text-gray-700">30 Hari</td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
 

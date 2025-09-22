@@ -12,6 +12,7 @@ use App\Models\Alamatperusahaan;
 use App\Models\CatatanKoin;
 use App\Models\LowonganPerusahaan;
 use App\Models\PaketLowongan;
+use App\Models\PelamarLowongan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -245,14 +246,15 @@ class PerusahaanController extends Controller
 
     public function edit_lowongan(LowonganPerusahaan $lowongan)
     {
-        
-        return view('Perusahaan.Lowongan_saya.edit-lowongan',[
+
+        return view('Perusahaan.Lowongan_saya.edit-lowongan', [
             "data"   =>  $lowongan
         ]);
     }
 
-    public function update_lowongan(Request $request, LowonganPerusahaan $lowongan){
-            $v = $request->validate([
+    public function update_lowongan(Request $request, LowonganPerusahaan $lowongan)
+    {
+        $v = $request->validate([
             "nama"    =>    "required",
             "alamat"  =>    "required",
             "jenis"   =>    "required",
@@ -267,7 +269,6 @@ class PerusahaanController extends Controller
 
         $lowongan->update($v);
         return redirect('/dashboard/perusahaan/lowongan');
-
     }
 
 
@@ -296,18 +297,50 @@ class PerusahaanController extends Controller
     //pelamar
     public function pelamar(LowonganPerusahaan $lowongan)
     {
-
-        return view('Perusahaan.Pelamar.pelamar',[
-            "data"  =>  $lowongan
+        // dd($lowongan);
+        return view('Perusahaan.Pelamar.pelamar', [
+            "data"  =>  $lowongan,
+            "datas" => PelamarLowongan::all()
         ]);
     }
-    public function konfirmasi_terima_lamaran()
+    public function formKonfirmasiLamaran(Request $request, PelamarLowongan $lowongan)
     {
-        return view('Perusahaan.Pelamar.konfirmasi-terima-lamaran');
+
+        return view('Perusahaan.Pelamar.konfirmasi-terima-lamaran', [
+            "Data"  =>   $lowongan
+        ]);
     }
-    public function konfirmasi_lamaran_terkirim()
+
+    public function konfirmasi_lamaran(Request $request, PelamarLowongan $lowongan)
     {
-        return view('Perusahaan.Pelamar.konfirmasi-lamaran-terkirim');
+        $validasi = $request->validate([
+            "tanggal_wawancara"   =>       "nullable",
+            "waktu_wawancara"     =>       "nullable",
+            "tempat_wawancara"    =>       "nullable",
+            "catatan_wawancara"   =>       "nullable"
+        ]);
+
+        $validasi['waktu_wawancara'] = $request->jam . ':' . $request->menit;
+
+        $lowongan->update($validasi);
+        return redirect()->route('konfirmasi.lamaran.terkirim', ['lowongan' => $lowongan->id]);
+    }
+
+    public function konfirmasi_lamaran_terkirim(PelamarLowongan $lowongan)
+    {
+        return view('Perusahaan.Pelamar.konfirmasi-lamaran-terkirim', [
+            "Data" => $lowongan
+        ]);
+    }
+
+    public function konfirmasi_status(Request $request, PelamarLowongan $lowongan) {
+        $v = $request->validate([
+            "status"   =>    "required"
+        ]);
+
+        $lowongan->update($v);
+        return redirect('/dashboard/perusahaan');
+
     }
 
     public function kandidat_ak()

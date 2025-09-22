@@ -54,9 +54,9 @@ Route::middleware(['status'])->group(function () {
     // End Route Landing Page
 
     // CV
-    Route::get('/cv/{pelamar:id}/unduh',[SuperAdminController::class, 'unduhCv'])->name('cv.unduh');
+    Route::get('/cv/{pelamar:id}/unduh', [SuperAdminController::class, 'unduhCv'])->name('cv.unduh');
     Route::get('/cv/{pelamar:id}/preview', [SuperAdminController::class, 'cvPreview'])
-    ->name('cv.preview');
+        ->name('cv.preview');
 
 
     // Pasang Lowongan
@@ -293,10 +293,6 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password'])->middleware('perusahaan');
 
-    Route::get('/dashboard/perusahaan/pelamar/{lowongan:slug}', [PerusahaanController::class, 'pelamar'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/konfirmasi/terima/lamaran', [PerusahaanController::class, 'konfirmasi_terima_lamaran'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->middleware('perusahaan');
-
     Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info'])->middleware('perusahaan');
@@ -314,11 +310,19 @@ Route::middleware(['status'])->group(function () {
     Route::get('/detail/pembayaran/{trx:id}', [PerusahaanController::class, 'detail_pembayaran'])->middleware('perusahaan');
     Route::put('/upload/bukti/pembayaran/{bukti:id}', [PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
-    // Route::put('/lowongan/publish/{id}',[PerusahaanController::class, 'publishLowongan'])->middleware('perusahaan');
     Route::post('/topup/lowongan', [LowonganController::class, 'topup'])->middleware('perusahaan');
 
 
     //Lamar Cepat
     Route::post('/lamar/cepat', [PelamarController::class, 'lamar_cepat']);
+
+    Route::get('/dashboard/perusahaan/pelamar/{lowongan:slug}', [PerusahaanController::class, 'pelamar'])->middleware('perusahaan')->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/form/terima/lamaran/{lowongan:id}', [PerusahaanController::class, 'formKonfirmasiLamaran'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->middleware('perusahaan');
+
+
+    Route::put('/dashboard/perusahaan/terima/lamaran/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_lamaran'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim/{lowongan}',[PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->name('konfirmasi.lamaran.terkirim');
+    Route::put('/dashboard/perusahaan/konfirmasi/{lowongan:id}',[PerusahaanController::class, 'konfirmasi_status'])->middleware('perusahaan');
 
 });

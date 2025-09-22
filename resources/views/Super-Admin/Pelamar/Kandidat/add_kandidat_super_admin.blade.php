@@ -73,24 +73,28 @@
             </div>
 
             <div class="space-y-3">
+                  <label class="block text-sm mb-1">Pendidikan *</label>
                 <button type="button"
                     class="w-full flex justify-between items-center bg-orange-500 text-white px-4 py-2 rounded-md">
                     <span>Tambahkan Pendidikan</span>
                     <span class="text-xl">+</span>
                 </button>
 
+                  <label class="block text-sm mb-1">Organisasi *</label>
                 <button type="button"
                     class="w-full flex justify-between items-center bg-orange-500 text-white px-4 py-2 rounded-md">
                     <span>Tambahkan Organisasi</span>
                     <span class="text-xl">+</span>
                 </button>
 
+                  <label class="block text-sm mb-1">Pengalaman *</label>
                 <button type="button"
                     class="w-full flex justify-between items-center bg-orange-500 text-white px-4 py-2 rounded-md">
                     <span>Tambahkan Pengalaman Kerja</span>
                     <span class="text-xl">+</span>
                 </button>
 
+                  <label class="block text-sm mb-1">Skill *</label>
                 <button type="button"
                     class="w-full flex justify-between items-center bg-orange-500 text-white px-4 py-2 rounded-md">
                     <span>Tambahkan Skill</span>
@@ -98,6 +102,7 @@
                 </button>
             </div>
 
+            <h2 class="text-lg font-semibold mb-4">Social Media</h2>
             <div>
                 <label class="block text-sm mb-1">Instagram</label>
                 <input type="text" name="instagram" class="w-full border rounded-md px-3 py-2">
