@@ -59,7 +59,7 @@
                                         @php
                                             $namapelamar = \App\Models\Pelamar::find($d->pelamar_id);
                                             $perusahaan = \App\Models\LowonganPerusahaan::find($d->lowongan_id);
-                                        @endphp
+                                        @endphp 
                                         <td class="px-4 py-3 text-gray-700">{{ $namapelamar->nama_pelamar }}</td>
                                         <td class="px-4 py-3">
                                             <button class="text-orange-500 hover:text-orange-600 download-btn"
@@ -88,7 +88,7 @@
                                         @endif
                                         <td class="px-4 py-3 text-gray-700">30 Hari</td>
                                     </tr>
-                                @endif
+                                @endif 
                             @endforeach
                         </tbody>
 
