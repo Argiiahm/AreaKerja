@@ -59,7 +59,8 @@
                                 </button>
 
                                 <div class="bg-green-500 px-6 py-2 rounded-lg text-center w-full sm:w-auto">
-                                    <span class="text-white font-semibold">Unduh CV</span>
+                                    <a href="/cv/{{ Auth::user()->pelamars->id }}/unduh"
+                                        class="text-white font-semibold">Unduh CV</a>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +156,7 @@
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700">No. Tlp <span
                                             class="text-red-500">*</span></label>
-                                    <input type="text"
+                                    <input type="text" name="telepon_pelamar"
                                         class="w-full border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                                         placeholder="No. Tlp" value="{{ Auth::user()->pelamars->telepon_pelamar }}">
                                 </div>
@@ -173,10 +174,9 @@
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700">Deskripsi Diri <span
                                             class="text-red-500">*</span></label>
-                                    <input
+                                    <textarea name="deskripsi_diri" rows="3"
                                         class="w-full border border-gray-300 rounded-md p-2 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                                        placeholder="Deskripsikan diri anda secara singkat"
-                                        value="{{ Auth::user()->pelamars->deskripsi_diri }}">
+                                        placeholder="Deskripsikan diri anda secara singkat">{{ Auth::user()->pelamars->deskripsi_diri }}</textarea>
                                 </div>
                             @else
                                 <div>

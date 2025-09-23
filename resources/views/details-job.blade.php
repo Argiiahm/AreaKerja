@@ -7,7 +7,7 @@
                 <i class="ph ph-magnifying-glass text-zinc-900 text-lg mr-2"></i>
                 <input type="text" placeholder="Posisi lowongan, kata kunci, ..."
                     class="w-full outline-none border-none placeholder-gray-500 text-gray-700" />
-            </div>
+            </div> 
 
             <span class="w-px h-6 bg-gray-300"></span>
 

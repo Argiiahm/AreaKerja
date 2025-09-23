@@ -33,9 +33,10 @@ class ProfileController extends Controller
             "img_profile"     =>      'nullable|file|image|mimes:png,jpg,jpeg',
             "gender"          =>      "nullable",
             "tanggal_lahir"   =>      "nullable",
-            "deskripsi_diri"  =>     "nullable",
-            "gaji_minimal"    =>     "nullable",
-            "gaji_maksimal"    =>     "nullable"
+            "telepon_pelamar"   =>      "nullable",
+            "deskripsi_diri"    =>     "nullable",
+            "gaji_minimal"      =>     "nullable",
+            "gaji_maksimal"     =>     "nullable"
         ]);
 
         if ($request->hasFile('img_profile')) {
@@ -276,5 +277,4 @@ class ProfileController extends Controller
         $skill->update($vData);
         return redirect('/profile');
     }
-
 }

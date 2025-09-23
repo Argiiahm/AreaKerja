@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
     <link rel="stylesheet" href="{{ public_path('css/tailwind.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
     <script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
     @vite('resources/css/app.css')

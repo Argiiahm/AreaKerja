@@ -105,63 +105,98 @@
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <div class="hidden lg:flex md:flex items-center gap-8">
                     <button type="button" id="notifikasi" aria-expanded="false" data-dropdown-toggle="notif"
-                        data-dropdown-placement="bottom">
-                        <span class="sr-only">Open user menu</span>
+                        data-dropdown-placement="bottom" class="relative">
+                        <span class="sr-only">Open notification</span>
                         <i class="ph-fill text-[#fa6601] ph-bell text-3xl"></i>
+                        @foreach ($Pesan as $p)
+                            @if ($p->status !== 'pending' && $p->pelamar_id === Auth::user()->pelamars->id && $p->is_read === 0)
+                                <span
+                                    class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600">
+                                </span>
+                            @endif
+                        @endforeach
                     </button>
 
-                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
-                        id="notif">
-                        <div class="flex items-center px-4 py-3 justify-between">
-                            <span class="block text-sm text-gray-900">Notifikasi</span>
-                            <span class="block text-sm  text-orange-500">Lihat Semua</span>
+
+                    {{-- Alert --}}
+                    @if (Auth::check() && Auth::user()->role === 'pelamar')
+                        <div id="notif"
+                            class="z-50 hidden my-4 w-96 text-base bg-white divide-y divide-gray-100 rounded-lg shadow-lg">
+                            <div class="flex items-center justify-between px-4 py-3">
+                                <span class="block text-sm font-semibold text-gray-900">Notifikasi</span>
+                                <a href="#" class="text-sm font-medium text-orange-500 hover:underline">Lihat
+                                    Semua</a>
+                            </div>
+                            <ul class="max-h-80 mx-2 overflow-y-auto">
+                                @if ($Pesan->isNotEmpty())
+                                    @foreach ($Pesan as $p)
+                                        @if ($p->status !== 'pending' && $p->pelamar_id === Auth::user()->pelamars->id)
+                                            @php
+                                                $lowongan = \App\Models\LowonganPerusahaan::find($p->lowongan_id);
+                                            @endphp
+                                            <li
+                                                class="px-4 py-3 {{ $p->is_read === 0 ? 'bg-gray-200' : 'border-zinc-300' }} hover:bg-gray-50 transition">
+                                                <form action="/detail/notif/read/{{ $p->id }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="text-left ">
+                                                        <div class="flex items-start gap-3">
+                                                            <img class="w-10 h-10 rounded-full object-cover"
+                                                                src="{{ asset('storage/' . $lowongan->perusahaan->img_profile) }}"
+                                                                alt="Logo {{ $lowongan->perusahaan->nama_perusahaan }}">
+                                                            <div class="flex-1">
+                                                                @if ($p->status === 'diterima')
+                                                                    <p class="text-sm text-gray-700">
+                                                                        <span
+                                                                            class="font-medium text-gray-900">Selamat!</span>
+                                                                        Lamaran Anda ke
+                                                                        <span
+                                                                            class="font-semibold">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
+                                                                        divisi <span
+                                                                            class="font-semibold">{{ $lowongan->nama }}</span>
+                                                                        <span
+                                                                            class="text-green-600 font-medium">{{ $p->status }}</span>.
+                                                                    </p>
+                                                                @elseif ($p->status === 'ditolak')
+                                                                    <p class="text-sm text-gray-700">
+                                                                        <span class="font-medium text-gray-900">Mohon
+                                                                            Maaf!</span>
+                                                                        Lamaran Anda ke
+                                                                        <span
+                                                                            class="font-semibold">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
+                                                                        divisi <span
+                                                                            class="font-semibold">{{ $lowongan->nama }}</span>
+                                                                        <span
+                                                                            class="text-red-600 font-medium">{{ $p->status }}</span>.
+                                                                    </p>
+                                                                @endif
+                                                                <span class="text-xs text-gray-400">
+                                                                    {{ $p->updated_at->diffForHumans() }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        @endif
+                                    @endforeach
+
+                                    <div class="flex items-center justify-end px-5 pb-3 gap-2 mt-2">
+                                        <i class="ph ph-checks text-blue-500 font-bold text-lg"></i>
+                                        <button class="text-xs font-semibold text-gray-600 hover:text-blue-600">
+                                            Tandai Baca
+                                        </button>
+                                    </div>
+                                @else
+                                    <li class="px-4 py-6 text-center text-sm text-gray-500">
+                                        Belum ada notifikasi.
+                                    </li>
+                                @endif
+                            </ul>
+
                         </div>
-                        <ul class="py-2" aria-labelledby="user-menu-button">
-                            <li class="border-b">
-                                <div class="flex items-center gap-2 ">
-                                    <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
-                                        <img class="w-8"
-                                            src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
-                                            alt="">
-                                        <p>Selamat! Lamaran yang anda
-                                            ajukan ke Seven Inc divisi
-                                            Videografi Diterima.</p>
-                                    </a>
-                                    <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
-                                </div>
-                            </li>
-                            <li class="border-b">
-                                <div class="flex items-center gap-2 ">
-                                    <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
-                                        <img class="w-8"
-                                            src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
-                                            alt="">
-                                        <p>Selamat! Lamaran yang anda
-                                            ajukan ke Seven Inc divisi
-                                            Videografi Diterima.</p>
-                                    </a>
-                                    <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
-                                </div>
-                            </li>
-                            <li class="border-b">
-                                <div class="flex items-center gap-2 ">
-                                    <a href="#" class="flex items-center gap-10 w-72 px-4 py-2 text-sm">
-                                        <img class="w-8"
-                                            src="https://png.pngtree.com/png-vector/20211030/ourmid/pngtree-company-logo-design-png-image_4016509.png"
-                                            alt="">
-                                        <p>Selamat! Lamaran yang anda
-                                            ajukan ke Seven Inc divisi
-                                            Videografi Diterima.</p>
-                                    </a>
-                                    <span class="float-right px-4 text-gray-400 py-2">2 Jam lalu</span>
-                                </div>
-                            </li>
-                            <span class="px-4 flex items-center justify-end gap-2 py-3">
-                                <i class="ph ph-checks text-blue-500 font-bold text-2xl"></i>
-                                <p class="text-[14px] font-semibold">Tandai baca</p>
-                            </span>
-                        </ul>
-                    </div>
+                    @endif
+
 
                     @if (Auth::check())
                         <button type="button" id="user-menu-button" aria-expanded="false"
@@ -307,7 +342,8 @@
                                 <ul class="py-2" aria-labelledby="user-menu-button">
                                     <li id="btn-profile">
                                         <a href="/dashboard/perusahaan/profile"
-                                            class="block px-4 py-2 text-sm">Profile Perusahaan</a>
+                                            class="block px-4 py-2 text-sm">Profile
+                                            Perusahaan</a>
                                     </li>
                                     <li>
                                         <a href="" class="block px-4 py-2 text-sm">Koin Area Kerja</a>

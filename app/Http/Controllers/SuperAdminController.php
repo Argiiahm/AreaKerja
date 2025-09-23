@@ -127,20 +127,27 @@ class SuperAdminController extends Controller
             "pdf" => true
         ])->render();
 
+        $css = file_get_contents(public_path('build/assets/app-Dd7altkU.css'));
 
         $htmlWithCss = '
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <title>CV Pelamar</title>
-                <script src="https://cdn.tailwindcss.com"></script>
-            </head>
-            <body>
-                ' . $html . '
-            </body>
-            </html>
-            ';
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>CV Pelamar</title>
+                        <style>' . $css . '</style>
+                          <link rel="stylesheet" type="text/css"
+                            href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+                        <link rel="stylesheet" type="text/css"
+                            href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+                        <script src="https://cdn.tailwindcss.com"></script>
+                    </head>
+                    <body>
+                        ' . $html . '
+                    </body>
+                    </html>
+                    ';
+
 
         $browserPath = BrowserPath::detect();
         if (!$browserPath) {
@@ -151,8 +158,9 @@ class SuperAdminController extends Controller
 
         $pdf = Browsershot::html($htmlWithCss)
             ->setOption('executablePath', $browserPath)
-            ->format('A4')
+            ->format('A3')
             ->margins(10, 10, 10, 10)
+            ->waitUntilNetworkIdle()
             ->pdf();
 
         return response($pdf)

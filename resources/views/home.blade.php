@@ -110,8 +110,8 @@
         <p class="my-10 font-semibold text-gray-500 text-center lg:text-left md:text-left">Lowongan berdasarkan pada
             aktivitas anda di areakerja</p>
         <div id="section-umpan-lowongan" class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3">
-            @foreach ($Data as $d) 
-               @if ($d->paket_id)    
+            @foreach ($Data as $d)
+                @if ($d->paket_id)
                 <a href="/detail/job/{{ $d->slug }}" class="border p-8">
                     <div class="flex justify-between items-center">
                         <div>
@@ -142,7 +142,7 @@
                     </ul>
                     <span>Aktif 2jam lalu</span>
                 </a>
-               @endif
+                @endif
             @endforeach
         </div>
 
@@ -200,7 +200,7 @@
                             intro: `
                         <div style="max-width:180px; text-align:center">
                             <img src="{{ asset('image/Lengkapi Profile.png') }}" 
-                                 style="width:100%; border-radius:12px;" />
+                                style="width:100%; border-radius:12px;" />
                         </div>
                     `,
                             position: 'right',
@@ -211,7 +211,7 @@
                             intro: `
                         <div style="max-width:180px; text-align:center">
                             <img src="{{ asset('image/Klik Profil.png') }}" 
-                                 style="width:100%; border-radius:12px;" />
+                                style="width:100%; border-radius:12px;" />
                         </div>
                     `,
                             position: 'right',

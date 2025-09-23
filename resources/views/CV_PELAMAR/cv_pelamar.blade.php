@@ -52,8 +52,7 @@
                           <hr class="w-full border border-orange-300 mb-3">
                       </div>
                       <p class="text-sm text-gray-700 leading-relaxed">
-                          Saya adalah lulusan Teknik Informatika di Universitas Gadjah Mada yang memiliki minat besar
-                          dalam pengembangan web dan aplikasi...
+                         {{ $Data->deskripsi_diri }}
                       </p>
                   </div>
                   <div>

@@ -312,7 +312,6 @@ Route::middleware(['status'])->group(function () {
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
     Route::post('/topup/lowongan', [LowonganController::class, 'topup'])->middleware('perusahaan');
 
-
     //Lamar Cepat
     Route::post('/lamar/cepat', [PelamarController::class, 'lamar_cepat']);
 
@@ -322,7 +321,8 @@ Route::middleware(['status'])->group(function () {
 
 
     Route::put('/dashboard/perusahaan/terima/lamaran/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_lamaran'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim/{lowongan}',[PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->name('konfirmasi.lamaran.terkirim');
-    Route::put('/dashboard/perusahaan/konfirmasi/{lowongan:id}',[PerusahaanController::class, 'konfirmasi_status'])->middleware('perusahaan');
-
+    Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim/{lowongan}', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->name('konfirmasi.lamaran.terkirim');
+    Route::put('/dashboard/perusahaan/konfirmasi/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_status'])->middleware('perusahaan');
+    
+    Route::put('/detail/notif/read/{lowongan:id}', [HomeController::class, 'read_detail_notif']);
 });

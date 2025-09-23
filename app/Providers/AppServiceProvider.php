@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\PelamarLowongan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,5 +26,25 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('perusahaan', function($user) {
             return $user->role == 'perusahaan';
         });
+
+        View::composer('*', function ($view) {
+            $Pesan = collect();
+            $unreadCount = 0;
+
+            if (Auth::check() && Auth::user()->role === 'pelamar') {
+                $pelamarId = optional(Auth::user()->pelamars)->id;
+                if ($pelamarId) {
+                    $Pesan = PelamarLowongan::with('lowongan.perusahaan')
+                        ->where('pelamar_id', $pelamarId)
+                        ->where('status', '!=', 'pending')
+                        ->latest()
+                        ->get();
+
+                    $unreadCount = $Pesan->count();
+                }
+            }
+            $view->with(compact('Pesan', 'unreadCount'));
+        }); 
     }
+    
 }

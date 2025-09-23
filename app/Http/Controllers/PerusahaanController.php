@@ -238,7 +238,7 @@ class PerusahaanController extends Controller
         ]);
 
         $v['perusahaan_id']  = Auth::user()->perusahaan->id;
-        $v['slug']  = Str::slug($request->nama);
+        $v['slug'] = Str::slug($request->nama) . '-' . uniqid();
         $v['tanggung_jawab']  = Auth::user()->perusahaan->nama_perusahaan;
         LowonganPerusahaan::create($v);
         return redirect('/dashboard/perusahaan/lowongan');

@@ -52,8 +52,7 @@
                         </thead>
                         <tbody class="divide-y">
                             @foreach ($datas->sortBy(function ($item) {
-            return $item->status === 'diterima' ? 1 : 0;
-        }) as $d)
+                                    return $item->status === 'diterima' ? 1 : 0;}) as $d)
                                 @if ($d->lowongan_id === $data->id)
                                     <tr>
                                         <td class="px-4 py-3 text-gray-700"> {{ $d->created_at?->format('d M Y') }}</td>
@@ -63,14 +62,14 @@
                                         @endphp
                                         <td class="px-4 py-3 text-gray-700">{{ $namapelamar->nama_pelamar }}</td>
                                         <td class="px-4 py-3">
-                                            <a href="/cv/{{ $namapelamar->id }}/unduh"
-                                                class="text-orange-500 hover:text-orange-600">
+                                            <button class="text-orange-500 hover:text-orange-600 download-btn"
+                                                data-url="/cv/{{ $namapelamar->id }}/unduh">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
                                                 </svg>
-                                            </a>
+                                            </button>
                                         </td>
                                         @if ($d->status === 'diterima')
                                             <td class="px-4 py-3 flex gap-2">
@@ -110,4 +109,77 @@
             </div>
         </div>
     </div>
+
+
+    <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+            <h2 class="text-lg font-semibold mb-4">Konfirmasi</h2>
+            <p class="text-gray-600 mb-4">Apakah Anda yakin ingin mengunduh CV ini?</p>
+            <div class="flex justify-end gap-2">
+                <button id="cancelBtn" class="px-4 py-2 rounded bg-gray-300">Batal</button>
+                <button id="confirmBtn" class="px-4 py-2 rounded bg-orange-500 text-white">Ya, Unduh</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+        <div class="flex flex-col items-center">
+            <div class="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-white mt-4">Sedang mengunduh...</p>
+        </div>
+    </div>
+
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
+            <h2 class="text-lg font-semibold mb-2 text-green-600">Berhasil!</h2>
+            <p class="text-gray-600 mb-4">CV berhasil diunduh.</p>
+            <button id="okBtn" class="px-4 py-2 rounded bg-orange-500 text-white">Oke</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const confirmModal = document.getElementById("confirmModal");
+            const loadingModal = document.getElementById("loadingModal");
+            const successModal = document.getElementById("successModal");
+
+            const cancelBtn = document.getElementById("cancelBtn");
+            const confirmBtn = document.getElementById("confirmBtn");
+            const okBtn = document.getElementById("okBtn");
+
+            let selectedUrl = "";
+
+            document.querySelectorAll(".download-btn").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    selectedUrl = this.getAttribute("data-url");
+                    confirmModal.classList.remove("hidden");
+                });
+            });
+
+            cancelBtn.addEventListener("click", () => {
+                confirmModal.classList.add("hidden");
+            });
+
+            confirmBtn.addEventListener("click", () => {
+                confirmModal.classList.add("hidden");
+                loadingModal.classList.remove("hidden");
+
+                setTimeout(() => {
+                    loadingModal.classList.add("hidden");
+                    successModal.classList.remove("hidden");
+
+                    let a = document.createElement("a");
+                    a.href = selectedUrl;
+                    a.setAttribute("download", "");
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }, 2000);
+            });
+
+            okBtn.addEventListener("click", () => {
+                successModal.classList.add("hidden");
+            });
+        });
+    </script>
 @endsection
