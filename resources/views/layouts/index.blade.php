@@ -349,10 +349,10 @@
                                         <a href="" class="block px-4 py-2 text-sm">Koin Area Kerja</a>
                                     </li>
                                     <li>
-                                        <a href="" class="block px-4 py-2 text-sm">Kandidat Saya</a>
+                                        <a href="/dashboard/perusahaan/kandidat" class="block px-4 py-2 text-sm">Kandidat Saya</a>
                                     </li>
                                     <li>
-                                        <a href="/bantuan" class="block px-4 py-2 text-sm">Pengaturan</a>
+                                        <a href="/dashboard/perusahaan/pengaturan" class="block px-4 py-2 text-sm">Pengaturan</a>
                                     </li>
                                     <li
                                         class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">

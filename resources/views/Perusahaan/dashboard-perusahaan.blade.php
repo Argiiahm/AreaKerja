@@ -4,157 +4,178 @@
     <div class="">
         @if (Auth::check() && Auth::user()->perusahaan->pasanglowongan->isNotEmpty())
             <div>
-                <div class="max-w-6xl mx-auto px-6 py-6 mt-32">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 mt-24 sm:mt-32">
                     <p class="text-sm text-orange-600 font-medium">Dashboard</p>
-                    <h1 class="text-2xl font-bold leading-snug">
-                        Selamat Datang Di Area Kerja <br> Seven Inc
+                    <h1 class="text-xl sm:text-2xl font-bold leading-snug">
+                        Selamat Datang Di Area Kerja <br class="hidden sm:block"> Seven Inc
                     </h1>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 mx-4 lg:mx-32 items-start">
-                    <div class="col-span-2 bg-orange-500 rounded-xl p-6">
-                        <h2 class="text-white font-semibold text-lg mb-4">Lowongan Saya</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 px-4 sm:px-6 lg:px-32 items-start">
+                    <div class="col-span-2 bg-orange-500 rounded-xl p-4 sm:p-6">
+                        <div class="flex justify-between items-center mb-5">
+                            <h2 class="text-white font-semibold text-base sm:text-lg mb-4">Lowongan Saya</h2>
+                            <a class="bg-white text-orange-500 font-semibold px-4 sm:px-6 py-2 rounded-md"
+                                href="/dashboard/perusahaan/lowongan">Tambah Lowongan</a>
+                        </div>
                         @foreach (Auth::user()->perusahaan->pasanglowongan as $datas)
                             @if ($datas->paket_id)
-                                <div class="bg-white rounded-xl p-4 flex items-center justify-between mb-4">
-                                    <div class="flex items-start space-x-4">
-                                        <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="">
-                                        <div>
+                                <div
+                                    class="bg-white rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
+                                    <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+                                        <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo"
+                                            class="w-12 h-12 sm:w-14 sm:h-14">
+                                        <div class="text-sm sm:text-base">
                                             <p class="text-gray-800 font-semibold">{{ $datas->perusahaan->nama_perusahaan }}
                                             </p>
                                             <p class="text-black font-bold">{{ $datas->nama }} – {{ $datas->jenis }}</p>
-                                            <p class="text-sm text-gray-500">{{ $datas->alamat }}</p>
-                                            <p class="text-sm bg-gray-100 inline-block mt-1 px-2 py-0.5 rounded">
-                                                Rp. {{ $datas->gaji_awal }} - Rp. {{ $datas->gaji_akhir }} per bulan
+                                            <p class="text-xs sm:text-sm text-gray-500">{{ $datas->alamat }}</p>
+                                            <p class="text-xs sm:text-sm bg-gray-100 inline-block mt-1 px-2 py-0.5 rounded">
+                                                Rp. {{ $datas->gaji_awal }} - Rp. {{ $datas->gaji_akhir }} / bulan
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-3">
+                                    <div class="flex items-center gap-2 sm:gap-3">
                                         <span
-                                            class="px-3 py-1 border rounded-lg text-gray-700">{{ $datas->paket->nama }}</span>
+                                            class="px-3 py-1 border rounded-lg text-gray-700 text-xs sm:text-sm">{{ $datas->paket->nama }}</span>
                                         <button
                                             onclick="window.location='/dashboard/perusahaan/pelamar/{{ $datas->slug }}'"
-                                            class="bg-orange-500 text-white px-4 py-1 rounded-lg hover:bg-orange-600 transition">
+                                            class="bg-orange-500 text-white px-3 sm:px-4 py-1 rounded-lg hover:bg-orange-600 transition text-xs sm:text-sm">
                                             Lihat Pelamar
                                         </button>
                                     </div>
                                 </div>
                             @endif
                         @endforeach
+                    </div>
+                    <div class="bg-orange-500 rounded-xl p-4 sm:p-6 flex flex-col justify-center h-fit">
+                        <h2 class="text-white font-semibold text-base sm:text-lg mb-6">Koin Saya</h2>
 
-                        <div class="flex justify-center mt-6">
-                            <button
-                                class="bg-white text-orange-600 font-semibold px-6 py-2 rounded-lg shadow hover:bg-gray-100 transition">
-                                Cari Kandidat
+                        <div class="bg-white text-center rounded-md px-4 sm:px-6 mb-5 py-3 w-full">
+                            <div class="flex items-center justify-center gap-3">
+                                <span class="text-orange-500 font-bold text-2xl sm:text-4xl">{{ $totalSaldo }}</span>
+                                <img src="{{ asset('Icon/coin perusahaan.png') }}" alt="coin"
+                                    class="w-8 h-8 sm:w-10 sm:h-10">
+                            </div>
+                            <button id="btn_topup"
+                                class="text-green-600 text-sm flex w-full items-center justify-center gap-1 mt-2">
+                                Top Up Koin <span
+                                    class="bg-green-500 text-white rounded-full px-1 sm:px-2 text-center">+</span>
                             </button>
                         </div>
-                    </div>
-                    <div class="bg-orange-500 rounded-xl p-6 flex flex-col justify-center h-fit">
-                        <h2 class="text-white font-semibold text-lg mb-6">Kandidat Saya</h2>
+
+                        <h2 class="text-white font-semibold text-base sm:text-lg mb-6">Kandidat Saya</h2>
                         <button
-                            class="bg-orange-500 text-white border-2 border-white font-semibold px-6 py-2 rounded-lg mb-3 hover:bg-orange-600 transition">
+                            class="bg-orange-500 text-white border-2 border-white font-semibold px-4 sm:px-6 py-2 rounded-lg mb-3 hover:bg-orange-600 transition text-sm sm:text-base">
                             Lihat Kandidat
                         </button>
                         <button
-                            class="bg-white text-black font-semibold px-6 py-2 rounded-lg shadow hover:bg-gray-100 transition">
+                            class="bg-white text-orange-500 font-semibold px-4 sm:px-6 py-2 rounded-lg shadow hover:bg-gray-100 transition text-sm sm:text-base">
                             Cari Kandidat
                         </button>
                     </div>
                 </div>
             </div>
         @else
-            <div class="max-w-6xl mx-auto px-6 py-6 mt-32">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 mt-24 sm:mt-32">
                 <p class="text-sm text-orange-600 font-medium">Dashboard</p>
-                <h1 class="text-2xl font-bold leading-snug">
-                    Selamat Datang Di Area Kerja <br> {{ Auth::user()->perusahaan->nama_perusahaan }}
+                <h1 class="text-xl sm:text-2xl font-bold leading-snug">
+                    Selamat Datang Di Area Kerja <br class="hidden sm:block">
+                    {{ Auth::user()->perusahaan->nama_perusahaan }}
                 </h1>
             </div>
 
             <div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 lg:px-40">
-                    <div class="col-span-2 bg-orange-500 rounded-xl p-6">
-                        <h2 class="text-white font-semibold text-lg mb-4">Lowongan Saya</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-40">
+                    <div class="col-span-2 bg-orange-500 rounded-xl p-4 sm:p-6">
+                        <h2 class="text-white font-semibold text-base sm:text-lg mb-4">Lowongan Saya</h2>
                         <div
-                            class="bg-white flex flex-col md:flex-row justify-between items-center rounded-md px-4 py-3 mb-4 gap-3">
+                            class="bg-white flex flex-col md:flex-row justify-between items-center rounded-md px-4 py-3 mb-4 gap-3 text-sm sm:text-base">
                             <span class="font-semibold text-black text-center md:text-left">Lowongan Belum Terpasang</span>
                             <a href="/dashboard/perusahaan/lowongan"
-                                class="text-orange-500 border border-orange-500 px-4 py-2 rounded-md text-sm">
+                                class="text-orange-500 border border-orange-500 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm">
                                 Tambah Lowongan
                             </a>
                         </div>
-                        <div class="bg-white text-center rounded-md px-4 py-4 w-full md:w-fit mx-auto float-left">
-                            <div class="flex items-center justify-center gap-3 ">
-                                <span class="text-orange-500 font-bold text-4xl">{{ $totalSaldo }}</span>
-                                <img src="{{ asset('Icon/coin perusahaan.png') }}" alt="coin" class="w-10 h-8">
+                        <div class="bg-white text-center rounded-md px-4 sm:px-6 py-4 w-full md:w-fit mx-auto">
+                            <div class="flex items-center justify-center gap-3">
+                                <span class="text-orange-500 font-bold text-2xl sm:text-4xl">{{ $totalSaldo }}</span>
+                                <img src="{{ asset('Icon/coin perusahaan.png') }}" alt="coin"
+                                    class="w-8 h-8 sm:w-10 sm:h-10">
                             </div>
                             <button id="btn_topup"
-                                class="text-green-600 text-sm flex w-full  text-center items-center justify-center gap-1 mt-2">
-                                Top Up Koin <span class="bg-green-500 text-white rounded-full px-1 text-center">+</span>
+                                class="text-green-600 text-sm flex w-full items-center justify-center gap-1 mt-2">
+                                Top Up Koin <span
+                                    class="bg-green-500 text-white rounded-full px-1 sm:px-2 text-center">+</span>
                             </button>
                         </div>
                     </div>
-                    <div class="bg-orange-500 rounded-xl p-6 ">
-                        <h2 class="text-white font-semibold text-lg mb-4">Kandidat Saya</h2>
-                        <button class="w-full border border-white text-white font-semibold py-2 rounded-md mb-3">
+                    <div class="bg-orange-500 rounded-xl p-4 sm:p-6">
+                        <h2 class="text-white font-semibold text-base sm:text-lg mb-4">Kandidat Saya</h2>
+                        <button
+                            class="w-full border border-white text-white font-semibold py-2 rounded-md mb-3 text-sm sm:text-base">
                             Lihat Kandidat
                         </button>
-                        <button class="w-full bg-white text-black font-semibold py-2 rounded-md">
+                        <button class="w-full bg-white text-black font-semibold py-2 rounded-md text-sm sm:text-base">
                             Cari Kandidat
                         </button>
                     </div>
                 </div>
         @endif
 
-        <div class="max-w-6xl mx-auto px-6 py-12">
-            <h2 class="text-center text-2xl font-bold text-orange-600 mb-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+            <h2 class="text-center text-xl sm:text-2xl font-bold text-orange-600 mb-12">
                 Tentang Area Kerja
             </h2>
-            <div class="block lg:grid md:grid-cols-2  items-start">
-                <img src="{{ asset('Icon/Illustration.png') }}" alt="Ilustrasi" class="w-[320px]">
-                <div class=" block md:flex lg:flex gap-3 items-center">
-                    <div class="bg-orange-500 text-white p-5 rounded-xl shadow-md mb-6">
+            <div class="block lg:grid md:grid-cols-2 items-start gap-6">
+                <img src="{{ asset('Icon/Illustration.png') }}" alt="Ilustrasi"
+                    class="w-[220px] sm:w-[280px] lg:w-[320px] mx-auto lg:mx-0">
+                <div class="block md:flex lg:flex gap-3 items-center mt-6 md:mt-0">
+                    <div class="bg-orange-500 text-white p-4 sm:p-5 rounded-xl shadow-md mb-6">
                         <div class="flex gap-2">
                             <div>
-                                <img src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="" class="w-[80px]">
+                                <img src="{{ asset('image/logo_area_kerja_putih.png') }}" alt=""
+                                    class="w-[60px] sm:w-[80px]">
                             </div>
                             <div>
-                                <span class="text-2xl font-bold">01</span>
-                                <h3 class="font-bold text-base mb-2">Mencari Lowongan</h3>
+                                <span class="text-xl sm:text-2xl font-bold">01</span>
+                                <h3 class="font-bold text-sm sm:text-base mb-2">Mencari Lowongan</h3>
                             </div>
                         </div>
-                        <p class="text-sm leading-relaxed">
+                        <p class="text-xs sm:text-sm leading-relaxed">
                             Area Kerja menyediakan platform bagi para pencari lowongan kerja sesuai keahlian.
                         </p>
                     </div>
                     <div class="flex flex-col gap-6">
-                        <div class="border border-orange-500 p-5 rounded-xl shadow-md flex flex-col justify-between">
+                        <div class="border border-orange-500 p-4 sm:p-5 rounded-xl shadow-md flex flex-col justify-between">
                             <div class="flex gap-2">
                                 <div>
-                                    <img src="{{ asset('image/logo-areakerja.png') }}" alt="" class="w-[80px]">
+                                    <img src="{{ asset('image/logo-areakerja.png') }}" alt=""
+                                        class="w-[60px] sm:w-[80px]">
                                 </div>
                                 <div>
-                                    <span class="text-2xl text-orange-600 font-bold">02</span>
-                                    <h3 class="font-bold text-orange-600 text-base mb-2">Lowongan Terbaru</h3>
+                                    <span class="text-xl sm:text-2xl text-orange-600 font-bold">02</span>
+                                    <h3 class="font-bold text-orange-600 text-sm sm:text-base mb-2">Lowongan Terbaru</h3>
                                 </div>
                             </div>
-                            <p class="text-sm text-gray-600 leading-relaxed">
-                                Area Kerja dapat menerima lowongan lowongan terbaru untuk mencakup berbagai macam
-                                bidang
-                                keahlian </p>
+                            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                                Area Kerja dapat menerima lowongan terbaru untuk mencakup berbagai macam bidang keahlian
+                            </p>
                         </div>
-                        <div class="border border-orange-500 p-5 rounded-xl shadow-md flex flex-col justify-between">
+                        <div class="border border-orange-500 p-4 sm:p-5 rounded-xl shadow-md flex flex-col justify-between">
                             <div class="flex gap-2">
                                 <div>
-                                    <img src="{{ asset('image/logo-areakerja.png') }}" alt="" class="w-[80px]">
+                                    <img src="{{ asset('image/logo-areakerja.png') }}" alt=""
+                                        class="w-[60px] sm:w-[80px]">
                                 </div>
                                 <div>
-                                    <span class="text-2xl text-orange-600 font-bold">03</span>
-                                    <h3 class="font-bold text-orange-600 text-base mb-2">Pasti Cocok</h3>
+                                    <span class="text-xl sm:text-2xl text-orange-600 font-bold">03</span>
+                                    <h3 class="font-bold text-orange-600 text-sm sm:text-base mb-2">Pasti Cocok</h3>
                                 </div>
                             </div>
-                            <p class="text-sm text-gray-600 leading-relaxed">
-                                Pelamar merupakan orang yang sudah siap kerja secara mental dan keahlian berkat
-                                pelatihan
-                                sebelumnya. </p>
+                            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                                Pelamar merupakan orang yang sudah siap kerja secara mental dan keahlian berkat pelatihan
+                                sebelumnya.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -214,7 +235,7 @@
                         <div
                             class="flex items-center justify-between border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-50 select-bank">
                             <div class="flex items-center gap-3">
-                                <img src="{{ asset($p->logo_img) }}" alt="" class="w-8 h-8">
+                                <img src="{{ asset($p->logo_img) }}" alt="" class="w-12 h-12">
                                 <span>{{ $p->nama_bank }}</span>
                             </div>
                             <input type="radio" name="id_bank" value="{{ $p->id }}" required

@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 use App\Models\LowonganPerusahaan;
+use App\Models\PelamarLowongan;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,5 +33,8 @@ class ResetExpiredLowonganJob implements ShouldQueue
                 'paket_id' => null,
                 'expired_date' => null,
             ]);
+        PelamarLowongan::whereNotNull('expired_date')
+            ->where('expired_date', '<=', now())
+            ->delete();
     }
 }

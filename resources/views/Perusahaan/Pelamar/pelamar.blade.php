@@ -52,14 +52,17 @@
                         </thead>
                         <tbody class="divide-y">
                             @foreach ($datas->sortBy(function ($item) {
-                                    return $item->status === 'diterima' ? 1 : 0;}) as $d)
+            return $item->status === 'diterima' ? 1 : 0;
+        }) as $d)
                                 @if ($d->lowongan_id === $data->id)
                                     <tr>
                                         <td class="px-4 py-3 text-gray-700"> {{ $d->created_at?->format('d M Y') }}</td>
                                         @php
                                             $namapelamar = \App\Models\Pelamar::find($d->pelamar_id);
                                             $perusahaan = \App\Models\LowonganPerusahaan::find($d->lowongan_id);
-                                        @endphp 
+
+                                            $now = Illuminate\Support\Carbon::now();
+                                        @endphp
                                         <td class="px-4 py-3 text-gray-700">{{ $namapelamar->nama_pelamar }}</td>
                                         <td class="px-4 py-3">
                                             <button class="text-orange-500 hover:text-orange-600 download-btn"
@@ -86,9 +89,15 @@
                                                     class="bg-red-600 text-white px-4 py-1 rounded-md text-sm">Tolak</button>
                                             </td>
                                         @endif
-                                        <td class="px-4 py-3 text-gray-700">30 Hari</td>
+                                        <td class="px-4 py-3 text-gray-700">
+                                            @if ($d->expired_date > $now)
+                                                Sisa {{ $now->diffInDays($d->expired_date) }} hari lagi
+                                            @else
+                                                <span class="text-red-600 font-semibold">Lowongan sudah expired</span>
+                                            @endif
+                                        </td>
                                     </tr>
-                                @endif 
+                                @endif
                             @endforeach
                         </tbody>
 

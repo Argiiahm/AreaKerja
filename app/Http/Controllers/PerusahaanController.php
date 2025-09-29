@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\Perusahaan;
 use App\Models\CatatanCash;
+use App\Models\CatatanKoin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\HargaPembayaran;
-use App\Models\Alamatperusahaan;
-use App\Models\CatatanKoin;
-use App\Models\LowonganPerusahaan;
 use App\Models\PaketLowongan;
+use Illuminate\Support\Carbon;
+use App\Models\HargaPembayaran;
 use App\Models\PelamarLowongan;
+use App\Models\Alamatperusahaan;
+use App\Models\LowonganPerusahaan;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class PerusahaanController extends Controller
@@ -74,7 +77,7 @@ class PerusahaanController extends Controller
         }
 
         if ($trx->status !== 'pending') {
-            abort(404, 'Halaman Tidak Tersedia!');
+            return redirect('/dashboard/perusahaan')->with('success_topup', 'pembayaran berhasil');
         }
 
         $bank = Bank::where('nama_bank', $trx->sumber_dana)->first();
@@ -294,6 +297,34 @@ class PerusahaanController extends Controller
         return view('Perusahaan.Pengaturan.change-password');
     }
 
+    public function password_change(Request $request, User $user)
+    {
+        $request->validate([
+            "password" => "required",
+            "password_new" => "required|min:6|confirmed",
+        ], [
+            "password.required" => "Kata sandi lama wajib diisi",
+            "password_new.required" => "Kata sandi baru wajib diisi",
+            "password_new.min" => "Kata sandi baru minimal 6 karakter",
+            "password_new.confirmed" => "Kata sandi tidak sama",
+        ]);
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Kata sandi salah'])->withInput();
+        }
+
+        if ($request->password === $request->password_new) {
+            return back()->withErrors(['password_new' => 'Kata sandi tidak bisa sama dengan sandi lama'])->withInput();
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password_new)
+        ]);
+
+        return redirect('/dashboard/perusahaan/pengaturan')->with('success', 'berhasil di ubah');
+    }
+
+
     //pelamar
     public function pelamar(LowonganPerusahaan $lowongan)
     {
@@ -333,14 +364,16 @@ class PerusahaanController extends Controller
         ]);
     }
 
-    public function konfirmasi_status(Request $request, PelamarLowongan $lowongan) {
+    public function konfirmasi_status(Request $request, PelamarLowongan $lowongan)
+    {
         $v = $request->validate([
             "status"   =>    "required"
         ]);
 
+        $lowongan->expired_date = Carbon::now()->addDays(30);
+
         $lowongan->update($v);
         return redirect('/dashboard/perusahaan');
-
     }
 
     public function kandidat_ak()

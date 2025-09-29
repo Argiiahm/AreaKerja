@@ -292,6 +292,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/kandidatak/cv', [PerusahaanController::class, 'cv_kandidat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password'])->middleware('perusahaan');
+    Route::put('/dashboard/perusahaan/pengaturan/password/change/{user}', [PerusahaanController::class, 'password_change'])->middleware('perusahaan');
 
     Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat'])->middleware('perusahaan');

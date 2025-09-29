@@ -190,5 +190,11 @@ class DatabaseSeeder extends Seeder
             "no_rek"     =>     "0021222112",
             "logo_img"   =>     "topup_icon/Bri.png"
         ]);
+        Bank::create([
+            "nama_bank"  =>    "QRIS",
+            "owner"      =>     "Areakerja",
+            "no_rek"     =>     "ID11021221",
+            "logo_img"   =>     "topup_icon/qris.png"
+        ]);
     }
 }

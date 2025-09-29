@@ -13,13 +13,13 @@
             </div>
 
             <!-- <button class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 flex items-center shadow">
-                                            <span class="text-lg font-bold mr-2">+</span> Tambah
-                                        </button> -->
+                                                <span class="text-lg font-bold mr-2">+</span> Tambah
+                                            </button> -->
         </div>
 
         <h2 class="text-2xl font-bold mb-6 border-b-2 border-orange-400 pb-2">Edit Lowongan</h2>
 
-        <form action="/dashboard/perusahaan/update/lowongan/{{ $data->id }}" method="POST" class="space-y-8">
+        <form action="/dashboard/perusahaan/update/lowongan/{{ $data->slug }}" method="POST" class="space-y-8">
             @csrf
             @method('PUT')
             <div class="grid grid-cols-2 gap-6">
@@ -78,8 +78,6 @@
 
             <textarea class="w-full border-2 rounded-md px-3 py-2 focus:ring-orange-400 focus:border-orange-400" name="deskripsi"
                 cols="30" rows="10">{!! old('deskripsi', $data->deskripsi ?? '') !!}</textarea>
-
-
             <div class="space-y-6 border-t-2 pt-6">
                 <h3 class="text-lg font-semibold text-orange-500">Syarat Pekerjaan</h3>
                 <div>
