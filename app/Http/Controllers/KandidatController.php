@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use Illuminate\Http\Request;
 
 class KandidatController extends Controller
 {
     public function index() {
-        return view('daftar-kandidat');
+        return view('daftar-kandidat',[
+            "payment"   =>    Bank::all()
+        ]);
     }
 
     public function kandidat_kosong(){

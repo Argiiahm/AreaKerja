@@ -32,7 +32,7 @@
                             Rp.{{ $data->gaji_awal }} - Rp. {{ $data->gaji_akhir }} per bulan
                         </span>
                     </div>
-                </div>
+                </div>  
                 <p class="text-gray-500 text-sm mt-4 md:mt-0">Aktif 2 jam lalu</p>
             </div>
         </div>

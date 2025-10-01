@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Event;
 use App\Models\Pelamar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,14 +30,16 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->status === 0) {
+                $latestEvent = Event::latest()->first();
+
                 if ($user->role == 'superadmin') {
                     return redirect('/dashboard/superadmin');
                 } elseif ($user->role == 'admin') {
                     return redirect('/dashboard/admin');
                 } elseif ($user->role == 'pelamar') {
-                    return redirect('/');
+                    return redirect('/')->with('show_event_modal',true)->with('latest_event',$latestEvent);
                 } elseif ($user->role == 'perusahaan') {
-                    return redirect('/dashboard/perusahaan');
+                    return redirect('/dashboard/perusahaan')->with('show_event_modal',true)->with('latest_event',$latestEvent);
                 } elseif ($user->role == 'finance') {
                     return redirect('/dashboard/finance');
                 }
@@ -173,10 +176,10 @@ class AuthController extends Controller
                 'string',
                 'min:8',
                 'regex:/[A-Z]/',
-                'regex:/[a-z]/',       
-                'regex:/[0-9]/',     
-                'regex:/[@$!%*#?&]/',  
-                'confirmed',      
+                'regex:/[a-z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
+                'confirmed',
             ],
         ], [
             'password.required' => 'Password wajib diisi.',

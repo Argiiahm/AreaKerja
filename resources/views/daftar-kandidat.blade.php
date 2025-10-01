@@ -14,7 +14,7 @@
                     Ikuti pelatihan terakreditasi Areakerja.com<br>
                     dan dapatkan pekerjaan impian anda!
                 </p>
-                <button data-modal-target="formModal" data-modal-toggle="formModal"
+                <button id="openFormModal"
                     class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-md shadow-md">
                     Daftar
                 </button>
@@ -82,106 +82,178 @@
     </div>
 
     {{-- Modal Daftar Kandidat --}}
-    <div id="formModal" tabindex="-1" aria-hidden="true"
-        class="hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full bg-black/50">
-        <div class="relative w-full max-w-md p-4">
-            <!-- Konten Modal -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
+    <div id="formModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-2xl shadow-lg p-6 w-[400px] md:w-[500px] relative">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Daftar Kandidat</h3>
+                <button id="closeFormModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
 
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold text-gray-800">Daftar Kandidat</h3>
-                    <button type="button" class="text-gray-500 hover:text-gray-700" data-modal-hide="formModal">✕</button>
-                </div>
+            <label for="divisi" class="block mb-2 text-sm font-medium text-gray-900">Bidang yang diminati</label>
+            <form>
+                <div id="dropdownWrapper" class="relative">
+                    <button id="dropdownBtn" type="button"
+                        class="w-full flex flex-wrap gap-2 items-center px-3 py-2 border rounded-lg bg-white text-gray-700">
+                        <span id="placeholder" class="text-gray-400">Divisi</span>
+                        <span id="selectedChips" class="flex flex-wrap gap-2"></span>
+                        <svg class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
 
-                <label for="divisi" class="block mb-2 text-sm font-medium text-gray-900">Bidang yang diminati</label>
-
-                <form>
-                    <div id="dropdownWrapper" class="relative">
-                        <button id="dropdownBtn" type="button"
-                            class="w-full flex flex-wrap gap-2 items-center px-3 py-2 border rounded-lg bg-white text-gray-700">
-                            <span id="placeholder" class="text-gray-400">Divisi</span>
-                            <span id="selectedChips" class="flex flex-wrap gap-2"></span>
-                            <svg class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
-                                </path>
-                            </svg>
-                        </button>
-
-                        <div id="dropdownMenu"
-                            class="hidden absolute z-50 mt-2 w-full bg-white border rounded-lg shadow-lg">
-                            <ul class="max-h-48 overflow-y-auto text-sm text-gray-700">
-                                <li>
-                                    <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                        <input type="checkbox" value="UI UX Designer"
-                                            class="checkbox w-4 h-4 text-orange-500 rounded">
-                                        <span class="ml-2">UI UX Designer</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                        <input type="checkbox" value="Design Grafis"
-                                            class="checkbox w-4 h-4 text-orange-500 rounded">
-                                        <span class="ml-2">Design Grafis</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                        <input type="checkbox" value="UX Designer"
-                                            class="checkbox w-4 h-4 text-orange-500 rounded">
-                                        <span class="ml-2">UX Designer</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                        <input type="checkbox" value="UX Research"
-                                            class="checkbox w-4 h-4 text-orange-500 rounded">
-                                        <span class="ml-2">UX Research</span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
+                    <div id="dropdownMenu" class="hidden absolute z-50 mt-2 w-full bg-white border rounded-lg shadow-lg">
+                        <ul class="max-h-48 overflow-y-auto text-sm text-gray-700">
+                            <li>
+                                <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                    <input type="checkbox" value="UI UX Designer"
+                                        class="checkbox w-4 h-4 text-orange-500 rounded">
+                                    <span class="ml-2">UI UX Designer</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                    <input type="checkbox" value="Design Grafis"
+                                        class="checkbox w-4 h-4 text-orange-500 rounded">
+                                    <span class="ml-2">Design Grafis</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                    <input type="checkbox" value="UX Designer"
+                                        class="checkbox w-4 h-4 text-orange-500 rounded">
+                                    <span class="ml-2">UX Designer</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                    <input type="checkbox" value="UX Research"
+                                        class="checkbox w-4 h-4 text-orange-500 rounded">
+                                    <span class="ml-2">UX Research</span>
+                                </label>
+                            </li>
+                        </ul>
                     </div>
-                </form>
-                <div class="flex justify-between mt-6">
-                    <button type="button" data-modal-hide="formModal"
-                        class="text-orange-500 font-medium">Kembali</button>
-                    <button type="submit"
-                        class="text-orange-500 font-medium">Selanjutnya</button>
+                </div>
+            </form>
+
+            <div class="flex justify-between mt-6">
+                <button type="button" id="btn_kembali_divisi" class="text-orange-500 font-medium">Kembali</button>
+                <button type="button" id="btn_pembayaran" class="text-orange-500 font-medium">Selanjutnya</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pembayaran -->
+    <div id="modalPembayaran" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-2xl shadow-lg w-[400px] md:w-[500px] relative p-6">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h2 class="text-lg font-bold">Daftar Kandidat</h2>
+                <button id="closeModalPembayaran" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+
+            <h3 class="text-gray-700 font-semibold mb-2">Metode Pembayaran</h3>
+            <div id="dropdownBankBtn"
+                class="border rounded-lg px-4 py-2 flex items-center justify-between cursor-pointer mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-orange-500">⇄</span>
+                    <span>Transfer Bank</span>
+                </div>
+                <span class="text-gray-600 text-xl">⮟</span>
+            </div>
+
+            <div id="list_p" class="space-y-3 hidden">
+                @foreach ($payment as $p)
+                    <div
+                        class="flex items-center justify-between border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-50 select-bank">
+                        <div class="flex items-center gap-3">
+                            <img src="{{ asset($p->logo_img) }}" alt="" class="w-12 h-12">
+                            <span>{{ $p->nama_bank }}</span>
+                        </div>
+                        <input type="radio" name="id_bank" value="{{ $p->id }}" required
+                            class="w-5 h-5 border-2 border-orange-500 rounded-full cursor-pointer">
+                    </div>
+                @endforeach
+
+                <div class="flex justify-between mt-6 text-sm font-semibold">
+                    <button type="button" id="btn_kembali_pembayaran"
+                        class="px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition">
+                        Kembali
+                    </button>
+
+                    <button type="submit" form="transaksi"
+                        class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">
+                        Selanjutnya
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
-        const btn = dropdownBtn,
-              menu = dropdownMenu,
-              chips = selectedChips,
-              ph = placeholder;
+        const openFormModal = document.getElementById("openFormModal");
+        const formModal = document.getElementById("formModal");
+        const modalPembayaran = document.getElementById("modalPembayaran");
 
-        btn.onclick = () => menu.classList.toggle("hidden");
+        const closeFormModal = document.getElementById("closeFormModal");
+        const btnKembaliDivisi = document.getElementById("btn_kembali_divisi");
+        const btnPembayaran = document.getElementById("btn_pembayaran");
 
-        menu.onchange = e => {
+        const closeModalPembayaran = document.getElementById("closeModalPembayaran");
+        const btnKembaliPembayaran = document.getElementById("btn_kembali_pembayaran");
+
+        openFormModal.addEventListener("click", () => {
+            formModal.classList.remove("hidden")
+        })
+
+        closeFormModal.onclick = () => formModal.classList.add("hidden");
+        btnKembaliDivisi.onclick = () => formModal.classList.add("hidden");
+
+        btnPembayaran.onclick = () => {
+            formModal.classList.add("hidden");
+            modalPembayaran.classList.remove("hidden");
+        };
+
+        closeModalPembayaran.onclick = () => modalPembayaran.classList.add("hidden");
+        btnKembaliPembayaran.onclick = () => {
+            modalPembayaran.classList.add("hidden");
+            formModal.classList.remove("hidden");
+        };
+
+        const dropdownBtn = document.getElementById("dropdownBtn");
+        const dropdownMenu = document.getElementById("dropdownMenu");
+        const selectedChips = document.getElementById("selectedChips");
+        const placeholder = document.getElementById("placeholder");
+
+        dropdownBtn.onclick = () => dropdownMenu.classList.toggle("hidden");
+
+        dropdownMenu.onchange = e => {
             if (e.target.type !== "checkbox") return;
             const val = e.target.value;
             if (e.target.checked) {
-                ph.classList.add("hidden");
-                chips.insertAdjacentHTML("beforeend",
+                placeholder.classList.add("hidden");
+                selectedChips.insertAdjacentHTML("beforeend",
                     `<span data-v="${val}" class="flex items-center bg-gray-100 px-2 py-1 rounded text-sm">${val}<button class="ml-2">✕</button></span>`
                 );
-            } else chips.querySelector(`[data-v="${val}"]`)?.remove();
-            if (!chips.children.length) ph.classList.remove("hidden");
-        };
-
-        chips.onclick = e => {
-            if (e.target.tagName === "BUTTON") {
-                const chip = e.target.parentElement;
-                menu.querySelector(`[value="${chip.dataset.v}"]`).checked = false;
-                chip.remove();
-                if (!chips.children.length) ph.classList.remove("hidden");
+            } else {
+                selectedChips.querySelector(`[data-v="${val}"]`)?.remove();
+                if (!selectedChips.children.length) placeholder.classList.remove("hidden");
             }
         };
 
-        window.onclick = e => {
-            if (!btn.contains(e.target) && !menu.contains(e.target)) menu.classList.add("hidden");
+        selectedChips.onclick = e => {
+            if (e.target.tagName === "BUTTON") {
+                const chip = e.target.parentElement;
+                dropdownMenu.querySelector(`[value="${chip.dataset.v}"]`).checked = false;
+                chip.remove();
+                if (!selectedChips.children.length) placeholder.classList.remove("hidden");
+            }
+        };
+
+        const dropdownBankBtn = document.getElementById("dropdownBankBtn");
+        const list_p = document.getElementById("list_p");
+
+        dropdownBankBtn.onclick = () => {
+            list_p.classList.toggle("hidden");
         };
     </script>
 @endsection

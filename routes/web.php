@@ -52,12 +52,10 @@ Route::middleware(['status'])->group(function () {
     Route::get('/tipskerja/details/{tipskerja:id}', [TipskerjaController::class, 'details']);
     Route::get('/daftarkandidat', [KandidatController::class, 'index']);
     // End Route Landing Page
-
+    
     // CV
     Route::get('/cv/{pelamar:id}/unduh', [SuperAdminController::class, 'unduhCv'])->name('cv.unduh');
-    Route::get('/cv/{pelamar:id}/preview', [SuperAdminController::class, 'cvPreview'])
-        ->name('cv.preview');
-
+    Route::get('/cv/{pelamar:id}/preview', [SuperAdminController::class, 'cvPreview'])->name('cv.preview');
 
     // Pasang Lowongan
     Route::get('/pasanglowongan', [LowonganController::class, 'index']);
@@ -263,9 +261,12 @@ Route::middleware(['status'])->group(function () {
     Route::post('/dashboard/admin/tipskerja/create/post', [AdminController::class, 'tips_kerja_create_post'])->middleware('admin')->name('tipskerja.store');
 
     Route::get('/dashboard/admin/event', [AdminController::class, 'event'])->middleware('admin');
-    Route::get('/dashboard/admin/event/detail', [AdminController::class, 'event_detail'])->middleware('admin');
+    Route::get('/dashboard/admin/event/detail/{event:id}', [AdminController::class, 'event_detail'])->middleware('admin');
     Route::get('/dashboard/admin/event/add', [AdminController::class, 'event_add'])->middleware('admin');
-    Route::get('/dashboard/admin/event/edit', [AdminController::class, 'event_edit'])->middleware('admin');
+    Route::post('/dashboard/admin/event/tambah', [AdminController::class, 'tambah_event'])->middleware('admin');
+    Route::delete('/dashboard/admin/event/hapus/{event:id}', [AdminController::class, 'hapus_event'])->middleware('admin');
+    Route::get('/dashboard/admin/event/edit/{event:id}', [AdminController::class, 'event_edit'])->middleware('admin');
+    Route::put('/dashboard/admin/event/update/{event:id}', [AdminController::class, 'event_update'])->middleware('admin');
 
     //Perusahaan
     Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index'])->middleware('perusahaan');

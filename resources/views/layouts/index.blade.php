@@ -349,10 +349,12 @@
                                         <a href="" class="block px-4 py-2 text-sm">Koin Area Kerja</a>
                                     </li>
                                     <li>
-                                        <a href="/dashboard/perusahaan/kandidat" class="block px-4 py-2 text-sm">Kandidat Saya</a>
+                                        <a href="/dashboard/perusahaan/kandidat"
+                                            class="block px-4 py-2 text-sm">Kandidat Saya</a>
                                     </li>
                                     <li>
-                                        <a href="/dashboard/perusahaan/pengaturan" class="block px-4 py-2 text-sm">Pengaturan</a>
+                                        <a href="/dashboard/perusahaan/pengaturan"
+                                            class="block px-4 py-2 text-sm">Pengaturan</a>
                                     </li>
                                     <li
                                         class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
@@ -575,6 +577,54 @@
     @yield('content')
 
 
+
+
+    @if (Auth::check() && Auth::user()->role === "pelamar" &&
+            Auth::user()->pelamars->nama_pelamar &&
+            Auth::user()->pelamars->deskripsi_diri &&
+            Auth::user()->pelamars->deskripsi_diri &&
+            Auth::user()->pelamars->tanggal_lahir &&
+            Auth::user()->pelamars->gender &&
+            Auth::user()->pelamars->telepon_pelamar)
+
+        @if (session('show_event_modal') && session('latest_event'))
+            @php $event = session('latest_event'); @endphp
+            <div id="eventModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+                <div class="bg-white shadow-xl w-3/4 lg:w-3/5 p-6 rounded-xl">
+                    <div>
+                        <h1 class="text-4xl font-bold border-b-2 py-3">🎉 Event Untukmu!</h1>
+                        <h2 class="text-2xl font-bold my-4">{{ $event->title }}</h2>
+                    </div>
+
+                    <div class="overflow-y-auto max-h-[60vh] pr-2">
+                        <div class="mb-6 aspect-[3/1] w-full mx-auto">
+                            <img src="{{ asset('storage/' . $event->image) }}" alt="event"
+                                class="w-full h-full object-cover rounded-xl shadow">
+                        </div>
+                        <p class="mb-3">{!! $event->content !!}</p>
+
+                        <div class="space-y-1 text-sm text-gray-600">
+                            <p><span class="font-semibold">Lokasi:</span> {{ $event->lokasi }}</p>
+                            <p><span class="font-semibold">Tanggal:</span> {{ $event->tgl_mulai }} s/d
+                                {{ $event->tgl_akhir }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-right">
+                        <button onclick="document.getElementById('eventModal').remove()"
+                            class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            Tutup
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endif
+
+
+
+
     <footer class="bg-orange-500  text-white py-10 mt-32">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -629,7 +679,6 @@
                 Copyright © 2024 areakerja.com
             </p>
         </div>
-
     </footer>
 
 

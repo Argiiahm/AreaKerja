@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Event;
 use App\Models\HargaPembayaran;
+use App\Models\KegiatanEvent;
 use App\Models\Tipskerja;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -232,7 +234,8 @@ class AdminController extends Controller
     public function event()
     {
         return view('Admin.Dashboard-admin.Event.index', [
-            "title"   =>   "Kelola Event"
+            "title"   =>   "Kelola Event",
+            "Data"    =>    Event::all()
         ]);
     }
     public function event_add()
@@ -241,16 +244,136 @@ class AdminController extends Controller
             "title"   =>   "Buat Event Baru"
         ]);
     }
-    public function event_edit()
+
+    public function tambah_event(Request $request)
+    {
+        // dd($request->all());
+        $data = $request->validate([
+            'status'  =>  "nullable",
+            'title' => "nullable|string",
+            'pendaftaran' => "nullable|string",
+            'kuota' => "nullable|integer",
+            'image' => "nullable|file|image|mimes:png,jpg,jpeg",
+            'content' => "nullable|string",
+            'tgl_mulai' => "nullable|date",
+            'jam_mulai' => "nullable",
+            'tgl_akhir' => "nullable|date",
+            'jam_akhir' => "nullable",
+            'lokasi' => "nullable|string",
+            'link_form' => "nullable|string",
+            'penutupan_pendaftaran' => "nullable|date"
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        $event = Event::create($data);
+
+
+        $datas = $request->validate([
+            'waktu'    => "nullable|array",
+            'waktu.*'  => "nullable|string",
+            'kegiatan' => "nullable|array",
+            'kegiatan.*' => "nullable|string"
+        ]);
+
+
+        foreach ($datas['waktu'] as $i => $waktu) {
+            KegiatanEvent::create([
+                'event_id' => $event->id,
+                'waktu'    => $waktu,
+                'kegiatan' => $datas['kegiatan'][$i] ?? null,
+            ]);
+        }
+        return redirect('/dashboard/admin/event')->with('success', 'Event berhasil ditambahkan!');
+    }
+
+
+
+    public function event_edit(Event $event)
     {
         return view('Admin.Dashboard-admin.Event.edit-event', [
-            "title"   =>   "Edit Event"
+            "title"   =>   "Edit Event",
+            "Data"    =>   $event
         ]);
     }
-    public function event_detail()
+    public function event_update(Request $request, Event $event)
+    {
+        $data = $request->validate([
+            'status'  => "nullable",
+            'title' => "nullable|string",
+            'pendaftaran' => "nullable|string",
+            'kuota' => "nullable|integer",
+            'image' => "nullable|file|image|mimes:png,jpg,jpeg",
+            'content' => "nullable|string",
+            'tgl_mulai' => "nullable|date",
+            'jam_mulai' => "nullable",
+            'tgl_akhir' => "nullable|date",
+            'jam_akhir' => "nullable",
+            'lokasi' => "nullable|string",
+            'link_form' => "nullable|string",
+            'penutupan_pendaftaran' => "nullable|date"
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($event->image && Storage::disk('public')->exists($event->image)) {
+                Storage::disk('public')->delete($event->image);
+            }
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        $event->update($data);
+
+        // validasi kegiatan
+        $datas = $request->validate([
+            'id' => "nullable|array",
+            'id.*' => "nullable|integer",
+            'waktu'    => "nullable|array",
+            'waktu.*'  => "nullable|string",
+            'kegiatan' => "nullable|array",
+            'kegiatan.*' => "nullable|string"
+        ]);
+
+        // update / insert
+        if (!empty($datas['waktu'])) {
+            foreach ($datas['waktu'] as $i => $waktu) {
+                if (!empty($datas['id'][$i])) {
+                    KegiatanEvent::where('id', $datas['id'][$i])
+                        ->update([
+                            'waktu'    => $waktu,
+                            'kegiatan' => $datas['kegiatan'][$i] ?? null,
+                        ]);
+                } else {
+                    $event->kegiatan_events()->create([
+                        'waktu'    => $waktu,
+                        'kegiatan' => $datas['kegiatan'][$i] ?? null,
+                    ]);
+                }
+            }
+        }
+
+        // delete kegiatan lama
+        if ($request->filled('delete_id')) {
+            $ids = explode(',', $request->delete_id);
+            KegiatanEvent::whereIn('id', $ids)->delete();
+        }
+
+        return redirect('/dashboard/admin/event')->with('success', 'Event berhasil diperbarui!');
+    }
+    public function event_detail(Event $event)
     {
         return view('Admin.Dashboard-admin.Event.detail-event', [
-            "title"   =>   "Event"
+            "title"   =>   "Event",
+            "Data"    =>    $event
         ]);
     }
+
+    public function hapus_event(Event $event){
+        $event->delete($event->id);
+
+        return redirect('/dashboard/admin/event');
+    }
+
+
 }

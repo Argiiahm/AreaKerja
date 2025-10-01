@@ -20,23 +20,27 @@
     <section class="container max-w-screen-lg mx-auto mt-10">
         <div class="grid grid-cols-1 gap-5">
             @foreach ($Data as $d)
-                <a href="/lowongan/tersimpan/detail/{{ $d->slug }}">
-                    <div class="flex gap-5 shadow-md p-4">
-                        <div>
-                            <img class="w-20" src="{{ asset('storage/' . $d->perusahaan->img_profile) }}" alt="">
-                        </div>
-                        <div class="w-full">
-                            <p>{{ $d->perusahaan->nama_perusahaan }}</p>
-                            <h1>{{ $d->nama }} - {{ $d->jenis }}</h1>
-                            <span>{{ $d->alamat }}</span>
-                            <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                                <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }} per
-                                    bulan</span>
-                                <span class="block mt-3 text-[#565656]">{{ $d->created_at->diffForHumans() }}</span>
+                @if ($d->paket_id)
+                    <a href="/lowongan/tersimpan/detail/{{ $d->slug }}">
+                        <div class="flex gap-5 shadow-md p-4">
+                            <div>
+                                <img class="w-20" src="{{ asset('storage/' . $d->perusahaan->img_profile) }}"
+                                    alt="">
+                            </div>
+                            <div class="w-full">
+                                <p>{{ $d->perusahaan->nama_perusahaan }}</p>
+                                <h1>{{ $d->nama }} - {{ $d->jenis }}</h1>
+                                <span>{{ $d->alamat }}</span>
+                                <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
+                                    <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">Rp.{{ $d->gaji_awal }} -
+                                        Rp.{{ $d->gaji_akhir }} per
+                                        bulan</span>
+                                    <span class="block mt-3 text-[#565656]">{{ $d->created_at->diffForHumans() }}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                @endif
             @endforeach
         </div>
     </section>
