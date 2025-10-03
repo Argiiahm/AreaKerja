@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            @php $no = 1; @endphp
+            @php $i = 1; @endphp
 
             <div class="bg-orange-500 text-white rounded-xl p-6 flex justify-between items-center shadow-md">
                 <div>
@@ -48,7 +48,7 @@
                         @foreach ($koin as $k)
                             @if ($k->created_at->isToday())
                                 <tr>
-                                    <td class="py-3 text-center">{{ $no  }}</td>
+                                    <td class="py-3 text-center">{{ $i++ }}</td>
                                     <td class="py-3 text-center">{{ $k->no_referensi }}</td>
                                     <td class="py-3 text-center">{{ $k->pesanan }}</td>
                                     <td class="py-3 text-center">{{ $k->dari }}</td>
@@ -72,20 +72,27 @@
                             <th class="py-3 text-center">Jenis</th>
                             <th class="py-3 text-center">Dari</th>
                             <th class="py-3 text-center">Sumber Dana</th>
-                            <th class="py-3 text-center">Total Koin</th>
+                            <th class="py-3 text-center">Total Harga</th>
                             <th class="py-3 text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y">
-                        @foreach ($cash as $c)
+                        @php
+                            use App\Models\HargaPembayaran;
+                        @endphp
+                        @foreach ($cash->sortByDesc('updated_at') as $c)
                             @if ($c->created_at->isToday() && $c->status !== 'pending')
+                                @php
+                                    $pembayaran = HargaPembayaran::where('jumlah_koin', $c->total)->first();
+                                    $total = $pembayaran->harga ?? 0;
+                                @endphp
                                 <tr>
-                                    <td class="py-3 text-center">{{ $no++ }}</td>
+                                    <td class="py-3 text-center">{{ $i++}}</td>
                                     <td class="py-3 text-center">{{ $c->no_referensi }}</td>
                                     <td class="py-3 text-center">{{ $c->pesanan }}</td>
                                     <td class="py-3 text-center">{{ $c->dari }}</td>
                                     <td class="py-3 text-center">{{ $c->sumber_dana }}</td>
-                                    <td class="py-3 text-center">{{ $c->total }}</td>
+                                    <td class="py-3 text-center">Rp. {{ number_format($total ?? 0, 0, ',', '.') }}</td>
                                     @if ($c->status === 'diterima')
                                         <td class="py-3 text-center text-green-500">{{ $c->status }}</td>
                                     @elseif ($c->status === 'ditolak')

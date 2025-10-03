@@ -6,14 +6,16 @@ use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
 use App\Models\HargaKoin;
 use App\Models\HargaPembayaran;
+use App\Models\PembeliKandidat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FinanceController extends Controller
 {
     public function index()
     {
-        $cash = CatatanCash::all();
-        $koin = CatatanKoin::all();
+        $cash   = CatatanCash::all();
+        $koin   = CatatanKoin::all();
 
         $totalOmset = 0;
         foreach ($cash->where('status', 'diterima') as $trx) {
@@ -30,6 +32,7 @@ class FinanceController extends Controller
             "totalOmset" => $totalOmset
         ]);
     }
+
 
 
     public function paket_harga()
@@ -101,19 +104,41 @@ class FinanceController extends Controller
     {
         return view('Dashboard-finance.riwayat-transaksi_tunai', [
             "title"   =>     "Catatan Transaksi",
-            "data"    =>     CatatanCash::all()
+            "data"    =>     CatatanCash::all(),
+            "data_pembayaran_kandidat"   =>   PembeliKandidat::all()
         ]);
     }
 
     public function updateStatus(Request $request)
     {
-        $data = CatatanCash::find($request->id);
+        $model = $request->model;
+        $status = $request->status;
+
+        if ($model === 'tunai') {
+            $data = CatatanCash::find($request->id);
+        } elseif ($model === 'kandidat') {
+            $data = PembeliKandidat::find($request->id);
+        } else {
+            return back()->with('error', 'Model tidak valid!');
+        }
+
         if (!$data) {
             return back()->with('error', 'Data tidak ditemukan!');
         }
 
-        $data->status = $request->status;
+        $data->status = $status;
         $data->save();
+
+        if ($model === 'kandidat' && $status === 'diterima') {
+            if ($request->filled('kategori')) {
+                $pelamar = $data->pelamar;
+                $pelamar->update([
+                    'kategori' => is_array($request->kategori)
+                        ? implode(',', $request->kategori)
+                        : $request->kategori
+                ]);
+            }
+        }
 
         return back()->with('success', 'Status berhasil diperbarui!');
     }

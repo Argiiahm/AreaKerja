@@ -50,7 +50,13 @@ Route::middleware(['status'])->group(function () {
     Route::get('/talenthunter', [TalentHunterController::class, 'index']);
     Route::get('/tipskerja', [TipskerjaController::class, 'index']);
     Route::get('/tipskerja/details/{tipskerja:id}', [TipskerjaController::class, 'details']);
-    Route::get('/daftarkandidat', [KandidatController::class, 'index']);
+    Route::get('/daftarkandidat', [KandidatController::class, 'index'])->middleware('auth');
+    // Transaksi Daftar Kandidat
+    Route::post('/daftarkandidat/transaksi', [KandidatController::class, 'transaksi'])->middleware('auth');
+    Route::get('/detail/pembayaran/kandidat/{p:id}', [KandidatController::class, 'transaksi_detail'])->middleware('auth');
+    Route::put('/transaksi/kandidat/update/{p:id}', [KandidatController::class, 'transaksi_update'])->middleware('auth');
+
+
     // End Route Landing Page
     
     // CV
@@ -220,9 +226,12 @@ Route::middleware(['status'])->group(function () {
 
     // Event -Super Admin
     Route::get('/dashboard/superadmin/event', [SuperAdminController::class, 'event'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/event/detail', [SuperAdminController::class, 'event_detail'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/event/detail/{event:id}', [SuperAdminController::class, 'event_detail'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/event/add', [SuperAdminController::class, 'event_add'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/event/edit', [SuperAdminController::class, 'event_edit'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/event/store', [SuperAdminController::class, 'event_store'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/event/edit/{event:id}', [SuperAdminController::class, 'event_edit'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/event/update/{event:id}', [SuperAdminController::class, 'event_update'])->middleware('superadmin');
+    Route::delete('/dashboard/superadmin/event/hapus/{event:id}', [SuperAdminController::class, 'event_delete'])->middleware('superadmin');
 
     // Akun -Super Admin
     Route::get('/dashboard/superadmin/akun', [SuperAdminController::class, 'akun'])->middleware('superadmin');
@@ -311,6 +320,7 @@ Route::middleware(['status'])->group(function () {
     Route::post('/dashboard/perusahaan/topup', [PerusahaanController::class, 'topup'])->middleware('perusahaan');
     Route::get('/detail/pembayaran/{trx:id}', [PerusahaanController::class, 'detail_pembayaran'])->middleware('perusahaan');
     Route::put('/upload/bukti/pembayaran/{bukti:id}', [PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
+    
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
     Route::post('/topup/lowongan', [LowonganController::class, 'topup'])->middleware('perusahaan');
 

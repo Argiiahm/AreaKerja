@@ -77,7 +77,7 @@ class PerusahaanController extends Controller
         }
 
         if ($trx->status !== 'pending') {
-            return redirect('/dashboard/perusahaan')->with('success_topup', 'pembayaran berhasil');
+            abort(404, 'Top Up Berhasil');
         }
 
         $bank = Bank::where('nama_bank', $trx->sumber_dana)->first();

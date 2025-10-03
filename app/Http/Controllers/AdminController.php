@@ -325,7 +325,7 @@ class AdminController extends Controller
 
         $event->update($data);
 
-        // validasi kegiatan
+
         $datas = $request->validate([
             'id' => "nullable|array",
             'id.*' => "nullable|integer",
@@ -335,7 +335,6 @@ class AdminController extends Controller
             'kegiatan.*' => "nullable|string"
         ]);
 
-        // update / insert
         if (!empty($datas['waktu'])) {
             foreach ($datas['waktu'] as $i => $waktu) {
                 if (!empty($datas['id'][$i])) {
@@ -353,7 +352,6 @@ class AdminController extends Controller
             }
         }
 
-        // delete kegiatan lama
         if ($request->filled('delete_id')) {
             $ids = explode(',', $request->delete_id);
             KegiatanEvent::whereIn('id', $ids)->delete();
@@ -369,11 +367,10 @@ class AdminController extends Controller
         ]);
     }
 
-    public function hapus_event(Event $event){
+    public function hapus_event(Event $event)
+    {
         $event->delete($event->id);
 
         return redirect('/dashboard/admin/event');
     }
-
-
 }

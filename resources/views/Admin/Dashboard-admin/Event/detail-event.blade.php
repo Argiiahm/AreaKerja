@@ -7,7 +7,12 @@
             <div class="flex items-center gap-2">
                 <span class="text-sm">Status</span>
                 <span class="bg-green-500 text-white px-3 py-1 rounded text-xs">{{ $Data->status }}</span>
-                <button class="bg-red-500 text-white px-4 py-1 rounded text-sm">Hapus</button>
+                <form action="/dashboard/admin/event/hapus/{{ $Data->id }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="bg-red-500 text-white px-4 py-1 rounded text-sm" type="submit"
+                        onclick="return confirm('Apakah Anda Yakin')">Hapus</button>
+                </form>
             </div>
         </div>
 

@@ -102,8 +102,9 @@
                                 <img src="{{ asset('Icon/coin perusahaan.png') }}" alt="coin"
                                     class="w-8 h-8 sm:w-10 sm:h-10">
                             </div>
-                            <button id="btn_topup" class="text-green-600 text-sm flex w-full items-center justify-center gap-1 mt-2">
-                                 Top Up Koin <span
+                            <button id="btn_topup"
+                                class="text-green-600 text-sm flex w-full items-center justify-center gap-1 mt-2">
+                                Top Up Koin <span
                                     class="bg-green-500 text-white rounded-full px-1 sm:px-2 text-center">+</span>
                             </button>
                         </div>

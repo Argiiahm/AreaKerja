@@ -30,4 +30,10 @@ class LowonganPerusahaan extends Model
     {
         return $this->belongsToMany(Pelamar::class, 'pelamar_lowongans', 'lowongan_id', 'pelamar_id');
     }
+
+    public function pembeli_kandidat() {
+        return $this->hasMany(PembeliKandidat::class, 'lowongan_id');
+    }
+
+
 }

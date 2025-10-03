@@ -6,29 +6,31 @@
             <p class="text-sm text-gray-700">25 Juni 2024</p>
             <div class="flex items-center gap-2">
                 <span class="text-sm">Status</span>
-                <span class="bg-green-500 text-white px-3 py-1 rounded text-xs">Open</span>
-                <button class="bg-red-500 text-white px-4 py-1 rounded text-sm">Hapus</button>
+                <span class="bg-green-500 text-white px-3 py-1 rounded text-xs">{{ $Data->status }}</span>
+                <form action="/dashboard/superadmin/event/hapus/{{ $Data->id }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="bg-red-500 text-white px-4 py-1 rounded text-sm" type="submit" onclick="return confirm('Apakah Anda Yakin')">Hapus</button>
+                </form>
             </div>
         </div>
 
         <div class="flex justify-end gap-3 mb-4">
-            <a href="/dashboard/superadmin/event/edit" class="bg-blue-500 text-white px-5 py-2 rounded text-sm">Edit Event</a>
-            <button class="bg-sky-500 text-white px-5 py-2 rounded text-sm">Lihat Partisipan</button>
+            <a href="/dashboard/superadmin/event/edit/{{ $Data->id }}"
+                class="bg-blue-500 text-white px-5 py-2 rounded text-sm">Edit Event</a>
         </div>
 
-        <div class="mb-6">
-            <img src="https://picsum.photos/900/300" alt="event" class="w-full rounded-xl shadow">
+        <div class="mb-6 aspect-[3/1] w-full max-w-[900px] mx-auto">
+            <img src="{{ asset('storage/' . $Data->image) }}" alt="event"
+                class="w-full h-full object-cover rounded-xl shadow">
         </div>
+
+
 
         <div class="mb-6">
             <h2 class="font-semibold text-lg mb-2">Event</h2>
             <p class="text-gray-700 text-sm leading-relaxed">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-            </p>
-            <p class="text-gray-700 text-sm leading-relaxed mt-2">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                {!! $Data->content !!}
             </p>
         </div>
 
@@ -36,11 +38,16 @@
             <h3 class="text-orange-600 font-semibold mb-3">Detail acara</h3>
             <div class="flex items-center gap-2 mb-2 text-sm">
                 <span class="text-gray-600">🕒</span>
-                <p>Waktu: 20 Agustus 2023 (09.00 - 15.00) WIB</p>
+                @if ($Data->tgl_akhir)
+                    <p>Waktu: {{ $Data->tgl_mulai }} ({{ $Data->jam_mulai }} WIB) - {{ $Data->tgl_akhir }}(
+                        {{ $Data->jam_akhir }} WIB )</p>
+                @else
+                    <p>Waktu: {{ $Data->tgl_mulai }} ({{ $Data->jam_mulai }} - {{ $Data->jam_akhir }}) WIB</p>
+                @endif
             </div>
             <div class="flex items-center gap-2 text-sm">
                 <span class="text-gray-600">📍</span>
-                <p>Lokasi: Kantor I Seven INC, Bantul, Yogyakarta</p>
+                <p>Lokasi: {{ $Data->lokasi }}</p>
             </div>
         </div>
 
@@ -59,41 +66,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="w-32 border border-orange-500 px-3 py-2">08.00</td>
-                            <td class="border border-orange-500 px-3 py-2">Registrasi Peserta</td>
-                        </tr>
-                        <tr>
-                            <td class="w-32 border border-orange-500 px-3 py-2">09.00</td>
-                            <td class="border border-orange-500 px-3 py-2">Pembukaan</td>
-                        </tr>
-                        <tr>
-                            <td class="w-32 border border-orange-500 px-3 py-2">10.00</td>
-                            <td class="border border-orange-500 px-3 py-2">Sesi Materi 1</td>
-                        </tr>
-                        <tr>
-                            <td class="w-32 border border-orange-500 px-3 py-2">12.00</td>
-                            <td class="border border-orange-500 px-3 py-2">Istirahat & Makan Siang</td>
-                        </tr>
-                        <tr>
-                            <td class="w-32 border border-orange-500 px-3 py-2">13.00</td>
-                            <td class="border border-orange-500 px-3 py-2">Sesi Materi 2</td>
-                        </tr>
-                        <tr>
-                            <td class="w-32 border border-orange-500 px-3 py-2">15.00</td>
-                            <td class="border border-orange-500 px-3 py-2">Penutupan</td>
-                        </tr>
+                        @foreach ($Data->kegiatan_events as $k)
+                            <tr>
+                                <td class="w-32 border border-orange-500 px-3 py-2">{{ $k->waktu }}</td>
+                                <td class="border border-orange-500 px-3 py-2">{{ $k->kegiatan }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <div class="flex justify-center items-center">
-            <button class="bg-orange-500 text-white px-8 py-2 rounded-full font-medium">
-                Mendaftar
-            </button>
-        </div>
-
     </div>
-
 @endsection

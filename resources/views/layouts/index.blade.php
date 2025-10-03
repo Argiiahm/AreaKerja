@@ -446,8 +446,8 @@
                                 Hunter</a>
                         </li>
                         <li>
-                            <a href=""
-                                class="block {{ Request()->is('') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Kandidat</a>
+                            <a href="/dashboard/perusahaan/kandidatak"
+                                class="block {{ Request()->is('dashboard/perusahaan/kandidatak') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Kandidat</a>
                         </li>
                         <li>
                             <a href="/pasanglowongan"
@@ -579,7 +579,8 @@
 
 
 
-    @if (Auth::check() && Auth::user()->role === "pelamar" &&
+    @if (Auth::check() &&
+            Auth::user()->role === 'pelamar' &&
             Auth::user()->pelamars->nama_pelamar &&
             Auth::user()->pelamars->deskripsi_diri &&
             Auth::user()->pelamars->deskripsi_diri &&

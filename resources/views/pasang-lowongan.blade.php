@@ -334,26 +334,24 @@
         </div>
     @endif
 
-
     @if (session('success'))
-        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
-                <div class="flex justify-center">
-                    <img src="{{ asset('topup_icon/Ceklis.png') }}" alt="" class="w-12 object-contain">
-                </div>
-                <h2 class="mt-2">Selamat! Lowongan Berhasil Di Beli.</h2>
-                <p class="text-zinc-400">Lowongan Anda Sekarang Telah Ter Publish!</p>
-                <div class="flex justify-center mb-2">
-                </div>
-
-                <div>
-                    <a href="/dashboard/perusahaan/lowongan"
-                        class="inline-block py-2 px-20 bg-gray-700 text-white font-semibold hover:bg-gray-800 transition">
-                        Kembali Ke Lowongan Saya
-                    </a>
-                </div>
-            </div>
+    <div id="toast-success"
+        class="fixed top-5 right-5 z-50 flex items-center w-full max-w-xs p-4 text-green-500 bg-green-100 rounded-lg shadow-lg"
+        role="alert">
+        <div class="flex justify-center">
+            <img src="{{ asset('topup_icon/Ceklis.png') }}" alt="" class="w-10 object-contain">
         </div>
+        <div class="ms-3 text-sm font-medium">
+            {{ session('success') }}
+            <p class="text-zinc-600">Lowongan Anda Sekarang Telah Ter Publish!</p>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('toast-success')?.remove();
+        }, 5000);
+    </script>
     @endif
 
     <script>

@@ -20,8 +20,6 @@
                             <th class=" py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
                                 Nama</th>
                             <th class=" py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Pendaftaran</th>
-                            <th class=" py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
                                 Quota</th>
                             <th class=" py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
                                 Mulai</th>
@@ -32,28 +30,31 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        <tr class="px-6 py-4 whitespace-no-wrap border-gray-500 border-b">
-                            <td class="px-2 py-1 ">
-                                <span class="bg-green-500  py-1 px-4 rounded-md text-white">Buka</span>
-                            </td>
-                            <td class="py-4 whitespace-no-wrap border-gray-500 text-blue-500">
-                                <a href="/dashboard/superadmin/event/detail">Testing</a>
-                            </td>
-                            <td class=" py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                3</td>
-                            <td class=" py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                oo</td>
-                            <td class=" py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                25-08-2025 08.00</td>
-                            <td class=" py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                30-10-2025 17.00</td>
-                            <td
-                                class=" py-4 whitespace-no-wrap text-white font-bold  border-gray-500 text-sm leading-5">
-                                <button><i class="ph ph-trash text-2xl bg-gray-700 p-0.5"></i></button>
-                            </td>
-                            <td class=" py-4 whitespace-no-wrap text-right border-gray-500 text-sm leading-5">
-                            </td>
-                        </tr>
+                        @foreach ($Data as $d)
+                            <tr class="px-6 py-4 whitespace-no-wrap border-gray-500 border-b">
+                                <td class="px-2 py-1 ">
+                                    <span class="bg-green-500  py-1 px-4 rounded-md text-white">{{ $d->status }}</span>
+                                </td>
+                                <td class="py-4 whitespace-no-wrap border-gray-500 text-blue-500">
+                                    <a href="/dashboard/superadmin/event/detail/{{ $d->id }}">{{ $d->title }}</a>
+                                </td>
+                                <td class=" py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">{{ $d->kuota }}
+                                </td>
+                                <td class=" py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
+                                    {{ $d->tgl_mulai }}<span class="pl-2 text-gray-600">{{ $d->jam_mulai }}</span></td>
+                                <td class=" py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
+                                    {{ $d->tgl_akhir }}<span class="pl-2 text-gray-600">{{ $d->jam_akhir }}</span></td>
+                                <td
+                                    class=" py-4 whitespace-no-wrap text-white font-bold  border-gray-500 text-sm leading-5">
+                                    <form action="/dashboard/superadmin/event/hapus/{{ $d->id }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Apakah Anda Yakin')"><i
+                                                class="ph ph-trash text-2xl bg-gray-700 p-0.5"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

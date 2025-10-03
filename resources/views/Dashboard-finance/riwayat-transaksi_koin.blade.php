@@ -22,7 +22,7 @@
                     <tbody class="divide-y">
                         @foreach ($data as $d)
                         <tr>
-                            <td class="py-3 text-center">{{$d->id}}</td>
+                            <td class="py-3 text-center">{{$loop->iteration}}</td>
                             <td class="py-3 text-center">{{$d->no_referensi}}</td>
                             <td class="py-3 text-center">{{$d->pesanan}}</td>
                             <td class="py-3 text-center">{{$d->dari}}</td>

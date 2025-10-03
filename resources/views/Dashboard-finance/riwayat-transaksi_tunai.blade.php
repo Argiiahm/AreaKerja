@@ -26,21 +26,22 @@
                         @endphp
                         @foreach ($data as $d)
                             @php
-                                $pembayaran = HargaPembayaran::where('jumlah_koin', $d->total)->first();
+                                $pembayaran = HargaPembayaran::where('jumlah_koin', $d->total)->first() ;
                                 $awal = $pembayaran->harga ?? 0;
                                 $admin = 2000;
                                 $total = $awal + $admin;
                             @endphp
                             <tr>
-                                <td class="py-3 text-center">{{ $d->id }}</td>
+                                <td class="py-3 text-center">{{ $loop->iteration }}</td>
                                 <td class="py-3 text-center">{{ $d->no_referensi }}</td>
                                 <td class="py-3 text-center">{{ $d->pesanan }}</td>
                                 <td class="py-3 text-center">{{ $d->dari }}</td>
                                 <td class="py-3 text-center">{{ $d->sumber_dana }}</td>
-                                <td class="py-3 text-center">{{ $d->total }}</td>
+                                <td class="py-3 text-center">Rp. {{ number_format($awal, 0, ',', '.') }}</td>
                                 <td class="py-3 text-center">{{ $d->status }}</td>
                                 <td class="px-6 py-4">
                                     <button class="open-detail" data-id="{{ $d->id }}"
+                                        data-model="tunai"
                                         data-no="{{ $d->no_referensi }}" data-jenis="{{ $d->pesanan }}"
                                         data-dari="{{ $d->dari }}" data-sumber="{{ $d->sumber_dana }}"
                                         data-waktu="{{ $d->created_at->format('d M Y') }}"
@@ -133,6 +134,7 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" id="form-success-id">
+                        <input type="hidden" name="model" id="form-success-model">
                         <input type="hidden" name="status" value="diterima">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Konfirmasi</button>
                     </form>
@@ -141,6 +143,7 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" id="form-failed-id">
+                        <input type="hidden" name="model" id="form-failed-model">
                         <input type="hidden" name="status" value="ditolak">
                         <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Tolak</button>
                     </form>
@@ -293,87 +296,82 @@
         const modalDitolak = document.getElementById("modalDitolak");
         const imageModal = document.getElementById("imageModal");
         const modalImage = document.getElementById("modalImage");
-        let currentBukti = "";
-
-        detailBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const status = btn.dataset.status;
-
-                modalPending.classList.add("hidden");
-                modalSuccess.classList.add("hidden");
-
-                if (status === "pending") {
-                    modalPending.classList.remove("hidden");
-                    modalSuccess.classList.add("hidden");
-                    modalDitolak.classList.add("hidden");
-                    document.getElementById("d_no").textContent = btn.dataset.no;
-                    document.getElementById("d_jenis").textContent = btn.dataset.jenis;
-                    document.getElementById("d_dari").textContent = btn.dataset.dari;
-                    document.getElementById("d_waktu").textContent = btn.dataset.waktu;
-                    document.getElementById("d_sumber").textContent = btn.dataset.sumber;
-                    document.getElementById("d_nominal").textContent = btn.dataset.pembayaran;
-                    document.getElementById("d_admin").textContent = btn.dataset.admin;
-                    document.getElementById("d_total").textContent = btn.dataset.hasil;
-                    document.getElementById("form-success-id").value = btn.dataset.id;
-                    document.getElementById("form-failed-id").value = btn.dataset.id;
-                } else if (status === "diterima") {
-                    modalSuccess.classList.remove("hidden");
-                    modalPending.classList.add("hidden");
-                    modalDitolak.classList.add("hidden");
-                    document.getElementById("s_no").textContent = btn.dataset.no;
-                    document.getElementById("s_jenis").textContent = btn.dataset.jenis;
-                    document.getElementById("s_waktu").textContent = btn.dataset.waktu;
-                    document.getElementById("s_dari").textContent = btn.dataset.dari;
-                    document.getElementById("s_sumber").textContent = btn.dataset.sumber;
-                    document.getElementById("s_nominal").textContent = btn.dataset.pembayaran;
-                    document.getElementById("s_admin").textContent = btn.dataset.admin;
-                    document.getElementById("s_total").textContent = btn.dataset.hasil;
-                } else if (status === "ditolak") {
-                    modalDitolak.classList.remove("hidden");
-                    modalSuccess.classList.add("hidden");
-                    modalPending.classList.add("hidden");
-                    document.getElementById("t_no").textContent = btn.dataset.no;
-                    document.getElementById("t_jenis").textContent = btn.dataset.jenis;
-                    document.getElementById("t_waktu").textContent = btn.dataset.waktu;
-                    document.getElementById("t_dari").textContent = btn.dataset.dari;
-                    document.getElementById("t_sumber").textContent = btn.dataset.sumber;
-                    document.getElementById("t_nominal").textContent = btn.dataset.pembayaran;
-                    document.getElementById("t_admin").textContent = btn.dataset.admin;
-                    document.getElementById("t_total").textContent = btn.dataset.hasil;
-                }
-
-                currentBukti = btn.dataset.bukti;
-                detailModal.classList.remove("hidden");
-            });
-        });
-
-        document.getElementById("openImageModal")?.addEventListener("click", () => {
-            modalImage.src = currentBukti;
-            imageModal.classList.remove("hidden");
-        });
-
-        document.getElementById("openImageModalditerima")?.addEventListener("click", () => {
-            modalImage.src = currentBukti;
-            imageModal.classList.remove("hidden");
-        });
-        document.getElementById("openImageModalditolak")?.addEventListener("click", () => {
-            modalImage.src = currentBukti;
-            imageModal.classList.remove("hidden");
-        });
 
         function closeDetail() {
             detailModal.classList.add("hidden");
+            modalPending.classList.add("hidden");
+            modalSuccess.classList.add("hidden");
+            modalDitolak.classList.add("hidden");
         }
 
         function closeImage() {
             imageModal.classList.add("hidden");
         }
 
-        detailModal.addEventListener("click", e => {
-            if (e.target === detailModal) closeDetail();
-        });
-        imageModal.addEventListener("click", e => {
-            if (e.target === imageModal) closeImage();
+        detailBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const data = btn.dataset;
+                document.getElementById("form-success-id").value = data.id;
+                document.getElementById("form-failed-id").value = data.id;
+                document.getElementById("form-success-model").value = data.model;
+                document.getElementById("form-failed-model").value = data.model;
+
+                if (data.status.toLowerCase() === "pending") {
+                    detailModal.classList.remove("hidden");
+                    modalPending.classList.remove("hidden");
+
+                    document.getElementById("d_no").innerText = data.no;
+                    document.getElementById("d_status").innerText = data.status;
+                    document.getElementById("d_jenis").innerText = data.jenis;
+                    document.getElementById("d_dari").innerText = data.dari;
+                    document.getElementById("d_sumber").innerText = data.sumber;
+                    document.getElementById("d_waktu").innerText = data.waktu;
+                    document.getElementById("d_nominal").innerText = data.pembayaran || "-";
+                    document.getElementById("d_admin").innerText = data.admin || "-";
+                    document.getElementById("d_total").innerText = data.hasil || "-";
+
+                    document.getElementById("openImageModal").onclick = () => {
+                        modalImage.src = data.bukti;
+                        imageModal.classList.remove("hidden");
+                    };
+
+                } else if (data.status.toLowerCase() === "diterima") {
+                    detailModal.classList.remove("hidden");
+                    modalSuccess.classList.remove("hidden");
+
+                    document.getElementById("s_no").innerText = data.no;
+                    document.getElementById("s_jenis").innerText = data.jenis;
+                    document.getElementById("s_dari").innerText = data.dari;
+                    document.getElementById("s_sumber").innerText = data.sumber;
+                    document.getElementById("s_waktu").innerText = data.waktu;
+                    document.getElementById("s_nominal").innerText = data.pembayaran || "-";
+                    document.getElementById("s_admin").innerText = data.admin || "-";
+                    document.getElementById("s_total").innerText = data.hasil || "-";
+
+                    document.getElementById("openImageModalditerima").onclick = () => {
+                        modalImage.src = data.bukti;
+                        imageModal.classList.remove("hidden");
+                    };
+
+                } else if (data.status.toLowerCase() === "ditolak") {
+                    detailModal.classList.remove("hidden");
+                    modalDitolak.classList.remove("hidden");
+
+                    document.getElementById("t_no").innerText = data.no;
+                    document.getElementById("t_jenis").innerText = data.jenis;
+                    document.getElementById("t_dari").innerText = data.dari;
+                    document.getElementById("t_sumber").innerText = data.sumber;
+                    document.getElementById("t_waktu").innerText = data.waktu;
+                    document.getElementById("t_nominal").innerText = data.pembayaran || "-";
+                    document.getElementById("t_admin").innerText = data.admin || "-";
+                    document.getElementById("t_total").innerText = data.hasil || "-";
+
+                    document.getElementById("openImageModalditolak").onclick = () => {
+                        modalImage.src = data.bukti;
+                        imageModal.classList.remove("hidden");
+                    };
+                }
+            });
         });
     </script>
 @endsection

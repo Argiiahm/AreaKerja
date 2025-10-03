@@ -82,112 +82,145 @@
     </div>
 
     {{-- Modal Daftar Kandidat --}}
-    <div id="formModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-        <div class="bg-white rounded-2xl shadow-lg p-6 w-[400px] md:w-[500px] relative">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-800">Daftar Kandidat</h3>
-                <button id="closeFormModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-            </div>
+    <form id="transaksi" action="/daftarkandidat/transaksi" method="POST">
+        @csrf
 
-            <label for="divisi" class="block mb-2 text-sm font-medium text-gray-900">Bidang yang diminati</label>
-            <form>
-                <div id="dropdownWrapper" class="relative">
-                    <button id="dropdownBtn" type="button"
-                        class="w-full flex flex-wrap gap-2 items-center px-3 py-2 border rounded-lg bg-white text-gray-700">
-                        <span id="placeholder" class="text-gray-400">Divisi</span>
-                        <span id="selectedChips" class="flex flex-wrap gap-2"></span>
-                        <svg class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
+        <input type="number" name="harga_pembayaran" hidden value="{{ $Harga->id }}">
 
-                    <div id="dropdownMenu" class="hidden absolute z-50 mt-2 w-full bg-white border rounded-lg shadow-lg">
-                        <ul class="max-h-48 overflow-y-auto text-sm text-gray-700">
-                            <li>
-                                <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                    <input type="checkbox" value="UI UX Designer"
-                                        class="checkbox w-4 h-4 text-orange-500 rounded">
-                                    <span class="ml-2">UI UX Designer</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                    <input type="checkbox" value="Design Grafis"
-                                        class="checkbox w-4 h-4 text-orange-500 rounded">
-                                    <span class="ml-2">Design Grafis</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                    <input type="checkbox" value="UX Designer"
-                                        class="checkbox w-4 h-4 text-orange-500 rounded">
-                                    <span class="ml-2">UX Designer</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                    <input type="checkbox" value="UX Research"
-                                        class="checkbox w-4 h-4 text-orange-500 rounded">
-                                    <span class="ml-2">UX Research</span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
+        <div id="formModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+            <div class="bg-white rounded-2xl shadow-lg p-6 w-[400px] md:w-[500px] relative">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">Daftar Kandidat</h3>
+                    <button id="closeFormModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
                 </div>
-            </form>
+                <label for="divisi" class="block mb-2 text-sm font-medium text-gray-900">Bidang yang diminati</label>
+                <div>
+                    <div id="dropdownWrapper" class="relative">
+                        <button id="dropdownBtn" type="button"
+                            class="w-full flex flex-wrap gap-2 items-center px-3 py-2 border rounded-lg bg-white text-gray-700">
+                            <span id="placeholder" class="text-gray-400">Divisi</span>
+                            <span id="selectedChips" class="flex flex-wrap gap-2"></span>
+                            <svg class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
 
-            <div class="flex justify-between mt-6">
-                <button type="button" id="btn_kembali_divisi" class="text-orange-500 font-medium">Kembali</button>
-                <button type="button" id="btn_pembayaran" class="text-orange-500 font-medium">Selanjutnya</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Pembayaran -->
-    <div id="modalPembayaran" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-        <div class="bg-white rounded-2xl shadow-lg w-[400px] md:w-[500px] relative p-6">
-            <div class="flex justify-between items-center border-b pb-3 mb-4">
-                <h2 class="text-lg font-bold">Daftar Kandidat</h2>
-                <button id="closeModalPembayaran" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-            </div>
-
-            <h3 class="text-gray-700 font-semibold mb-2">Metode Pembayaran</h3>
-            <div id="dropdownBankBtn"
-                class="border rounded-lg px-4 py-2 flex items-center justify-between cursor-pointer mb-4">
-                <div class="flex items-center gap-2">
-                    <span class="text-orange-500">⇄</span>
-                    <span>Transfer Bank</span>
-                </div>
-                <span class="text-gray-600 text-xl">⮟</span>
-            </div>
-
-            <div id="list_p" class="space-y-3 hidden">
-                @foreach ($payment as $p)
-                    <div
-                        class="flex items-center justify-between border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-50 select-bank">
-                        <div class="flex items-center gap-3">
-                            <img src="{{ asset($p->logo_img) }}" alt="" class="w-12 h-12">
-                            <span>{{ $p->nama_bank }}</span>
+                        <div id="dropdownMenu"
+                            class="hidden absolute z-50 mt-2 w-full bg-white border rounded-lg shadow-lg">
+                            <ul class="max-h-48 overflow-y-auto text-sm text-gray-700">
+                                @foreach ($divisi as $d)
+                                    <li>
+                                        <label class="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                            <input name="divisi[]" type="checkbox" value="{{ $d->divisi }}"
+                                                class="checkbox w-4 h-4 text-orange-500 rounded">
+                                            <span class="pl-2">{{ $d->divisi }}</span>
+                                        </label>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <input type="radio" name="id_bank" value="{{ $p->id }}" required
-                            class="w-5 h-5 border-2 border-orange-500 rounded-full cursor-pointer">
                     </div>
-                @endforeach
+                </div>
 
-                <div class="flex justify-between mt-6 text-sm font-semibold">
-                    <button type="button" id="btn_kembali_pembayaran"
-                        class="px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition">
-                        Kembali
-                    </button>
-
-                    <button type="submit" form="transaksi"
-                        class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">
-                        Selanjutnya
-                    </button>
+                <div class="flex justify-between mt-6">
+                    <button type="button" id="btn_kembali_divisi" class="text-orange-500 font-medium">Kembali</button>
+                    <button type="button" id="btn_pembayaran" class="text-orange-500 font-medium">Selanjutnya</button>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Modal Pembayaran -->
+        <div id="modalPembayaran" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+            <div class="bg-white rounded-2xl shadow-lg w-[400px] md:w-[500px] relative p-6">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <h2 class="text-lg font-bold">Daftar Kandidat</h2>
+                    <button id="closeModalPembayaran" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+
+                <h3 class="text-gray-700 font-semibold mb-2">Metode Pembayaran</h3>
+                <div id="dropdownBankBtn"
+                    class="border rounded-lg px-4 py-2 flex items-center justify-between cursor-pointer mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="text-orange-500">⇄</span>
+                        <span>Transfer Bank</span>
+                    </div>
+                    <span class="text-gray-600 text-xl">⮟</span>
+                </div>
+
+                <div id="list_p" class="space-y-3 hidden">
+                    @foreach ($payment as $p)
+                        <div
+                            class="flex items-center justify-between border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-50 select-bank">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ asset($p->logo_img) }}" alt="" class="w-12 h-12">
+                                <span>{{ $p->nama_bank }}</span>
+                            </div>
+                            <input type="radio" name="id_bank" value="{{ $p->id }}" required
+                                class="w-5 h-5 border-2 border-orange-500 rounded-full cursor-pointer">
+                        </div>
+                    @endforeach
+
+                    <div class="flex justify-between mt-6 text-sm font-semibold">
+                        <button type="button" id="btn_kembali_pembayaran"
+                            class="px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition">
+                            Kembali
+                        </button>
+
+                        <button type="submit" form="transaksi"
+                            class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">
+                            Selanjutnya
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    @if (session('konfirmasi_transaksi'))
+        <div id="modalKonfirmasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-2xl p-6 w-[450px] shadow-lg relative">
+                <h2 class="text-lg font-bold mb-4">Konfirmasi Pembayaran</h2>
+                <div class="border border-orange-500 rounded-xl p-4 space-y-2">
+                    <p class="flex justify-between">
+                        <span>No. Transaksi</span>
+                        <span>{{ session('konfirmasi_transaksi')['no_referensi'] }}</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span>Nama Pengirim</span>
+                        <span>{{ session('konfirmasi_transaksi')['dari'] }}</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span>Nama Penerima</span>
+                        <span>Area Kerja</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span>Metode Pembayaran</span>
+                        <span class="bg-orange-500 text-white px-2 rounded">
+                            {{ session('konfirmasi_transaksi')['sumber_dana'] }}
+                        </span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span>Jumlah Deposit</span>
+                        <span>Rp. {{ number_format(session('konfirmasi_transaksi')['total'], 0, ',', '.') }}</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span>Biaya Admin</span>
+                        <span>Rp. 2.000</span>
+                    </p>
+                    <hr>
+                    <p class="flex justify-between font-bold">
+                        <span>Total Pembayaran</span>
+                        <span>Rp. {{ number_format(session('konfirmasi_transaksi')['total'] + 2000, 0, ',', '.') }}</span>
+                    </p>
+                </div>
+                <div>
+                    <a href="/detail/pembayaran/kandidat/{{ session('konfirmasi_transaksi')['id'] }}"
+                        class="mt-5 w-full flex justify-center my-5 bg-orange-500 text-white py-2 rounded-xl">Konfirmasi</a>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <script>
         const openFormModal = document.getElementById("openFormModal");

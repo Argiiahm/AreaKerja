@@ -4,7 +4,6 @@
     <div class="mx-auto p-6">
         <form action="/dashboard/admin/event/tambah" method="POST" enctype="multipart/form-data" class="space-y-5">
             @csrf
-
             <div>
                 <label class="block text-sm font-medium mb-1">Status Acara</label>
                 <select name="status"
@@ -164,6 +163,6 @@
                 previewImage.classList.add('hidden');
                 previewImage.src = '';
             }
-        });
+        }); 
     </script>
 @endsection

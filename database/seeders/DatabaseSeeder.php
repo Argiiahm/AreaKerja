@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Bank;
+use App\Models\Divisi;
 use App\Models\Finance;
 use App\Models\HargaKoin;
 use App\Models\HargaPembayaran;
@@ -38,6 +39,22 @@ class DatabaseSeeder extends Seeder
             "role"               =>     "superadmin",
             "verified"           =>     1,
             "alasan_freeze_akun" =>     null
+        ]);
+
+        Divisi::create([
+            "divisi"  =>     "Programmer"
+        ]);
+        Divisi::create([
+            "divisi"  =>     "Desainer"
+        ]);
+        Divisi::create([
+            "divisi"  =>     "UI UX Design"
+        ]);
+        Divisi::create([
+            "divisi"  =>     "Video Editor"
+        ]);
+        Divisi::create([
+            "divisi"  =>     "UX Research"
         ]);
 
         SuperAdmin::create([
@@ -136,6 +153,7 @@ class DatabaseSeeder extends Seeder
 
         HargaPembayaran::create([
             "nama"     =>    "Pendaftaran Kandidat",
+            "jumlah_koin" =>  0,
             "harga"       => 200000
         ]);
 
