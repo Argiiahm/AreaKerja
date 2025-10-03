@@ -83,7 +83,7 @@
                         @foreach ($cash->sortByDesc('updated_at') as $c)
                             @if ($c->created_at->isToday() && $c->status !== 'pending')
                                 @php
-                                    $pembayaran = HargaPembayaran::where('jumlah_koin', $c->total)->first();
+                                    $pembayaran = HargaPembayaran::where('nama', $c->pesanan)->first();
                                     $total = $pembayaran->harga ?? 0;
                                 @endphp
                                 <tr>

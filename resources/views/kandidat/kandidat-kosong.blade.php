@@ -11,6 +11,6 @@
                 Anda harus menyelesaikan pelatihan kandidat <br>
                 agar bisa mengakses halaman ini
             </p>
-        </div>
+        </div>  
     </div>
-@endsection
+@endsection 

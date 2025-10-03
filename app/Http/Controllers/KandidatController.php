@@ -33,6 +33,15 @@ class KandidatController extends Controller
         $Bank = Bank::where('id', $request->id_bank)->get()->first();
 
         $validasi_data = $request->validate([
+            'divisi'        => "required|array",
+            'divisi.*'      => "string",
+        ]);
+
+        $pelamar->update([
+            'divisi' => json_encode($request->divisi),
+        ]);
+
+        $validasi_data = $request->validate([
             'no_referensi'  =>   "nullable",
             'pesanan'       =>   "nullable",
             'dari'          =>   "nullable",
@@ -53,7 +62,6 @@ class KandidatController extends Controller
 
 
         $pembeli = CatatanCash::create($validasi_data);
-
 
         return redirect('/daftarkandidat')->with('konfirmasi_transaksi', [
             "id"   =>    $pembeli->id,

@@ -6,6 +6,7 @@ use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
 use App\Models\HargaKoin;
 use App\Models\HargaPembayaran;
+use App\Models\Pelamar;
 use App\Models\PembeliKandidat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -111,17 +112,10 @@ class FinanceController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $model = $request->model;
         $status = $request->status;
+        $p = Pelamar::where('nama_pelamar' , $request->model)->get()->first();
 
-        if ($model === 'tunai') {
-            $data = CatatanCash::find($request->id);
-        } elseif ($model === 'kandidat') {
-            $data = PembeliKandidat::find($request->id);
-        } else {
-            return back()->with('error', 'Model tidak valid!');
-        }
-
+        $data = CatatanCash::find($request->id);
         if (!$data) {
             return back()->with('error', 'Data tidak ditemukan!');
         }
@@ -129,15 +123,12 @@ class FinanceController extends Controller
         $data->status = $status;
         $data->save();
 
-        if ($model === 'kandidat' && $status === 'diterima') {
-            if ($request->filled('kategori')) {
-                $pelamar = $data->pelamar;
+        if ($data->jumlah_koin === 0 && $status === 'diterima') {
+   
+                $pelamar = $p;
                 $pelamar->update([
-                    'kategori' => is_array($request->kategori)
-                        ? implode(',', $request->kategori)
-                        : $request->kategori
+                    'kategori' => "kandidat aktif"
                 ]);
-            }
         }
 
         return back()->with('success', 'Status berhasil diperbarui!');

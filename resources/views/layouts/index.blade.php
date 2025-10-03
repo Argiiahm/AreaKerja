@@ -392,9 +392,17 @@
                                     </div>
                                 </div>
                                 <ul class="py-2" aria-labelledby="user-menu-button">
-                                    <li id="btn-profile">
-                                        <a href="/profile" class="block px-4 py-2 text-sm">Profile</a>
-                                    </li>
+                                    @if (Auth::user()->pelamars->kategori === 'kandidat aktif' || Auth::user()->pelamars->kategori === 'calon kandidat')
+                                        <li class="flex items-center justify-center" id="btn-profile">
+                                            <img src="{{ asset('image/Kandidat.png') }}" alt="">
+                                            <a href="/profile"
+                                                class="block px-4 py-2 text-sm text-center">Kandidat</a>
+                                        </li>
+                                    @else
+                                        <li id="btn-profile">
+                                            <a href="/profile" class="block px-4 py-2 text-sm">Profile</a>
+                                        </li>
+                                    @endif
                                     <li>
                                         <a href="/lowongan/tersimpan" class="block px-4 py-2 text-sm">Lowongan
                                             Tersimpan</a>
@@ -458,7 +466,45 @@
                             <a href="/"
                                 class="block {{ Request()->is('') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Event</a>
                         </li>
+
+                    @elseif (Auth::check() && Auth::user()->role === 'pelamar')
+                        <li>
+                            <a href="/"
+                                class="block {{ Request()->is('/') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Beranda</a>
+                        </li>
+                        <li>
+                            <a href="/talenthunter"
+                                class="block {{ Request()->is('talenthunter') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Talent
+                                Hunter</a>
+                        </li>
+                        <li>
+                            <a href="/tipskerja"
+                                class="block  {{ Request()->is('tipskerja') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Tips
+                                Kerja</a>
+                        </li>
+                        @if (
+                            (Auth::user()->role === 'pelamar' && Auth::user()->pelamars->kategori === 'kandidat aktif') ||
+                                Auth::user()->pelamars->kategori == 'calon kandidat')
+                            <li>
+                                <a href="/kandidat/kosong"
+                                    class="block {{ Request()->is('kandidat/kosong') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Rekrut
+                                    Saya</a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="/daftarkandidat"
+                                    class="block {{ Request()->is('daftarkandidat') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Daftar
+                                    Kandidat</a>
+                            </li>
+                        @endif
+                        <li>
+                            <a href="/pasanglowongan"
+                                class="block {{ Request()->is('pasanglowongan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Pasang
+                                Lowongan</a>
+                        </li>
+
                     @else
+
                         <li>
                             <a href="/"
                                 class="block {{ Request()->is('/') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Beranda</a>
@@ -478,13 +524,11 @@
                                 class="block {{ Request()->is('daftarkandidat') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Daftar
                                 Kandidat</a>
                         </li>
-                        {{-- @can('perusahaan') --}}
                         <li>
                             <a href="/pasanglowongan"
                                 class="block {{ Request()->is('pasanglowongan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Pasang
                                 Lowongan</a>
                         </li>
-                        {{-- @endcan --}}
                     @endif
                     <li class="flex lg:hidden md:hidden justify-between items-center mt-4">
                         <button type="button" id="notifikasi" aria-expanded="false" data-dropdown-toggle="notif-hp"

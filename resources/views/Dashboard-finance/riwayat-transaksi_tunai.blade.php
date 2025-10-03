@@ -26,7 +26,7 @@
                         @endphp
                         @foreach ($data as $d)
                             @php
-                                $pembayaran = HargaPembayaran::where('jumlah_koin', $d->total)->first() ;
+                                $pembayaran = HargaPembayaran::where('nama', $d->pesanan)->first() ;
                                 $awal = $pembayaran->harga ?? 0;
                                 $admin = 2000;
                                 $total = $awal + $admin;
@@ -41,7 +41,6 @@
                                 <td class="py-3 text-center">{{ $d->status }}</td>
                                 <td class="px-6 py-4">
                                     <button class="open-detail" data-id="{{ $d->id }}"
-                                        data-model="tunai"
                                         data-no="{{ $d->no_referensi }}" data-jenis="{{ $d->pesanan }}"
                                         data-dari="{{ $d->dari }}" data-sumber="{{ $d->sumber_dana }}"
                                         data-waktu="{{ $d->created_at->format('d M Y') }}"
@@ -136,6 +135,7 @@
                         <input type="hidden" name="id" id="form-success-id">
                         <input type="hidden" name="model" id="form-success-model">
                         <input type="hidden" name="status" value="diterima">
+                        {{-- <input type="hidden" name="kategori" value="kandidat aktif"> --}}
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Konfirmasi</button>
                     </form>
 
@@ -143,7 +143,7 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" id="form-failed-id">
-                        <input type="hidden" name="model" id="form-failed-model">
+                        <input type="hidden" name="" id="form-failed-model">
                         <input type="hidden" name="status" value="ditolak">
                         <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Tolak</button>
                     </form>
@@ -313,7 +313,7 @@
                 const data = btn.dataset;
                 document.getElementById("form-success-id").value = data.id;
                 document.getElementById("form-failed-id").value = data.id;
-                document.getElementById("form-success-model").value = data.model;
+                document.getElementById("form-success-model").value = data.dari;
                 document.getElementById("form-failed-model").value = data.model;
 
                 if (data.status.toLowerCase() === "pending") {

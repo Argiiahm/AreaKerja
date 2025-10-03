@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TalentHunterController;
 use App\Http\Controllers\TipskerjaController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -129,10 +130,10 @@ Route::middleware(['status'])->group(function () {
 
 
     // Kandidat
-    Route::get('/kandidat/kosong', [KandidatController::class, 'kandidat_kosong']);
-    Route::get('/kandidat/lengkap', [KandidatController::class, 'kandidat_lengkap']);
-    Route::get('/kandidat/rekrut', [KandidatController::class, 'rekrut']);
-    Route::get('/kandidat/rekrut/detail', [KandidatController::class, 'rekrut_detail']);
+    Route::get('/kandidat/kosong', [KandidatController::class, 'kandidat_kosong'])->middleware('kandidat');
+    Route::get('/kandidat/lengkap', [KandidatController::class, 'kandidat_lengkap'])->middleware('kandidat');
+    Route::get('/kandidat/rekrut', [KandidatController::class, 'rekrut'])->middleware('kandidat');
+    Route::get('/kandidat/rekrut/detail', [KandidatController::class, 'rekrut_detail'])->middleware('kandidat');
     Route::get('/kandidat/status', [KandidatController::class, 'status']);
 
 
