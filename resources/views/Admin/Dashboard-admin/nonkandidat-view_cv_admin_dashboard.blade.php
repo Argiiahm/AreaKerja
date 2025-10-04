@@ -9,26 +9,34 @@
                     alt="Profile" class="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border-4 border-gray-300">
 
                 <div>
-                    <h1 class="text-2xl md:text-3xl font-bold text-orange-600">Bambang Kurnia</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-orange-600">{{ $Data->nama_pelamar }}</h1>
                     <p class="text-sm text-gray-700 mt-2 leading-snug">
-                        Jalan Prapatan Dalam No. 04 Rt. 47 <br>
-                        BALIKPAPAN KOTA, KOTA BALIKPAPAN, <br>
-                        KALIMANTAN TIMUR, ID, 76111
+                        @php
+                            $alamatTerbaru = $Data->alamat_pelamars->sortByDesc('created_at')->first();
+                        @endphp
+
+                        @if ($alamatTerbaru)
+                            {{ $alamatTerbaru->desa }}<br>
+                            {{ $alamatTerbaru->detail }},<br>
+                            {{ $alamatTerbaru->provinsi }}, {{ $alamatTerbaru->kode_pos }}
+                        @endif
                     </p>
                 </div>
             </div>
             <div class="text-sm text-gray-700 space-y-2 text-center md:text-left">
                 <p class="flex items-center justify-center md:justify-start gap-2">
-                    <i class="ph ph-envelope-simple text-orange-600 text-lg"></i> bambangkurnia@gmail.com
+                    <i class="ph ph-envelope-simple text-orange-600 text-lg"></i> {{ $Data->users->email }}
                 </p>
                 <p class="flex items-center justify-center md:justify-start gap-2">
-                    <i class="ph ph-phone text-orange-600 text-lg"></i> 08123456789
+                    <i class="ph ph-phone text-orange-600 text-lg"></i> {{ $Data->telepon_pelamar }}
                 </p>
                 <p class="flex items-center justify-center md:justify-start gap-2">
-                    <i class="ph ph-linkedin-logo text-orange-600 text-lg"></i> @bambang_kurnia
+                    <i class="ph ph-linkedin-logo text-orange-600 text-lg"></i>
+                    {{ $Data->sosmed->latest()->first()->linkedin ?? 'tidak ada data' }}
                 </p>
                 <p class="flex items-center justify-center md:justify-start gap-2">
-                    <i class="ph ph-globe text-orange-600 text-lg"></i> Bambang Kurnia
+                    <i class="ph ph-globe text-orange-600 text-lg"></i>
+                    {{ $Data->sosmed->latest()->first()->website ?? 'tidak ada data' }}
                 </p>
             </div>
         </div>
@@ -45,8 +53,7 @@
                         <hr class="w-full border border-orange-300 mb-3">
                     </div>
                     <p class="text-sm text-gray-700 leading-relaxed">
-                        Saya adalah lulusan Teknik Informatika di Universitas Gadjah Mada yang memiliki minat besar
-                        dalam pengembangan web dan aplikasi...
+                        {{ $Data->deskripsi_diri }}
                     </p>
                 </div>
 
@@ -59,11 +66,9 @@
                         <hr class="w-full border border-orange-300 mb-3">
                     </div>
                     <ul class="text-sm text-gray-700 space-y-1">
-                        <li>• Laravel — <span class="font-semibold">Expert</span></li>
-                        <li>• PHP — <span class="font-semibold">Intermediate</span></li>
-                        <li>• Flutter — <span class="font-semibold">Expert</span></li>
-                        <li>• CSS — <span class="font-semibold">Intermediate</span></li>
-                        <li>• JavaScript — <span class="font-semibold">Expert</span></li>
+                        @foreach ($Data->skill as $s)
+                            <li>• {{ $s->skill }} — <span class="font-semibold">{{ $s->experience_level }}</span></li>
+                        @endforeach
                     </ul>
                 </div>
 
@@ -101,21 +106,14 @@
                         <hr class="w-full border border-orange-300 mb-3">
                     </div>
                     <div class="space-y-4 text-sm text-gray-700">
-                        <div>
-                            <p class="font-semibold">UI/UX Designer <span class="text-gray-500">(2020–2022)</span></p>
-                            <p class="italic">PT. Mega Jaya Permata</p>
-                            <p>Bertanggung jawab untuk merancang antarmuka pengguna yang intuitif...</p>
-                        </div>
-                        <div>
-                            <p class="font-semibold">Front End Developer <span class="text-gray-500">(2022–2023)</span></p>
-                            <p class="italic">PT. PERTAMINA (Persero)</p>
-                            <p>Bertugas untuk mengimplementasikan desain UI/UX ke dalam kode...</p>
-                        </div>
-                        <div>
-                            <p class="font-semibold">Back End Developer <span class="text-gray-500">(2023–2024)</span></p>
-                            <p class="italic">PT. Haryanto Group</p>
-                            <p>Fokus utama saya adalah pada pengembangan dan pengelolaan server...</p>
-                        </div>
+                        @foreach ($Data->pengalaman_kerja as $k)
+                            <div>
+                                <p class="font-semibold">{{ $k->posisi_kerja }} <span
+                                        class="text-gray-500">({{ $k->tahun_awal }} - {{ $k->tahun_akhir }})</span></p>
+                                <p class="italic">{{ $k->nama_perusahaan }}</p>
+                                <p>{{ $k->deskripsi }}</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
@@ -128,16 +126,14 @@
                         <hr class="w-full border border-orange-300 mb-3">
                     </div>
                     <ul class="text-sm text-gray-700 space-y-2">
-                        <li>
-                            <p class="font-semibold">Universitas Gadjah Mada <span class="text-gray-500">(2018–2019)</span>
-                            </p>
-                            <p class="italic">Teknik Informatika</p>
-                        </li>
-                        <li>
-                            <p class="font-semibold">SMK Negeri 2 Yogyakarta <span class="text-gray-500">(2018–2019)</span>
-                            </p>
-                            <p class="italic">Teknik Komputer dan Jaringan</p>
-                        </li>
+                        @foreach ($Data->riwayat_pendidikan as $p)
+                            <li>
+                                <p class="font-semibold">{{ $p->asal_pendidikan }}<span
+                                        class="text-gray-500">({{ $p->tahun_awal }} - {{ $k->tahun_akhir }})</span>
+                                </p>
+                                <p class="italic">{{ $k->jurusan }}</p>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

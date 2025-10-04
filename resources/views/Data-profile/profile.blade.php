@@ -30,7 +30,13 @@
                             <div>
                                 <select
                                     class="border-2 border-orange-500 w-32 sm:w-40 p-2 rounded-md text-orange-500 font-semibold">
-                                    <option value="">Pelamar Aktif</option>
+                                    @if (Auth::user()->pelamars->kategori === 'calon kandidat')
+                                        <option value="">Calon Kandidat</option>
+                                    @elseif (Auth::user()->pelamars->kategori === 'kandidat aktif')
+                                        <option value="">Kandidat Aktif</option>
+                                    @else
+                                        <option value="">Pelamar Aktif</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Event;
 use App\Models\HargaPembayaran;
 use App\Models\KegiatanEvent;
+use App\Models\Pelamar;
 use App\Models\Tipskerja;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -74,29 +75,54 @@ class AdminController extends Controller
     public function pelamar()
     {
         return view('Admin.Dashboard-admin.pelamar-dashboard_admin', [
-            "title"    =>      "Data Kandidat"
+            "title"    =>      "Data Kandidat",
+            "Data"     =>      Pelamar::all()
         ]);
     }
 
-    public function kandidat_view_cv()
+    public function kandidat_view_cv(Pelamar $pelamar)
     {
         return view('Admin.Dashboard-admin.kandidat-view_cv_admin_dashboard', [
-            "title"   =>   ""
+            "title"   =>   "",
+            "Data"    =>   $pelamar
         ]);
     }
-    public function non_kandidat_view_cv()
+    public function non_kandidat_view_cv(Pelamar $pelamar)
     {
         return view('Admin.Dashboard-admin.nonkandidat-view_cv_admin_dashboard', [
-            "title"   =>   ""
+            "title"   =>   "",
+            "Data"   =>  $pelamar
         ]);
     }
 
-    public function calon_kandidat_view()
+    public function calon_kandidat_view(Pelamar $pelamar)
     {
         return view('Admin.Dashboard-admin.calon_kandidat-view_admin_dashboard', [
-            "title"   =>   "Data Kandidat"
+            "title"   =>   "Data Kandidat",
+            "Data"    =>   $pelamar
+
         ]);
     }
+
+    public function calon_kandidat_status(Request $request, Pelamar $pelamar)
+    {
+
+        if ($request->filled('kategori')) {
+            $pelamar->kategori = $request->kategori;
+        }
+
+        if ($request->filled('mulai_pelatihan')) {
+            $pelamar->mulai_pelatihan = $request->mulai_pelatihan;
+        }
+
+        if ($request->filled('selesai_pelatihan')) {
+            $pelamar->selesai_pelatihan = $request->selesai_pelatihan;
+        }
+
+        $pelamar->save();
+        return back();
+    }
+
 
     public function perusahaan()
     {

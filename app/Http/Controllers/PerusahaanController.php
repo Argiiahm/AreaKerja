@@ -13,7 +13,11 @@ use Illuminate\Support\Carbon;
 use App\Models\HargaPembayaran;
 use App\Models\PelamarLowongan;
 use App\Models\Alamatperusahaan;
+use App\Models\Divisi;
+use App\Models\HargaKoin;
 use App\Models\LowonganPerusahaan;
+use App\Models\Pelamar;
+use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -376,10 +380,47 @@ class PerusahaanController extends Controller
         return redirect('/dashboard/perusahaan');
     }
 
-    public function kandidat_ak()
+    public function kandidat_ak(Request $request)
     {
-        return view('Perusahaan.Pelamar.Kandidat-AK.kandidat');
+        $user = Auth::user();
+
+        $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status', 'diterima')->sum('total');
+
+        $query = Pelamar::where('kategori', 'kandidat aktif');
+
+        if ($request->skill) {
+            $skillFilter = strtolower(preg_replace("/[^a-z0-9]/", "", $request->skill));
+
+            $query->whereHas('skill', function ($q) use ($skillFilter) {
+                $q->whereRaw("LOWER(REPLACE(REPLACE(REPLACE(skill, '/', ''), '-', ''), ' ', '')) LIKE ?", ["%{$skillFilter}%"]);
+            });
+        }
+
+        if ($request->umur) {
+            [$min, $max] = explode('-', $request->umur);
+            $query->whereRaw("TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN ? AND ?", [$min, $max]);
+        }
+
+        if ($request->gender) {
+            $query->where('gender', $request->gender);
+        }
+
+        $Data = $query->get();
+        return view('Perusahaan.Pelamar.Kandidat-AK.kandidat', [
+            "Data"    =>    $Data,
+            "totalSaldo"  =>  $totalSaldo,
+            "data"  =>  HargaPembayaran::all(),
+            "harga" => HargaKoin::where('id', 7)->get()->first(),
+            "payment"  =>  Bank::all(),
+            "divisi"  =>   Divisi::all()
+        ]);
     }
+    
+    public function beli_kandidat( Request $request,HargaKoin $harga){
+        dd($request->all());
+    }
+
+
     public function cv_kandidat()
     {
         return view('Perusahaan.Pelamar.Kandidat-AK.cv-kandidat');

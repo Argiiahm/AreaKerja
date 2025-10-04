@@ -85,7 +85,7 @@ class KandidatController extends Controller
         }
 
         $bank = Bank::where('nama_bank', $p->sumber_dana)->first();
-        $pembayaran = CatatanCash::where('total', $p->total)->first();
+        $pembayaran = HargaPembayaran::where('nama', $p->pesanan)->first();
 
 
         return view('Detail-tf_pembayaran.detail_pembeli_kandidat', [

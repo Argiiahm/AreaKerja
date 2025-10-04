@@ -252,9 +252,10 @@ Route::middleware(['status'])->group(function () {
     Route::put('/dashboard/admin/profile/update/{admin:id}', [AdminController::class, 'profile_update'])->middleware('admin');
 
     Route::get('/dashboard/admin/pelamar', [AdminController::class, 'pelamar'])->middleware('admin');
-    Route::get('/dashboard/admin/kandidat/view', [AdminController::class, 'kandidat_view_cv'])->middleware('admin');
-    Route::get('/dashboard/admin/nonkandidat/view', [AdminController::class, 'non_kandidat_view_cv'])->middleware('admin');
-    Route::get('/dashboard/admin/calonkandidat/view', [AdminController::class, 'calon_kandidat_view'])->middleware('admin');
+    Route::get('/dashboard/admin/kandidat/view/{pelamar:id}', [AdminController::class, 'kandidat_view_cv'])->middleware('admin');
+    Route::get('/dashboard/admin/nonkandidat/view/{pelamar:id}', [AdminController::class, 'non_kandidat_view_cv'])->middleware('admin');
+    Route::get('/dashboard/admin/calonkandidat/view/{pelamar:id}', [AdminController::class, 'calon_kandidat_view'])->middleware('admin');
+    Route::put('dashboard/admin/status/calonkandidat/{pelamar:id}', [AdminController::class, 'calon_kandidat_status'])->middleware('admin');
 
     Route::get('/dashboard/admin/perusahaan', [AdminController::class, 'perusahaan'])->middleware('admin');
     Route::get('/dashboard/admin/perusahaan/view', [AdminController::class, 'perusahaan_view'])->middleware('admin');
@@ -301,6 +302,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak', [PerusahaanController::class, 'kandidat_ak'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak/cv', [PerusahaanController::class, 'cv_kandidat'])->middleware('perusahaan');
+    Route::post('/beli/kandidatak/{harga:id}', [PerusahaanController::class, 'beli_kandidat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/pengaturan/password/change/{user}', [PerusahaanController::class, 'password_change'])->middleware('perusahaan');

@@ -75,12 +75,14 @@
                     <tr class="bg-gray-50 text-gray-700">
                         <th class="text-left py-2 px-6">Keterangan</th>
                         <th class="text-left py-2 px-6">Jumlah</th>
+                        <th class="text-left py-2 px-6">Biaya Admin</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y">
                     <tr>
                         <td class="py-2 px-6">{{ $Data->pesanan }}</td>
-                        <td class="py-2 px-6">Rp. {{ number_format($pembayaran->total, 0, ',', '.') }}</td>
+                        <td class="py-2 px-6">Rp. {{ number_format($pembayaran->harga, 0, ',', '.') }}</td>
+                        <td class="py-2 px-6">Rp. 2.000</td>
                     </tr>
                 </tbody>
             </table>
@@ -88,7 +90,7 @@
 
             <div class="mt-4 space-y-2 text-sm px-2">
                 <p class="flex justify-between font-bold border-t pt-2"><span>Total Tagihan</span>
-                    <span>Rp. {{ number_format($pembayaran->total, 0, ',', '.') }}</span>
+                    <span>Rp. {{ number_format($pembayaran->harga + 2000, 0, ',', '.') }}</span>
                 </p>
             </div>
         </div>

@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pelamar extends Model
 {
     use HasFactory;
     protected $table = 'pelamars';
     protected $guarded = [];
+
+    public function getUmurAttribute()
+    {
+        return Carbon::parse($this->tanggal_lahir)->age;
+    }
 
     public function users()
     {
@@ -51,11 +57,13 @@ class Pelamar extends Model
         return $this->belongsToMany(LowonganPerusahaan::class, 'simpan_lowongans', 'pelamar_id', 'lowongan_id');
     }
 
-    public function lowongan_perusahaan() {
-        return $this->belongsToMany(LowonganPerusahaan::class, 'pelamar_lowongans','pelamar_id', 'lowongan_id');
+    public function lowongan_perusahaan()
+    {
+        return $this->belongsToMany(LowonganPerusahaan::class, 'pelamar_lowongans', 'pelamar_id', 'lowongan_id');
     }
 
-    public function pembeli_kandidat() {
+    public function pembeli_kandidat()
+    {
         return $this->hasOne(PembeliKandidat::class, 'pelamar_id');
     }
 }

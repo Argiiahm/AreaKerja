@@ -112,8 +112,9 @@ class FinanceController extends Controller
 
     public function updateStatus(Request $request)
     {
+        $p = Pelamar::where('nama_pelamar', $request->model)->get()->first();
+        // dd($request->model, $p);
         $status = $request->status;
-        $p = Pelamar::where('nama_pelamar' , $request->model)->get()->first();
 
         $data = CatatanCash::find($request->id);
         if (!$data) {
@@ -123,13 +124,13 @@ class FinanceController extends Controller
         $data->status = $status;
         $data->save();
 
-        if ($data->jumlah_koin === 0 && $status === 'diterima') {
-   
-                $pelamar = $p;
-                $pelamar->update([
-                    'kategori' => "kandidat aktif"
-                ]);
+        if ($data->jumlah_koin == 0 && $status === 'diterima') {
+            if ($p) {
+                $p->kategori = "calon kandidat";
+                $p->save();
+            }
         }
+
 
         return back()->with('success', 'Status berhasil diperbarui!');
     }

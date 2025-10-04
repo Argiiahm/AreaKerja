@@ -32,7 +32,7 @@
                             Rp.{{ $data->gaji_awal }} - Rp. {{ $data->gaji_akhir }} per bulan
                         </span>
                     </div>
-                </div>  
+                </div>
                 <p class="text-gray-500 text-sm mt-4 md:mt-0">Aktif 2 jam lalu</p>
             </div>
         </div>
@@ -52,8 +52,8 @@
                         </thead>
                         <tbody class="divide-y">
                             @foreach ($datas->sortBy(function ($item) {
-            return $item->status === 'diterima' ? 1 : 0;
-        }) as $d)
+                                return $item->status === 'diterima' ? 1 : 0;
+                            }) as $d)
                                 @if ($d->lowongan_id === $data->id)
                                     <tr>
                                         <td class="px-4 py-3 text-gray-700"> {{ $d->created_at?->format('d M Y') }}</td>
