@@ -1,42 +1,51 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="p-6">
-        <div class="flex flex-wrap items-center mb-3 space-x-2 text-sm">
-            <span>Semua ({{ $all }})</span>
-            <span id="btn_terbit" class="text-blue-500 cursor-pointer">| Telah Terbit ({{ $terbit }})</span>
-            <span id="btn_blmterbit" class="text-blue-500 cursor-pointer">| Draf ({{ $noterbit }})</span>
+    <div class="p-6 bg-gray-50 min-h-screen">
+        <div class="flex flex-wrap items-center justify-between mb-6">
+            <div class="flex flex-wrap items-center space-x-3 text-sm text-gray-700">
+                <span class="font-medium text-gray-900">Semua ({{ $all }})</span>
+                <span id="btn_terbit" class="text-blue-600 hover:text-blue-800 cursor-pointer font-medium transition">
+                    | Telah Terbit ({{ $terbit }})
+                </span>
+                <span id="btn_blmterbit" class="text-blue-600 hover:text-blue-800 cursor-pointer font-medium transition">
+                    | Draf ({{ $noterbit }})
+                </span>
+            </div>
+
+            <a href="/dashboard/superadmin/tipskerja/add"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow transition">
+                + Buat Post
+            </a>
         </div>
 
-        <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-3">
-            <div class="flex flex-wrap items-center gap-2">
-                <div class="relative">
+        <div class="bg-white rounded-xl shadow-md p-5 mb-6 border border-gray-200">
+            <div class="flex flex-col md:flex-row justify-between gap-4 items-center">
+                <div class="flex flex-wrap items-center gap-3">
                     <select id="filterSelect"
-                        class="appearance-none border border-gray-300 rounded-md px-3 h-9 pr-6 text-sm text-gray-700 focus:outline-none">
+                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition">
                         <option value="created_at">Tanggal</option>
                         <option value="title">Nama</option>
                     </select>
+
+                    <button type="button" onclick="setAction('update')"
+                        class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm shadow-sm transition">
+                        Terapkan
+                    </button>
+                    <button type="button" onclick="setAction('delete')"
+                        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm shadow-sm transition">
+                        Hapus
+                    </button>
                 </div>
 
-                <button type="button" onclick="setAction('update')"
-                    class="bg-gray-700 text-white px-4 h-9 rounded-md text-sm">
-                    Terapkan
-                </button>
-                <button type="button" onclick="setAction('delete')"
-                    class="bg-red-500 text-white px-4 h-9 rounded-md text-sm">
-                    Hapus
-                </button>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2">
-                <input id="searchInput" type="text" placeholder="nama/tanggal..."
-                    class="border border-gray-300 rounded-md px-3 h-9 text-sm focus:outline-none w-full md:w-48">
-                <button type="button" onclick="searchTable()"
-                    class="bg-gray-700 text-white px-5 h-9 rounded-md text-sm">Cari</button>
-                <a href="/dashboard/superadmin/tipskerja/add"
-                    class="bg-blue-500 text-white px-6 py-2 rounded-md text-sm text-center">
-                    Buat Post
-                </a>
+                <div class="flex flex-wrap items-center gap-2">
+                    <input id="searchInput" type="text" placeholder="Cari nama/tanggal..."
+                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 w-48 transition">
+                    <button type="button" onclick="searchTable()"
+                        class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg text-sm transition">
+                        Cari
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -45,54 +54,54 @@
             <input type="hidden" name="_method" id="formMethod">
             <input type="hidden" name="status" id="statusField">
 
-            <div id="sudah_terbit" class="overflow-x-auto rounded-lg shadow">
+            <div id="sudah_terbit" class="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-white">
                 <table class="w-full text-sm text-left border-collapse">
-                    <thead class="bg-gray-700 text-white">
+                    <thead class="bg-gray-800 text-white text-sm uppercase tracking-wide">
                         <tr>
-                            <th class="px-4 py-3">
-                                <input type="checkbox" id="checkAllTerbit" class="w-4 h-4">
-                            </th>
-                            <th class="px-4 py-3">Judul</th>
-                            <th class="px-4 py-3">Penulis</th>
-                            <th class="px-4 py-3">Tanggal</th>
+                            <th class="px-5 py-3"><input type="checkbox" id="checkAllTerbit" class="w-4 h-4"></th>
+                            <th class="px-5 py-3">Judul</th>
+                            <th class="px-5 py-3">Penulis</th>
+                            <th class="px-5 py-3">Tanggal</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($sudah_terbit as $d)
-                            <tr class="bg-gray-200">
-                                <td class="px-4 py-3">
+                            <tr class="border-b hover:bg-gray-100 transition">
+                                <td class="px-5 py-3">
                                     <input name="ids[]" type="checkbox" value="{{ $d->id }}" class="w-4 h-4">
                                 </td>
-                                <td class="px-4 py-3 text-blue-600 font-medium cursor-pointer">{{ $d->title }}</td>
-                                <td class="px-4 py-3">{{ $d->penulis }}</td>
-                                <td class="px-4 py-3">{{ $d->created_at->format('d M Y') }}</td>
+                                <td class="px-5 py-3 text-blue-600 hover:text-blue-800 font-medium cursor-pointer">
+                                    {{ $d->title }}
+                                </td>
+                                <td class="px-5 py-3 text-gray-700">{{ $d->penulis }}</td>
+                                <td class="px-5 py-3 text-gray-600">{{ $d->created_at->format('d M Y') }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
 
-            <div id="belum_terbit" class="overflow-x-auto rounded-lg shadow hidden">
+            <div id="belum_terbit" class="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-white hidden">
                 <table class="w-full text-sm text-left border-collapse">
-                    <thead class="bg-gray-700 text-white">
+                    <thead class="bg-gray-800 text-white text-sm uppercase tracking-wide">
                         <tr>
-                            <th class="px-4 py-3">
-                                <input type="checkbox" id="checkAllBelum" class="w-4 h-4">
-                            </th>
-                            <th class="px-4 py-3">Judul</th>
-                            <th class="px-4 py-3">Penulis</th>
-                            <th class="px-4 py-3">Tanggal</th>
+                            <th class="px-5 py-3"><input type="checkbox" id="checkAllBelum" class="w-4 h-4"></th>
+                            <th class="px-5 py-3">Judul</th>
+                            <th class="px-5 py-3">Penulis</th>
+                            <th class="px-5 py-3">Tanggal</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($belum_terbit as $d)
-                            <tr class="bg-gray-200">
-                                <td class="px-4 py-3">
+                            <tr class="border-b hover:bg-gray-100 transition">
+                                <td class="px-5 py-3">
                                     <input name="ids[]" type="checkbox" value="{{ $d->id }}" class="w-4 h-4">
                                 </td>
-                                <td class="px-4 py-3 text-blue-600 font-medium cursor-pointer">{{ $d->title }}</td>
-                                <td class="px-4 py-3">{{ $d->penulis }}</td>
-                                <td class="px-4 py-3">{{ $d->created_at->format('d M Y') }}</td>
+                                <td class="px-5 py-3 text-blue-600 hover:text-blue-800 font-medium cursor-pointer">
+                                    {{ $d->title }}
+                                </td>
+                                <td class="px-5 py-3 text-gray-700">{{ $d->penulis }}</td>
+                                <td class="px-5 py-3 text-gray-600">{{ $d->created_at->format('d M Y') }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -150,12 +159,8 @@
 
             rows.forEach(row => {
                 let colText = "";
-
-                if (filterBy === "title") {
-                    colText = row.cells[2].innerText.toLowerCase();
-                } else if (filterBy === "created_at") {
-                    colText = row.cells[3].innerText.toLowerCase();
-                }
+                if (filterBy === "title") colText = row.cells[1].innerText.toLowerCase();
+                else if (filterBy === "created_at") colText = row.cells[3].innerText.toLowerCase();
 
                 row.style.display = colText.includes(input) ? "" : "none";
             });

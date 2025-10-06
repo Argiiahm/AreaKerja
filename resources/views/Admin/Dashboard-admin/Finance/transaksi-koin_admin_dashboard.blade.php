@@ -25,16 +25,12 @@
                     Cari
                 </button>
             </div>
-
-
-
         </div>
 
 
         <!-- Koin -->
         <div id="table_koin" class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
-            <div
-                class="align-middle inline-block min-w-full shadow overflow-hidden bg-white  px-8 pt-3 rounded-lg">
+            <div class="align-middle inline-block min-w-full shadow overflow-hidden bg-white  px-8 pt-3 rounded-lg">
                 <table class="min-w-full">
                     <thead>
                         <tr>
@@ -58,28 +54,30 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white text-center ">
-                        <tr class="border-b">
-                            <td class="px-6 py-4 whitespace-no-wrap  border-gray-500">
-                                1
-                            </td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-gray-500">
-                                <div class="text-sm leading-5">3923948129891</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                Open CV</td>
-                            <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                Apple Corp</td>
-                            <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                VA BCA</td>
-                            <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                1000 Koin</td>
-                            <td
-                                class="px-6 py-4 whitespace-no-wrap text-green-500 font-bold  border-gray-500 text-sm leading-5">
-                                Success
-                            </td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-right border-gray-500 text-sm leading-5">
+                        @foreach ($koin as $k)
+                            <tr class="border-b">
+                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500">
+                                    {{ $loop->iteration }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-gray-500">
+                                    <div class="text-sm leading-5">{{ $k->no_referensi }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
+                                    {{ $k->pesanan }}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
+                                    {{ $k->dari }}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
+                                    {{ $k->sumber_dana }}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
+                                    {{ $k->total }} Koin</td>
+                                <td
+                                    class="px-6 py-4 whitespace-no-wrap text-green-500 font-bold  border-gray-500 text-sm leading-5">
+                                    Success
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap text-right border-gray-500 text-sm leading-5">
 
-                            </td>
+                                </td>
+                        @endforeach
                         </tr>
                     </tbody>
                 </table>

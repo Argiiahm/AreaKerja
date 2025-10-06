@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\CatatanKoin;
 use App\Models\Event;
 use App\Models\HargaPembayaran;
 use App\Models\KegiatanEvent;
+use App\Models\LowonganPerusahaan;
 use App\Models\Pelamar;
+use App\Models\Perusahaan;
 use App\Models\Tipskerja;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -127,15 +130,39 @@ class AdminController extends Controller
     public function perusahaan()
     {
         return view('Admin.Dashboard-admin.perusahaan.data-perusahaan_admin_dashboard', [
-            "title"   =>   "Data Perusahaan"
+            "title"   =>   "Data Perusahaan",
+            "Data"    =>  Perusahaan::all()
         ]);
     }
-    public function perusahaan_view()
+    public function perusahaan_view(Perusahaan $perusahaan)
     {
         return view('Admin.Dashboard-admin.perusahaan.view-perusahaan_admin_dashboard', [
-            "title"   =>   ""
+            "title"   =>   "",
+            "data"    =>  $perusahaan,
+            "lowongan" => LowonganPerusahaan::all()
         ]);
     }
+
+
+    public function freeze_perusahaan(Request $request, User $user)
+    {
+        $data = $request->validate([
+            "status"  =>   'required|boolean'
+        ]);
+
+        $user->update($data);
+        return redirect('dashboard/admin/perusahaan');
+    }
+    public function unfreeze_perusahaan(Request $request, User $user)
+    {
+        $data = $request->validate([
+            "status"  =>   'required|boolean'
+        ]);
+
+        $user->update($data);
+        return redirect('dashboard/admin/perusahaan');
+    }
+
     public function perusahaan_view_lowongan()
     {
         return view('Admin.Dashboard-admin.perusahaan.view-lowongan_perushaan_admin_dashboard', [
@@ -158,7 +185,8 @@ class AdminController extends Controller
     public function finance()
     {
         return view('Admin.Dashboard-admin.Finance.transaksi-koin_admin_dashboard', [
-            "title"   =>   "Data Transaksi Koin"
+            "title"   =>   "Data Transaksi Koin",
+            "koin"    =>   CatatanKoin::all()
         ]);
     }
     public function tips_kerja()
@@ -230,7 +258,7 @@ class AdminController extends Controller
         return redirect('/dashboard/admin/tipskerja');
     }
 
-    public function ubah_status(Request $request,)
+    public function ubah_status(Request $request)
     {
         $ids = $request->ids;
 
@@ -350,7 +378,6 @@ class AdminController extends Controller
         }
 
         $event->update($data);
-
 
         $datas = $request->validate([
             'id' => "nullable|array",

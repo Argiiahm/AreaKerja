@@ -258,7 +258,9 @@ Route::middleware(['status'])->group(function () {
     Route::put('dashboard/admin/status/calonkandidat/{pelamar:id}', [AdminController::class, 'calon_kandidat_status'])->middleware('admin');
 
     Route::get('/dashboard/admin/perusahaan', [AdminController::class, 'perusahaan'])->middleware('admin');
-    Route::get('/dashboard/admin/perusahaan/view', [AdminController::class, 'perusahaan_view'])->middleware('admin');
+    Route::get('/dashboard/admin/perusahaan/view/{perusahaan:id}', [AdminController::class, 'perusahaan_view'])->middleware('admin');
+    Route::put('/dashboard/admin/unbanned/{user:id}', [AdminController::class, 'unfreeze_perusahaan'])->middleware('admin');
+    Route::put('/dashboard/admin/banned/{user:id}', [AdminController::class, 'freeze_perusahaan'])->middleware('admin');
     Route::get('/dashboard/admin/perusahaan/view/lowongan', [AdminController::class, 'perusahaan_view_lowongan'])->middleware('admin');
     Route::get('/dashboard/admin/perusahaan/view/cv', [AdminController::class, 'perusahaan_view_cv'])->middleware('admin');
     Route::get('/dashboard/admin/perusahaan/view/talenthunter', [AdminController::class, 'perusahaan_view_talenthunter'])->middleware('admin');

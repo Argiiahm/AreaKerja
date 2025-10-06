@@ -6,7 +6,6 @@ class BrowserPath
 {
     public static function detect()
     {
-        // Daftar lokasi Chrome/Edge di Windows
         $paths = [
             'C:\Program Files\Google\Chrome\Application\chrome.exe',
             'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',

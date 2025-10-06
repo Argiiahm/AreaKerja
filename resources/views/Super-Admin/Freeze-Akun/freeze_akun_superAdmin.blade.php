@@ -1,49 +1,60 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="p-6">
-        {{-- Search Bar --}}
-        <div class="flex justify-end mb-4">
+    <div class="p-6 bg-gray-50 min-h-screen">
+        {{-- Header --}}
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Manajemen Pengguna</h1>
             <div class="flex items-center space-x-2">
                 <input 
                     type="text" 
-                    placeholder="name/username" 
+                    placeholder="Cari nama / username..." 
                     id="searchInput"
-                    class="border border-gray-300 rounded-md px-3 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    class="border border-gray-300 bg-white rounded-lg px-4 py-2 w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                 >
                 <button 
                     type="button" 
                     onclick="searchTable()"
-                    class="bg-gray-700 text-white px-4 py-2 rounded-md"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium shadow transition"
                 >
                     Cari
                 </button>
             </div>
         </div>
 
-        {{-- Table --}}
-        <div class="bg-white border rounded-2xl shadow-sm overflow-x-auto">
-            <table id="myTable" class="w-full">
-                <thead>
-                    <tr class="text-left">
-                        <th class="px-6 py-3 font-semibold text-gray-700">No</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Username</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Email</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Role</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Telepon</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Alamat</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Status</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Aksi</th>
+        {{-- Table Container --}}
+        <div class="bg-white border border-gray-200 rounded-xl shadow-md overflow-x-auto">
+            <table id="myTable" class="w-full text-sm text-left border-collapse">
+                <thead class="bg-gray-800 text-white text-sm uppercase tracking-wide">
+                    <tr>
+                        <th class="px-6 py-3">No</th>
+                        <th class="px-6 py-3">Username</th>
+                        <th class="px-6 py-3">Email</th>
+                        <th class="px-6 py-3">Role</th>
+                        <th class="px-6 py-3">Telepon</th>
+                        <th class="px-6 py-3">Alamat</th>
+                        <th class="px-6 py-3">Status</th>
+                        <th class="px-6 py-3 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-gray-200">
                     @foreach ($Data as $d)
-                        <tr>
-                            <td class="px-6 py-3 text-gray-700">{{ $d->id }}</td>
-                            <td class="px-6 py-3 text-gray-700">{{ $d->username }}</td>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-6 py-3 text-gray-700">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-3 text-gray-800 font-medium">{{ $d->username }}</td>
                             <td class="px-6 py-3 text-gray-700">{{ $d->email }}</td>
-                            <td class="px-6 py-3 text-gray-700">{{ $d->role }}</td>
-                            
+                            <td class="px-6 py-3 capitalize">
+                                <span class="px-2 py-1 text-xs rounded-full 
+                                    @if ($d->role === 'superadmin') bg-purple-100 text-purple-700
+                                    @elseif ($d->role === 'admin') bg-green-100 text-green-700
+                                    @elseif ($d->role === 'perusahaan') bg-blue-100 text-blue-700
+                                    @elseif ($d->role === 'pelamar') bg-yellow-100 text-yellow-700
+                                    @else bg-gray-100 text-gray-600
+                                    @endif">
+                                    {{ $d->role }}
+                                </span>
+                            </td>
+
                             {{-- Telepon --}}
                             <td class="px-6 py-3 text-gray-700">
                                 @if ($d->role == 'pelamar')
@@ -71,22 +82,23 @@
                             </td>
 
                             {{-- Status --}}
-                            <td class="px-6 py-3 text-gray-700">
+                            <td class="px-6 py-3">
                                 @if ($d->status === 0)
-                                    <span class="bg-blue-500 text-green-100 text-sm font-medium px-2.5 py-0.5 rounded-sm">
+                                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
                                         Aktif
                                     </span>
                                 @elseif ($d->status === 1)
-                                    <span class="bg-red-500 text-green-100 text-sm font-medium px-2.5 py-0.5 rounded-sm">
+                                    <span class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">
                                         Banned
                                     </span>
                                 @endif
                             </td>
 
                             {{-- Aksi --}}
-                            <td class="px-6 py-4">
-                                <a href="/dashboard/superadmin/freeze/detail/{{ $d->id }}">
-                                    <img src="{{ asset('Icon/fzd.png') }}" alt="Freeze">
+                            <td class="px-6 py-4 text-center">
+                                <a href="/dashboard/superadmin/freeze/detail/{{ $d->id }}" 
+                                   class="inline-flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition">
+                                    <img src="{{ asset('Icon/fzd.png') }}" alt="Freeze" class="w-5 h-5">
                                 </a>
                             </td>
                         </tr>
