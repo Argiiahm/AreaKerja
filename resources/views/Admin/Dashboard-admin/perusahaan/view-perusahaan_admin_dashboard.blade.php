@@ -98,7 +98,6 @@
                 const updatedDate = new Date(updatedStr);
                 const today = new Date();
 
-                // Samakan waktu ke 00:00 agar akurat
                 updatedDate.setHours(0, 0, 0, 0);
                 today.setHours(0, 0, 0, 0);
 

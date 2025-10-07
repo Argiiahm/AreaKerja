@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
 use App\Models\Event;
 use App\Models\HargaPembayaran;
@@ -186,7 +187,8 @@ class AdminController extends Controller
     {
         return view('Admin.Dashboard-admin.Finance.transaksi-koin_admin_dashboard', [
             "title"   =>   "Data Transaksi Koin",
-            "koin"    =>   CatatanKoin::all()
+            "koin"    =>   CatatanKoin::all(),
+            "data"    =>   CatatanCash::all()
         ]);
     }
     public function tips_kerja()

@@ -17,6 +17,7 @@ use App\Models\Divisi;
 use App\Models\HargaKoin;
 use App\Models\LowonganPerusahaan;
 use App\Models\Pelamar;
+use App\Models\PembeliKandidat;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -383,8 +384,10 @@ class PerusahaanController extends Controller
     public function kandidat_ak(Request $request)
     {
         $user = Auth::user();
+        $perusahaan = Perusahaan::where('id', $user->perusahaan->id)->get()->first();
 
         $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status', 'diterima')->sum('total');
+        $lowongan = LowonganPerusahaan::where('perusahaan_id', $perusahaan->id)->get();
 
         $query = Pelamar::where('kategori', 'kandidat aktif');
 
@@ -412,12 +415,67 @@ class PerusahaanController extends Controller
             "data"  =>  HargaPembayaran::all(),
             "harga" => HargaKoin::where('id', 7)->get()->first(),
             "payment"  =>  Bank::all(),
-            "divisi"  =>   Divisi::all()
+            "divisi"  =>   Divisi::all(),
+            "lowongan" => $lowongan
         ]);
     }
-    
-    public function beli_kandidat( Request $request,HargaKoin $harga){
-        dd($request->all());
+
+    public function beli_kandidat(Request $request)
+    {
+        $request->validate([
+            'pelamar_id' => 'required',
+            'lowongan_id' => 'required',
+        ]);
+
+        $user = Auth::user();
+
+        $totalSaldo = CatatanCash::where('user_id', $user->id)
+            ->where('status', 'diterima')
+            ->sum('total');
+
+        $hargaKoin = HargaKoin::where('id', 7)->value('harga') ?? 0;
+
+        if ($totalSaldo < $hargaKoin) {
+            return back()->with('error', 'Saldo koin tidak mencukupi untuk membeli kandidat!');
+        }
+
+        $sisaKurang = $hargaKoin;
+        $cashRecords = CatatanCash::where('user_id', $user->id)
+            ->where('status', 'diterima')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        foreach ($cashRecords as $record) {
+            if ($sisaKurang <= 0) break;
+
+            if ($record->total <= $sisaKurang) {
+                $sisaKurang -= $record->total;
+                $record->total = 0;
+            } else {
+                $record->total -= $sisaKurang;
+                $sisaKurang = 0;
+            }
+
+            $record->save();
+        }
+
+        CatatanKoin::create([
+            'user_id' => $user->id,
+            'no_referensi' => 'AK' . rand(100000, 999999),
+            'pesanan' => 'Pembelian Kandidat Aktif',
+            'dari' => $user->username,
+            'sumber_dana' => 'Koin-' . $user->username,
+            'total' => $hargaKoin,
+        ]);
+
+        PembeliKandidat::create([
+            'no_referensi' => 'AK' . rand(100000, 999999),
+            'pelamar_id' => $request->pelamar_id,
+            'lowongan_id' => $request->lowongan_id,
+            'status' => 'pending',
+        ]);
+
+        return back()->with('success', 'Berhasil membeli kandidat! Koin telah dikurangi.');
     }
 
 

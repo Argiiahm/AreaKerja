@@ -335,23 +335,23 @@
     @endif
 
     @if (session('success'))
-    <div id="toast-success"
-        class="fixed top-5 right-5 z-50 flex items-center w-full max-w-xs p-4 text-green-500 bg-green-100 rounded-lg shadow-lg"
-        role="alert">
-        <div class="flex justify-center">
-            <img src="{{ asset('topup_icon/Ceklis.png') }}" alt="" class="w-10 object-contain">
+        <div id="toast-success"
+            class="fixed top-5 right-5 z-50 flex items-center w-full max-w-xs p-4 text-green-500 bg-green-100 rounded-lg shadow-lg"
+            role="alert">
+            <div class="flex justify-center">
+                <img src="{{ asset('topup_icon/Ceklis.png') }}" alt="" class="w-10 object-contain">
+            </div>
+            <div class="ms-3 text-sm font-medium">
+                {{ session('success') }}
+                <p class="text-zinc-600">Lowongan Anda Sekarang Telah Ter Publish!</p>
+            </div>
         </div>
-        <div class="ms-3 text-sm font-medium">
-            {{ session('success') }}
-            <p class="text-zinc-600">Lowongan Anda Sekarang Telah Ter Publish!</p>
-        </div>
-    </div>
 
-    <script>
-        setTimeout(() => {
-            document.getElementById('toast-success')?.remove();
-        }, 5000);
-    </script>
+        <script>
+            setTimeout(() => {
+                document.getElementById('toast-success')?.remove();
+            }, 5000);
+        </script>
     @endif
 
     <script>

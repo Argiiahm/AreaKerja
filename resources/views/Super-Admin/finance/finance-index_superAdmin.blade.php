@@ -11,7 +11,6 @@
             </select>
         </div>
 
-        {{-- Table Paket Harga --}}
         <div id="paket_harga_table" class="">
             <div class="mb-10">
                 <div class="flex justify-between items-center mx-2 my-2">
@@ -68,9 +67,7 @@
                 </div>
             </div>
         </div>
-        {{-- End Table Paket Harga --}}
 
-        {{-- Riwayat Table Tunai & Koin --}}
         <div id="riwayat_table" class="hidden">
             <div class="mb-10">
                 <h2 class="text-lg font-semibold mb-3">Riwayat Tunai</h2>

@@ -61,7 +61,6 @@
             </table>
         </div>
 
-        {{-- 🔸 Tabel Non Kandidat --}}
         <div id="non_kandidat" class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
             <table class="w-full">
                 <thead>
@@ -100,7 +99,6 @@
             </table>
         </div>
 
-        {{-- 🔸 Tabel Calon Pelamar --}}
         <div id="calon_pelamar" class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
             <table class="w-full">
                 <thead>

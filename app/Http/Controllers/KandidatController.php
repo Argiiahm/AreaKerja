@@ -7,6 +7,7 @@ use App\Models\CatatanCash;
 use App\Models\Divisi;
 use Illuminate\Http\Request;
 use App\Models\HargaPembayaran;
+use App\Models\LowonganPerusahaan;
 use App\Models\PembeliKandidat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -126,12 +127,32 @@ class KandidatController extends Controller
 
     public function rekrut()
     {
-        return view('kandidat.rekrut');
+        $kandidat = Auth::user()->pelamars;
+        $rekrut = PembeliKandidat::where('pelamar_id', $kandidat->id)->get();
+        return view('kandidat.rekrut', [
+            "rekrut"   =>   $rekrut
+        ]);
     }
 
-    public function rekrut_detail()
+    public function rekrut_detail(PembeliKandidat $pembeli)
     {
-        return view('kandidat.rekrut-detail');
+        return view('kandidat.rekrut-detail', [
+            "Data"   =>   $pembeli,
+            "lowongan" => LowonganPerusahaan::all()
+        ]);
+    }
+
+    public function diterima_kandidat(Request $request, PembeliKandidat $p){
+        // dd($request->all());
+        $data = $request->validate([
+            "status"   => 'required'
+        ]);
+
+      
+
+        $p->update($data);
+
+    return redirect()->back()->with('showModalSelesai', true);
     }
 
     public function status()

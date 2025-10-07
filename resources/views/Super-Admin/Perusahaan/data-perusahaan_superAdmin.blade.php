@@ -1,144 +1,154 @@
 @extends('Super-Admin.dashboard-superAdmin.dashboard-super_admin')
 
 @section('super_admin-content')
-    <div class="p-6">
-        <div class="block lg:flex justify-between items-center mb-4">
+<div class="flex justify-center">
+    <div class="w-full max-w-7xl p-6 space-y-6">
+        
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <a href="/dashboard/superadmin/perusahaan/add/perusahaan" 
+                   class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white flex items-center gap-2 px-4 py-2 rounded-lg shadow-md transition-all">
+                    <i class="ph ph-plus text-2xl"></i>
+                    <span class="hidden sm:inline">Tambah</span>
+                </a>
 
-            <div class="flex items-center gap-2">
-                <a id="btnAddPerusahaan" class="bg-orange-500 flex justify-center items-center px-4 py-1 rounded-md"
-                    href="/dashboard/superadmin/perusahaan/add/perusahaan"><i class="ph ph-plus text-2xl text-white"></i></a>
-                <select id="kategori_select_perusahaan" class="bg-orange-500 text-white px-10 py-2 rounded-md" name=""
-                    id="">
-                    <option id="perusahaan_opt" value="perusahaan">Perusahaan</option>
-                    <option id="recruitment_opt" value="recruitment">Recruitment</option>
-                    <option id="talent_hunter_opt" value="talent_hunter">Talent Hunter</option>
-                    <option id="panggilan_opt" value="panggilan">Panggilan</option>
+                <select id="kategori_select_perusahaan" 
+                    class="bg-gray-100 border border-gray-300 text-gray-800 px-4 py-2 rounded-lg focus:ring-2 focus:ring-orange-400 transition-all">
+                    <option value="perusahaan">Perusahaan</option>
+                    <option value="recruitment">Recruitment</option>
+                    <option value="talent_hunter">Talent Hunter</option>
+                    <option value="panggilan">Panggilan</option>
                 </select>
             </div>
 
-            <div class="flex items-center space-x-2 mt-0 lg:mt-0 md:mt">
-                <input type="text" placeholder="name/username"
-                    class="border border-gray-300 rounded-md px-3 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                <button class="bg-gray-700 text-white px-4 py-2 rounded-md">Cari</button>
+            <div class="flex items-center gap-2">
+                <input type="text" 
+                       placeholder="Cari nama / username..." 
+                       class="border border-gray-300 rounded-lg px-4 py-2 w-72 focus:ring-2 focus:ring-orange-400 outline-none transition-all">
+                <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow-md transition-all">Cari</button>
             </div>
         </div>
 
-        {{-- perusahaan_table --}}
-        <div id="perusahaan_table" class="bg-white border rounded-2xl shadow-sm overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="text-left">
-                        <th class="px-6 py-3 font-semibold text-gray-700">ID</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Nama Perusahaan</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Email</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Telepon</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Alamat</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="">
-                        <td class="px-6 py-3 text-gray-700">774770</td>
-                        <td class="px-6 py-3 text-gray-700">Brahim Diaz</td>
-                        <td class="px-6 py-3 text-gray-700">S1</td>
-                        <td class="px-6 py-3 text-gray-700">UI UX Designer</td>
-                        <td class="px-6 py-3 text-gray-700">Jawa Tengah</td>
-                        <td class="px-6 py-4">
-                            <a href="/dashboard/superadmin/recrutiment"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">
-                                View
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+            <div class="bg-gray-100 px-6 py-4 flex items-center justify-between">
+                <h2 id="table_title" class="text-lg font-semibold text-gray-700">Daftar Perusahaan</h2>
+            </div>
 
+            <div class="overflow-x-auto">
+                <table id="perusahaan_table" class="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-3 text-left">ID</th>
+                            <th class="px-6 py-3 text-left">Nama</th>
+                            <th class="px-6 py-3 text-left">Email</th>
+                            <th class="px-6 py-3 text-left">Telepon</th>
+                            <th class="px-6 py-3 text-left">Alamat</th>
+                            <th class="px-6 py-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 transition-all">
+                            <td class="px-6 py-4 font-medium">774770</td>
+                            <td class="px-6 py-4">Brahim Diaz</td>
+                            <td class="px-6 py-4">brahim@company.com</td>
+                            <td class="px-6 py-4">+62 812 3456 7890</td>
+                            <td class="px-6 py-4">Jawa Tengah</td>
+                            <td class="px-6 py-4 text-center">
+                                <a href="/dashboard/superadmin/recrutiment"
+                                   class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-md text-sm transition-all">View</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        {{-- recruitment_table --}}
-        <div id="recruitment_table" class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="text-left">
-                        <th class="px-6 py-3 font-semibold text-gray-700">ID</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Nama Perusahaan</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Email</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Telepon</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Alamat</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="/dashboard/superadmin/nonkandidat_view">
-                        <td class="px-6 py-3 text-gray-700">0</td>
-                        <td class="px-6 py-3 text-gray-700">Brahim Diaz</td>
-                        <td class="px-6 py-3 text-gray-700">S1</td>
-                        <td class="px-6 py-3 text-gray-700">UI UX Designer</td>
-                        <td class="px-6 py-3 text-gray-700">Jawa Tengah</td>
-                        <td class="px-6 py-4">
-                            <a href="/dashboard/superadmin/recrutiment"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">
-                                View
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <table id="recruitment_table" class="hidden min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-3 text-left">ID</th>
+                            <th class="px-6 py-3 text-left">Nama</th>
+                            <th class="px-6 py-3 text-left">Email</th>
+                            <th class="px-6 py-3 text-left">Telepon</th>
+                            <th class="px-6 py-3 text-left">Alamat</th>
+                            <th class="px-6 py-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 transition-all">
+                            <td class="px-6 py-4 font-medium">001</td>
+                            <td class="px-6 py-4">PT Maju Jaya</td>
+                            <td class="px-6 py-4">info@majujaya.co.id</td>
+                            <td class="px-6 py-4">0812-9000-999</td>
+                            <td class="px-6 py-4">Jakarta Selatan</td>
+                            <td class="px-6 py-4 text-center">
+                                <a href="/dashboard/superadmin/recrutiment"
+                                   class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-md text-sm transition-all">View</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        {{-- Table Tulent Hunter --}}
-        <div id="talent_hunter_table" class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="text-left">
-                        <th class="px-6 py-3 font-semibold text-gray-700">ID</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Nama Perusahaan</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Email</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Telepon</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Alamat</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="">
-                        <td class="px-6 py-3 text-gray-700">774770</td>
-                        <td class="px-6 py-3 text-gray-700">Brahim Diaz</td>
-                        <td class="px-6 py-3 text-gray-700">S1</td>
-                        <td class="px-6 py-3 text-gray-700">UI UX Designer</td>
-                        <td class="px-6 py-3 text-gray-700">Jawa Tengah</td>
-                        <td class="px-6 py-4">
-                            <a href="/dashboard/superadmin/talenthunter"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">
-                                View
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        {{-- Table Panggilan --}}
-        <div id="table_panggilan" class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="text-left">
-                        <th class="px-6 py-3 font-semibold text-gray-700">ID</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Nama Perusahaan</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Email</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Telepon</th>
-                        <th class="px-6 py-3 font-semibold text-gray-700">Kepentingan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="">
-                        <td class="px-6 py-3 text-gray-700">774770</td>
-                        <td class="px-6 py-3 text-gray-700">Brahim Diaz</td>
-                        <td class="px-6 py-3 text-gray-700">S1</td>
-                        <td class="px-6 py-3 text-gray-700">UI UX Designer</td>
-                        <td class="px-6 py-4">List Nama Pekerja</td>
-                    </tr>
-                </tbody>
-            </table>
+                <table id="talent_hunter_table" class="hidden min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-3 text-left">ID</th>
+                            <th class="px-6 py-3 text-left">Nama</th>
+                            <th class="px-6 py-3 text-left">Email</th>
+                            <th class="px-6 py-3 text-left">Telepon</th>
+                            <th class="px-6 py-3 text-left">Alamat</th>
+                            <th class="px-6 py-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 transition-all">
+                            <td class="px-6 py-4 font-medium">554</td>
+                            <td class="px-6 py-4">Talent Seeker ID</td>
+                            <td class="px-6 py-4">hr@talentseeker.id</td>
+                            <td class="px-6 py-4">0812-8888-5555</td>
+                            <td class="px-6 py-4">Bandung</td>
+                            <td class="px-6 py-4 text-center">
+                                <a href="/dashboard/superadmin/talenthunter"
+                                   class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-md text-sm transition-all">View</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table id="table_panggilan" class="hidden min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-3 text-left">ID</th>
+                            <th class="px-6 py-3 text-left">Nama</th>
+                            <th class="px-6 py-3 text-left">Email</th>
+                            <th class="px-6 py-3 text-left">Telepon</th>
+                            <th class="px-6 py-3 text-left">Kepentingan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 transition-all">
+                            <td class="px-6 py-4 font-medium">774770</td>
+                            <td class="px-6 py-4">Brahim Diaz</td>
+                            <td class="px-6 py-4">brahim@company.com</td>
+                            <td class="px-6 py-4">0812-3456-7890</td>
+                            <td class="px-6 py-4">List Nama Pekerja</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
+</div>
+
+<script>
+document.getElementById('kategori_select_perusahaan').addEventListener('change', function() {
+    const selected = this.value;
+    const tables = ['perusahaan', 'recruitment', 'talent_hunter', 'panggilan'];
+    tables.forEach(name => {
+        document.getElementById(`${name}_table`)?.classList.add('hidden');
+    });
+    document.getElementById(`${selected}_table`)?.classList.remove('hidden');
+    document.getElementById('table_title').textContent = 
+        selected.charAt(0).toUpperCase() + selected.slice(1).replace('_', ' ');
+});
+</script>
 @endsection
