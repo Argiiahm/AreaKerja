@@ -143,21 +143,6 @@
                         </div>
                     @endif
                 </div>
-
-                {{-- <div class="relative text-3xl cursor-pointer">
-                    <i class="ph ph-dots-three-vertical">pp</i>
-                    <div class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg hidden group-hover:block">
-                        <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"><i
-                                class="ph ph-linkedin-logo"></i> Linkedin</a>
-                        <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"><i
-                                class="ph ph-envelope"></i> Gmail</a>
-                        <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"><i
-                                class="ph ph-globe"></i> Website</a>
-                        <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"><i
-                                class="ph ph-whatsapp-logo"></i> Whatsapp</a>
-                    </div>
-                </div> --}}
-
             </div>
 
             <div class="px-6 pb-6">

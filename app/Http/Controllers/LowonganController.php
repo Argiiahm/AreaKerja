@@ -8,6 +8,7 @@ use App\Models\CatatanKoin;
 use App\Models\LowonganPerusahaan;
 use Illuminate\Http\Request;
 use App\Models\PaketLowongan;
+use App\Models\PembeliKandidat;
 use Illuminate\Support\Facades\Auth;
 
 class LowonganController extends Controller
@@ -56,7 +57,8 @@ class LowonganController extends Controller
 
         return view('Lowongan-tersimpan.lowongan-tersimpan_detail', [
             "Data"  =>   $lowongan,
-            "Rekomendasi"  =>   $rekomendasi
+            "Rekomendasi"  =>   $rekomendasi,
+            "beli"   =>  PembeliKandidat::all()
         ]);
     }
 
