@@ -38,6 +38,7 @@
                                     Terima
                                 </button>
                                 <button
+                                    onclick="openModalTolak('{{ optional(optional($Data->lowongan_perusahaan)->perusahaan)->nama_perusahaan }}')"
                                     class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold shadow transition">
                                     Tolak
                                 </button>
@@ -110,37 +111,37 @@
                     <div class="space-y-4">
                         @foreach ($lowongan as $l)
                             @if ($l->paket_id)
-                            @if ($l->perusahaan_id === $Data->lowongan_perusahaan->perusahaan_id && $l->id !== $Data->lowongan_perusahaan->id)
-                                <a href="/lowongan/tersimpan/detail/{{ $l->slug }}"
-                                    class="block bg-gray-50 border border-gray-100 rounded-xl p-4 hover:bg-orange-50 hover:border-orange-300 transition-all shadow-sm">
-                                    <div class="flex items-start gap-3">
-                                        <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo"
-                                            class="w-12 h-12 object-cover rounded-md shadow-sm flex-shrink-0">
-                                        <div class="flex-1 min-w-0">
-                                            <p class="text-xs text-gray-500 mb-0.5 truncate">
-                                                {{ $l->perusahaan->nama_perusahaan }}
-                                            </p>
-                                            <h3 class="font-semibold text-gray-800 text-sm leading-snug break-words">
-                                                {{ $l->nama }}
-                                                <span class="text-gray-500"> - {{ $l->jenis }}</span>
-                                            </h3>
-                                            <p class="text-xs text-gray-500 mt-0.5 break-words">
-                                                {{ $l->alamat }}
-                                            </p>
-                                            <div
-                                                class="mt-2 flex flex-wrap justify-between items-center text-xs text-gray-600 gap-y-2">
-                                                <span
-                                                    class="bg-gray-100 px-3 py-1 rounded-md font-medium whitespace-nowrap">
-                                                    Rp {{ $l->gaji_awal }} - {{ $l->gaji_akhir }}
-                                                </span>
-                                                <span class="text-gray-400 updated-date"
-                                                    data-updated="{{ $l->updated_at }}">
-                                                    Menghitung...
-                                                </span>
+                                @if ($l->perusahaan_id === $Data->lowongan_perusahaan->perusahaan_id && $l->id !== $Data->lowongan_perusahaan->id)
+                                    <a href="/lowongan/tersimpan/detail/{{ $l->slug }}"
+                                        class="block bg-gray-50 border border-gray-100 rounded-xl p-4 hover:bg-orange-50 hover:border-orange-300 transition-all shadow-sm">
+                                        <div class="flex items-start gap-3">
+                                            <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo"
+                                                class="w-12 h-12 object-cover rounded-md shadow-sm flex-shrink-0">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-xs text-gray-500 mb-0.5 truncate">
+                                                    {{ $l->perusahaan->nama_perusahaan }}
+                                                </p>
+                                                <h3 class="font-semibold text-gray-800 text-sm leading-snug break-words">
+                                                    {{ $l->nama }}
+                                                    <span class="text-gray-500"> - {{ $l->jenis }}</span>
+                                                </h3>
+                                                <p class="text-xs text-gray-500 mt-0.5 break-words">
+                                                    {{ $l->alamat }}
+                                                </p>
+                                                <div
+                                                    class="mt-2 flex flex-wrap justify-between items-center text-xs text-gray-600 gap-y-2">
+                                                    <span
+                                                        class="bg-gray-100 px-3 py-1 rounded-md font-medium whitespace-nowrap">
+                                                        Rp {{ $l->gaji_awal }} - {{ $l->gaji_akhir }}
+                                                    </span>
+                                                    <span class="text-gray-400 updated-date"
+                                                        data-updated="{{ $l->updated_at }}">
+                                                        Menghitung...
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
+                                    </a>
                                 @endif
                             @endif
                         @endforeach
@@ -197,6 +198,101 @@
                 </p>
             </div>
         </div>
+
+        <div id="modalKonfirmasitolak"
+            class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+            <div class="bg-white rounded-2xl p-8 w-[380px] text-center border-t-4 border-orange-500 shadow-xl">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3">Konfirmasi Rekrutmen</h2>
+                <p class="text-gray-600 mb-6">
+                    Yakin ingin menolak rekrutmen dari
+                    <span class="font-semibold text-orange-600" id="namaPerusahaanTolak">(Nama Perusahaan)</span>?
+                </p>
+                <div class="flex justify-center gap-4">
+                    <button onclick="openModalAlasan()"
+                        class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg shadow">
+                        Tolak
+                    </button>
+                    <button onclick="closeModalTolak()"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-2 rounded-lg shadow">
+                        Batal
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalAlasan" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-2xl p-8 w-[420px] text-center shadow-lg relative">
+                <h2 class="text-lg font-semibold text-gray-800 mb-6">Pilih Alasan</h2>
+
+                <form action="/ditolak/kandidat/{{ $Data->id }}" method="POST" class="text-left space-y-3">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" hidden name="status" value="ditolak">
+                    <label class="block border-b border-gray-300 pb-1 cursor-pointer">
+                        <input type="radio" name="alasan" value="Gaji yang ditawarkan tidak sesuai" class="mr-2">
+                        Gaji yang ditawarkan tidak sesuai
+                    </label>
+
+                    <label class="block border-b border-gray-300 pb-1 cursor-pointer">
+                        <input type="radio" name="alasan" value="Menerima tawaran dari perusahaan lain"
+                            class="mr-2">
+                        Menerima tawaran dari perusahaan lain
+                    </label>
+
+                    <label class="block border-b border-gray-300 pb-1 cursor-pointer">
+                        <input type="radio" name="alasan" value="Menginginkan benefit yang lebih lengkap"
+                            class="mr-2">
+                        Menginginkan benefit yang lebih lengkap
+                    </label>
+
+                    <label class="block border-b border-gray-300 pb-1 cursor-pointer">
+                        <input type="radio" name="alasan" value="Menginginkan fleksibilitas dalam bekerja"
+                            class="mr-2">
+                        Menginginkan fleksibilitas dalam bekerja
+                    </label>
+
+                    <div class="pt-2">
+                        <label class="font-medium text-gray-700">Lainnya :</label>
+                        <textarea name="alasan_lainya"
+                            class="w-full border border-gray-300 rounded-md mt-1 p-2 text-sm focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                            rows="3" placeholder="Tulis alasan lain..."></textarea>
+                    </div>
+
+                    <div class="flex justify-center gap-3 pt-6">
+                        <button type="submit"
+                            class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition">
+                            Lanjut
+                        </button>
+                        <button type="button" onclick="closeModalAlasan()"
+                            class="bg-orange-200 hover:bg-orange-300 text-orange-700 px-6 py-2 rounded-lg font-semibold transition">
+                            Kembali
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="modalTolakSelesai"
+            class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+            <div class="bg-white rounded-2xl p-8 w-[340px] text-center border-t-4 border-orange-500 shadow-xl relative">
+                <button onclick="closeModalTolakSelesai()"
+                    class="absolute top-3 right-4 text-gray-500 text-xl font-bold hover:text-gray-700">&times;</button>
+                <div class="flex flex-col items-center justify-center">
+                    <div class="bg-orange-100 p-4 rounded-full mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-orange-500" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                    </div>
+                    <h2 class="text-lg font-semibold text-gray-800 mb-2">Penolakan Selesai</h2>
+                    <p class="text-gray-600">Penolakan anda telah dikirim ke<br>
+                        <span id="namaPerusahaanTolakSelesai"
+                            class="font-semibold text-black">{{ $Data->lowongan_perusahaan->perusahaan->nama_perusahaan }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <script>
@@ -232,5 +328,34 @@
                 else el.textContent = diffDays + ' hari yang lalu';
             });
         });
+
+        const ModalTolak = document.getElementById("modalKonfirmasitolak");
+        const ModalTolakSelesai = document.getElementById("modalTolakSelesai");
+
+        function openModalAlasan() {
+            document.getElementById("modalAlasan").classList.remove("hidden");
+            document.getElementById("modalKonfirmasitolak").classList.add("hidden");
+        }
+
+        function closeModalAlasan() {
+            document.getElementById("modalAlasan").classList.add("hidden");
+        }
+
+
+        window.openModalTolak = function(namaPerusahaan) {
+            document.getElementById("namaPerusahaanTolak").innerText = namaPerusahaan;
+            ModalTolak.classList.remove("hidden");
+        };
+        window.closeModalTolak = function() {
+            document.getElementById("modalKonfirmasitolak").classList.add("hidden");
+        };
+
+        @if (session('showModalSelesaiTolak'))
+            ModalTolakSelesai.classList.remove('hidden');
+        @endif
+
+        window.closeModalTolakSelesai = function() {
+            ModalTolakSelesai.classList.add('hidden');
+        };
     </script>
 @endsection

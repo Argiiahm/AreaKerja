@@ -142,18 +142,35 @@ class KandidatController extends Controller
         ]);
     }
 
-    public function diterima_kandidat(Request $request, PembeliKandidat $p){
+    public function diterima_kandidat(Request $request, PembeliKandidat $p)
+    {
         // dd($request->all());
         $data = $request->validate([
             "status"   => 'required'
         ]);
 
-      
-
         $p->update($data);
 
-    return redirect()->back()->with('showModalSelesai', true);
+        return redirect()->back()->with('showModalSelesai', true);
     }
+    public function ditolak_kandidat(Request $request, PembeliKandidat $p)
+    {
+        $request->validate([
+            'status' => 'required',
+            'alasan' => 'nullable',
+            'alasan_lainya' => 'nullable|string'
+        ]);
+
+        $alasan = $request->alasan_lainya ?: $request->alasan;
+
+        $p->update([
+            'status' => $request->status,
+            'alasan' => $alasan
+        ]);
+
+        return redirect()->back()->with('showModalSelesaiTolak', true);
+    }
+
 
     public function status()
     {

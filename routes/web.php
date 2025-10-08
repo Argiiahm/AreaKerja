@@ -57,6 +57,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/detail/pembayaran/kandidat/{p:id}', [KandidatController::class, 'transaksi_detail'])->middleware('auth');
     Route::put('/transaksi/kandidat/update/{p:id}', [KandidatController::class, 'transaksi_update'])->middleware('auth');
     Route::put('/diterima/kandidat/{p:id}', [KandidatController::class, 'diterima_kandidat'])->middleware('auth');
+    Route::put('/ditolak/kandidat/{p:id}', [KandidatController::class, 'ditolak_kandidat'])->middleware('auth');
 
 
     // End Route Landing Page
