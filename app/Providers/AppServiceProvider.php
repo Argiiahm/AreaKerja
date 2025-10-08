@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\PelamarLowongan;
+use App\Models\PembeliKandidat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -23,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('perusahaan', function($user) {
+        Gate::define('perusahaan', function ($user) {
             return $user->role == 'perusahaan';
         });
 
@@ -44,7 +45,12 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
             $view->with(compact('Pesan', 'unreadCount'));
-        }); 
+        });
+
+        View::composer('*', function ($view) {
+            $PesanPerusahaan = \App\Models\PembeliKandidat::all();
+
+            $view->with(compact('PesanPerusahaan'));
+        });
     }
-    
 }

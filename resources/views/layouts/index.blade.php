@@ -195,6 +195,83 @@
                             </ul>
 
                         </div>
+                    @elseif (Auth::check() && Auth::user()->role === 'perusahaan')
+                        <div id="notif"
+                            class="z-50 hidden my-4 w-96 text-base bg-white divide-y divide-gray-100 rounded-lg shadow-lg">
+                            <div class="flex items-center justify-between px-4 py-3">
+                                <span class="block text-sm font-semibold text-gray-900">Notifikasi</span>
+                                <a href="#" class="text-sm font-medium text-orange-500 hover:underline">Lihat
+                                    Semua</a>
+                            </div>
+                            <ul class="max-h-80 mx-2 overflow-y-auto"> 
+                                @if ($PesanPerusahaan->isNotEmpty()) 
+                                    @foreach ($PesanPerusahaan as $pp)
+                                        @if ($pp->status !== 'pending'   && $pp->lowongan_perusahaan->perusahaan->id === Auth::user()->perusahaan->id)
+                                            @php
+                                                $lowongan = \App\Models\Pelamar::find($pp->pelamar_id);
+                                            @endphp
+                                            <li
+                                                class="px-4 py-3 {{ $pp->is_read === 0 ? 'bg-gray-200' : 'border-zinc-300' }} hover:bg-gray-50 transition">
+                                                <form action="/detail/notif/read/{{ $pp->id }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="text-left ">
+                                                        <div class="flex items-start gap-3">
+                                                            <img class="w-10 h-10 rounded-full object-cover"
+                                                                src="{{ asset('storage/' . $lowongan->img_profile) }}"
+                                                                alt="Logo {{ $lowongan->nama_pelamar }}">
+                                                            <div class="flex-1">
+                                                                @if ($pp->status === 'diterima')
+                                                                    <p class="text-sm text-gray-700">
+                                                                        <span
+                                                                            class="font-medium text-gray-900">Selamat!</span>
+                                                                        Lamaran Anda ke
+                                                                        <span
+                                                                            class="font-semibold">{{ $lowongan->nama_pelamar }}</span>
+                                                                        di Lowongan <span
+                                                                            class="font-semibold">{{ $lowongan->divisi }} </span>
+                                                                        <span
+                                                                            class="text-green-600 font-medium">{{ $pp->status }}</span>.
+                                                                    </p>
+                                                                @elseif ($pp->status === 'ditolak')
+                                                                    <p class="text-sm text-gray-700">
+                                                                        <span class="font-medium text-gray-900">Mohon
+                                                                            Maaf!</span>
+                                                                        Lamaran Anda ke Kandidat
+                                                                        <span
+                                                                            class="font-semibold">{{ $lowongan->nama_pelamar }}</span>
+                                                                        di Lowongan <span
+                                                                            class="font-semibold">{{ $pp->lowongan_perusahaan->nama}}</span>
+                                                                        <span
+                                                                            class="text-red-600 font-medium">{{ $pp->status }}</span>.
+                                                                    </p>
+                                                                @endif
+                                                                <span class="text-xs text-gray-400">
+                                                                    {{ $pp->updated_at->diffForHumans() }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        @endif
+                                    @endforeach
+
+
+                                    <div class="flex items-center justify-end px-5 pb-3 gap-2 mt-2">
+                                        <i class="ph ph-checks text-blue-500 font-bold text-lg"></i>
+                                        <button class="text-xs font-semibold text-gray-600 hover:text-blue-600">
+                                            Tandai Baca
+                                        </button>
+                                    </div>
+                                @else
+                                    <li class="px-4 py-6 text-center text-sm text-gray-500">
+                                        Belum ada notifikasi.
+                                    </li>
+                                @endif
+                            </ul>
+
+                        </div>
                     @endif
 
 
@@ -427,8 +504,6 @@
                         <a href="/login"
                             class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
                     @endif
-
-
                 </div>
                 <button data-collapse-toggle="navbar-sticky" type="button"
                     class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -466,7 +541,6 @@
                             <a href="/"
                                 class="block {{ Request()->is('') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Event</a>
                         </li>
-
                     @elseif (Auth::check() && Auth::user()->role === 'pelamar')
                         <li>
                             <a href="/"
@@ -502,9 +576,7 @@
                                 class="block {{ Request()->is('pasanglowongan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Pasang
                                 Lowongan</a>
                         </li>
-
                     @else
-
                         <li>
                             <a href="/"
                                 class="block {{ Request()->is('/') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Beranda</a>

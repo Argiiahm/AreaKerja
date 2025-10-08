@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LowonganPerusahaan;
 use App\Models\PelamarLowongan;
+use App\Models\PembeliKandidat;
 
 class HomeController extends Controller
 {
@@ -11,15 +12,17 @@ class HomeController extends Controller
     {
         return view('home', [
             "Data"  =>    LowonganPerusahaan::all(),
-            "Pesan"  =>   PelamarLowongan::all()
+            "Pesan"  =>   PelamarLowongan::all(),
+            "PesanPerusahaan"  =>   PembeliKandidat::all()
         ]);
     }
-
+    
     public function viewjob(LowonganPerusahaan $job)
     {
         return view('details-job', [
             "Data"  =>   $job,
-            "Pesan" =>   PelamarLowongan::all()
+            "Pesan" =>   PelamarLowongan::all(),
+            "PesanPerusahaan"  =>   PembeliKandidat::all()
         ]);
     }
 
