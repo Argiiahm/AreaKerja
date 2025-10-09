@@ -277,7 +277,8 @@ Route::middleware(['status'])->group(function () {
 
     Route::get('/dashboard/admin/event', [AdminController::class, 'event'])->middleware('admin');
     Route::get('/dashboard/admin/event/detail/{event:id}', [AdminController::class, 'event_detail'])->middleware('admin');
-    Route::get('/dashboard/admin/event/add', [AdminController::class, 'event_add'])->middleware('admin');
+    Route::get('/dashboard/admin/event/add', [
+        AdminController::class, 'event_add'])->middleware('admin');
     Route::post('/dashboard/admin/event/tambah', [AdminController::class, 'tambah_event'])->middleware('admin');
     Route::delete('/dashboard/admin/event/hapus/{event:id}', [AdminController::class, 'hapus_event'])->middleware('admin');
     Route::get('/dashboard/admin/event/edit/{event:id}', [AdminController::class, 'event_edit'])->middleware('admin');
@@ -323,7 +324,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja'])->middleware('perusahaan');
 
     Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/gabung/event', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/gabung/event/{event:id}', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');
 
     // Transaksi Top Up  
@@ -347,4 +348,5 @@ Route::middleware(['status'])->group(function () {
     Route::put('/dashboard/perusahaan/konfirmasi/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_status'])->middleware('perusahaan');
     
     Route::put('/detail/notif/read/{lowongan:id}', [HomeController::class, 'read_detail_notif']);
+    Route::put('/detail/notif/read/perusahaan/{pembeli:id}', [PerusahaanController::class, 'read_detail_notif_perusahaan']);
 });

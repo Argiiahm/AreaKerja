@@ -12,8 +12,10 @@ use App\Models\PaketLowongan;
 use Illuminate\Support\Carbon;
 use App\Models\HargaPembayaran;
 use App\Models\PelamarLowongan;
+
 use App\Models\Alamatperusahaan;
 use App\Models\Divisi;
+use App\Models\Event;
 use App\Models\HargaKoin;
 use App\Models\LowonganPerusahaan;
 use App\Models\Pelamar;
@@ -478,6 +480,18 @@ class PerusahaanController extends Controller
         return back()->with('success', 'Berhasil membeli kandidat! Koin telah dikurangi.');
     }
 
+    public function read_detail_notif_perusahaan(PembeliKandidat $pembeli)
+    {
+        // dd($pembeli->id);
+
+        $pembeli->update(
+            [
+                "is_read" => true
+            ]
+        );
+        return redirect()->back();
+    }
+
 
     public function cv_kandidat()
     {
@@ -519,11 +533,15 @@ class PerusahaanController extends Controller
     //event
     public function halaman_event()
     {
-        return view('Perusahaan.Event.halaman-event');
+        return view('Perusahaan.Event.halaman-event',[
+            "Data"   =>   Event::all()
+        ]);
     }
-    public function gabung_event()
+    public function gabung_event(Event $event)
     {
-        return view('Perusahaan.Event.gabung-event');
+        return view('Perusahaan.Event.gabung-event',[
+            "Data"  =>  $event
+        ]);
     }
     public function detail_event_kosong()
     {

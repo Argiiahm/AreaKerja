@@ -165,7 +165,8 @@ class KandidatController extends Controller
 
         $p->update([
             'status' => $request->status,
-            'alasan' => $alasan
+            'alasan' => $alasan,
+            'expired_date' => now()->addHours(24)
         ]);
 
         return redirect()->back()->with('showModalSelesaiTolak', true);

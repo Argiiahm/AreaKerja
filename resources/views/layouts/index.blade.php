@@ -208,18 +208,18 @@
                                     @foreach ($PesanPerusahaan as $pp)
                                         @if ($pp->status !== 'pending'   && $pp->lowongan_perusahaan->perusahaan->id === Auth::user()->perusahaan->id)
                                             @php
-                                                $lowongan = \App\Models\Pelamar::find($pp->pelamar_id);
+                                                $pelamar = \App\Models\Pelamar::find($pp->pelamar_id);
                                             @endphp
                                             <li
                                                 class="px-4 py-3 {{ $pp->is_read === 0 ? 'bg-gray-200' : 'border-zinc-300' }} hover:bg-gray-50 transition">
-                                                <form action="/detail/notif/read/{{ $pp->id }}" method="POST">
+                                                <form action="/detail/notif/read/perusahaan/{{ $pp->id }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="submit" class="text-left ">
                                                         <div class="flex items-start gap-3">
                                                             <img class="w-10 h-10 rounded-full object-cover"
-                                                                src="{{ asset('storage/' . $lowongan->img_profile) }}"
-                                                                alt="Logo {{ $lowongan->nama_pelamar }}">
+                                                                src="{{ asset('storage/' . $pelamar->img_profile) }}"
+                                                                alt="Logo {{ $pelamar->nama_pelamar }}">
                                                             <div class="flex-1">
                                                                 @if ($pp->status === 'diterima')
                                                                     <p class="text-sm text-gray-700">
@@ -227,9 +227,9 @@
                                                                             class="font-medium text-gray-900">Selamat!</span>
                                                                         Lamaran Anda ke
                                                                         <span
-                                                                            class="font-semibold">{{ $lowongan->nama_pelamar }}</span>
+                                                                            class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
                                                                         di Lowongan <span
-                                                                            class="font-semibold">{{ $lowongan->divisi }} </span>
+                                                                            class="font-semibold">{{ $pelamar->divisi }} </span>
                                                                         <span
                                                                             class="text-green-600 font-medium">{{ $pp->status }}</span>.
                                                                     </p>
@@ -239,7 +239,7 @@
                                                                             Maaf!</span>
                                                                         Lamaran Anda ke Kandidat
                                                                         <span
-                                                                            class="font-semibold">{{ $lowongan->nama_pelamar }}</span>
+                                                                            class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
                                                                         di Lowongan <span
                                                                             class="font-semibold">{{ $pp->lowongan_perusahaan->nama}}</span>
                                                                         <span
@@ -538,8 +538,8 @@
                                 Lowongan</a>
                         </li>
                         <li>
-                            <a href="/"
-                                class="block {{ Request()->is('') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Event</a>
+                            <a href="/dashboard/perusahaan/event"
+                                class="block {{ Request()->is('dashboard/perusahaan/event') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Event</a>
                         </li>
                     @elseif (Auth::check() && Auth::user()->role === 'pelamar')
                         <li>
@@ -702,7 +702,7 @@
             Auth::user()->pelamars->deskripsi_diri &&
             Auth::user()->pelamars->tanggal_lahir &&
             Auth::user()->pelamars->gender &&
-            Auth::user()->pelamars->telepon_pelamar)
+            Auth::user()->pelamars->telepon_pelamar || Auth::check() && Auth::user()->role === "perusahaan")
 
         @if (session('show_event_modal') && session('latest_event'))
             @php $event = session('latest_event'); @endphp
@@ -710,8 +710,8 @@
                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
                 <div class="bg-white shadow-xl w-3/4 lg:w-3/5 p-6 rounded-xl">
                     <div>
-                        <h1 class="text-4xl font-bold border-b-2 py-3">🎉 Event Untukmu!</h1>
-                        <h2 class="text-2xl font-bold my-4">{{ $event->title }}</h2>
+                        <h1 class="text-4xl text-gray-500 font-bold border-b-2 py-3">🎉 Event Untukmu!</h1>
+                        <h2 class="text-2xl  text-gray-300 font-bold my-4">{{ $event->title }}</h2>
                     </div>
 
                     <div class="overflow-y-auto max-h-[60vh] pr-2">
