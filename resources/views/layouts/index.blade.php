@@ -108,13 +108,23 @@
                         data-dropdown-placement="bottom" class="relative">
                         <span class="sr-only">Open notification</span>
                         <i class="ph-fill text-[#fa6601] ph-bell text-3xl"></i>
-                        @foreach ($Pesan as $p)
-                            @if ($p->status !== 'pending' && $p->pelamar_id === Auth::user()->pelamars->id && $p->is_read === 0)
-                                <span
-                                    class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600">
-                                </span>
-                            @endif
-                        @endforeach
+                        @if (Auth::check() && Auth::user()->role === 'pelamar')
+                            @foreach ($Pesan as $p)
+                                @if ($p->status !== 'pending' && $p->pelamar_id === Auth::user()->pelamars->id && $p->is_read === 0)
+                                    <span
+                                        class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600">
+                                    </span>
+                                @endif
+                            @endforeach
+                        @elseif (Auth::check() && Auth::user()->role === 'perusahaan')
+                            @foreach ($PesanPerusahaan as $pp)
+                                @if ($pp->status !== 'pending' && $pp->is_read === 0)
+                                    <span
+                                        class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600">
+                                    </span>
+                                @endif
+                            @endforeach
+                        @endif
                     </button>
 
 
@@ -203,16 +213,17 @@
                                 <a href="#" class="text-sm font-medium text-orange-500 hover:underline">Lihat
                                     Semua</a>
                             </div>
-                            <ul class="max-h-80 mx-2 overflow-y-auto"> 
-                                @if ($PesanPerusahaan->isNotEmpty()) 
+                            <ul class="max-h-80 mx-2 overflow-y-auto">
+                                @if ($PesanPerusahaan->isNotEmpty())
                                     @foreach ($PesanPerusahaan as $pp)
-                                        @if ($pp->status !== 'pending'   && $pp->lowongan_perusahaan->perusahaan->id === Auth::user()->perusahaan->id)
+                                        @if ($pp->status !== 'pending' && $pp->lowongan_perusahaan->perusahaan->id === Auth::user()->perusahaan->id)
                                             @php
                                                 $pelamar = \App\Models\Pelamar::find($pp->pelamar_id);
                                             @endphp
                                             <li
                                                 class="px-4 py-3 {{ $pp->is_read === 0 ? 'bg-gray-200' : 'border-zinc-300' }} hover:bg-gray-50 transition">
-                                                <form action="/detail/notif/read/perusahaan/{{ $pp->id }}" method="POST">
+                                                <form action="/detail/notif/read/perusahaan/{{ $pp->id }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="submit" class="text-left ">
@@ -229,7 +240,8 @@
                                                                         <span
                                                                             class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
                                                                         di Lowongan <span
-                                                                            class="font-semibold">{{ $pelamar->divisi }} </span>
+                                                                            class="font-semibold">{{ $pelamar->divisi }}
+                                                                        </span>
                                                                         <span
                                                                             class="text-green-600 font-medium">{{ $pp->status }}</span>.
                                                                     </p>
@@ -241,7 +253,7 @@
                                                                         <span
                                                                             class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
                                                                         di Lowongan <span
-                                                                            class="font-semibold">{{ $pp->lowongan_perusahaan->nama}}</span>
+                                                                            class="font-semibold">{{ $pp->lowongan_perusahaan->nama }}</span>
                                                                         <span
                                                                             class="text-red-600 font-medium">{{ $pp->status }}</span>.
                                                                     </p>
@@ -520,8 +532,8 @@
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:mt-0 md:border-0 ">
                     @if (Auth::check() && Auth::user()->role == 'perusahaan')
                         <li>
-                            <a href=""
-                                class="block {{ Request()->is('') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Berlangganan</a>
+                            <a href="/dashboard/perusahaan/berlangganan"
+                                class="block {{ Request()->is('dashboard/perusahaan/berlangganan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Berlangganan</a>
                         </li>
                         <li>
                             <a href="/talenthunter"
@@ -695,14 +707,16 @@
 
 
 
-    @if (Auth::check() &&
+    @if (
+        (Auth::check() &&
             Auth::user()->role === 'pelamar' &&
             Auth::user()->pelamars->nama_pelamar &&
             Auth::user()->pelamars->deskripsi_diri &&
             Auth::user()->pelamars->deskripsi_diri &&
             Auth::user()->pelamars->tanggal_lahir &&
             Auth::user()->pelamars->gender &&
-            Auth::user()->pelamars->telepon_pelamar || Auth::check() && Auth::user()->role === "perusahaan")
+            Auth::user()->pelamars->telepon_pelamar) ||
+            (Auth::check() && Auth::user()->role === 'perusahaan'))
 
         @if (session('show_event_modal') && session('latest_event'))
             @php $event = session('latest_event'); @endphp

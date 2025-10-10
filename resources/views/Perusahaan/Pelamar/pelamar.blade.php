@@ -52,8 +52,8 @@
                         </thead>
                         <tbody class="divide-y">
                             @foreach ($datas->sortBy(function ($item) {
-                                return $item->status === 'diterima' ? 1 : 0;
-                            }) as $d)
+            return $item->status === 'diterima' ? 1 : 0;
+        }) as $d)
                                 @if ($d->lowongan_id === $data->id)
                                     <tr>
                                         <td class="px-4 py-3 text-gray-700"> {{ $d->created_at?->format('d M Y') }}</td>
@@ -92,8 +92,10 @@
                                         <td class="px-4 py-3 text-gray-700">
                                             @if ($d->expired_date > $now)
                                                 Sisa {{ $now->diffInDays($d->expired_date) }} hari lagi
+                                            @elseif ($d->expired_date === null)
+                                                <span class="text-green-500 font-semibold">30 Hari</span>
                                             @else
-                                                <span class="text-red-600 font-semibold">Lowongan sudah expired</span>
+                                                <span class="text-red-600 font-semibold">Sudah Expired</span>
                                             @endif
                                         </td>
                                     </tr>

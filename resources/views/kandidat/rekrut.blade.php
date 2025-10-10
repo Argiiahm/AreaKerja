@@ -26,8 +26,7 @@
     <section class="mx-10 mt-16 mb-20">
         @if ($rekrut->isEmpty())
             <div class="text-center py-16 bg-gray-50 rounded-2xl shadow-sm">
-                <img src="{{ asset('image/empty-state.png') }}" alt="Empty" class="mx-auto w-48 opacity-70 mb-6">
-                <p class="text-gray-500 text-lg">Belum ada lowongan yang tersimpan.</p>
+                <p class="text-gray-500 text-lg">Belum ada lowongan.</p>
             </div>
         @else
             <div class="grid grid-cols-1 gap-6">

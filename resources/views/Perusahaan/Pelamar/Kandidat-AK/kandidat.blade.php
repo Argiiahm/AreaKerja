@@ -1,16 +1,13 @@
 @extends('layouts.index')
 
 @section('content')
-    {{-- Hero Section --}}
     <section class="relative w-full h-[75vh] lg:h-[90vh] flex items-center justify-start overflow-hidden">
-        {{-- Background --}}
         <div class="absolute inset-0 z-0">
             <img src="https://png.pngtree.com/background/20240507/original/pngtree-digital-marketing-website-displayed-on-rendered-office-desktop-picture-image_8837781.jpg"
                 alt="Background" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/60"></div>
         </div>
 
-        {{-- Content --}}
         <div class="relative z-10 px-6 lg:px-20 mt-16 lg:mt-0">
             <div class="max-w-2xl space-y-4">
                 <h1 class="text-4xl lg:text-6xl font-extrabold text-white leading-tight drop-shadow-lg">
@@ -24,9 +21,8 @@
         </div>
     </section>
 
-    {{-- Filter Form --}}
     <form action="/dashboard/perusahaan/kandidatak" method="GET"
-        class="bg-white shadow-xl -mt-8 relative z-20 rounded-2xl flex flex-wrap items-center justify-between gap-4 px-6 py-6 mx-4 lg:mx-40 border border-gray-100">
+        class="bg-white shadow-xl -mt-8 relative  rounded-2xl flex flex-wrap items-center justify-between gap-4 px-6 py-6 mx-4 lg:mx-40 border border-gray-100">
         <div class="flex flex-col lg:flex-row items-center gap-4 w-full lg:w-auto flex-wrap">
             <div class="flex items-center border border-gray-300 rounded-lg px-3 py-2 w-full lg:w-44">
                 <select name="skill" class="focus:outline-none text-sm w-full bg-transparent">
@@ -60,7 +56,6 @@
         </button>
     </form>
 
-    {{-- Koin Balance --}}
     <div class="flex justify-end mt-8 px-4 lg:px-20">
         <div class="bg-white border border-gray-100 shadow-md rounded-xl p-5 flex flex-col items-center w-full lg:w-72">
             <div class="flex items-center justify-center">
@@ -74,7 +69,6 @@
         </div>
     </div>
 
-    {{-- Kandidat Table --}}
     <div class="mt-10 px-4 lg:px-20 mb-16">
         <div class="overflow-x-auto shadow-md rounded-xl">
             <table class="w-full text-sm text-left border-collapse">
@@ -106,10 +100,25 @@
                                     </button>
                                 </td>
                                 <td class="px-5 py-3 text-center">
-                                    <button onclick="cekKoin({{ $d->id }})"
-                                        class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-sm transition">
-                                        Beli
-                                    </button>
+                                    @php
+                                        $pembelian = $pembeliKandidat
+                                            ->where('pelamar_id', $d->id)
+                                            ->sortByDesc('created_at')
+                                            ->first();
+                                    @endphp
+
+                                    @if ($pembelian && $pembelian->status === 'pending')
+                                        <button
+                                            class="bg-zinc-500 hover:bg-zinc-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-sm transition">
+                                            <i class="ph ph-clock"></i>
+                                        </button>
+                                    @else
+                                        <button onclick="cekKoin({{ $d->id }})"
+                                            class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-sm transition">
+                                            Beli
+                                        </button>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endif
@@ -119,8 +128,6 @@
         </div>
     </div>
 
-    {{-- Modals --}}
-    {{-- Modal Koin --}}
     <div id="modalKoin" class="fixed inset-0 flex items-center justify-center bg-black/50 hidden z-40 px-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 text-center">
             <h2 class="text-2xl font-bold mb-2 text-red-500">Upss!!</h2>
@@ -130,7 +137,6 @@
         </div>
     </div>
 
-    {{-- Modal Verifikasi --}}
     <div id="modalVerifikasi" class="fixed inset-0 flex items-center justify-center bg-black/50 hidden z-50 px-4">
         <div class="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 text-center">
             <div class="flex justify-center items-center mb-4">
@@ -148,7 +154,6 @@
         </div>
     </div>
 
-    {{-- Modal Lowongan --}}
     <div id="modalLowongan" class="fixed inset-0 flex items-center justify-center bg-black/50 hidden z-[70] px-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 text-center">
             <h2 class="text-2xl font-bold mb-2 text-orange-500">Pilih Lowongan</h2>
@@ -177,7 +182,6 @@
         </div>
     </div>
 
-    {{-- Toast --}}
     @if (session('success'))
         <div id="toast-success"
             class="fixed top-5 right-5 z-50 flex items-center w-full max-w-xs p-4 text-green-600 bg-green-100 rounded-lg shadow-lg animate-fade-in"
@@ -193,7 +197,6 @@
         </script>
     @endif
 
-    {{-- JS --}}
     <script>
         let koinUser = {{ $totalSaldo }};
 

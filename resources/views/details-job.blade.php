@@ -7,7 +7,7 @@
                 <i class="ph ph-magnifying-glass text-zinc-900 text-lg mr-2"></i>
                 <input type="text" placeholder="Posisi lowongan, kata kunci, ..."
                     class="w-full outline-none border-none placeholder-gray-500 text-gray-700" />
-            </div> 
+            </div>
 
             <span class="w-px h-6 bg-gray-300"></span>
 
@@ -185,112 +185,124 @@
         </div>
     </section>
 
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] border-2 border-purple-500">
-            @php
-                $pelamar = Auth::user()->pelamars; // relasi ke tabel pelamars
-                $profilLengkap = $pelamar && $pelamar->nama_pelamar && $pelamar->deskripsi_diri && $pelamar->tanggal_lahir && $pelamar->gender && $pelamar->telepon_pelamar && $pelamar->img_profile && $pelamar->gaji_minimal && $pelamar->gaji_maksimal ;
-            @endphp
-            @if (!$profilLengkap)
-                <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
-                <p class="text-center mb-3">Lengkapi Profile anda Terlebih Dahulu</p>
-                <div class="flex justify-center">
-                    <button onclick="window.location='/profile'"
-                        class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
-                        Lengkapi
-                    </button>
-                </div>
-            @else
-                @if (!Auth::user()->pelamars->lowongan_perusahaan->contains($Data->id))
+    @if (Auth::check())
+        <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] border-2 border-purple-500">
+                @php
+                    $pelamar = Auth::user()->pelamars;
+                    $profilLengkap =
+                        $pelamar &&
+                        $pelamar->nama_pelamar &&
+                        $pelamar->deskripsi_diri &&
+                        $pelamar->tanggal_lahir &&
+                        $pelamar->gender &&
+                        $pelamar->telepon_pelamar &&
+                        $pelamar->img_profile &&
+                        $pelamar->gaji_minimal &&
+                        $pelamar->gaji_maksimal;
+                @endphp
+                @if (!$profilLengkap)
                     <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
-                    <p class="text-center mb-6">
-                        CV akan dikirimkan ke <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
-                    </p>
-
-                    <div class="flex justify-center gap-4">
-                        <form action="/lamar/cepat" method="POST">
-                            @csrf
-                            <input type="text" name="lowongan_id" value="{{ $Data->id }}" id="" hidden>
-                            <button
-                                class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
-                                Kirim
-                            </button>
-                        </form>
-                        <button id="closeModalBtn"
+                    <p class="text-center mb-3">Lengkapi Profile anda Terlebih Dahulu</p>
+                    <div class="flex justify-center">
+                        <button onclick="window.location='/profile'"
                             class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
-                            Batal
+                            Lengkapi
                         </button>
                     </div>
                 @else
-                    <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
-                    <p class="text-center mb-1">
-                        Anda Sudah Mengirim Lamaran Ke <br> <span
-                            class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
-                    </p>
-                    <p class="text-center mb-3">Tunggu Respon dari perusahaan</p>
-                    <div class="flex justify-center">
-                        <button id="closeModalBtn"
-                            class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                    @if (!Auth::user()->pelamars->lowongan_perusahaan->contains($Data->id))
+                        <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+                        <p class="text-center mb-6">
+                            CV akan dikirimkan ke <span
+                                class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+                        </p>
+
+                        <div class="flex justify-center gap-4">
+                            <form action="/lamar/cepat" method="POST">
+                                @csrf
+                                <input type="text" name="lowongan_id" value="{{ $Data->id }}" id=""
+                                    hidden>
+                                <button
+                                    class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                    Kirim
+                                </button>
+                            </form>
+                            <button id="closeModalBtn"
+                                class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                Batal
+                            </button>
+                        </div>
+                    @else
+                        <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+                        <p class="text-center mb-1">
+                            Anda Sudah Mengirim Lamaran Ke <br> <span
+                                class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+                        </p>
+                        <p class="text-center mb-3">Tunggu Respon dari perusahaan</p>
+                        <div class="flex justify-center">
+                            <button id="closeModalBtn"
+                                class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                Selesai
+                            </button>
+                        </div>
+                    @endif
+                @endif
+            </div>
+        </div>
+    @endif
+
+        @if (session('success'))
+            <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
+                    <h2 class="mt-2">Lamaran Anda Berhasil Terkirim</h2>
+                    <p class="text-zinc-400">Silahkan Menunggu Informasi Selanjutnya <br> Melalui Sytem Kamu.</p>
+                    <div class="flex justify-center mb-2">
+                        <img class="my-8" src="{{ asset('Icon/poplogout.png') }}" alt="">
+                    </div>
+
+                    <div>
+                        <button id="closeSuccessModal"
+                            class="inline-block rounded-md py-2 px-10 bg-orange-500 text-white font-semibold hover:bg-gray-800 transition">
                             Selesai
                         </button>
                     </div>
-                @endif
-            @endif
-        </div>
-    </div>
-
-    @if (session('success'))
-        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
-                <h2 class="mt-2">Lamaran Anda Berhasil Terkirim</h2>
-                <p class="text-zinc-400">Silahkan Menunggu Informasi Selanjutnya <br> Melalui Sytem Kamu.</p>
-                <div class="flex justify-center mb-2">
-                    <img class="my-8" src="{{ asset('Icon/poplogout.png') }}" alt="">
-                </div>
-
-                <div>
-                    <button id="closeSuccessModal"
-                        class="inline-block rounded-md py-2 px-10 bg-orange-500 text-white font-semibold hover:bg-gray-800 transition">
-                        Selesai
-                    </button>
                 </div>
             </div>
-        </div>
+
+            <script>
+                const modalSuccess = document.getElementById("modalSuccess");
+                const closeSuccessModal = document.getElementById("closeSuccessModal");
+
+                closeSuccessModal.addEventListener("click", () => {
+                    modalSuccess.classList.add("hidden");
+                });
+            </script>
+        @endif
+
 
         <script>
-            const modalSuccess = document.getElementById("modalSuccess");
-            const closeSuccessModal = document.getElementById("closeSuccessModal");
+            const modal = document.getElementById("modal");
+            const openModalBtn = document.getElementById("openModalBtn");
+            const closeModalBtn = document.getElementById("closeModalBtn");
 
-            closeSuccessModal.addEventListener("click", () => {
-                modalSuccess.classList.add("hidden");
+            openModalBtn.addEventListener("click", () => {
+                modal.classList.remove("hidden");
+            });
+
+            closeModalBtn.addEventListener("click", () => {
+                modal.classList.add("hidden");
+            });
+
+            window.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.classList.add("hidden");
+                }
+            });
+
+            document.getElementById("kirimBtn").addEventListener("click", () => {
+                alert("CV berhasil dikirim!");
+                modal.classList.add("hidden");
             });
         </script>
-    @endif
-
-
-    <script>
-        const modal = document.getElementById("modal");
-        const openModalBtn = document.getElementById("openModalBtn");
-        const closeModalBtn = document.getElementById("closeModalBtn");
-
-        openModalBtn.addEventListener("click", () => {
-            modal.classList.remove("hidden");
-        });
-
-        closeModalBtn.addEventListener("click", () => {
-            modal.classList.add("hidden");
-        });
-
-        window.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.classList.add("hidden");
-            }
-        });
-
-        document.getElementById("kirimBtn").addEventListener("click", () => {
-            alert("CV berhasil dikirim!");
-            modal.classList.add("hidden");
-        });
-    </script>
-
-@endsection
+    @endsection

@@ -27,82 +27,91 @@
             </button>
         </div>
 
-
-        <div class="flex justify-center my-10">
-            <p class="text-[#fa6601] font-semibold text-center lg:text-left md:text-left">Lamar Pekerjaan Kamu ~ <span
-                    class="font-normal block lg:inline md:inline text-zinc-600">Dengan Waktu
-                    Dan Langkah Yang Tepat</span></p>
+        <div class="flex justify-center my-10 mx-2">
+            <p class="text-[#fa6601] font-semibold text-center lg:text-left md:text-left">
+                Lamar Pekerjaan Kamu ~
+                <span class="font-normal block lg:inline md:inline text-zinc-600">
+                    Dengan Waktu Dan Langkah Yang Tepat
+                </span>
+            </p>
         </div>
 
         <div>
-            <p class="font-semibold text-zinc-700 px-2 lg:px-0">KATEGORI PEKERJAAN POPULER</p>
-            <div class="flex gap-3">
+            <p class="font-medium hidden lg:block md:block text-zinc-600 px-5 lg:px-0">
+                KATEGORI PEKERJAAN POPULER
+            </p>
 
-                <div class="px-2 lg:px-0 md:ml-5 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-4 gap-2 mt-5 flex-1">
+            <div class="flex flex-col lg:flex-row md:flex-row gap-4 mx-2 mt-5">
+                <!-- Grid Kategori -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 w-full">
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Teknologi</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Teknologi</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Pelayanan</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Pelayanan</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Administrasi</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Administrasi</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Pemasaran</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Pemasaran</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Pendidik</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Pendidik</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Customer Service</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Customer Service</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Keuangan</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Keuangan</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Kasir</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Kasir</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Admin</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Admin</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Programmer</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Programmer</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Marketing</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Marketing</p>
                     </div>
                     <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Multimedia</p>
+                        <p class="text-center text-zinc-500 font-medium text-sm">Multimedia</p>
                     </div>
                 </div>
-                <div class="mt-5 flex flex-col pr-2 lg:pr-0 md:mr-5 gap-2 w-32">
+
+                <!-- Jenis Pekerjaan -->
+                <div class="grid grid-cols-3 md:grid-cols-1 lg:grid-cols-1 gap-2 w-full lg:w-32 md:w-32">
                     <div
-                        class="border border-gray-300 border-l-4 border-l-red-600 py-2 flex items-center justify-center gap-1 shadow-sm text-red-600 font-semibold">
+                        class="border border-gray-300 border-l-4 border-l-red-600 py-2 flex items-center justify-center gap-1 shadow-sm text-red-600 font-semibold text-sm text-center">
                         <i class="ph ph-fire text-lg"></i>
                         Full Time
                     </div>
                     <div
-                        class="border border-gray-300 border-l-4 border-l-sky-500 py-2 flex items-center justify-center gap-1 shadow-sm text-sky-500 font-semibold">
+                        class="border border-gray-300 border-l-4 border-l-sky-500 py-2 flex items-center justify-center gap-1 shadow-sm text-sky-500 font-semibold text-sm text-center">
                         <i class="ph ph-globe text-lg"></i>
                         WFO/WFH
                     </div>
                     <div
-                        class="border border-gray-300 border-l-4 border-l-orange-600 py-2 flex items-center justify-center gap-1 shadow-sm text-orange-600 font-semibold">
+                        class="border border-gray-300 border-l-4 border-l-orange-600 py-2 flex items-center justify-center gap-1 shadow-sm text-orange-600 font-semibold text-sm text-center">
                         <i class="ph ph-graduation-cap text-lg"></i>
                         Graduate
                     </div>
                 </div>
+
             </div>
         </div>
+
     </section>
 
     <div class="mt-10 flex justify-center gap-10  items-center font-semibold border-b">
         <button id="umpan-lowongan"
-            class="border-b-2 border-[#fa6601] text-[13px] lg:text-[16px] md:text-[16px] cursor-pointer">UMPAN
+            class="border-b-2 border-[#fa6601] text-[13px] lg:text-[16px] text-zinc-500 md:text-[16px] cursor-pointer">UMPAN
             LOWONGAN</button>
         <button id="pencarian"
-            class="gacursor-pointer border-[#fa6601]  text-[13px] lg:text-[16px] md:text-[16px]">PENCARIAN BARU BARU
+            class="gacursor-pointer border-[#fa6601]  text-[13px] lg:text-[16px]  text-zinc-500 md:text-[16px]">PENCARIAN BARU BARU
             INI</button>
     </div>
 
@@ -112,36 +121,40 @@
         <div id="section-umpan-lowongan" class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3">
             @foreach ($Data as $d)
                 @if ($d->paket_id)
-                <a href="/detail/job/{{ $d->slug }}" class="border p-8">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <p class="bg-[#fdedf4] w-fit p-2 text-[#9d2b6b] font-semibold rounded-md text-[12px]">dibutuhkan
-                                segera</p>
-                            <h1 class="font-bold text-[18px] my-3">{{ $d->nama }} - {{ $d->jenis }} </h1>
+                    <a href="/detail/job/{{ $d->slug }}" class="border p-8">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="bg-[#fdedf4] w-fit p-2 text-[#9d2b6b] font-semibold rounded-md text-[12px]">
+                                    dibutuhkan
+                                    segera</p>
+                                <h1 class="font-bold text-[18px] my-3">{{ $d->nama }} - {{ $d->jenis }} </h1>
+                            </div>
+                            <div class="text-5xl font-bold">
+                                <i class="ph ph-dots-three-vertical"></i>
+                            </div>
                         </div>
-                        <div class="text-5xl font-bold">
-                            <i class="ph ph-dots-three-vertical"></i>
+                        <p class="text-gray-500 font-semibold">{{ $d->perusahaan->nama_perusahaan }}</p>
+                        <p class="text-gray-500 font-semibold">{{ $d->alamat }}</p>
+                        <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp.
+                            {{ $d->gaji_awal }} – Rp. {{ $d->gaji_akhir }}
+                            per
+                            bulan
+                        </p>
+                        <div class="flex items-center gap-2 my-4">
+                            <i class="ph-fill ph-paper-plane-right text-blue-600 text-2xl"></i>
+                            <span>Lamar Dengan Cepat</span>
                         </div>
-                    </div>
-                    <p class="text-gray-500 font-semibold">{{ $d->perusahaan->nama_perusahaan }}</p>
-                    <p class="text-gray-500 font-semibold">{{ $d->alamat }}</p>
-                    <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp. {{ $d->gaji_awal }} – Rp. {{ $d->gaji_akhir }}
-                        per
-                        bulan
-                    </p>
-                    <div class="flex items-center gap-2 my-4">
-                        <i class="ph-fill ph-paper-plane-right text-blue-600 text-2xl"></i>
-                        <span>Lamar Dengan Cepat</span>
-                    </div>
 
-                    <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
-                        <li>Gaji – Rp{{ $d->gaji_awal }} – Rp{{ $d->gaji_akhir }} per bulan Tergantung Pengalaman.</li>
-                        <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
-                        <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video berdurasi 1
-                            menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan diberikan).</li>
-                    </ul>
-                    <span>Aktif 2jam lalu</span>
-                </a>
+                        <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
+                            <li>Gaji – Rp{{ $d->gaji_awal }} – Rp{{ $d->gaji_akhir }} per bulan Tergantung Pengalaman.</li>
+                            <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
+                            <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video
+                                berdurasi 1
+                                menit tentang diri Anda yang memperkenalkan diri kepada perusahaan (Rinciannya akan
+                                diberikan).</li>
+                        </ul>
+                        <span>Aktif 2jam lalu</span>
+                    </a>
                 @endif
             @endforeach
         </div>

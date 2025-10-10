@@ -38,10 +38,8 @@
                 </div>
                 <div>
                     <label class="block font-medium mb-1">Alamat</label>
-                    <select name="alamat"
+                    <input type="text" name="alamat"
                         class="w-full border-2 rounded-md px-3 py-2 focus:ring-orange-400 focus:border-orange-400">
-                        <option value="rumah">Rumah</option>
-                    </select>
                 </div>
             </div>
 

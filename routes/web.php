@@ -58,8 +58,6 @@ Route::middleware(['status'])->group(function () {
     Route::put('/transaksi/kandidat/update/{p:id}', [KandidatController::class, 'transaksi_update'])->middleware('auth');
     Route::put('/diterima/kandidat/{p:id}', [KandidatController::class, 'diterima_kandidat'])->middleware('auth');
     Route::put('/ditolak/kandidat/{p:id}', [KandidatController::class, 'ditolak_kandidat'])->middleware('auth');
-
-
     // End Route Landing Page
     
     // CV
@@ -73,12 +71,10 @@ Route::middleware(['status'])->group(function () {
     Route::get('/lowongan/tersimpan/detail/{lowongan:slug}', [LowonganController::class, 'lowongan_tersimpan_detail']);
     // End Pasang Lowongan
 
-
     // Profile
     Route::get('/profile', [ProfileController::class, 'profile'])->middleware('auth');
     Route::put('/hapus/profile/{pelamar:id}', [ProfileController::class, 'hapus_profile'])->middleware('auth');
     Route::put('/lengkapi/profile/{pelamar:id}', [ProfileController::class, 'tambah_profile'])->middleware('auth');
-
 
     Route::get('/alamat', [ProfileController::class, 'alamat'])->middleware('auth');
     Route::get('/data/alamat', [ProfileController::class, 'form_data_alamat'])->middleware('auth');
@@ -86,21 +82,17 @@ Route::middleware(['status'])->group(function () {
     Route::get('/alamat/pelamar/edit/{alamatpelamar:id}', [ProfileController::class, 'edit_data_alamat'])->middleware('auth');
     Route::put('/alamat/pelamar/update/{alamatpelamar:id}', [ProfileController::class, 'update_data_alamat'])->middleware('auth');
 
-
     Route::post('/tambah/pendidikan', [ProfileController::class, 'add_pendidikan'])->middleware('auth');
     Route::get('/edit/pendidikan/{pendidikan:id}', [ProfileController::class, 'edit_pendidikan'])->middleware('auth');
     Route::put('/update/pendidikan/{pendidikan:id}', [ProfileController::class, 'update_pendidikan'])->middleware('auth');
-
 
     Route::post('/tambah/organisasi', [ProfileController::class, 'add_organisasi'])->middleware('auth');
     Route::get('/edit/organisasi/{organisasi:id}', [ProfileController::class, 'edit_organisasi'])->middleware('auth');
     Route::put('/update/organisasi/{organisasi:id}', [ProfileController::class, 'update_organisasi'])->middleware('auth');
 
-
     Route::post('/tambah/pengalaman/kerja', [ProfileController::class, 'tambah_pengalaman'])->middleware('auth');
     Route::get('/edit/pengalaman/kerja/{pengalamankerja:id}', [ProfileController::class, 'edit_pengalaman'])->middleware('auth');
     Route::put('/update/pengalaman/kerja/{pengalamankerja:id}', [ProfileController::class, 'update_pengalaman'])->middleware('auth');
-
 
     Route::post('/tambah/skill', [ProfileController::class, 'tambah_skill'])->middleware('auth');
     Route::get('/edit/skill/{skill:id}', [ProfileController::class, 'edit_skill'])->middleware('auth');
@@ -111,43 +103,12 @@ Route::middleware(['status'])->group(function () {
     Route::get('/bantuan', [FaqController::class, 'index']);
     // END FAQ
 
-    //Auth Finance
-    // Route::get('/login/finance', [AuthController::class, 'login_finance']);
-    // Route::post('/masuk/finance', [AuthController::class, 'masuk_finance']);
-    // Route::delete('/logout/finance', [AuthController::class, 'logout_finance']);
-    // Route::get('/register/finance', [AuthController::class, 'register_finance']);
-    // Route::post('/buat/finance', [AuthController::class, 'buat_finance']);
-    // Route::get('/verifikasi/finance', [AuthController::class, 'verifikasi_finance']);
-    // Route::get('/verifikasi/finance/otp', [AuthController::class, 'verifikasi_finance_otp']);
-    // Route::get('/change/password/finance', [AuthController::class, 'change_password_finance']);
-
-    //Auth Admin
-    // Route::get('/login/admin', [AuthController::class, 'login_admin']);
-    // Route::post('/masuk/admin', [AuthController::class, 'masuk_admin']);
-    // Route::get('/register/admin', [AuthController::class, 'register_admin']);
-    // Route::post('/buat/admin', [AuthController::class, 'buat_admin']);
-    // Route::get('/verifikasi/admin', [AuthController::class, 'verifikasi_admin']);
-    // Route::get('/verifikasi/admin/otp', [AuthController::class, 'verifikasi_admin_otp']);
-    // Route::get('/change/password/admin', [AuthController::class, 'change_password_admin']);
-
-
     // Kandidat
     Route::get('/kandidat/kosong', [KandidatController::class, 'kandidat_kosong'])->middleware('kandidat');
     Route::get('/kandidat/lengkap', [KandidatController::class, 'kandidat_lengkap'])->middleware('kandidat');
     Route::get('/kandidat/rekrut', [KandidatController::class, 'rekrut'])->middleware('kandidat');
     Route::get('/kandidat/rekrut/detail/{pembeli:id}', [KandidatController::class, 'rekrut_detail'])->middleware('kandidat');
     Route::get('/kandidat/status', [KandidatController::class, 'status']);
-
-
-    //Auth super Admin
-    // Route::get('/login/super/admin', [AuthController::class, 'login_super_admin']);
-    // Route::post('/login/super/admin/masuk', [AuthController::class, 'masuk_super_admin']);
-    // Route::delete('/logout/super/admin', [AuthController::class, 'logout_super_admin']);
-    // Route::get('/register/super/admin', [AuthController::class, 'register_super_admin']);
-    // Route::post('/buat/superadmin', [AuthController::class, 'buat_super_admin']);
-    // Route::get('/verifikasi/super/admin', [AuthController::class, 'verifikasi_super_admin']);
-    // Route::get('/verifikasi/super/admin/otp', [AuthController::class, 'verifikasi_super_admin_otp']);
-    // Route::get('/change/password/super/admin', [AuthController::class, 'change_password_super_admin']);
 
     // Dashboard Finance
     Route::get('/dashboard/finance', [FinanceController::class, 'index'])->middleware('finance');
@@ -289,15 +250,12 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/profile', [PerusahaanController::class, 'profile'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/edit/profile', [PerusahaanController::class, 'edit_profile'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/update/profile/{perusahaan:id}', [PerusahaanController::class, 'update_profile'])->middleware('perusahaan');
-
     Route::get('/dashboard/perusahaan/tambah/alamat', [PerusahaanController::class, 'tambah_alamat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/isi/alamat', [PerusahaanController::class, 'isi_alamat'])->middleware('perusahaan');
     Route::post('/dashboard/perusahaan/create/alamat', [PerusahaanController::class, 'create_alamat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/edit/alamat/{alamatperusahaan:id}', [PerusahaanController::class, 'edit_alamat'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/update/alamat/{alamatperusahaan:id}', [PerusahaanController::class, 'update_alamat'])->middleware('perusahaan');
-
     Route::get('/dashboard/perusahaan/alamat/jadi', [PerusahaanController::class, 'alamat_jadi'])->middleware('perusahaan');
-
     Route::get('/dashboard/perusahaan/lowongan', [PerusahaanController::class, 'lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/isi/lowongan', [PerusahaanController::class, 'isi_lowongan'])->middleware('perusahaan');
     Route::post('/dashboard/perusahaan/create/lowongan', [PerusahaanController::class, 'create_lowongan'])->middleware('perusahaan');
@@ -307,14 +265,10 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak', [PerusahaanController::class, 'kandidat_ak'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak/cv', [PerusahaanController::class, 'cv_kandidat'])->middleware('perusahaan');
-
     Route::post('/beli/kandidatak/{harga:id}', [PerusahaanController::class, 'beli_kandidat'])->middleware('perusahaan');
- 
-
     Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/pengaturan/password/change/{user}', [PerusahaanController::class, 'password_change'])->middleware('perusahaan');
-
     Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info'])->middleware('perusahaan');
@@ -322,7 +276,6 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/nama', [PerusahaanController::class, 'kandidat_nama'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/laporan', [PerusahaanController::class, 'kandidat_laporan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja'])->middleware('perusahaan');
-
     Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/gabung/event/{event:id}', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');
@@ -331,17 +284,14 @@ Route::middleware(['status'])->group(function () {
     Route::post('/dashboard/perusahaan/topup', [PerusahaanController::class, 'topup'])->middleware('perusahaan');
     Route::get('/detail/pembayaran/{trx:id}', [PerusahaanController::class, 'detail_pembayaran'])->middleware('perusahaan');
     Route::put('/upload/bukti/pembayaran/{bukti:id}', [PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
-    
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');
     Route::post('/topup/lowongan', [LowonganController::class, 'topup'])->middleware('perusahaan');
 
     //Lamar Cepat
     Route::post('/lamar/cepat', [PelamarController::class, 'lamar_cepat']);
-
     Route::get('/dashboard/perusahaan/pelamar/{lowongan:slug}', [PerusahaanController::class, 'pelamar'])->middleware('perusahaan')->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/form/terima/lamaran/{lowongan:id}', [PerusahaanController::class, 'formKonfirmasiLamaran'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->middleware('perusahaan');
-
 
     Route::put('/dashboard/perusahaan/terima/lamaran/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_lamaran'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim/{lowongan}', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->name('konfirmasi.lamaran.terkirim');

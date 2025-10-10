@@ -31,38 +31,31 @@
                     class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Provinsi <span class="text-red-500">*</span>
-                </label>
-                <select name="provinsi"
-                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
-                    <option value="" selected disabled>Provinsi</option>
-                    <option value="jawa">jawa</option>
-                </select>
-            </div>
+            <select id="provinsi" name="provinsi"
+                class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                <option value="" selected disabled>Provinsi</option>
+                @foreach ($Provinsi as $p)
+                    <option value="{{ $p->name }}" data-id="{{ $p->id }}">{{ $p->name }}</option>
+                @endforeach
+            </select>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Kota <span class="text-red-500">*</span>
-                </label>
-                <select name="kota"
-                    class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
-                    <option value="" selected disabled>Kota</option>
-                    <option value="banjar">banjar</option>
-                </select>
-            </div>
+            <select id="kota" name="kota"
+                class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                <option value="" selected disabled>Kota</option>
+            </select>
+
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                     Kecamatan <span class="text-red-500">*</span>
                 </label>
-                <select name="kecamatan"
+                <input id="kecamatan" type="text" name="kecamatan" placeholder="kecamatan"
                     class="w-full border border-orange-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
-                    <option value="" selected disabled>Kecamatan</option>
-                    <option value="padaherang">padaherang</option>
-                </select>
             </div>
+
+
+
+
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -83,4 +76,42 @@
             </div>
         </form>
     </div>
+
+    <script>
+        const kabupatenData = @json($Kabupaten);
+        const kecamatanData = @json($Daerah);
+
+        const provinsiSelect = document.getElementById('provinsi');
+        const kotaSelect = document.getElementById('kota');
+        const kecamatanSelect = document.getElementById('kecamatan');
+
+        provinsiSelect.addEventListener('change', function() {
+            const provinsiId = this.selectedOptions[0].getAttribute('data-id');
+            kotaSelect.innerHTML = '<option value="" selected disabled>Kota</option>';
+            kecamatanSelect.innerHTML = '<option value="" selected disabled>Kecamatan</option>';
+
+            const filteredKota = kabupatenData.filter(k => k.provinsi_id == provinsiId);
+            filteredKota.forEach(k => {
+                const option = document.createElement('option');
+                option.value = k.name;
+                option.setAttribute('data-id', k.id);
+                option.textContent = k.name;
+                kotaSelect.appendChild(option);
+            });
+        });
+
+
+        kotaSelect.addEventListener('change', function() {
+            const kotaId = this.selectedOptions[0].getAttribute('data-id');
+            kecamatanSelect.innerHTML = '<option value="" selected disabled>Kecamatan</option>';
+
+            const filteredKecamatan = kecamatanData.filter(kec => kec.kabupaten_id == kotaId);
+            filteredKecamatan.forEach(kec => {
+                const option = document.createElement('option');
+                option.value = kec.name;
+                option.textContent = kec.name;
+                kecamatanSelect.appendChild(option);
+            });
+        });
+    </script>
 @endsection

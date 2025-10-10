@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use App\Models\Kabupaten;
 use App\Models\Perusahaan;
 use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
@@ -12,14 +13,15 @@ use App\Models\PaketLowongan;
 use Illuminate\Support\Carbon;
 use App\Models\HargaPembayaran;
 use App\Models\PelamarLowongan;
-
 use App\Models\Alamatperusahaan;
+use App\Models\Daerah;
 use App\Models\Divisi;
 use App\Models\Event;
 use App\Models\HargaKoin;
 use App\Models\LowonganPerusahaan;
 use App\Models\Pelamar;
 use App\Models\PembeliKandidat;
+use App\Models\Provinsi;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -165,7 +167,11 @@ class PerusahaanController extends Controller
     }
     public function isi_alamat()
     {
-        return view('Perusahaan.profile.isi-alamat');
+        return view('Perusahaan.profile.isi-alamat',[
+            "Provinsi"    =>    Provinsi::all(),
+            "Kabupaten"   =>    Kabupaten::all(),
+            "Daerah"      =>  Daerah::all() 
+        ]);
     }
 
     public function create_alamat(Request $request)
@@ -411,6 +417,10 @@ class PerusahaanController extends Controller
         }
 
         $Data = $query->get();
+
+        $pembeliKandidat = PembeliKandidat::whereIn('pelamar_id', $Data->pluck('id'))->get()->keyBy('pelamar_id');
+
+
         return view('Perusahaan.Pelamar.Kandidat-AK.kandidat', [
             "Data"    =>    $Data,
             "totalSaldo"  =>  $totalSaldo,
@@ -418,7 +428,8 @@ class PerusahaanController extends Controller
             "harga" => HargaKoin::where('id', 7)->get()->first(),
             "payment"  =>  Bank::all(),
             "divisi"  =>   Divisi::all(),
-            "lowongan" => $lowongan
+            "lowongan" => $lowongan,
+            "pembeliKandidat" => $pembeliKandidat
         ]);
     }
 
@@ -479,7 +490,6 @@ class PerusahaanController extends Controller
 
         return back()->with('success', 'Berhasil membeli kandidat! Koin telah dikurangi.');
     }
-
     public function read_detail_notif_perusahaan(PembeliKandidat $pembeli)
     {
         // dd($pembeli->id);
@@ -491,6 +501,7 @@ class PerusahaanController extends Controller
         );
         return redirect()->back();
     }
+
 
 
     public function cv_kandidat()
@@ -533,13 +544,13 @@ class PerusahaanController extends Controller
     //event
     public function halaman_event()
     {
-        return view('Perusahaan.Event.halaman-event',[
+        return view('Perusahaan.Event.halaman-event', [
             "Data"   =>   Event::all()
         ]);
     }
     public function gabung_event(Event $event)
     {
-        return view('Perusahaan.Event.gabung-event',[
+        return view('Perusahaan.Event.gabung-event', [
             "Data"  =>  $event
         ]);
     }
