@@ -176,8 +176,8 @@
                                                                             class="font-semibold">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
                                                                         divisi <span
                                                                             class="font-semibold">{{ $lowongan->nama }}</span>
-                                                                        <span
-                                                                            class="text-red-600 font-medium">{{ $p->status }}</span>.
+                                                                        <span class="text-red-600 font-medium">Belum
+                                                                            Bisa Kami Terima</span>.
                                                                     </p>
                                                                 @endif
                                                                 <span class="text-xs text-gray-400">
@@ -532,8 +532,13 @@
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:mt-0 md:border-0 ">
                     @if (Auth::check() && Auth::user()->role == 'perusahaan')
                         <li>
+                            @if (Auth::user()->perusahaan->is_berlangganan)
+                                <a href="/dashboard/perusahaan/berlangganan/kandidat"
+                                    class="block {{ Request()->is('dashboard/perusahaan/berlangganan/kandidat') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Beranda</a>
+                            @else
                             <a href="/dashboard/perusahaan/berlangganan"
                                 class="block {{ Request()->is('dashboard/perusahaan/berlangganan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Berlangganan</a>
+                            @endif
                         </li>
                         <li>
                             <a href="/talenthunter"

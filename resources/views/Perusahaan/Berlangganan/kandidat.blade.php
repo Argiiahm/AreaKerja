@@ -1,4 +1,4 @@
-@extends('layouts.index')
+ @extends('layouts.index')
 @section('content')
     <div class="font-sans mt-24">
 
@@ -28,7 +28,7 @@
                                     yang bermasalah, list pekerja yang handal, hingga membuat laporan harian pekerja.
                                 </p>
                             </div>
-                            <a href="#" class="text-orange-500 text-sm font-medium mt-2 hover:underline">
+                            <a href="/dashboard/perusahaan/berlangganan/kandidat/info" class="text-orange-500 text-sm font-medium mt-2 hover:underline">
                                 &gt; Lebih Detail
                             </a>
                         </div>

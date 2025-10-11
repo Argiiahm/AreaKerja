@@ -16,24 +16,18 @@
                             <th class="py-3 text-center">Dari</th>
                             <th class="py-3 text-center">Sumber Dana</th>
                             <th class="py-3 text-center">Total Koin</th>
-                            <th class="py-3 text-center">Detail</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y">
                         @foreach ($data as $d)
-                        <tr>
-                            <td class="py-3 text-center">{{$loop->iteration}}</td>
-                            <td class="py-3 text-center">{{$d->no_referensi}}</td>
-                            <td class="py-3 text-center">{{$d->pesanan}}</td>
-                            <td class="py-3 text-center">{{$d->dari}}</td>
-                            <td class="py-3 text-center">{{$d->sumber_dana}}</td>
-                            <td class="py-3 text-center">{{$d->total}}</td>
-                            <td class="px-6 py-4 flex justify-center">
-                                <a href="/dashboard/finance/catatantransaksi/tunai/detail/{{ $d->id }}" class="">
-                                    <img src="{{ asset('Icon/fzd.png') }}" alt="">
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td class="py-3 text-center">{{ $loop->iteration }}</td>
+                                <td class="py-3 text-center">{{ $d->no_referensi }}</td>
+                                <td class="py-3 text-center">{{ $d->pesanan }}</td>
+                                <td class="py-3 text-center">{{ $d->dari }}</td>
+                                <td class="py-3 text-center">{{ $d->sumber_dana }}</td>
+                                <td class="py-3 text-center">{{ $d->total }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

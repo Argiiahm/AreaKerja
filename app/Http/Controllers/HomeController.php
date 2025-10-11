@@ -31,8 +31,15 @@ class HomeController extends Controller
         $lowongan->timestamps = false;
         $lowongan->is_read = true;
         $lowongan->save();
-        return view('detail_status-melamar',[
-            "Data"  => $lowongan
-        ]);
+        if($lowongan->status === 'diterima'){
+            return view('detail_status-melamar',[
+                "Data"  => $lowongan
+            ]);
+        }elseif($lowongan->status === 'ditolak'){
+            return view('detail_status-tolak-melamar',[
+                "Data"  => $lowongan
+            ]);
+            
+        }
     }
 }

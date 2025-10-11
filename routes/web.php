@@ -238,8 +238,7 @@ Route::middleware(['status'])->group(function () {
 
     Route::get('/dashboard/admin/event', [AdminController::class, 'event'])->middleware('admin');
     Route::get('/dashboard/admin/event/detail/{event:id}', [AdminController::class, 'event_detail'])->middleware('admin');
-    Route::get('/dashboard/admin/event/add', [
-        AdminController::class, 'event_add'])->middleware('admin');
+    Route::get('/dashboard/admin/event/add', [AdminController::class, 'event_add'])->middleware('admin');
     Route::post('/dashboard/admin/event/tambah', [AdminController::class, 'tambah_event'])->middleware('admin');
     Route::delete('/dashboard/admin/event/hapus/{event:id}', [AdminController::class, 'hapus_event'])->middleware('admin');
     Route::get('/dashboard/admin/event/edit/{event:id}', [AdminController::class, 'event_edit'])->middleware('admin');
@@ -261,6 +260,7 @@ Route::middleware(['status'])->group(function () {
     Route::post('/dashboard/perusahaan/create/lowongan', [PerusahaanController::class, 'create_lowongan'])->middleware('perusahaan');
     Route::post('/dashboard/perusahaan/edit/lowongan/{lowongan:slug}', [PerusahaanController::class, 'edit_lowongan'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/update/lowongan/{lowongan:slug}', [PerusahaanController::class, 'update_lowongan'])->middleware('perusahaan');
+    Route::delete('/dashboard/perusahaan/hapus/lowongan/{lowongan:slug}', [PerusahaanController::class, 'hapus_lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/lowongan/detail/{lowongan:slug}', [PerusahaanController::class, 'detail_lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak', [PerusahaanController::class, 'kandidat_ak'])->middleware('perusahaan');
@@ -269,13 +269,17 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/pengaturan/password/change/{user}', [PerusahaanController::class, 'password_change'])->middleware('perusahaan');
+
+    //Berlangganan
     Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah', [PerusahaanController::class, 'kandidat_bermasalah'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/nama', [PerusahaanController::class, 'kandidat_nama'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/laporan', [PerusahaanController::class, 'kandidat_laporan'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat'])->middleware('perusahaan','berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info'])->middleware('perusahaan','berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah', [PerusahaanController::class, 'kandidat_bermasalah'])->middleware('perusahaan','berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/nama', [PerusahaanController::class, 'kandidat_nama'])->middleware('perusahaan','berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/laporan', [PerusahaanController::class, 'kandidat_laporan'])->middleware('perusahaan','berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja'])->middleware('perusahaan','berlangganan');
+
+    //Event  Perusahaan
     Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/gabung/event/{event:id}', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');
@@ -291,12 +295,21 @@ Route::middleware(['status'])->group(function () {
     Route::post('/lamar/cepat', [PelamarController::class, 'lamar_cepat']);
     Route::get('/dashboard/perusahaan/pelamar/{lowongan:slug}', [PerusahaanController::class, 'pelamar'])->middleware('perusahaan')->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/form/terima/lamaran/{lowongan:id}', [PerusahaanController::class, 'formKonfirmasiLamaran'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/form/tolak/lamaran/{lowongan:id}', [PerusahaanController::class, 'formTolakLamaran'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->middleware('perusahaan');
 
+    Route::put('/dashboard/perusahaan/tolak/lamaran/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_tolak_lamaran'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/terima/lamaran/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_lamaran'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim/{lowongan}', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->name('konfirmasi.lamaran.terkirim');
+    Route::get('/dashboard/perusahaan/konfirmasi/lamaran/terkirim/{lowongan}', [PerusahaanController::class, 'konfirmasi_lamaran_terkirim'])->name(name: 'konfirmasi.lamaran.terkirim');
+    Route::get('/dashboard/perusahaan/konfirmasi/lamaran/tolak/terkirim/{lowongan}', [PerusahaanController::class, 'konfirmasi_tolak_lamaran_terkirim'])->name(name: 'konfirmasi.lamaran.terkirim.tolak');
     Route::put('/dashboard/perusahaan/konfirmasi/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_status'])->middleware('perusahaan');
+    Route::put('/dashboard/perusahaan/konfirmasi/tolak/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_tolak_status'])->middleware('perusahaan');
     
     Route::put('/detail/notif/read/{lowongan:id}', [HomeController::class, 'read_detail_notif']);
     Route::put('/detail/notif/read/perusahaan/{pembeli:id}', [PerusahaanController::class, 'read_detail_notif_perusahaan']);
+
+
+    Route::post('/berlangganan/bayar', [PerusahaanController::class, 'berlangganan_bayar'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/berlangganan/kirim/email', [PerusahaanController::class, 'berlangganan_send_email'])->middleware('perusahaan');
+    
 });

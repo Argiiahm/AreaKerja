@@ -52,10 +52,11 @@
                             </p>
 
                             <div class="flex gap-6 mt-4">
-                                <form action="" method="POST" class="flex items-center gap-2">
+                                 <form id="deleteForm" action="/dashboard/perusahaan/hapus/lowongan/{{ $data->slug }}" method="POST"
+                                    class="flex items-center gap-2">
                                     @csrf
-                                    @method('PUT')
-                                    <button type="submit"
+                                    @method('DELETE')
+                                    <button type="button" id="openModalBtn"
                                         class="flex items-center gap-1 text-orange-600 hover:text-orange-700">
                                         <i class="ph ph-trash text-lg"></i>
                                         <span class="text-sm font-medium">Tutup lowongan</span>
@@ -84,7 +85,6 @@
                                         @endforeach
                                     </ul>
                                 </div>
-
                                 <div class="flex gap-3 mb-3 border-b-2 pb-5">
                                     <div>
                                         <img src="{{ asset('Icon/detail-lowongan.png') }}" alt="">
@@ -124,7 +124,8 @@
             <aside class="lg:col-span-1">
                 @if ($Data->count() > 1)
                     <div class="flex justify-between gap-5 items-center">
-                        <h2 class="font-semibold text-2xl">Lowongan {{ Auth::user()->perusahaan->nama_perusahaan }} Lainnya</h2>
+                        <h2 class="font-semibold text-2xl">Lowongan {{ Auth::user()->perusahaan->nama_perusahaan }} Lainnya
+                        </h2>
                         <a href="/dashboard/perusahaan/lowongan" class="text-orange-500 font-semibold hover:underline">
                             Lihat Semua
                         </a>
@@ -148,13 +149,15 @@
                                             </div>
                                             <div>
                                                 <p class="text-sm text-gray-600">{{ $d->perusahaan->nama_perusahaan }}</p>
-                                                <h1 class="font-semibold text-lg">{{ $d->nama }} - {{ $d->jenis }}</h1>
+                                                <h1 class="font-semibold text-lg">{{ $d->nama }} -
+                                                    {{ $d->jenis }}</h1>
                                                 <span class="text-sm text-gray-500">{{ $d->alamat }}</span>
                                             </div>
                                         </div>
 
                                         <div class="flex justify-between items-center mt-5">
-                                            <span class="px-3 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-semibold">
+                                            <span
+                                                class="px-3 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-semibold">
                                                 Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }}
                                             </span>
                                             <span class="text-sm text-gray-500">
@@ -170,4 +173,35 @@
             </aside>
         </div>
     </section>
+
+    <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+            <h2 class="text-lg font-semibold mb-4">Konfirmasi</h2>
+            <p class="text-gray-600 mb-4">Apakah Anda yakin ingin menghapus lowongan ini?</p>
+            <div class="flex justify-end gap-2">
+                <button id="cancelBtn" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">Batal</button>
+                <button id="confirmBtn" class="px-4 py-2 rounded bg-orange-500 text-white hover:bg-orange-600">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const openModalBtn = document.getElementById('openModalBtn');
+        const modal = document.getElementById('confirmModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const deleteForm = document.getElementById('deleteForm');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        confirmBtn.addEventListener('click', () => {
+            deleteForm.submit();
+        });
+    </script>
 @endsection

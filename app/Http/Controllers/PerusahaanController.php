@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use App\Models\User;
+use App\Models\Event;
+use App\Models\Skill;
+use App\Models\Daerah;
+use App\Models\Divisi;
+use App\Models\Pelamar;
+use App\Models\Provinsi;
+use App\Models\HargaKoin;
 use App\Models\Kabupaten;
 use App\Models\Perusahaan;
 use App\Models\CatatanCash;
@@ -13,19 +21,12 @@ use App\Models\PaketLowongan;
 use Illuminate\Support\Carbon;
 use App\Models\HargaPembayaran;
 use App\Models\PelamarLowongan;
-use App\Models\Alamatperusahaan;
-use App\Models\Daerah;
-use App\Models\Divisi;
-use App\Models\Event;
-use App\Models\HargaKoin;
-use App\Models\LowonganPerusahaan;
-use App\Models\Pelamar;
 use App\Models\PembeliKandidat;
-use App\Models\Provinsi;
-use App\Models\Skill;
-use App\Models\User;
+use App\Models\Alamatperusahaan;
+use App\Models\LowonganPerusahaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class PerusahaanController extends Controller
@@ -167,10 +168,10 @@ class PerusahaanController extends Controller
     }
     public function isi_alamat()
     {
-        return view('Perusahaan.profile.isi-alamat',[
+        return view('Perusahaan.profile.isi-alamat', [
             "Provinsi"    =>    Provinsi::all(),
             "Kabupaten"   =>    Kabupaten::all(),
-            "Daerah"      =>  Daerah::all() 
+            "Daerah"      =>  Daerah::all()
         ]);
     }
 
@@ -286,6 +287,11 @@ class PerusahaanController extends Controller
         $lowongan->update($v);
         return redirect('/dashboard/perusahaan/lowongan');
     }
+    public function hapus_lowongan(LowonganPerusahaan $lowongan)
+    {
+        $lowongan->destroy($lowongan->id);
+        return redirect('/dashboard/perusahaan/lowongan');
+    }
 
 
     public function detail_lowongan(LowonganPerusahaan $lowongan)
@@ -354,6 +360,12 @@ class PerusahaanController extends Controller
             "Data"  =>   $lowongan
         ]);
     }
+    public function formTolakLamaran(Request $request, PelamarLowongan $lowongan)
+    {
+        return view('perusahaan.pelamar.konfirmasi-tolak-lamaran', [
+            "Data"  =>   $lowongan
+        ]);
+    }
 
     public function konfirmasi_lamaran(Request $request, PelamarLowongan $lowongan)
     {
@@ -369,6 +381,15 @@ class PerusahaanController extends Controller
         $lowongan->update($validasi);
         return redirect()->route('konfirmasi.lamaran.terkirim', ['lowongan' => $lowongan->id]);
     }
+    public function konfirmasi_tolak_lamaran(Request $request, PelamarLowongan $lowongan)
+    {
+        $validasi = $request->validate([
+            "catatan_wawancara"   =>       "nullable"
+        ]);
+
+        $lowongan->update($validasi);
+        return redirect()->route('konfirmasi.lamaran.terkirim.tolak', ['lowongan' => $lowongan->id]);
+    }
 
     public function konfirmasi_lamaran_terkirim(PelamarLowongan $lowongan)
     {
@@ -376,8 +397,25 @@ class PerusahaanController extends Controller
             "Data" => $lowongan
         ]);
     }
+    public function konfirmasi_tolak_lamaran_terkirim(PelamarLowongan $lowongan)
+    {
+        return view('perusahaan.pelamar.konfirmasi-lamaran-terkirim-tolak', [
+            "Data" => $lowongan
+        ]);
+    }
 
     public function konfirmasi_status(Request $request, PelamarLowongan $lowongan)
+    {
+        $v = $request->validate([
+            "status"   =>    "required"
+        ]);
+
+        $lowongan->expired_date = Carbon::now()->addDays(30);
+
+        $lowongan->update($v);
+        return redirect('/dashboard/perusahaan');
+    }
+    public function konfirmasi_tolak_status(Request $request, PelamarLowongan $lowongan)
     {
         $v = $request->validate([
             "status"   =>    "required"
@@ -502,8 +540,6 @@ class PerusahaanController extends Controller
         return redirect()->back();
     }
 
-
-
     public function cv_kandidat()
     {
         return view('Perusahaan.Pelamar.Kandidat-AK.cv-kandidat');
@@ -513,8 +549,102 @@ class PerusahaanController extends Controller
     //berlangganan
     public function berlangganan()
     {
-        return view('Perusahaan.Berlangganan.index');
+        $user = Auth::user();
+        $sudahBeli = CatatanKoin::where('user_id', $user->id)->where('pesanan', 'Berlangganan')->first();
+        $harga = HargaKoin::where('nama', 'Berlangganan')->get()->first();
+        $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status', 'diterima')->sum('total');
+        return view('Perusahaan.Berlangganan.index', [
+            "totalSaldo" => $totalSaldo,
+            "harga"  =>  $harga,
+            "sudahBeli" => $sudahBeli
+        ]);
     }
+
+
+    public function berlangganan_bayar(Request $request)
+    {
+        $user = Auth::user();
+
+        $totalSaldo = CatatanCash::where('user_id', $user->id)
+            ->where('status', 'diterima')
+            ->sum('total');
+
+        $hargaKoin = HargaKoin::where('id', 6)->value('harga') ?? 0;
+
+        if ($totalSaldo < $hargaKoin) {
+            return back()->with('error', 'Saldo koin tidak mencukupi untuk membeli kandidat!');
+        }
+
+        $sisaKurang = $hargaKoin;
+        $cashRecords = CatatanCash::where('user_id', $user->id)
+            ->where('status', 'diterima')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        foreach ($cashRecords as $record) {
+            if ($sisaKurang <= 0) break;
+
+            if ($record->total <= $sisaKurang) {
+                $sisaKurang -= $record->total;
+                $record->total = 0;
+            } else {
+                $record->total -= $sisaKurang;
+                $sisaKurang = 0;
+            }
+            $record->save();
+        }
+
+        $noref = "AK" . rand(1000000000, 9999999999);
+
+        $v = $request->validate([
+            "user_id"        =>    "nullable",
+            "no_referensi"   =>    "nullable",
+            "pesanan"        =>    "nullable",
+            "dari"           =>    "nullable",
+            "sumber_dana"    =>    "nullable",
+            "total"          =>    "nullable",
+        ]);
+
+        $v['user_id'] = $user->id;
+        $v['no_referensi'] = $noref;
+        $v['pesanan']  = "Berlangganan";
+        $v['dari']  = $user->perusahaan->nama_perusahaan;
+        $v['sumber_dana']  = "koin-" . $user->perusahaan->nama_perusahaan;
+        $v['total']    = $request->total;
+
+        CatatanKoin::create($v);
+
+        session([
+            'berlangganan_noref' => $noref,
+            'berlangganan_total' => $request->total
+        ]);
+
+        return redirect('dashboard/perusahaan/berlangganan#b')->with('success', 'Berlangganan Berhasil, Mohon Tunggu Informasi Selanjutnya');
+    }
+
+    public function berlangganan_send_email()
+    {
+        $user = auth()->user();
+        $noref = session('berlangganan_noref');
+        $total = session('berlangganan_total');
+
+        $pesan = "📢 Pembayaran berlangganan baru\n\n" .
+            "Nama Perusahaan : {$user->perusahaan->nama_perusahaan}\n" .
+            "Nama User       : {$user->perusahaan->nama_perusahaan}\n" .
+            "Email User      : {$user->email}\n" .
+            "No Referensi    : {$noref}\n" .
+            "Pesanan         : Berlangganan\n" .
+            "Total Koin      : {$total}\n\n";
+
+        Mail::raw($pesan, function ($message) {
+            $message->to(env('ADMIN_EMAIL'))
+                ->subject('Pembayaran Berlangganan Baru');
+        });
+
+        return redirect('dashboard/perusahaan/berlangganan#b')->with('success_email', 'email terikirim');
+    }
+
+
     public function berlangganan_kandidat()
     {
         return view('Perusahaan.Berlangganan.kandidat');
