@@ -44,6 +44,33 @@
                                         </button>
                                     </div>
                                 </div>
+                            @else
+                                <div
+                                    class="bg-white rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
+                                    <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+                                        <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo"
+                                            class="w-12 h-12 sm:w-14 sm:h-14">
+                                        <div class="text-sm sm:text-base">
+                                            <p class="text-gray-800 font-semibold">
+                                                {{ $datas->perusahaan->nama_perusahaan }}
+                                            </p>
+                                            <p class="text-black font-bold">{{ $datas->nama }} – {{ $datas->jenis }}</p>
+                                            <p class="text-xs sm:text-sm text-gray-500">{{ $datas->alamat }}</p>
+                                            <p class="text-xs sm:text-sm bg-gray-100 inline-block mt-1 px-2 py-0.5 rounded">
+                                                Rp. {{ $datas->gaji_awal }} - Rp. {{ $datas->gaji_akhir }} / bulan
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2 sm:gap-3">
+                                        <span
+                                            class="px-3 py-1 border rounded-lg bg-red-500 text-white text-xs sm:text-sm">Kadaluarsa</span>
+                                        <button
+                                            onclick="window.location='/dashboard/perusahaan/lowongan'"
+                                            class="bg-zinc-500 text-white px-3 sm:px-4 py-1 rounded-lg hover:bg-zinc-600 transition text-xs sm:text-sm">
+                                            Lihat Pelamar
+                                        </button>
+                                    </div>
+                                </div>
                             @endif
                         @endforeach
                     </div>
@@ -160,7 +187,8 @@
                                 Area Kerja dapat menerima lowongan terbaru untuk mencakup berbagai macam bidang keahlian
                             </p>
                         </div>
-                        <div class="border border-orange-500 p-4 sm:p-5 rounded-xl shadow-md flex flex-col justify-between">
+                        <div
+                            class="border border-orange-500 p-4 sm:p-5 rounded-xl shadow-md flex flex-col justify-between">
                             <div class="flex gap-2">
                                 <div>
                                     <img src="{{ asset('image/logo-areakerja.png') }}" alt=""

@@ -13,7 +13,7 @@
         </div>
         <div class="mt-6">
             <div>
-                <h1 class="text-2xl font-semibold mx-5 lg:mx-0">4 Rekomendasi Kerja Freelance Yang Patut Kamu Coba
+                <h1 class="text-2xl font-semibold mx-5 lg:mx-0">Article Areakerja.com
                 </h1>
                 <div class="flex justify-end items-center gap-3 mx-4 lg:mx-0">
                     <i class="ph ph-arrow-up-right px-6 py-2 rounded-full text-white bg-[#fa6601]"></i>

@@ -85,19 +85,16 @@
                           <hr class="w-full border border-orange-300 mb-3">
                       </div>
                       <div class="space-y-4 text-sm text-gray-700">
-                          <div>
-                              <p class="font-semibold">Tim Kreatif <span class="text-gray-500">(2018–2019)</span></p>
-                              <p class="italic">HIMA ILKOM UGM</p>
-                              <p>Sebagai anggota Tim Kreatif, saya bertanggung jawab dalam menghasilkan konsep
-                                  kreatif...</p>
-                          </div>
-                          <div>
-                              <p class="font-semibold">Divisi Humas <span class="text-gray-500">(2018–2019)</span></p>
-                              <p class="italic">BEM KM UGM</p>
-                              <p>Sebagai anggota Divisi Humas BEM KM UGM, saya berperan dalam menjaga komunikasi yang
-                                  baik...
-                              </p>
-                          </div>
+                          @foreach ($Data->organisasi as $og)
+                              <div>
+                                  <p class="font-semibold">{{ $og->jabatan }} <span
+                                          class="text-gray-500">({{ $og->tahun_awal }} -
+                                          {{ $og->tahun_akhir }})</span>
+                                  </p>
+                                  <p class="italic">{{ $og->nama_organisasi }}</p>
+                                  <p>{{ $og->deskripsi }}</p>
+                              </div>
+                          @endforeach
                       </div>
                   </div>
               </div>

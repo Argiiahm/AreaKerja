@@ -4,10 +4,10 @@
     <div class="p-6 mt-8 px-5 lg:px-20 md:px-5 border-2">
         <h2 class="text-lg font-semibold mb-6">Edit Profile</h2>
 
-
         <form action="/dashboard/admin/profile/update/{{ Auth::user()->admin->id }}" method="POST" class="space-y-5" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            {{-- Foto Profil --}}
             <div class="flex items-center gap-4 mb-6">
                 <div class="flex items-center gap-4">
                     <div class="modal" id="imgModal">
@@ -43,6 +43,7 @@
                 </div>
             </div>
 
+            {{-- Email & Username --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Email</label>
@@ -57,48 +58,54 @@
                 </div>
             </div>
 
+            {{-- Nama Lengkap --}}
             <div>
                 <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
                 <input type="text" name="nama_lengkap" value="{{ Auth::user()->admin->nama_lengkap }}"
                     class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
             </div>
 
+            {{-- Alamat: Provinsi, Kota, Kecamatan --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Provinsi</label>
-                    <select name="provinsi" class="w-full border rounded-md p-2">
-                        @if (Auth::user()->admin->provinsi)
-                            <option value="{{ Auth::user()->admin->provinsi }}" selected>{{ Auth::user()->admin->provinsi }}</option>
-                        @else
-                            <option selected disabled>Pilih Provinsi</option>
-                            <option value="Yogyakarta">Yogyakarta</option>
-                        @endif
+                    <select id="provinsi" name="provinsi" class="w-full border rounded-md p-2">
+                        <option value="" disabled {{ !Auth::user()->admin->provinsi ? 'selected' : '' }}>Pilih Provinsi</option>
+                        @foreach ($Provinsi as $p)
+                            <option value="{{ $p->name }}" data-id="{{ $p->id }}"
+                                {{ Auth::user()->admin->provinsi == $p->name ? 'selected' : '' }}>
+                                {{ $p->name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
+
                 <div>
                     <label class="block text-sm font-medium mb-1">Kota/Kabupaten</label>
-                    <select name="kota" class="w-full border rounded-md p-2">
-                        @if (Auth::user()->admin->kota)
-                            <option value="{{ Auth::user()->admin->kota }}" selected>{{ Auth::user()->admin->kota }}</option>
-                        @else
-                            <option selected disabled>Pilih Kota / kabupaten</option>
-                            <option value="Sleman">Sleman</option>
-                        @endif
+                    <select id="kota" name="kota" class="w-full border rounded-md p-2">
+                        <option value="" disabled {{ !Auth::user()->admin->kota ? 'selected' : '' }}>Pilih Kota / Kabupaten</option>
+                        @foreach ($Kabupaten as $k)
+                            @if (Auth::user()->admin->kota == $k->name)
+                                <option value="{{ $k->name }}" data-id="{{ $k->id }}" selected>{{ $k->name }}</option>
+                            @endif
+                        @endforeach
                     </select>
                 </div>
+
                 <div>
                     <label class="block text-sm font-medium mb-1">Kecamatan</label>
-                    <select name="kecamatan" class="w-full border rounded-md p-2">
-                        @if (Auth::user()->admin->kecamatan)
-                            <option value="{{ Auth::user()->admin->kecamatan }}" selected>{{ Auth::user()->admin->kecamatan }}</option>
-                        @else
-                            <option selected disabled>Pilih Kecamatan</option>
-                            <option value="Siduarjo">Siduarjo</option>
-                        @endif
+                    <select id="kecamatan" name="kecamatan" class="w-full border rounded-md p-2">
+                        <option value="" disabled {{ !Auth::user()->admin->kecamatan ? 'selected' : '' }}>Pilih Kecamatan</option>
+                        @foreach ($Daerah as $d)
+                            @if (Auth::user()->admin->kecamatan == $d->name)
+                                <option value="{{ $d->name }}" selected>{{ $d->name }}</option>
+                            @endif
+                        @endforeach
                     </select>
                 </div>
             </div>
 
+            {{-- Desa & Kode Pos --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Desa</label>
@@ -112,12 +119,14 @@
                 </div>
             </div>
 
+            {{-- Detail Alamat --}}
             <div>
                 <label class="block text-sm font-medium mb-1">Detail Lainnya</label>
                 <input type="text" name="detail_alamat" value="{{ Auth::user()->admin->detail__alamat }}"
                     class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
             </div>
 
+            {{-- Tombol --}}
             <div class="flex justify-center gap-4 pt-4">
                 <button type="button" class="bg-red-600 hover:bg-red-700 text-white px-8 py-2 rounded-md">
                     Batal
@@ -128,7 +137,45 @@
             </div>
         </form>
     </div>
+
+    {{-- SCRIPT DROPDOWN --}}
     <script>
+        const kabupatenData = @json($Kabupaten);
+        const kecamatanData = @json($Daerah);
+
+        const provinsiSelect = document.getElementById('provinsi');
+        const kotaSelect = document.getElementById('kota');
+        const kecamatanSelect = document.getElementById('kecamatan');
+
+        provinsiSelect.addEventListener('change', function() {
+            const provinsiId = this.selectedOptions[0].getAttribute('data-id');
+            kotaSelect.innerHTML = '<option value="" disabled selected>Pilih Kota / Kabupaten</option>';
+            kecamatanSelect.innerHTML = '<option value="" disabled selected>Pilih Kecamatan</option>';
+
+            const filteredKota = kabupatenData.filter(k => k.provinsi_id == provinsiId);
+            filteredKota.forEach(k => {
+                const option = document.createElement('option');
+                option.value = k.name;
+                option.setAttribute('data-id', k.id);
+                option.textContent = k.name;
+                kotaSelect.appendChild(option);
+            });
+        });
+
+        kotaSelect.addEventListener('change', function() {
+            const kotaId = this.selectedOptions[0].getAttribute('data-id');
+            kecamatanSelect.innerHTML = '<option value="" disabled selected>Pilih Kecamatan</option>';
+
+            const filteredKecamatan = kecamatanData.filter(kec => kec.kabupaten_id == kotaId);
+            filteredKecamatan.forEach(kec => {
+                const option = document.createElement('option');
+                option.value = kec.name;
+                option.textContent = kec.name;
+                kecamatanSelect.appendChild(option);
+            });
+        });
+
+        // PREVIEW IMAGE
         const profileImg = document.getElementById("previewImageadmin");
         const imgModal = document.getElementById("imgModal");
         const modalImg = document.getElementById("modalImg");
@@ -142,17 +189,15 @@
             imgModal.style.display = "none";
         };
 
-        document
-            .getElementById("fileInput")
-            .addEventListener("change", function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById("previewImageadmin").src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+        document.getElementById("fileInput").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("previewImageadmin").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     </script>
 @endsection

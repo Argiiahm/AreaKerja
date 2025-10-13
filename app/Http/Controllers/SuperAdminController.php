@@ -371,17 +371,22 @@ class SuperAdminController extends Controller
             'section' => 'nullable|json',
         ]);
 
-        $data['penulis']  = Auth::user()->username;
-        $data['status'] = 'belum terbit';
+        $data['penulis'] = Auth::user()->username;
+        $data['status']  = 'belum terbit';
 
-        if (empty($request->intro) && !empty($request->content)) {
-            $data['intro'] = Str::limit(strip_tags($request->content), 150);
+        $intro   = $request->input('intro');
+        $content = $request->input('content');
+        $section = $request->input('section');
+
+        if (empty($intro) && !empty($content)) {
+            $data['intro'] = Str::limit(strip_tags($content), 150);
         } else {
-            $data['intro'] = $request->intro;
+            $data['intro'] = $intro;
         }
 
-        if (empty($request->section) && !empty($request->content)) {
-            $paragraphs = preg_split('/\r\n|\r|\n/', strip_tags($request->content));
+
+        if (empty($section) && !empty($content)) {
+            $paragraphs = preg_split('/\r\n|\r|\n/', strip_tags($content));
 
             $sections = [];
             foreach ($paragraphs as $index => $p) {
@@ -395,13 +400,10 @@ class SuperAdminController extends Controller
 
             $data['section'] = json_encode($sections);
         } else {
-            $data['section'] = $request->section;
+            $data['section'] = $section;
         }
 
         if ($request->hasFile('image')) {
-            if ($request->image && Storage::exists('public/' . $request->image)) {
-                Storage::delete('public/' . $request->image);
-            }
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 

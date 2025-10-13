@@ -245,8 +245,8 @@ Route::middleware(['status'])->group(function () {
     Route::put('/dashboard/admin/event/update/{event:id}', [AdminController::class, 'event_update'])->middleware('admin');
 
     //Perusahaan
-    Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/profile', [PerusahaanController::class, 'profile'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index'])->middleware(middleware: 'perusahaan');
+    Route::get('/dashboard/perusahaan/profile', [PerusahaanController::class, 'profile'])->middleware(middleware: 'perusahaan');
     Route::get('/dashboard/perusahaan/edit/profile', [PerusahaanController::class, 'edit_profile'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/update/profile/{perusahaan:id}', [PerusahaanController::class, 'update_profile'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/tambah/alamat', [PerusahaanController::class, 'tambah_alamat'])->middleware('perusahaan');
@@ -307,7 +307,6 @@ Route::middleware(['status'])->group(function () {
     
     Route::put('/detail/notif/read/{lowongan:id}', [HomeController::class, 'read_detail_notif']);
     Route::put('/detail/notif/read/perusahaan/{pembeli:id}', [PerusahaanController::class, 'read_detail_notif_perusahaan']);
-
 
     Route::post('/berlangganan/bayar', [PerusahaanController::class, 'berlangganan_bayar'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kirim/email', [PerusahaanController::class, 'berlangganan_send_email'])->middleware('perusahaan');

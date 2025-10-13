@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Daerah;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
 use App\Models\Event;
 use App\Models\HargaPembayaran;
+use App\Models\Kabupaten;
 use App\Models\KegiatanEvent;
 use App\Models\LowonganPerusahaan;
 use App\Models\Pelamar;
 use App\Models\Perusahaan;
+use App\Models\Provinsi;
 use App\Models\Tipskerja;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -36,7 +39,10 @@ class AdminController extends Controller
     {
         return view('Admin.Dashboard-admin.edit-profile_admin_dashboard', [
             "title"    =>     "Profile",
-            "Data"     =>      $admin
+            "Data"     =>      $admin,
+            "Provinsi"  =>   Provinsi::all(),
+            "Kabupaten" => Kabupaten::all(),
+            "Daerah"   =>   Daerah::all(),
         ]);
     }
 
@@ -222,17 +228,21 @@ class AdminController extends Controller
             'section' => 'nullable|json',
         ]);
 
-        $data['penulis']  = Auth::user()->username;
-        $data['status'] = 'belum terbit';
+        $data['penulis'] = Auth::user()->username;
+        $data['status']  = 'belum terbit';
 
-        if (empty($request->intro) && !empty($request->content)) {
-            $data['intro'] = Str::limit(strip_tags($request->content), 150);
+        $intro   = $request->input('intro');
+        $content = $request->input('content');
+        $section = $request->input('section');
+
+        if (empty($intro) && !empty($content)) {
+            $data['intro'] = Str::limit(strip_tags($content), 150);
         } else {
-            $data['intro'] = $request->intro;
+            $data['intro'] = $intro;
         }
 
-        if (empty($request->section) && !empty($request->content)) {
-            $paragraphs = preg_split('/\r\n|\r|\n/', strip_tags($request->content));
+        if (empty($section) && !empty($content)) {
+            $paragraphs = preg_split('/\r\n|\r|\n/', strip_tags($content));
 
             $sections = [];
             foreach ($paragraphs as $index => $p) {
@@ -246,17 +256,15 @@ class AdminController extends Controller
 
             $data['section'] = json_encode($sections);
         } else {
-            $data['section'] = $request->section;
+            $data['section'] = $section;
         }
 
         if ($request->hasFile('image')) {
-            if ($request->image && Storage::exists('public/' . $request->image)) {
-                Storage::delete('public/' . $request->image);
-            }
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
         Tipskerja::create($data);
+
         return redirect('/dashboard/admin/tipskerja');
     }
 

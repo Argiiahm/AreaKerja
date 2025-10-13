@@ -6,17 +6,10 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-semibold text-gray-800">Manajemen Pengguna</h1>
             <div class="flex items-center space-x-2">
-                <input 
-                    type="text" 
-                    placeholder="Cari nama / username..." 
-                    id="searchInput"
-                    class="border border-gray-300 bg-white rounded-lg px-4 py-2 w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-                >
-                <button 
-                    type="button" 
-                    onclick="searchTable()"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium shadow transition"
-                >
+                <input type="text" placeholder="Cari nama / username..." id="searchInput"
+                    class="border border-gray-300 bg-white rounded-lg px-4 py-2 w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+                <button type="button" onclick="searchTable()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium shadow transition">
                     Cari
                 </button>
             </div>
@@ -44,13 +37,13 @@
                             <td class="px-6 py-3 text-gray-800 font-medium">{{ $d->username }}</td>
                             <td class="px-6 py-3 text-gray-700">{{ $d->email }}</td>
                             <td class="px-6 py-3 capitalize">
-                                <span class="px-2 py-1 text-xs rounded-full 
+                                <span
+                                    class="px-2 py-1 text-xs rounded-full 
                                     @if ($d->role === 'superadmin') bg-purple-100 text-purple-700
                                     @elseif ($d->role === 'admin') bg-green-100 text-green-700
                                     @elseif ($d->role === 'perusahaan') bg-blue-100 text-blue-700
                                     @elseif ($d->role === 'pelamar') bg-yellow-100 text-yellow-700
-                                    @else bg-gray-100 text-gray-600
-                                    @endif">
+                                    @else bg-red-100 text-red-600 @endif">
                                     {{ $d->role }}
                                 </span>
                             </td>
@@ -96,8 +89,8 @@
 
                             {{-- Aksi --}}
                             <td class="px-6 py-4 text-center">
-                                <a href="/dashboard/superadmin/freeze/detail/{{ $d->id }}" 
-                                   class="inline-flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition">
+                                <a href="/dashboard/superadmin/freeze/detail/{{ $d->id }}"
+                                    class="inline-flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition">
                                     <img src="{{ asset('Icon/fzd.png') }}" alt="Freeze" class="w-5 h-5">
                                 </a>
                             </td>
