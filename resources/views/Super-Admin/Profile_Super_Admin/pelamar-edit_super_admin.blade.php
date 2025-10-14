@@ -65,42 +65,43 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Provinsi</label>
-                    @if (Auth::user()->superadmins->provinsi == null)
-                        <select name="provinsi" class="w-full border rounded-md p-2">
-                            <option selected disabled>Provinsi</option>
-                            <option>Yogyakarta</option>
-                        </select>
-                    @else
-                        <select name="provinsi" class="w-full border rounded-md p-2">
-                            <option selected>{{ Auth::user()->superadmins->provinsi }}</option>
-                        </select>
-                    @endif
+                    <select id="provinsi" name="provinsi" class="w-full border rounded-md p-2">
+                        <option value="" disabled {{ !Auth::user()->superadmins->provinsi ? 'selected' : '' }}>Pilih
+                            Provinsi</option>
+                        @foreach ($Provinsi as $p)
+                            <option value="{{ $p->name }}" data-id="{{ $p->id }}"
+                                {{ Auth::user()->superadmins->provinsi == $p->name ? 'selected' : '' }}>
+                                {{ $p->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+
                 <div>
                     <label class="block text-sm font-medium mb-1">Kota/Kabupaten</label>
-                    @if (Auth::user()->superadmins->kota == null)
-                        <select name="kota" class="w-full border rounded-md p-2">
-                            <option selected disabled>Kota</option>
-                            <option>Sleman</option>
-                        </select>
-                    @else
-                        <select name="kota" class="w-full border rounded-md p-2">
-                            <option selected>{{ Auth::user()->superadmins->kota }}</option>
-                        </select>
-                    @endif
+                    <select id="kota" name="kota" class="w-full border rounded-md p-2">
+                        <option value="" disabled {{ !Auth::user()->superadmins->kota ? 'selected' : '' }}>Pilih Kota /
+                            Kabupaten</option>
+                        @foreach ($Kabupaten as $k)
+                            @if (Auth::user()->superadmins->kota == $k->name)
+                                <option value="{{ $k->name }}" data-id="{{ $k->id }}" selected>
+                                    {{ $k->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
+
                 <div>
                     <label class="block text-sm font-medium mb-1">Kecamatan</label>
-                    @if (Auth::user()->superadmins->kecamatan == null)
-                        <select name="kecamatan" class="w-full border rounded-md p-2">
-                            <option selected disabled>Kecamatan</option>
-                            <option>Maguwaharjo</option>
-                        </select>
-                    @else
-                        <select name="kecamatan" class="w-full border rounded-md p-2">
-                            <option selected>{{ Auth::user()->superadmins->kecamatan }}</option>
-                        </select>
-                    @endif
+                    <select id="kecamatan" name="kecamatan" class="w-full border rounded-md p-2">
+                        <option value="" disabled {{ !Auth::user()->superadmins->kecamatan ? 'selected' : '' }}>Pilih
+                            Kecamatan</option>
+                        @foreach ($Daerah as $d)
+                            @if (Auth::user()->superadmins->kecamatan == $d->name)
+                                <option value="{{ $d->name }}" selected>{{ $d->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
@@ -155,6 +156,42 @@
     </div>
 
     <script>
+        const kabupatenData = @json($Kabupaten);
+        const kecamatanData = @json($Daerah);
+
+        const provinsiSelect = document.getElementById('provinsi');
+        const kotaSelect = document.getElementById('kota');
+        const kecamatanSelect = document.getElementById('kecamatan');
+
+        provinsiSelect.addEventListener('change', function() {
+            const provinsiId = this.selectedOptions[0].getAttribute('data-id');
+            kotaSelect.innerHTML = '<option value="" disabled selected>Pilih Kota / Kabupaten</option>';
+            kecamatanSelect.innerHTML = '<option value="" disabled selected>Pilih Kecamatan</option>';
+
+            const filteredKota = kabupatenData.filter(k => k.provinsi_id == provinsiId);
+            filteredKota.forEach(k => {
+                const option = document.createElement('option');
+                option.value = k.name;
+                option.setAttribute('data-id', k.id);
+                option.textContent = k.name;
+                kotaSelect.appendChild(option);
+            });
+        });
+
+        kotaSelect.addEventListener('change', function() {
+            const kotaId = this.selectedOptions[0].getAttribute('data-id');
+            kecamatanSelect.innerHTML = '<option value="" disabled selected>Pilih Kecamatan</option>';
+
+            const filteredKecamatan = kecamatanData.filter(kec => kec.kabupaten_id == kotaId);
+            filteredKecamatan.forEach(kec => {
+                const option = document.createElement('option');
+                option.value = kec.name;
+                option.textContent = kec.name;
+                kecamatanSelect.appendChild(option);
+            });
+        });
+
+
         const profileImg = document.getElementById("previewImagesuperadmin");
         const imgModalp = document.getElementById("imgModal");
         const modalImgp = document.getElementById("modalImg");

@@ -16,7 +16,7 @@
                         <p class="text-gray-600 font-medium">{{ $Data->perusahaan->nama_perusahaan }}</p>
                         <p class="text-gray-500 mt-1">{{ $Data->alamat }}</p>
                         <p class="mt-3 inline-block bg-orange-100 text-orange-600 font-semibold px-4 py-2 rounded-lg">
-                            Rp {{ $Data->gaji_awal }} – Rp {{ $Data->gaji_akhir }} / bulan
+                            Rp {{ number_format($Data->gaji_awal, 0, ',', '.') }} – Rp {{ number_format($Data->gaji_akhir, 0, ',', '.') }} / bulan
                         </p>
 
                         <div class="mt-5 flex flex-wrap items-center gap-4">
@@ -126,7 +126,6 @@
                             Lihat Semua
                         </a>
                     </div>
-
                     <div class="space-y-4">
                         @forelse ($Rekomendasi as $s)
                             @if ($s->paket_id && $Data->count() > 1 && $s->sum('id') != $s->id)
@@ -146,7 +145,7 @@
 
                                             <div class="mt-2 flex justify-between items-center text-xs text-gray-600">
                                                 <span class="bg-gray-100 px-3 py-1 rounded-md font-medium">
-                                                    Rp {{ $s->gaji_awal }} - {{ $s->gaji_akhir }}
+                                                    Rp. {{ number_format($s->gaji_awal, 0, ',', '.') }} - Rp. {{ number_format($s->gaji_akhir, 0, ',', '.') }}
                                                 </span>
                                                 <span class="text-gray-400">Aktif 2 jam lalu</span>
                                             </div>

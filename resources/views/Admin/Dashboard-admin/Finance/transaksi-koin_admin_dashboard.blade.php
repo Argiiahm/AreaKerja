@@ -11,19 +11,24 @@
             </div>
 
             <div class="flex items-center space-x-2">
-                <div class="flex border border-gray-300 rounded-lg overflow-hidden h-10">
-                    <select class="px-10 text-sm text-gray-700 focus:outline-none border-r border-gray-300">
-                        <option>No. Ref</option>
-                        <option>ID User</option>
-                        <option>Email</option>
-                    </select>
+                <form method="GET" action="/dashboard/admin/cari/finance/admin" class="flex items-center space-x-2">
+                    <div class="flex border border-gray-300 rounded-lg overflow-hidden h-10">
+                        <select name="filter"
+                            class="px-10 text-sm text-gray-700 focus:outline-none border-r border-gray-300">
+                            <option value="no_referensi" {{ request('filter') == 'no_referensi' ? 'selected' : '' }}>No. Ref
+                            </option>
+                            <option value="user_id" {{ request('filter') == 'dari' ? 'selected' : '' }}>ID User</option>
+                        </select>
 
-                    <input type="text" value="991773493631" class="px-3 text-sm text-gray-700 focus:outline-none w-40">
-                </div>
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari..."
+                            class="px-3 text-sm text-gray-700 focus:outline-none w-40">
+                    </div>
 
-                <button class="bg-gray-700 text-white px-6 h-10 rounded-lg">
-                    Cari
-                </button>
+                    <button type="submit" class="bg-gray-700 text-white px-6 h-10 rounded-lg">
+                        Cari
+                    </button>
+                </form>
+
             </div>
         </div>
 
@@ -55,6 +60,7 @@
                     </thead>
                     <tbody class="bg-white text-center ">
                         @foreach ($koin as $k)
+                        {{-- {{ $k }} --}}
                             <tr class="border-b">
                                 <td class="px-6 py-4 whitespace-no-wrap  border-gray-500">
                                     {{ $loop->iteration }}
@@ -68,7 +74,7 @@
                                     {{ $k->dari }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
                                     {{ $k->sumber_dana }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
+                                <td cla ss="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
                                     {{ $k->total }} Koin</td>
                                 <td
                                     class="px-6 py-4 whitespace-no-wrap text-green-500 font-bold  border-gray-500 text-sm leading-5">

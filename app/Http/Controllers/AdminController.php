@@ -26,7 +26,11 @@ class AdminController extends Controller
     public function index()
     {
         return view('Admin.Dashboard-admin.dashboard', [
-            "title"    =>     "Dashboard"
+            "title"    =>     "Dashboard",
+            "Perusahaan" =>  Perusahaan::count(),
+            "Lowongan" =>   LowonganPerusahaan::count(),
+            "Pelamar"  =>   Pelamar::count(),
+            "Kandidat"  =>  Pelamar::where('kategori','kandidat aktif')->count()
         ]);
     }
     public function profile()
@@ -154,11 +158,12 @@ class AdminController extends Controller
     public function freeze_perusahaan(Request $request, User $user)
     {
         $data = $request->validate([
-            "status"  =>   'required|boolean'
+            "status"  =>   'required|boolean',
+            "alasan_freeze_akun"  =>   'required'
         ]);
 
         $user->update($data);
-        return redirect('dashboard/admin/perusahaan');
+        return back()->with('success', 'berhasil');
     }
     public function unfreeze_perusahaan(Request $request, User $user)
     {
@@ -197,6 +202,27 @@ class AdminController extends Controller
             "data"    =>   CatatanCash::all()
         ]);
     }
+
+    public function finance_cari(Request $request) {
+        $filter = $request->input("filter");
+        $q = $request->input("q");
+
+        $koin = CatatanKoin::query();
+        $tunai = CatatanCash::query();
+
+        if($q) {
+            $koin->where($filter, 'like', "%$q%");
+            $tunai->where($filter, 'like', "%$q%");
+        }
+
+        return view('Admin.Dashboard-admin.Finance.transaksi-koin_admin_dashboard', [
+            "title"   =>   "Data Transaksi Koin",
+            "koin"    =>   $koin->get(),
+            "data"    =>   $tunai->get()
+        ]);
+
+    }
+
     public function tips_kerja()
     {
         return view('Admin.Dashboard-admin.Tipskerja.index', [

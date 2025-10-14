@@ -136,7 +136,7 @@
                         <p class="text-gray-500 font-semibold">{{ $d->perusahaan->nama_perusahaan }}</p>
                         <p class="text-gray-500 font-semibold">{{ $d->alamat }}</p>
                         <p class="bg-[#d7d6d6] w-fit my-3 p-2 text-[#565656] font-semibold rounded-md">Rp.
-                            {{ $d->gaji_awal }} – Rp. {{ $d->gaji_akhir }}
+                            {{ number_format($d->gaji_awal, 0, ',', '.') }} – Rp. {{ number_format($d->gaji_akhir, 0, ',', '.') }}
                             per
                             bulan
                         </p>
@@ -146,7 +146,7 @@
                         </div>
 
                         <ul class="ps-5 mt-2 space-y-1 list-disc list-inside mb-5">
-                            <li>Gaji – Rp{{ $d->gaji_awal }} – Rp{{ $d->gaji_akhir }} per bulan Tergantung Pengalaman.</li>
+                            <li>Gaji – Rp{{ number_format($d->gaji_awal, 0, ',', '.') }} – Rp{{ number_format($d->gaji_akhir, 0, ',', '.') }} per bulan Tergantung Pengalaman.</li>
                             <li>Anda harus menyelesaikan penilaian pra-wawancara singkat sebelum Anda diwawancara.</li>
                             <li>Bersamaan dengan penilaian pra-wawancara, Anda akan diminta untuk mengirimkan video
                                 berdurasi 1

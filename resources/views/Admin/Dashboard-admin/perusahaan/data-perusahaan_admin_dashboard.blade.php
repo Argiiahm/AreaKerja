@@ -66,14 +66,8 @@
                                     <input type="number" name="status" value="0" hidden>
                                 </form>
 
-                                <form id="banned" action="/dashboard/admin/banned/{{ $d->users->id }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="number" name="status" hidden value="1">
-                                </form>
                                 @if ($d->users->status === 0)
-                                    <button class="bg-red-500 text-white p-2 rounded hover:bg-red-600" form="banned"
-                                        type="submit">
+                                    <button class="bg-red-500 text-white p-2 rounded hover:bg-red-600" id="btnBekukan">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -188,6 +182,75 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <!-- end-Talen Hunter -->
-@endsection
+
+        <div id="modalKonfirmasi" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 w-[350px] text-center">
+                <div class="text-red-500 text-5xl mb-3">⚠️</div>
+                <p class="text-gray-800 font-semibold mb-5">Yakin akan membekukan?</p>
+                <div class="flex justify-center space-x-4">
+                    <button id="yaBekukan"
+                        class="bg-green-500 text-white px-6 py-1 rounded-md hover:bg-green-600">Ya</button>
+                    <button id="tidakBekukan"
+                        class="bg-red-500 text-white px-6 py-1 rounded-md hover:bg-red-600">Tidak</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalAlasan" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 w-[350px]">
+                <h2 class="text-center text-lg font-semibold mb-4">Konfirmasi</h2>
+                <form id="banned" action="/dashboard/admin/banned/{{ $d->users->id }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="number" name="status" hidden value="1">
+                    <textarea id="alasan" placeholder="Masukkan Alasan" name="alasan_freeze_akun"
+                        class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+                        rows="3"></textarea>
+                    <div class="mt-4 flex justify-center">
+                        <button type="submit" class="bg-green-500 text-white px-6 py-1 rounded-md hover:bg-green-600">
+                            Kirim
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @if (session('success'))
+            <div id="modalSukses" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <div class="bg-white rounded-xl shadow-lg p-4 flex items-center space-x-3">
+                    <div class="text-green-500 text-3xl">✔️</div>
+                    <p class="text-gray-800 font-medium">Akun Berhasil Di Bekukan</p>
+                </div>
+            </div>
+            <script>
+                setTimeout(() => {
+                    document.getElementById('modalSukses')?.classList.add('hidden');
+                }, 2000);
+            </script>
+        @endif
+
+        <script>
+            const btnBekukan = document.getElementById('btnBekukan');
+            const modalKonfirmasi = document.getElementById('modalKonfirmasi');
+            const modalAlasan = document.getElementById('modalAlasan'); 
+            const yaBekukan = document.getElementById('yaBekukan');
+            const tidakBekukan = document.getElementById('tidakBekukan');
+            const kirimAlasan = document.getElementById('kirimAlasan');
+            const alasanInput = document.getElementById('alasan');
+
+            btnBekukan.addEventListener('click', () => {
+                modalKonfirmasi.classList.remove('hidden');
+            });
+
+            yaBekukan.addEventListener('click', () => {
+                modalKonfirmasi.classList.add('hidden');
+                modalAlasan.classList.remove('hidden');
+            });
+
+            tidakBekukan.addEventListener('click', () => {
+                modalKonfirmasi.classList.add('hidden');
+            });
+        </script>
+
+        <!-- end-Talen Hunter -->
+    @endsection

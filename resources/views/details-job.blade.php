@@ -113,7 +113,7 @@
                     <h1 class="font-bold text-xl">{{ $Data->nama }}</h1>
                     <p class="text-gray-500">{{ $Data->perusahaan->nama_perusahaan }} | {{ $Data->alamat }}</p>
                     <p class="bg-gray-200 w-fit my-3 px-3 py-1 text-gray-700 font-semibold rounded-md">
-                        Rp. {{ $Data->gaji_awal }} – Rp. {{ $Data->gaji_akhir }} perbulan
+                        Rp. {{ number_format($Data->gaji_awal, 0, ',', '.') }} – Rp. {{ number_format($Data->gaji_awal, 0, ',', '.') }} perbulan
                     </p>
                     @if (Auth::check() && Auth::user()->role === 'pelamar')
                         <div class="flex items-center gap-10">

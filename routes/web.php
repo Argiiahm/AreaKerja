@@ -13,7 +13,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TalentHunterController;
 use App\Http\Controllers\TipskerjaController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -229,6 +228,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/admin/perusahaan/view/talenthunter', [AdminController::class, 'perusahaan_view_talenthunter'])->middleware('admin');
 
     Route::get('/dashboard/admin/finance', [AdminController::class, 'finance'])->middleware('admin');
+    Route::get('/dashboard/admin/cari/finance/admin', [AdminController::class, 'finance_cari'])->middleware('admin');
 
     Route::get('/dashboard/admin/tipskerja', [AdminController::class, 'tips_kerja'])->middleware('admin');
     Route::get('/dashboard/admin/tipskerja/addpost', [AdminController::class, 'tips_kerja_add_post'])->middleware('admin');

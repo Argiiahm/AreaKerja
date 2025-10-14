@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Daerah;
+use App\Models\Kabupaten;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Pelamar;
 use App\Models\Tipskerja;
+use App\Models\Perusahaan;
 use App\Models\SuperAdmin;
 use Illuminate\Support\Str;
 use App\Helpers\BrowserPath;
 use Illuminate\Http\Request;
 use App\Models\KegiatanEvent;
+use App\Models\LowonganPerusahaan;
+use App\Models\Provinsi;
 use Spatie\Browsershot\Browsershot;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -21,7 +26,11 @@ class SuperAdminController extends Controller
     public function index()
     {
         return view('Super-Admin.dashboard-superAdmin.dashboard-super_admin', [
-            "title"  =>    "Dashboard"
+            "title"  =>    "Dashboard",
+            "Perusahaan" =>  Perusahaan::count(),
+            "Lowongan" =>   LowonganPerusahaan::count(),
+            "Pelamar"  =>   Pelamar::count(),
+            "Kandidat"  =>  Pelamar::where('kategori', 'kandidat aktif')->count()
         ]);
     }
     public function profile()
@@ -34,6 +43,9 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Profile_Super_Admin.pelamar-edit_super_admin', [
             "title"  =>    "Profile",
+            "Provinsi"  =>   Provinsi::all(),
+            "Kabupaten"  =>   Kabupaten::all(),
+            "Daerah"   =>   Daerah::all()
         ]);
     }
     public function profile_update(Request $request)
@@ -577,7 +589,7 @@ class SuperAdminController extends Controller
 
     public function event_delete(Event $event)
     {
-        $event->delete($event->id);
+        $event->destroy($event->id);
         return redirect('/dashboard/superadmin/event')->with('success', 'Event berhasil Di Hapus!');
     }
 
