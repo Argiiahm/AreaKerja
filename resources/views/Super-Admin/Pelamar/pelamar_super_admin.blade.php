@@ -1,5 +1,7 @@
 @extends('Super-Admin.layouts.index')
 @section('super_admin-content')
+{{ session()->forget('pelamar_id') }}
+{{-- {{ session()->forget('pelamar')->users->email }} --}}
     <div class="p-6 flex justify-center">
         <div class="w-full max-w-7xl">
 
@@ -15,7 +17,7 @@
                         class="bg-orange-500 text-white px-6 py-2 rounded-md focus:outline-none cursor-pointer hover:bg-orange-600 transition">
                         <option id="kandidat_opt" value="kandidat">Kandidat</option>
                         <option id="non_kandidat_opt" value="non_kandidat">Non Kandidat</option>
-                        <option id="calon_pelamar_opt" value="calon_pelamar">Calon Kandidat</option>
+                        <option id="calon_pelamar_opt" value="calon_kandidat">Calon Kandidat</option>
                     </select>
                 </div>
 
@@ -147,4 +149,5 @@
 
         </div>
     </div>
+    
 @endsection

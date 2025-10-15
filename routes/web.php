@@ -143,6 +143,12 @@ Route::middleware(['status'])->group(function () {
     //View, Add Dan Edit Non Kandidat - SuperAdmin
     Route::get('/dashboard/superadmin/nonkandidat_view/{pelamar:id}', [SuperAdminController::class, 'non_kandidat_view'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pelamar/add/non_kandidat', [SuperAdminController::class, 'add_non_kandidat'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/pelamar/create/non_kandidat', [SuperAdminController::class, 'create_non_kandidat'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/pelamar/create/alamat', [SuperAdminController::class, 'create_alamat'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/pelamar/create/pendidikan', [SuperAdminController::class, 'create_pendidikan'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/pelamar/create/organisasi', [SuperAdminController::class, 'create_organisasi'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/pelamar/create/pengalaman', [SuperAdminController::class, 'create_pengalaman'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/pelamar/create/skill', [SuperAdminController::class, 'create_skill'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pelamar/edit/non_kandidat', [SuperAdminController::class, 'edit_non_kandidat'])->middleware('superadmin');
 
     // View, Add Calon Kandidat  -SuperAdmin
@@ -170,6 +176,8 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/finance', [SuperAdminController::class, 'finance'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/finance/edit/paketkoin', [SuperAdminController::class, 'finance_edit_paket_koin'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/finance/edit/paketpembayaran', [SuperAdminController::class, 'finance_edit_paket_pembayaran'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/update/harga/koin',[SuperAdminController::class, 'update_koin'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/update/harga/tunai',[SuperAdminController::class, 'update_tunai'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/finance/edit/laporan', [SuperAdminController::class, 'finance_laporan'])->middleware('superadmin');
 
     // Freeze Akun - Super Admin
@@ -201,6 +209,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/{user:id}/view', [SuperAdminController::class, 'akun_view'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/akun/add', [SuperAdminController::class, 'akun_add'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/{user:id}/edit', [SuperAdminController::class, 'akun_edit'])->middleware('superadmin');
+    Route::delete('/delete/akun/{user:id}', [SuperAdminController::class, 'akun_delete'])->middleware('superadmin');
 
     // Link & Header - Super Admin
     Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page'])->middleware('superadmin');

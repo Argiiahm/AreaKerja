@@ -186,9 +186,10 @@ class PerusahaanController extends Controller
             'kode_pos' => 'nullable',
             'detail' =>   'nullable'
         ]);
-
+        
         $vData['perusahaan_id'] = Auth::user()->perusahaan->id;
-
+        $vData['detail'] = $request->desa . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->provinsi;
+        
         Alamatperusahaan::create($vData);
         return redirect('/dashboard/perusahaan/tambah/alamat');
     }
@@ -202,6 +203,7 @@ class PerusahaanController extends Controller
 
     public function update_alamat(Request $request, Alamatperusahaan $alamatperusahaan)
     {
+        dd($request->all());
         $vData = $request->validate([
             'label'  => 'nullable',
             'desa'   => 'nullable',
@@ -213,6 +215,8 @@ class PerusahaanController extends Controller
         ]);
 
         $vData['perusahaan_id'] = Auth::user()->perusahaan->id;
+        $vData['detail'] = $request->desa . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->provinsi;
+
 
         $alamatperusahaan->update($vData);
         return redirect('/dashboard/perusahaan/tambah/alamat');

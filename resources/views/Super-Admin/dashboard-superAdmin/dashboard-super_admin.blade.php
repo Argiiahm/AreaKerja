@@ -8,7 +8,7 @@
                 <div class="flex justify-between items-center">
                     <h3 class="text-sm font-semibold text-gray-600">Perusahaan</h3>
                     <span
-                        class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">+{{ ($Perusahaan * 1) / 2 }}%</span>
+                        class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">+{{ ($Perusahaan * 1) / 5 }}%</span>
                 </div>
                 <p class="text-3xl font-bold text-gray-800 mt-3">{{ $Perusahaan }}</p>
                 <a href="#" class="text-sm text-green-700 mt-4 inline-block hover:text-green-800 hover:underline">
@@ -20,7 +20,7 @@
                 <div class="flex justify-between items-center">
                     <h3 class="text-sm font-semibold text-gray-600">Kandidat</h3>
                     <span
-                        class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">+{{ ($Kandidat * 1) / 2 }}%</span>
+                        class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">+{{ ($Kandidat * 1) / 5 }}%</span>
                 </div>
                 <p class="text-3xl font-bold text-gray-800 mt-3">{{ $Kandidat }}</p>
                 <a href="#" class="text-sm text-green-700 mt-4 inline-block hover:text-green-800 hover:underline">
@@ -32,9 +32,12 @@
                 <div class="flex justify-between items-center">
                     <h3 class="text-sm font-semibold text-gray-600">Non Kandidat</h3>
                     <span
-                        class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">+{{ ($Pelamar * 1) / 2 }}%</span>
+                        class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">+{{ ($Pelamar * 1) / 5 }}%</span>
                 </div>
-                <p class="text-3xl font-bold text-gray-800 mt-3">{{ $Pelamar }}</p>
+                <p class="text-3xl font-bold text-gray-800 mt-3">
+                    {{ $Pelamar }}
+                </p>
+
                 <a href="#" class="text-sm text-green-700 mt-4 inline-block hover:text-green-800 hover:underline">
                     Lihat Detail &gt;
                 </a>
@@ -44,7 +47,7 @@
                 <div class="flex justify-between items-center">
                     <h3 class="text-sm font-semibold text-gray-600">Lowongan</h3>
                     <span
-                        class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">+{{ ($Lowongan * 1) / 2 }}%</span>
+                        class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">+{{ ($Lowongan * 1) / 5 }}%</span>
                 </div>
                 <p class="text-3xl font-bold text-gray-800 mt-3">{{ $Lowongan }}</p>
                 <a href="#" class="text-sm text-green-700 mt-4 inline-block hover:text-green-800 hover:underline">

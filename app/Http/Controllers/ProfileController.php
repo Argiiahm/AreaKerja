@@ -141,7 +141,7 @@ class ProfileController extends Controller
 
         Organisasi::create($v);
         return redirect('/profile');
-        return back();
+        // return back();
     }
 
     public function edit_organisasi(Organisasi $organisasi)

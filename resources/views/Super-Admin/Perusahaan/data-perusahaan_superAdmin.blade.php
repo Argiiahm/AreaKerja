@@ -46,17 +46,20 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
+                            @foreach ($Data as $d)
+                                
                             <tr class="hover:bg-gray-50 transition-all">
-                                <td class="px-6 py-4 font-medium">774770</td>
-                                <td class="px-6 py-4">Brahim Diaz</td>
-                                <td class="px-6 py-4">brahim@company.com</td>
-                                <td class="px-6 py-4">+62 812 3456 7890</td>
-                                <td class="px-6 py-4">Jawa Tengah</td>
+                                <td class="px-6 py-4 font-medium">{{ $d->id }}</td>
+                                <td class="px-6 py-4">{{ $d->nama_perusahaan }}</td>
+                                <td class="px-6 py-4">{{ $d->users->email }}</td>
+                                <td class="px-6 py-4">{{ $d->telepon_perusahaan }}</td>
+                                <td class="px-6 py-4">{{ $d->alamatperusahaan()->latest()->first()->detail ?? 'belum ada data' }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <a href="/dashboard/superadmin/recrutiment"
                                         class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-md text-sm transition-all">View</a>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                                @endforeach
                         </tbody>
                     </table>
 

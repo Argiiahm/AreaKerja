@@ -29,8 +29,8 @@ class AdminController extends Controller
             "title"    =>     "Dashboard",
             "Perusahaan" =>  Perusahaan::count(),
             "Lowongan" =>   LowonganPerusahaan::count(),
-            "Pelamar"  =>   Pelamar::count(),
-            "Kandidat"  =>  Pelamar::where('kategori','kandidat aktif')->count()
+            "Pelamar" => Pelamar::whereNull('kategori')->count() + Pelamar::where('kategori', 'pelamar')->count(),
+            "Kandidat"  =>  Pelamar::where('kategori', 'kandidat aktif')->count()
         ]);
     }
     public function profile()
@@ -203,14 +203,15 @@ class AdminController extends Controller
         ]);
     }
 
-    public function finance_cari(Request $request) {
+    public function finance_cari(Request $request)
+    {
         $filter = $request->input("filter");
         $q = $request->input("q");
 
         $koin = CatatanKoin::query();
         $tunai = CatatanCash::query();
 
-        if($q) {
+        if ($q) {
             $koin->where($filter, 'like', "%$q%");
             $tunai->where($filter, 'like', "%$q%");
         }
@@ -220,7 +221,6 @@ class AdminController extends Controller
             "koin"    =>   $koin->get(),
             "data"    =>   $tunai->get()
         ]);
-
     }
 
     public function tips_kerja()

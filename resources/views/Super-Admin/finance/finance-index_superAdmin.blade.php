@@ -23,18 +23,17 @@
                         <thead>
                             <tr class="bg-orange-500 text-white">
                                 <th class="py-3 px-4 text-left">Nama</th>
+
                                 <th class="py-3 text-left">Harga</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y">
-                            <tr>
-                                <td class="py-3 px-4">AppleCorp.</td>
-                                <td class="py-3">150 Koin</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">AppleCorp.</td>
-                                <td class="py-3">150 Koin</td>
-                            </tr>
+                            @foreach ($koin as $k)
+                                <tr>
+                                    <td class="py-3 px-4">{{ $k->nama }}</td>
+                                    <td class="py-3">{{ $k->harga }} Koin</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -54,14 +53,12 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y">
-                            <tr>
-                                <td class="py-3 px-4">AppleCorp.</td>
-                                <td class="py-3">RP.15000</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">AppleCorp.</td>
-                                <td class="py-3">Rp.15000</td>
-                            </tr>
+                            @foreach ($tunai as $t)
+                                <tr>
+                                    <td class="py-3 px-4">{{ $t->nama }}</td>
+                                    <td class="py-3">Rp. {{ number_format($t->harga, 0, ',', '.') }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
