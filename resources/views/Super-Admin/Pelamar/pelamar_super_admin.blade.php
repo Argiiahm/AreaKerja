@@ -1,7 +1,7 @@
 @extends('Super-Admin.layouts.index')
 @section('super_admin-content')
-{{ session()->forget('pelamar_id') }}
-{{-- {{ session()->forget('pelamar')->users->email }} --}}
+    {{ session()->forget('pelamar_id') }}
+    {{-- {{ session()->forget('pelamar')->users->email }} --}}
     <div class="p-6 flex justify-center">
         <div class="w-full max-w-7xl">
 
@@ -41,10 +41,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $i = 1;
+                        @endphp
                         @foreach ($pelamar as $p)
                             @if ($p->kategori === 'kandidat aktif')
                                 <tr class="hover:bg-gray-50 border-b">
-                                    <td class="px-6 py-3 text-gray-700">{{ $loop->iteration }}</td>
+                                    <td class="px-6 py-3 text-gray-700">{{ $i++ }}</td>
                                     <td class="px-6 py-3 text-gray-700">{{ $p->nama_pelamar ?? 'belum terisi' }}</td>
                                     <td class="px-6 py-3 text-gray-700">
                                         {{ $p->riwayat_pendidikan->sortByDesc('created_at')->first()->pendidikan ?? 'belum ada data' }}
@@ -82,31 +85,33 @@
                     </thead>
                     <tbody>
                         @foreach ($pelamar as $p)
-                            <tr class="hover:bg-gray-50 border-b">
-                                <td class="px-6 py-3 text-gray-700">{{ $loop->iteration }}</td>
-                                <td class="px-6 py-3 text-gray-700">{{ $p->nama_pelamar ?? 'belum terisi' }}</td>
-                                <td class="px-6 py-3 text-gray-700">
-                                    {{ $p->riwayat_pendidikan->sortByDesc('created_at')->first()->pendidikan ?? 'belum ada data' }}
-                                </td>
-                                <td class="px-6 py-3 text-gray-700">
-                                    {{ $p->skill->sortByDesc('created_at')->first()->skill ?? 'belum ada data' }}
-                                </td>
-                                <td class="px-6 py-3 text-gray-700">
-                                    {{ $p->alamat_pelamars->sortByDesc('created_at')->first()->detail ?? 'belum ada data' }}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <a href="/dashboard/superadmin/nonkandidat_view/{{ $p->id }}"
-                                        class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md transition">
-                                        View
-                                    </a>
-                                </td>
-                            </tr>
+                            @if ($p->kategori === null)
+                                <tr class="hover:bg-gray-50 border-b">
+                                    <td class="px-6 py-3 text-gray-700">{{ $i++ }}</td>
+                                    <td class="px-6 py-3 text-gray-700">{{ $p->nama_pelamar ?? 'belum terisi' }}</td>
+                                    <td class="px-6 py-3 text-gray-700">
+                                        {{ $p->riwayat_pendidikan->sortByDesc('created_at')->first()->pendidikan ?? 'belum ada data' }}
+                                    </td>
+                                    <td class="px-6 py-3 text-gray-700">
+                                        {{ $p->skill->sortByDesc('created_at')->first()->skill ?? 'belum ada data' }}
+                                    </td>
+                                    <td class="px-6 py-3 text-gray-700">
+                                        {{ $p->alamat_pelamars->sortByDesc('created_at')->first()->detail ?? 'belum ada data' }}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <a href="/dashboard/superadmin/nonkandidat_view/{{ $p->id }}"
+                                            class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md transition">
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
             </div>
 
-            <div id="calon_pelamar"
+            <div id="calon_kandidat"
                 class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
                 <table class="w-full">
                     <thead>
@@ -123,7 +128,7 @@
                         @foreach ($pelamar as $p)
                             @if ($p->kategori === 'calon kandidat')
                                 <tr class="hover:bg-gray-50 border-b">
-                                    <td class="px-6 py-3 text-gray-700">{{ $loop->iteration }}</td>
+                                    <td class="px-6 py-3 text-gray-700">{{ $i++ }}</td>
                                     <td class="px-6 py-3 text-gray-700">{{ $p->nama_pelamar ?? 'belum terisi' }}</td>
                                     <td class="px-6 py-3 text-gray-700">
                                         {{ $p->riwayat_pendidikan->sortByDesc('created_at')->first()->pendidikan ?? 'belum ada data' }}
@@ -149,5 +154,4 @@
 
         </div>
     </div>
-    
 @endsection

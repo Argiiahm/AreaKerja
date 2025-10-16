@@ -138,6 +138,7 @@ Route::middleware(['status'])->group(function () {
     //View, Add Dan Edit Kandidat - SuperAdmin
     Route::get('/dashboard/superadmin/kandidat_view', [SuperAdminController::class, 'kandidat_view'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pelamar/add/kandidat', [SuperAdminController::class, 'add_kandidat'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/pelamar/create/kandidat', [SuperAdminController::class, 'kandidat_create'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pelamar/edit/kandidat', [SuperAdminController::class, 'edit_kandidat'])->middleware('superadmin');
 
     //View, Add Dan Edit Non Kandidat - SuperAdmin
@@ -149,10 +150,12 @@ Route::middleware(['status'])->group(function () {
     Route::post('/dashboard/superadmin/pelamar/create/organisasi', [SuperAdminController::class, 'create_organisasi'])->middleware('superadmin');
     Route::post('/dashboard/superadmin/pelamar/create/pengalaman', [SuperAdminController::class, 'create_pengalaman'])->middleware('superadmin');
     Route::post('/dashboard/superadmin/pelamar/create/skill', [SuperAdminController::class, 'create_skill'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/pelamar/edit/non_kandidat', [SuperAdminController::class, 'edit_non_kandidat'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/pelamar/edit/non_kandidat/{pelamar}', [SuperAdminController::class, 'edit_non_kandidat'])->middleware('superadmin');
+    Route::put('/edit/nonkandidat/{pelamar:id}', [SuperAdminController::class, 'update_non_kandidat'])->middleware('superadmin');
 
     // View, Add Calon Kandidat  -SuperAdmin
     Route::get('/dashboard/superadmin/pelamar/add/calon_kandidat', [SuperAdminController::class, 'add_calon_kandidat'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/pelamar/update/calon_kandidat/{pelamar:id}', [SuperAdminController::class, 'update_calon_kandidat'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pelamar/view/calon_kandidat', [SuperAdminController::class, 'view_calon_kandidat'])->middleware('superadmin');
 
     // Data Perusahaan -SuperAdmin

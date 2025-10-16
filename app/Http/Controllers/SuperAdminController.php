@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use App\Helpers\BrowserPath;
 use Illuminate\Http\Request;
 use App\Models\Alamatpelamar;
+use App\Models\Divisi;
 use App\Models\KegiatanEvent;
 use App\Models\HargaPembayaran;
 use App\Models\RiwayatPendidikan;
@@ -108,10 +109,38 @@ class SuperAdminController extends Controller
     // Bagian Kandidat
     public function add_kandidat()
     {
+        $pelamar = Pelamar::with('users')->find(session('pelamar_id'));
         return view('Super-Admin.Pelamar.Kandidat.add_kandidat_super_admin', [
-            "title" => "Edit Kandidat"
+            "title" => "Add Kandidat",
+            "pelamar" => $pelamar
         ]);
     }
+
+    public function kandidat_create(Request $request)
+    {
+        $validasi_data = $request->validate([
+            "username" => "required",
+            "email" => "required|email",
+            "password" => "required",
+            "role" => "required"
+        ]);
+
+        $validasi_data['password'] = Hash::make($request->password);
+        $user = User::create($validasi_data);
+
+        $validasi_dataPelamar = $request->validate([
+            "nama_pelamar" => "required",
+            "telepon_pelamar" => "required",
+            "gender" => "required",
+            "kategori" => "required"
+        ]);
+
+        $pelamar = $user->pelamars()->create($validasi_dataPelamar);
+        // dd($pelamar->id);
+        session(['pelamar_id' => $pelamar->id]);
+        return redirect('/dashboard/superadmin/pelamar/add/kandidat');
+    }
+
     public function edit_kandidat()
     {
         return view('Super-Admin.Pelamar.Kandidat.edit_kandidat_super_admin', [
@@ -196,7 +225,7 @@ class SuperAdminController extends Controller
     {
         $pelamar = Pelamar::with('users')->find(session('pelamar_id'));
         return view('Super-Admin.Pelamar.Non_kandidat.add_non_kandidat_super_admin', [
-            "title" => "Edit Non Kandidat",
+            "title" => "Add Non Kandidat",
             "pelamar"  =>   $pelamar
         ]);
     }
@@ -227,12 +256,75 @@ class SuperAdminController extends Controller
 
 
 
-    public function edit_non_kandidat()
+    public function edit_non_kandidat(Pelamar $pelamar)
     {
         return view('Super-Admin.Pelamar.Non_kandidat.edit_non_kandidat_super_admin', [
-            "title" => "Edit Non Kandidat"
+            "title" => "Edit Non Kandidat",
+            "Data"  =>  $pelamar
         ]);
     }
+    public function update_non_kandidat(Request $request, Pelamar $pelamar)
+    {
+        // $pelamar = Pelamar::findOrFail($pelamar);
+        // $user = $pelamar->users;
+
+        // $request->validate([
+        //     'email' => 'required|email',
+        //     'username' => 'required',
+        //     'nama_pelamar' => 'required',
+        //     'gender' => 'required',
+        //     'detail' => 'required',
+        //     'telepon' => 'required',
+        // ]);
+
+        // $user->update([
+        //     'email' => $request->email,
+        //     'username' => $request->username,
+        //     'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
+        // ]);
+
+        // $pelamar->update([
+        //     'nama_pelamar' => $request->nama_pelamar,
+        //     'gender' => $request->gender,
+        //     'telepon_pelamar' => $request->telepon,
+        // ]);
+
+        // $alamat = $pelamar->alamat_pelamars()->latest()->first();
+        // if ($alamat) {
+        //     $alamat->update([
+        //         'detail' => $request->detail,
+        //     ]);
+        // }
+        // return redirect('/dashboard/superadmin/akun')
+        //     ->with('success', 'Data user berhasil diperbarui');
+
+        $user = User::findOrFail($pelamar->users->id);
+
+        $validasi_data = $request->validate([
+            "username" => "required",
+            "email" => "required|email",
+            "password" => "nullable",
+            "role" => "required"
+        ]);
+
+        if ($request->filled('password')) {
+            $validasi_data['password'] = Hash::make($request->password);
+        } else {
+            unset($validasi_data['password']);
+        }
+
+        $user->update($validasi_data);
+
+        $validasi_dataPelamar = $request->validate([
+            "nama_pelamar" => "required",
+            "telepon_pelamar" => "required",
+            "gender" => "required"
+        ]);
+
+        $pelamar->update($validasi_dataPelamar);
+        return back();
+    }
+
 
     public function create_alamat(Request $request)
     {
@@ -321,9 +413,33 @@ class SuperAdminController extends Controller
     public function add_calon_kandidat()
     {
         return view('Super-Admin.Pelamar.Calon_kandidat.add_kandidat_super_admin', [
-            "title" => "Edit Calon Kandidat"
+            "title" => "Edit Calon Kandidat",
+            "pelamarList"   =>    Pelamar::all(),
+            "Divisi"        =>  Divisi::all()
         ]);
     }
+
+    public function update_calon_kandidat(Request $request, Pelamar $pelamar)
+    {
+        if ($request->filled('kategori')) {
+            $pelamar->kategori = $request->kategori;
+        }
+
+        if ($request->filled('mulai_pelatihan')) {
+            $pelamar->mulai_pelatihan = $request->mulai_pelatihan;
+        }
+        if ($request->filled('divisi')) {
+            $pelamar->divisi = $request->divisi;
+        }
+
+        // if ($request->filled('selesai_pelatihan')) {
+        //     $pelamar->selesai_pelatihan = $request->selesai_pelatihan;
+        // }
+
+        $pelamar->save();
+        return back();
+    }
+
     public function view_calon_kandidat()
     {
         return view('Super-Admin.Pelamar.Calon_kandidat.kandidat-view', [

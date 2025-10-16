@@ -37,12 +37,12 @@
                   </p>
                   <p class="flex items-center justify-center md:justify-start gap-2">
                       <i class="ph ph-linkedin-logo text-orange-600 text-lg"></i>
-                      {{ $Data->sosmed->latest()->first()->linkedin ?? 'tidak ada data' }}</li>
+                      {{ $Data->sosmed->linkedin ?? 'tidak ada data' }}</li>
 
                   </p>
                   <p class="flex items-center justify-center md:justify-start gap-2">
                       <i class="ph ph-globe text-orange-600 text-lg"></i>
-                      {{ $Data->sosmed->latest()->first()->website ?? 'tidak ada data' }}</li>
+                      {{ $Data->sosmed->website ?? 'tidak ada data' }}</li>
 
                   </p>
               </div>
@@ -131,9 +131,9 @@
                           @foreach ($Data->riwayat_pendidikan as $p)
                               <li>
                                   <p class="font-semibold">{{ $p->asal_pendidikan }}<span
-                                          class="text-gray-500">({{ $p->tahun_awal }} - {{ $k->tahun_akhir }})</span>
+                                          class="text-gray-500">({{ $p->tahun_awal }} - {{ $p->tahun_akhir }})</span>
                                   </p>
-                                  <p class="italic">{{ $k->jurusan }}</p>
+                                  <p class="italic">{{ $p->jurusan }}</p>
                               </li>
                           @endforeach
                       </ul>

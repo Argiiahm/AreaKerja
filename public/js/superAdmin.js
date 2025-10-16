@@ -7,7 +7,7 @@ let btnAdd = document.getElementById("btnAdd");
 
 let kandidat_table = document.getElementById("kandidat");
 let non_kandidat_table = document.getElementById("non_kandidat");
-let calon_pelamar_table = document.getElementById("calon_pelamar");
+let calon_pelamar_table = document.getElementById("calon_kandidat");
 
 if (selectKategori) {
     selectKategori.addEventListener("change", () => {
@@ -15,7 +15,7 @@ if (selectKategori) {
 
         btnAdd.href = "/dashboard/superadmin/pelamar/add/" + val;
 
-        if (val === "kandidat") {
+        if (val === "kandidat") {   
             kandidat_table.classList.remove("hidden");
             non_kandidat_table.classList.add("hidden");
             calon_pelamar_table.classList.add("hidden");
@@ -27,7 +27,7 @@ if (selectKategori) {
             calon_pelamar_table.classList.add("hidden");
 
             title.innerHTML = "Data Non Kandidat";
-        } else if (val === "calon_pelamar") {
+        } else if (val === "calon_kandidat") {
             kandidat_table.classList.add("hidden");
             non_kandidat_table.classList.add("hidden");
             calon_pelamar_table.classList.remove("hidden");

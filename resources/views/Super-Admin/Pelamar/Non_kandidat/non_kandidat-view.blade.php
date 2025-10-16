@@ -20,7 +20,7 @@
             <div>
                 <p class="font-bold text-lg text-gray-800">User ID</p>
                 <p class="font-semibold text-base">{{ $Data->users->id }}</p>
-            </div>
+           </div>
             <div>
                 <p class="font-bold text-lg text-gray-800">Username</p>
                 <p class="font-semibold text-base">{{ $Data->users->username }}</p>
@@ -113,7 +113,7 @@
         </div>
 
         <div class="flex justify-center gap-4 mt-10">
-            <a href="/dashboard/superadmin/pelamar/edit/non_kandidat"
+            <a href="/dashboard/superadmin/pelamar/edit/non_kandidat/{{ $Data->id }}"
                 class="px-6 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded-md shadow">Edit</a>
             <a href="/cv/{{ $Data->id }}/unduh"
                 class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md shadow">Unduh</a>
