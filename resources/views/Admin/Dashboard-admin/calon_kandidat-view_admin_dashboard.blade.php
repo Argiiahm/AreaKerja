@@ -16,7 +16,18 @@
 
                 <div>
                     <p class="opacity-80">Divisi</p>
-                    <p class="font-medium">{{ implode(', ', json_decode($Data->divisi, true)) }}</p>
+                    @php
+                        $divisi = json_decode($Data->divisi, true);
+                    @endphp
+
+                    <p class="font-medium">
+                        @if (is_array($divisi))
+                            {{ implode(', ', $divisi) }}
+                        @else
+                            {{ $Data->divisi }}
+                        @endif
+                    </p>
+
                 </div>
 
                 <input type="hidden" name="kategori" value="{{ $Data->kategori }}">

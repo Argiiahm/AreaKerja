@@ -2,33 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organisasi;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Skill;
 use App\Models\Daerah;
+use App\Models\Divisi;
 use App\Models\Pelamar;
 use App\Models\Provinsi;
 use App\Models\HargaKoin;
 use App\Models\Kabupaten;
 use App\Models\Tipskerja;
+use App\Models\Organisasi;
 use App\Models\Perusahaan;
 use App\Models\SuperAdmin;
+use App\Models\CatatanCash;
+use App\Models\CatatanKoin;
 use Illuminate\Support\Str;
 use App\Helpers\BrowserPath;
 use Illuminate\Http\Request;
 use App\Models\Alamatpelamar;
-use App\Models\Divisi;
 use App\Models\KegiatanEvent;
 use App\Models\HargaPembayaran;
+use App\Models\Pengalamankerja;
 use App\Models\RiwayatPendidikan;
 use App\Models\LowonganPerusahaan;
-use App\Models\Pengalamankerja;
-use App\Models\Skill;
 use Spatie\Browsershot\Browsershot;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
+
 
 class SuperAdminController extends Controller
 {
@@ -116,6 +119,97 @@ class SuperAdminController extends Controller
         ]);
     }
 
+    public function edit_organisasi(Organisasi $organisasi)
+    {
+        return view('Super-Admin.Pelamar.edit-kandidat.edit-organisasi', [
+            "title"  =>  "Edit Organisasi",
+            "Data"  =>  $organisasi
+        ]);
+    }
+
+    public function update_organisasi(Request $request, Organisasi $organisasi)
+    {
+        $v = $request->validate([
+            'nama_organisasi'     =>  "nullable",
+            'jabatan'     =>     "nullable",
+            'tahun_awal'     =>     "nullable",
+            'tahun_akhir'     =>     "nullable",
+            'deskripsi'     =>     "nullable",
+        ]);
+
+        $v['pelamar_id']  =   $request->pelamar_id;
+
+        $organisasi->update($v);
+        return back();
+    }
+
+    public function edit_pendidikan(RiwayatPendidikan $pendidikan)
+    {
+        return view('Super-Admin.Pelamar.edit-kandidat.edit-pendidikan', [
+            "title" =>  'edit pendidikan',
+            "Data"  => $pendidikan
+        ]);
+    }
+
+    public function update_pendidikan(Request $request, RiwayatPendidikan $pendidikan)
+    {
+        $v = $request->validate([
+            "pendidikan"          =>      "nullable",
+            "jurusan"             =>      "nullable",
+            "asal_pendidikan"     =>      "nullable",
+            "tahun_awal"          =>      "nullable",
+            "tahun_akhir"         =>      "nullable",
+        ]);
+
+        $v['pelamar_id']  =  $request->pelamars_id;
+        $pendidikan->update($v);
+
+        return back();
+    }
+
+    public function edit_pengalaman(Pengalamankerja $pengalaman)
+    {
+        return view('Super-Admin.Pelamar.edit-kandidat.edit-pengalaman', [
+            "title" => 'edit pengalaman',
+            "data"  => $pengalaman
+        ]);
+    }
+
+    public function update_pengalaman(Request $request, Pengalamankerja $pengalaman)
+    {
+        $vdata = $request->validate([
+            'posisi_kerja'  =>    "nullable",
+            'jabatan_kerja'  =>    "nullable",
+            'nama_perusahaan'  =>    "nullable",
+            'tahun_awal'  =>    "nullable",
+            'tahun_akhir'  =>    "nullable",
+            'deskripsi'  =>    "nullable",
+        ]);
+        $vdata['pelamar_id'] = $request->pelamar_id;
+        $pengalaman->update($vdata);
+        return back();
+    }
+
+    public function edit_skill(Skill $skill)
+    {
+        return view('Super-Admin.Pelamar.edit-kandidat.edit-skill', [
+            "title" => 'edit Skill',
+            "data" => $skill
+        ]);
+    }
+
+    public function update_skill(Request $request, Skill $skill)
+    {
+        $vData = $request->validate([
+            "skill"   => 'nullable',
+            "experience_level"  => 'nullable'
+        ]);
+        $vData['pelamar_id'] = $skill->pelamar_id;
+        $skill->update($vData);
+
+        return back();
+    }
+
     public function kandidat_create(Request $request)
     {
         $validasi_data = $request->validate([
@@ -124,7 +218,6 @@ class SuperAdminController extends Controller
             "password" => "required",
             "role" => "required"
         ]);
-
         $validasi_data['password'] = Hash::make($request->password);
         $user = User::create($validasi_data);
 
@@ -132,27 +225,83 @@ class SuperAdminController extends Controller
             "nama_pelamar" => "required",
             "telepon_pelamar" => "required",
             "gender" => "required",
-            "kategori" => "required"
+            "kategori" => "required",
+            "img_profile" => "nullable|image|mimes:jpg,jpeg,png"
         ]);
 
+        $imgPath = null;
+        if ($request->hasFile('img_profile')) {
+            $imgPath = $request->file('img_profile')->store('images', 'public');
+        }
+
+        $validasi_dataPelamar['img_profile'] = $imgPath;
+
+        // dd($validasi_dataPelamar);
+
+
         $pelamar = $user->pelamars()->create($validasi_dataPelamar);
-        // dd($pelamar->id);
+
         session(['pelamar_id' => $pelamar->id]);
+
         return redirect('/dashboard/superadmin/pelamar/add/kandidat');
     }
 
-    public function edit_kandidat()
+
+    public function edit_kandidat(Pelamar $pelamar)
     {
         return view('Super-Admin.Pelamar.Kandidat.edit_kandidat_super_admin', [
-            "title" => "Edit Kandidat"
+            "title" => "Edit Kandidat",
+            "Data" => $pelamar
         ]);
     }
 
-    public function kandidat_view()
+    public function kandidat_view(Pelamar $pelamar)
     {
         return view('Super-Admin.Pelamar.Kandidat.kandidat-view', [
-            "title" => "Detail Kandidat"
+            "title" => "Detail Kandidat",
+            "Data"  => $pelamar
         ]);
+    }
+    public function update_kandidat(Request $request, Pelamar $pelamar)
+    {
+
+        $user = User::findOrFail($pelamar->users->id);
+
+        $validasi_data = $request->validate([
+            "username" => "required",
+            "email" => "required|email",
+            "password" => "nullable",
+            "role" => "required"
+        ]);
+
+        if ($request->filled('password')) {
+            $validasi_data['password'] = Hash::make($request->password);
+        } else {
+            unset($validasi_data['password']);
+        }
+
+        $user->update($validasi_data);
+
+        $validasi_dataPelamar = $request->validate([
+            "nama_pelamar" => "required",
+            "telepon_pelamar" => "required",
+            "gender" => "required",
+            "img_profile"  =>   "nullable"
+        ]);
+
+        if ($request->hasFile('img_profile')) {
+            if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
+                Storage::delete('public/' . $pelamar->img_profile);
+            }
+
+            $path = $request->file('img_profile')->store('images', 'public');
+
+            $validasi_dataPelamar['img_profile'] = $path;
+            // dd($validasi_dataPelamar);
+        }
+
+        $pelamar->update($validasi_dataPelamar);
+        return back();
     }
 
     //Bagian NON KANDIDAT
@@ -245,8 +394,16 @@ class SuperAdminController extends Controller
         $validasi_dataPelamar = $request->validate([
             "nama_pelamar" => "required",
             "telepon_pelamar" => "required",
-            "gender" => "required"
+            "gender" => "required",
+            "img_profile"  =>   "nullable"
         ]);
+
+        $imgPath = null;
+        if ($request->hasFile('img_profile')) {
+            $imgPath = $request->file('img_profile')->store('images', 'public');
+        }
+
+        $validasi_dataPelamar['img_profile'] = $imgPath;
 
         $pelamar = $user->pelamars()->create($validasi_dataPelamar);
         // dd($pelamar->id);
@@ -263,40 +420,9 @@ class SuperAdminController extends Controller
             "Data"  =>  $pelamar
         ]);
     }
+
     public function update_non_kandidat(Request $request, Pelamar $pelamar)
     {
-        // $pelamar = Pelamar::findOrFail($pelamar);
-        // $user = $pelamar->users;
-
-        // $request->validate([
-        //     'email' => 'required|email',
-        //     'username' => 'required',
-        //     'nama_pelamar' => 'required',
-        //     'gender' => 'required',
-        //     'detail' => 'required',
-        //     'telepon' => 'required',
-        // ]);
-
-        // $user->update([
-        //     'email' => $request->email,
-        //     'username' => $request->username,
-        //     'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
-        // ]);
-
-        // $pelamar->update([
-        //     'nama_pelamar' => $request->nama_pelamar,
-        //     'gender' => $request->gender,
-        //     'telepon_pelamar' => $request->telepon,
-        // ]);
-
-        // $alamat = $pelamar->alamat_pelamars()->latest()->first();
-        // if ($alamat) {
-        //     $alamat->update([
-        //         'detail' => $request->detail,
-        //     ]);
-        // }
-        // return redirect('/dashboard/superadmin/akun')
-        //     ->with('success', 'Data user berhasil diperbarui');
 
         $user = User::findOrFail($pelamar->users->id);
 
@@ -318,8 +444,20 @@ class SuperAdminController extends Controller
         $validasi_dataPelamar = $request->validate([
             "nama_pelamar" => "required",
             "telepon_pelamar" => "required",
-            "gender" => "required"
+            "gender" => "required",
+            "img_profile"  =>   "nullable"
         ]);
+
+        if ($request->hasFile('img_profile')) {
+            if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
+                Storage::delete('public/' . $pelamar->img_profile);
+            }
+
+            $path = $request->file('img_profile')->store('images', 'public');
+
+            $validasi_dataPelamar['img_profile'] = $path;
+            // dd($validasi_dataPelamar);
+        }
 
         $pelamar->update($validasi_dataPelamar);
         return back();
@@ -462,29 +600,179 @@ class SuperAdminController extends Controller
             "title" => "Tambah Perusahaan"
         ]);
     }
-    public function perusahaan_detail()
+    public function perusahaan_edit(Perusahaan $perusahaan)
+    {
+        return view('Super-Admin.Perusahaan.edit_data_perusahaan_super_admin', [
+            "title" => "Edit Perusahaan",
+            "Data"  =>  $perusahaan
+        ]);
+    }
+    public function perusahaan_update(Request $request, Perusahaan $perusahaan)
+    {
+        $user = User::findOrFail($perusahaan->users->id);
+
+        $validasi_data = $request->validate([
+            "username" => "required",
+            "email" => "required|email",
+            "password" => "nullable",
+        ]);
+
+        if ($request->filled('password')) {
+            $validasi_data['password'] = Hash::make($request->password);
+        } else {
+            unset($validasi_data['password']);
+        }   
+
+        $user->update($validasi_data);
+
+        $validasi_dataPerusahaan = $request->validate([
+            "nama_perusahaan" => "required",
+            "img_profile"   =>   "nullable",
+            "legalitas" => "required",
+            "deskripsi" => "required",
+            "visi" => "required",
+            "misi" => "required",
+            "telepon_perusahaan" => "required",
+            "whatsapp" => "required",
+        ]);
+        if ($request->hasFile('img_profile')) {
+            if ($perusahaan->img_profile && Storage::exists('public/' . $perusahaan->img_profile)) {
+                Storage::delete('public/' . $perusahaan->img_profile);
+            }
+
+            $path = $request->file('img_profile')->store('images', 'public');
+            $validasi_dataPerusahaan['img_profile'] = $path;
+        }
+
+        $perusahaan->update($validasi_dataPerusahaan);
+        return back();
+    }
+
+    public function perusahaan_create(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'username' => 'required',
+            'password' => 'required',
+            'nama_perusahaan' => 'required',
+            'legalitas' => 'nullable',
+            'deskripsi' => 'required',
+            'visi' => 'required',
+            'misi' => 'required',
+            'telepon_perusahaan' => 'nullable',
+            'whatsapp' => 'nullable',
+            'img_profile' => 'nullable|image|mimes:jpg,jpeg,png',
+        ]);
+
+        $user = User::create([
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'role' => 'perusahaan',
+        ]);
+
+        $imgPath = null;
+
+        if ($request->hasFile('img_profile')) {
+            $imgPath = $request->file('img_profile')->store('images', 'public');
+        }
+
+        Perusahaan::create([
+            'user_id' => $user->id,
+            'nama_perusahaan' => $validated['nama_perusahaan'],
+            'legalitas' => $request->legalitas,
+            'deskripsi' => $validated['deskripsi'],
+            'visi' => $validated['visi'],
+            'misi' => $validated['misi'],
+            'telepon_perusahaan' => $request->telepon_perusahaan,
+            'whatsapp' => $request->whatsapp,
+            'img_profile' => $imgPath,
+        ]);
+        return redirect('/dashboard/superadmin/perusahaan')->with('success', 'Perusahaan berhasil ditambahkan!');
+    }
+
+    public function perusahaan_delete(User $user)
+    {
+        $user->destroy($user->id);
+        return redirect('/dashboard/superadmin/perusahaan');
+    }
+
+    public function perusahaan_detail(Perusahaan $perusahaan)
     {
         return view('Super-Admin.Perusahaan.details_perusahaan_superAdmin', [
-            "title" => ""
+            "title" => "",
+            "Data"  =>    $perusahaan
         ]);
     }
-    public function lowongan_detail()
+    public function lowongan_detail(LowonganPerusahaan $lowongan)
     {
         return view('Super-Admin.Perusahaan.detail-lowongan_perusahaan_superAdmin', [
-            "title" => ""
+            "title" => "",
+            "Data"  => $lowongan
         ]);
     }
-    public function lowongan_add()
+
+    public function jadikan_rekomendasi(LowonganPerusahaan $lowongan)
+    {
+        $lowongan->update([
+            "rekomendasi"  => 1
+        ]);
+
+        return back();
+    }
+
+    public function lowongan_add(Perusahaan $perusahaan)
     {
         return view('Super-Admin.Perusahaan.tambah_lowongan-perusahaan_superAdmin', [
-            "title" => "Tambah Lowongan"
+            "title" => "Tambah Lowongan",
+            "Data"  =>  $perusahaan
         ]);
     }
-    public function lowongan_edit()
+
+    public function lowongan_create(Request $request)
+    {
+        // dd($request->all());
+        $valdas = $request->validate([
+            "nama"    =>     "required",
+            "alamat"  =>     "required",
+            "jenis"   =>     "required",
+            "gaji_awal"  => "required",
+            "gaji_akhir" => "required",
+            "deskripsi"  => "required",
+            "syarat_pekerjaan" => "required",
+            "batas_lamaran"    => "required"
+        ]);
+
+        $valdas['perusahaan_id'] = $request->perusahaan_id;
+        $valdas['slug']     =   Str::slug($request->nama);
+
+        LowonganPerusahaan::create($valdas);
+        return redirect('/dashboard/superadmin/perusahaan');
+    }
+
+    public function lowongan_edit(LowonganPerusahaan $lowongan)
     {
         return view('Super-Admin.Perusahaan.edit_lowongan-perusahaan_superAdmin', [
-            "title" => "Edit Lowongan"
+            "title" => "Edit Lowongan",
+            "Data"  =>  $lowongan
         ]);
+    }
+
+    public function lowongan_update(Request $request, LowonganPerusahaan $lowongan)
+    {
+        $valdas = $request->validate([
+            "nama"    =>     "required",
+            "alamat"  =>     "required",
+            "jenis"   =>     "required",
+            "gaji_awal"  => "required",
+            "gaji_akhir" => "required",
+            "deskripsi"  => "required",
+            "syarat_pekerjaan" => "required",
+            "batas_lamaran"    => "required"
+        ]);
+
+        $lowongan->update($valdas);
+        return back();
     }
 
     // Recrutiment
@@ -525,10 +813,13 @@ class SuperAdminController extends Controller
     // Finance
     public function finance()
     {
+
         return view('Super-Admin.finance.finance-index_superAdmin', [
             "title" => "Paket Harga",
             "koin" => HargaKoin::all(),
-            "tunai" => HargaPembayaran::all()
+            "tunai" => HargaPembayaran::all(),
+            "cash"  =>  CatatanCash::all(),
+            "koins" =>  CatatanKoin::all()
         ]);
     }
     public function finance_edit_paket_koin()

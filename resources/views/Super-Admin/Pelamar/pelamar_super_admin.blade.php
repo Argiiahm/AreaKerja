@@ -59,7 +59,7 @@
                                         {{ $p->alamat_pelamars->sortByDesc('created_at')->first()->detail ?? 'belum ada data' }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <a href="/dashboard/superadmin/nonkandidat_view/{{ $p->id }}"
+                                        <a href="/dashboard/superadmin/kandidat_view/{{ $p->id }}"
                                             class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md transition">
                                             View
                                         </a>

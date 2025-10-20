@@ -67,45 +67,79 @@
 
         <div id="riwayat_table" class="hidden">
             <div class="mb-10">
-                <h2 class="text-lg font-semibold mb-3">Riwayat Tunai</h2>
+                <h2 class="text-lg font-semibold mb-3">Riwayat Transaksi Tunai Terbaru</h2>
                 <div class="overflow-x-auto bg-white rounded-xl shadow-md">
                     <table class="w-full border-collapse">
                         <thead>
                             <tr class="bg-orange-500 text-white">
-                                <th class="py-3 px-4 text-left">No</th>
-                                <th class="py-3 text-left">No.Refrensi</th>
-                                <th class="py-3 text-left">Jenis</th>
-                                <th class="py-3 text-left">Dari</th>
-                                <th class="py-3 text-left">Sumber Dana</th>
-                                <th class="py-3 text-left">Total Koin</th>
-                                <th class="py-3 text-left">Detail</th>
-                                <th class="py-3 text-left">Status</th>
+                                <th class="py-3 px-4 text-center">No</th>
+                                <th class="py-3 text-center">No.Refrensi</th>
+                                <th class="py-3 text-center">Jenis</th>
+                                <th class="py-3 text-center">Dari</th>
+                                <th class="py-3 text-center">Sumber Dana</th>
+                                <th class="py-3 text-center">Total Harga</th>
+                                <th class="py-3 text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y">
-
+                            @php
+                                use App\Models\HargaPembayaran;
+                                $i = 1
+                            @endphp
+                            @foreach ($cash->sortByDesc('updated_at') as $c)
+                                @if ($c->created_at->isToday() && $c->status !== 'pending')
+                                    @php
+                                        $pembayaran = HargaPembayaran::where('nama', $c->pesanan)->first();
+                                        $total = $pembayaran->harga ?? 0;
+                                    @endphp
+                                    <tr>
+                                        <td class="py-3 text-center">{{ $i++ }}</td> 
+                                        <td class="py-3 text-center">{{ $c->no_referensi }}</td>
+                                        <td class="py-3 text-center">{{ $c->pesanan }}</td>
+                                        <td class="py-3 text-center">{{ $c->dari }}</td>
+                                        <td class="py-3 text-center">{{ $c->sumber_dana }}</td>
+                                        <td class="py-3 text-center">Rp. {{ number_format($total ?? 0, 0, ',', '.') }}</td>
+                                        @if ($c->status === 'diterima')
+                                            <td class="py-3 text-center text-green-500">{{ $c->status }}</td>
+                                        @elseif ($c->status === 'ditolak')
+                                            <td class="py-3 text-center text-red-500">{{ $c->status }}</td>
+                                        @else
+                                            <td class="py-3 text-center">{{ $c->status }}</td>
+                                        @endif
+                                    </tr>
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="mb-10">
-                <h2 class="text-lg font-semibold mb-3">Riwayat Koin</h2>
+                <h2 class="text-lg font-semibold mb-3">Riwayat Transaksi Koin Terbaru</h2>
                 <div class="overflow-x-auto bg-white rounded-xl shadow-md">
                     <table class="w-full border-collapse">
                         <thead>
                             <tr class="bg-orange-500 text-white">
-                                <th class="py-3 px-4 text-left">No</th>
-                                <th class="py-3 text-left">No.Refrensi</th>
-                                <th class="py-3 text-left">Jenis</th>
-                                <th class="py-3 text-left">Dari</th>
-                                <th class="py-3 text-left">Sumber Dana</th>
-                                <th class="py-3 text-left">Total Koin</th>
-                                <th class="py-3 text-left">Detail</th>
-                                <th class="py-3 text-left">Status</th>
+                                <th class="py-3 px-4 text-center">No</th>
+                                <th class="py-3 text-center">No.Refrensi</th>
+                                <th class="py-3 text-center">Jenis</th>
+                                <th class="py-3 text-center">Dari</th>
+                                <th class="py-3 text-center">Sumber Dana</th>
+                                <th class="py-3 text-center">Total Koin</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y">
-
+                            @foreach ($koins as $k)
+                                @if ($k->created_at->isToday())
+                                    <tr>
+                                        <td class="py-3 text-center">{{ $i++ }}</td>
+                                        <td class="py-3 text-center">{{ $k->no_referensi }}</td>
+                                        <td class="py-3 text-center">{{ $k->pesanan }}</td>
+                                        <td class="py-3 text-center">{{ $k->dari }}</td>
+                                        <td class="py-3 text-center">{{ $k->sumber_dana }}</td>
+                                        <td class="py-3 text-center">{{ $k->total }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

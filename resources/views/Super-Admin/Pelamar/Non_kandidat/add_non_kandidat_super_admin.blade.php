@@ -4,27 +4,33 @@
     <div class="mx-auto border rounded-xl p-6">
         @if ($pelamar)
             <button onclick="window.location='/dashboard/superadmin/pelamar'" type="submit"
-                class="px-6 py-2 bg-orange-500 text-white rounded-md">Simpan & Kembali</button>
+                class="px-6 py-2 mb-5 bg-orange-500 text-white rounded-md"><i class="ph ph-arrow-left"></i></button>
         @endif
-
-        <div class="flex items-center gap-2">
-            <img src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
+        <div class="flex items-center gap-2 mb-5">
+            <img id="previewImage"
+                src="{{ $pelamar && $pelamar->img_profile
+                    ? asset('storage/' . $pelamar->img_profile)
+                    : 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg' }}"
                 class="w-24 h-24 rounded-full object-cover mb-2">
+
+
             <div class="flex gap-2">
-                <div
+                <label
                     class="flex items-center gap-2 border-2 bg-orange-500 px-6 py-2 rounded-lg w-full sm:w-auto justify-center cursor-pointer">
                     <i class="ph ph-upload-simple text-2xl text-white"></i>
                     <span class="text-white">Upload</span>
-                </div>
-                <div
-                    class="flex items-center gap-2 border border-orange-500 px-6 py-2 rounded-lg w-full sm:w-auto justify-center cursor-pointer">
+                    <input type="file" name="img_profile" id="foto" class="hidden" accept="image/*"
+                        form="formNonKandidat">
+                </label>
+                <button type="button" onclick="removeImage()"
+                    class="flex items-center gap-2 border border-orange-500 px-6 py-2 rounded-lg w-full sm:w-auto justify-center">
                     <i class="ph ph-trash text-2xl text-orange-500"></i>
                     <span class="text-orange-500">Remove</span>
-                </div>
+                </button>
             </div>
         </div>
 
-        <form action="/dashboard/superadmin/pelamar/create/non_kandidat" method="POST" class="space-y-4">
+        <form id="formNonKandidat" action="/dashboard/superadmin/pelamar/create/non_kandidat" method="POST" class="space-y-4" enctype="multipart/form-data">
             @csrf
 
             <div>
@@ -324,6 +330,22 @@
     </div>
 
     <script>
+        const fileInput = document.getElementById('foto');
+        const previewImage = document.getElementById('previewImage');
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                previewImage.src = URL.createObjectURL(file);
+            }
+        });
+
+        function removeImage() {
+            fileInput.value = '';
+            previewImage.src =
+                'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg';
+        }
+
         function cekUser(modalId) {
             let pelamarId = document.querySelector('input[name="pelamar_id"]').value;
 

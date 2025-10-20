@@ -134,12 +134,21 @@ Route::middleware(['status'])->group(function () {
 
     // Pelamar SuperAdmin
     Route::get('/dashboard/superadmin/pelamar', [SuperAdminController::class, 'pelamar'])->middleware('superadmin');
+    Route::get('/edit/superadmin/kandidat/organisasi/{organisasi:id}', [SuperAdminController::class, 'edit_organisasi'])->middleware('superadmin');
+    Route::put('/update/superadmin/kandidat/organisasi/{organisasi:id}', [SuperAdminController::class, 'update_organisasi'])->middleware('superadmin');
+    Route::get('/edit/superadmin/kandidat/pendidikan/{pendidikan:id}', [SuperAdminController::class, 'edit_pendidikan'])->middleware('superadmin');
+    Route::put('/update/superadmin/kandidat/pendidikan/{pendidikan:id}', [SuperAdminController::class, 'update_pendidikan'])->middleware('superadmin');
+    Route::get('/edit/superadmin/kandidat/pengalaman/{pengalaman:id}', [SuperAdminController::class, 'edit_pengalaman'])->middleware('superadmin');
+    Route::put('/update/superadmin/kandidat/pengalaman/{pengalaman:id}', [SuperAdminController::class, 'update_pengalaman'])->middleware('superadmin');
+    Route::get('/edit/superadmin/kandidat/skill/{skill:id}', [SuperAdminController::class, 'edit_skill'])->middleware('superadmin');
+    Route::put('/update/superadmin/kandidat/skill/{skill:id}', [SuperAdminController::class, 'update_skill'])->middleware('superadmin');
 
     //View, Add Dan Edit Kandidat - SuperAdmin
-    Route::get('/dashboard/superadmin/kandidat_view', [SuperAdminController::class, 'kandidat_view'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/kandidat_view/{pelamar:id}', [SuperAdminController::class, 'kandidat_view'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pelamar/add/kandidat', [SuperAdminController::class, 'add_kandidat'])->middleware('superadmin');
     Route::post('/dashboard/superadmin/pelamar/create/kandidat', [SuperAdminController::class, 'kandidat_create'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/pelamar/edit/kandidat', [SuperAdminController::class, 'edit_kandidat'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/pelamar/edit/kandidat/{pelamar:id}', [SuperAdminController::class, 'edit_kandidat'])->middleware('superadmin');
+    Route::put('/edit/kandidat/{pelamar:id}', [SuperAdminController::class, 'update_kandidat'])->middleware('superadmin');
 
     //View, Add Dan Edit Non Kandidat - SuperAdmin
     Route::get('/dashboard/superadmin/nonkandidat_view/{pelamar:id}', [SuperAdminController::class, 'non_kandidat_view'])->middleware('superadmin');
@@ -161,10 +170,17 @@ Route::middleware(['status'])->group(function () {
     // Data Perusahaan -SuperAdmin
     Route::get('/dashboard/superadmin/perusahaan', [SuperAdminController::class, 'perusahaan'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/perusahaan/add/perusahaan', [SuperAdminController::class, 'perusahaan_add'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/perusahaan/detail', [SuperAdminController::class, 'perusahaan_detail'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/perusahaan/detail', [SuperAdminController::class, 'lowongan_detail'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/perusahaan/lowongan/add', [SuperAdminController::class, 'lowongan_add'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/perusahaan/lowongan/edit', [SuperAdminController::class, 'lowongan_edit'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/perusahaan/edit/perusahaan/{perusahaan:id}', [SuperAdminController::class, 'perusahaan_edit'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/perusahaan/update/perusahaan/{perusahaan:id}', [SuperAdminController::class, 'perusahaan_update'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/perusahaan/create/perusahaan', [SuperAdminController::class, 'perusahaan_create'])->middleware('superadmin');
+    Route::delete('/dashboard/superadmin/perusahaan/delete/perusahaan/{user:id}', [SuperAdminController::class, 'perusahaan_delete'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/perusahaan/detail/{perusahaan:id}', [SuperAdminController::class, 'perusahaan_detail'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/perusahaan/lowongan/detail/{lowongan:id}', [SuperAdminController::class, 'lowongan_detail'])->middleware('superadmin');
+    Route::put('/jadikan/rekomendasi/{lowongan:id}', [SuperAdminController::class, 'jadikan_rekomendasi'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/perusahaan/lowongan/add/{perusahaan:id}', [SuperAdminController::class, 'lowongan_add'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin/perusahaan/lowongan/create', [SuperAdminController::class, 'lowongan_create'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/perusahaan/lowongan/edit/{lowongan:id}', [SuperAdminController::class, 'lowongan_edit'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/perusahaan/lowongan/update/{lowongan:id}', [SuperAdminController::class, 'lowongan_update'])->middleware('superadmin');
 
     // Data Recrutiment -Super Admin
     Route::get('/dashboard/superadmin/recrutiment', [SuperAdminController::class, 'recrutiment_detail'])->middleware('superadmin');

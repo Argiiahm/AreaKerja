@@ -60,7 +60,6 @@ class ProfileController extends Controller
         $pelamar->sosmed()->create($sosmed);
         return redirect('/profile');
 
-        return view('Data-profile.profile');
     }
 
     public function hapus_profile(Pelamar $pelamar)
@@ -164,7 +163,6 @@ class ProfileController extends Controller
 
         $organisasi->update($v);
         return redirect('/profile');
-        return back();
     }
 
     // RIwayat Pendiidkan
@@ -244,7 +242,6 @@ class ProfileController extends Controller
         $vdata['pelamar_id'] = Auth::user()->pelamars->id;
         $pengalamankerja->update($vdata);
         return redirect('/profile');
-        return back();
     }
 
     //skill

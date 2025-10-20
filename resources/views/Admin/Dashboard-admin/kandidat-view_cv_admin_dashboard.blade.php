@@ -31,10 +31,10 @@
                     <i class="ph ph-phone text-orange-600 text-lg"></i> {{ $Data->telepon_pelamar }}
                 </p>
                 <p class="flex items-center justify-center md:justify-start gap-2">
-                    <i class="ph ph-linkedin-logo text-orange-600 text-lg"></i> {{ $Data->sosmed->latest()->first()->linkedin ?? 'tidak ada data' }}
+                    <i class="ph ph-linkedin-logo text-orange-600 text-lg"></i> {{ optional($Data->sosmed()->latest()->first())->linkedin ?? 'tidak ada data' }}
                 </p>
                 <p class="flex items-center justify-center md:justify-start gap-2">
-                    <i class="ph ph-globe text-orange-600 text-lg"></i>  {{ $Data->sosmed->latest()->first()->website ?? 'tidak ada data' }}
+                    <i class="ph ph-globe text-orange-600 text-lg"></i>  {{ optional($Data->sosmed()->latest()->first())->website ?? 'tidak ada data' }}
                 </p>
             </div>
         </div>

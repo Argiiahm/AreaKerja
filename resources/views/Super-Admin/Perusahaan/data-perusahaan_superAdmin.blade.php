@@ -45,21 +45,21 @@
                                 <th class="px-6 py-3 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-100">
+                        <tbody class="divide-y divide-gray-100"> 
                             @foreach ($Data as $d)
-                                
-                            <tr class="hover:bg-gray-50 transition-all">
-                                <td class="px-6 py-4 font-medium">{{ $d->id }}</td>
-                                <td class="px-6 py-4">{{ $d->nama_perusahaan }}</td>
-                                <td class="px-6 py-4">{{ $d->users->email }}</td>
-                                <td class="px-6 py-4">{{ $d->telepon_perusahaan }}</td>
-                                <td class="px-6 py-4">{{ $d->alamatperusahaan()->latest()->first()->detail ?? 'belum ada data' }}</td>
-                                <td class="px-6 py-4 text-center">
-                                    <a href="/dashboard/superadmin/recrutiment"
-                                        class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-md text-sm transition-all">View</a>
+                                <tr class="hover:bg-gray-50 transition-all">
+                                    <td class="px-6 py-4 font-medium">{{ $loop->iteration }}</td>
+                                    <td class="px-6 py-4">{{ $d->nama_perusahaan }}</td>
+                                    <td class="px-6 py-4">{{ $d->users->email }}</td>
+                                    <td class="px-6 py-4">{{ $d->telepon_perusahaan }}</td>
+                                    <td class="px-6 py-4">
+                                        {{ $d->alamatperusahaan()->latest()->first()->detail ?? 'belum ada data' }}</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <a href="/dashboard/superadmin/perusahaan/detail/{{ $d->id }}"
+                                            class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-md text-sm transition-all">View</a>
                                     </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
                         </tbody>
                     </table>
 

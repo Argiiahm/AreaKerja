@@ -98,7 +98,6 @@
                 </div>
             </div>
         </div>
-
         <script>
             setTimeout(() => {
                 document.getElementById('modalSukses')?.classList.add('hidden');
@@ -109,7 +108,6 @@
             });
         </script>
         @endif
-
     </div>
 
     <script>
