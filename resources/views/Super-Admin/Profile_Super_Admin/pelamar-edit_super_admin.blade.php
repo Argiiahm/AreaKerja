@@ -160,7 +160,7 @@
         const kecamatanData = @json($Daerah);
 
         const provinsiSelect = document.getElementById('provinsi');
-        const kotaSelect = document.getElementById('kota');
+        const kotaSelect = document.getElementById('kota'); 
         const kecamatanSelect = document.getElementById('kecamatan');
 
         provinsiSelect.addEventListener('change', function() {

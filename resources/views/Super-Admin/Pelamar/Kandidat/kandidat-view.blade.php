@@ -20,7 +20,7 @@
             <div>
                 <p class="font-bold text-lg text-gray-800">User ID</p>
                 <p class="font-semibold text-base">{{ $Data->users->id }}</p>
-           </div>
+            </div>
             <div>
                 <p class="font-bold text-lg text-gray-800">Username</p>
                 <p class="font-semibold text-base">{{ $Data->users->username }}</p>
@@ -117,10 +117,75 @@
                 class="px-6 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded-md shadow">Edit</a>
             <a href="/cv/{{ $Data->id }}/unduh"
                 class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md shadow">Unduh</a>
-            <a href="#" class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md shadow">Hapus</a>
+            <button data-id="{{ $Data->id }}" class="btnHapus px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md shadow">Hapus</button data-id="{{ $Data->id }}">
         </div>
 
         @include('CV_PELAMAR.cv_pelamar')
 
+
+        <div id="modalKonfirmasi-{{ $Data->id }}"
+            class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 w-[350px] text-center relative">
+                <div class="text-gray-600 text-5xl mb-3"><i class="ph ph-trash"></i></div>
+                <p class="text-gray-800 font-semibold mb-5">Yakin akan hapus data?</p>
+                <div class="flex justify-center space-x-4">
+                    <form action="dashboaod/supadmin./hapus/users/pelamar/{{ $Data->users->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="bg-green-500 text-white px-6 py-1 rounded-md hover:bg-green-600">Hapus</button>
+                    </form>
+                    <button data-id="{{ $Data->id }}"
+                        class="batalHapus bg-red-500 text-white px-6 py-1 rounded-md hover:bg-red-600">Batal</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    @if (session('success'))
+        <div id="modalSukses" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl shadow-lg w-[350px] text-center relative p-6">
+                <button id="closeSukses" class="absolute top-2 right-3 text-gray-400 text-xl hover:text-gray-600">×</button>
+
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <div class="flex items-center justify-center w-20 h-20 rounded-full bg-green-100">
+                        <div class="flex items-center justify-center w-14 h-14 rounded-full bg-green-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                                stroke="white" class="w-10 h-10">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-800 font-semibold text-[15px]">Data User Berhasil Dihapus</p>
+                </div>
+            </div>
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('modalSukses')?.classList.add('hidden');
+            }, 2000);
+
+            document.getElementById('closeSukses')?.addEventListener('click', () => {
+                document.getElementById('modalSukses').classList.add('hidden');
+            });
+        </script>
+    @endif
+    </div>
+
+    <script>
+        document.querySelectorAll('.btnHapus').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                document.getElementById(`modalKonfirmasi-${id}`).classList.remove('hidden');
+            });
+        });
+
+        document.querySelectorAll('.batalHapus').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                document.getElementById(`modalKonfirmasi-${id}`).classList.add('hidden');
+            });
+        });
+    </script>
 @endsection

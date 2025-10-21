@@ -1,4 +1,4 @@
-@extends('Admin.Dashboard-admin.layouts.index')
+    @extends('Admin.Dashboard-admin.layouts.index')
 
 @section('admin-content')
     <div class="p-6">
@@ -224,7 +224,7 @@
                 </div>
             </div>
 
-            {{-- MODAL DITOLAK --}}t
+            {{-- MODAL DITOLAK --}}
             <div id="modalDitolak"
                 class="hidden bg-white w-full max-w-md p-8 relative rounded-xl shadow-lg overflow-y-auto">
                 <button onclick="closeDetail()"

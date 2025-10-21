@@ -8,7 +8,7 @@
                 @if ($Data->img_profile)
                     <img id="previewImage"
                         src="{{ asset('storage/' . $Data->img_profile) }}"
-                        class="w-24 h-24 rounded-full object-cover mb-2">
+                        class="w-24 h-24 rounded-ful mb-2">   
                 @else
                     <img id="previewImage"
                         src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"

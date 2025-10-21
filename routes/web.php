@@ -142,6 +142,7 @@ Route::middleware(['status'])->group(function () {
     Route::put('/update/superadmin/kandidat/pengalaman/{pengalaman:id}', [SuperAdminController::class, 'update_pengalaman'])->middleware('superadmin');
     Route::get('/edit/superadmin/kandidat/skill/{skill:id}', [SuperAdminController::class, 'edit_skill'])->middleware('superadmin');
     Route::put('/update/superadmin/kandidat/skill/{skill:id}', [SuperAdminController::class, 'update_skill'])->middleware('superadmin');
+    Route::delete('dashboaod/supadmin./hapus/users/pelamar/{user:id}', [SuperAdminController::class, 'delete_user'])->middleware('superadmin');
 
     //View, Add Dan Edit Kandidat - SuperAdmin
     Route::get('/dashboard/superadmin/kandidat_view/{pelamar:id}', [SuperAdminController::class, 'kandidat_view'])->middleware('superadmin');
@@ -229,6 +230,8 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/akun/add', [SuperAdminController::class, 'akun_add'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/{user:id}/edit', [SuperAdminController::class, 'akun_edit'])->middleware('superadmin');
     Route::delete('/delete/akun/{user:id}', [SuperAdminController::class, 'akun_delete'])->middleware('superadmin');
+
+    Route::post('/dasboard/superadmin/create/pengguna',[SuperAdminController::class , 'create_pengguna'])->middleware('superadmin');
 
     // Link & Header - Super Admin
     Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page'])->middleware('superadmin');

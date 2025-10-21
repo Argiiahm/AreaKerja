@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alamatperusahaan;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Skill;
@@ -208,6 +209,12 @@ class SuperAdminController extends Controller
         $skill->update($vData);
 
         return back();
+    }
+
+    public function delete_user(User $user)
+    {
+        $user->delete();
+        return back()->with('success', 'akun berhasil di hapus');
     }
 
     public function kandidat_create(Request $request)
@@ -621,7 +628,7 @@ class SuperAdminController extends Controller
             $validasi_data['password'] = Hash::make($request->password);
         } else {
             unset($validasi_data['password']);
-        }   
+        }
 
         $user->update($validasi_data);
 
@@ -1171,9 +1178,90 @@ class SuperAdminController extends Controller
     public function akun_add()
     {
         return view('Super-Admin.Akun.add-akun_superAdmin', [
-            "title" => "Kelola Akun"
+            "title" => "Kelola Akun",
+            "Provinsi"  =>   Provinsi::all(),
+            "Kabupaten"  =>  Kabupaten::all(),
+            "Kecamatan"  =>  Daerah::all(),
         ]);
     }
+
+
+    public function create_pengguna(Request $request)
+    {
+        $validasiData = $request->validate([
+            "username"   =>    "required",
+            "email"      =>    "required",
+            "password"   =>    "required",
+            "role"       =>     "required",
+            "status"     =>     "required|boolean",
+            "provinsi"   =>     "nullable",
+            "kota"       =>      "nullable",
+            "kecamatan"  =>      "nullable",
+            "kode_pos"   =>      "nullable",
+            "detail"     =>      "nullable"
+        ]);
+
+        $user = User::create([
+            "username"   => $validasiData["username"],
+            "email"      => $validasiData["email"],
+            "password"   => $validasiData["password"] = Hash::make($request->password),
+            "role"       => $validasiData["role"],
+        ]);
+
+        if ($user->role === "pelamar") {
+            $pelamar = $user->pelamars()->create([
+                "nama_pelamar"   =>    $validasiData['username']
+            ]);
+
+            $pelamar->alamat_pelamars()->create([
+                "provinsi"   =>    $validasiData["provinsi"],
+                "kota"       =>    $validasiData["kota"],
+                "kecamatan"  =>    $validasiData["kecamatan"],
+                "kode_pos"   =>    $validasiData["kode_pos"],
+                "detail"     =>    $validasiData["detail"]
+            ]);
+        }
+        if ($user->role === "perusahaan") {
+            $perusahaan = $user->perusahaan()->create([
+                "nama_perusahaan"   =>    $validasiData['username']
+            ]);
+
+            $perusahaan->Alamatperusahaan()->create([
+                "provinsi"   =>    $validasiData["provinsi"],
+                "kota"       =>    $validasiData["kota"],
+                "kecamatan"  =>    $validasiData["kecamatan"],
+                "kode_pos"   =>    $validasiData["kode_pos"],
+                "detail"     =>    $validasiData["detail"]
+            ]);
+        }
+
+
+        if ($user->role === "superadmin") {
+            $user->superadmins()->create([
+                "nama_lengkap"  =>    $validasiData["username"],
+                "provinsi"   =>    $validasiData["provinsi"],
+                "kota"       =>    $validasiData["kota"],
+                "kecamatan"  =>    $validasiData["kecamatan"],
+                "kode_pos"   =>    $validasiData["kode_pos"],
+                "detail_alamat"     =>    $validasiData["detail"]
+            ]);
+        }
+
+        if ($user->role === "admin") {
+            $user->admin()->create([
+                "nama_lengkap"  =>    $validasiData["username"],
+                "provinsi"   =>    $validasiData["provinsi"],
+                "kota"       =>    $validasiData["kota"],
+                "kecamatan"  =>    $validasiData["kecamatan"],
+                "kode_pos"   =>    $validasiData["kode_pos"],
+                "detail_alamat"     =>    $validasiData["detail"]
+            ]);
+        }
+
+
+        return redirect('/dashboard/superadmin/akun');
+    }
+
     public function akun_edit(User $user)
     {
         return view('Super-Admin.Akun.edit-akun_superAdmin', [
