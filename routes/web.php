@@ -10,7 +10,7 @@ use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\PelamarController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\SuperAdminController;{{  }}
 use App\Http\Controllers\TalentHunterController;
 use App\Http\Controllers\TipskerjaController;
 use Illuminate\Support\Facades\Route;
@@ -232,6 +232,7 @@ Route::middleware(['status'])->group(function () {
     Route::delete('/delete/akun/{user:id}', [SuperAdminController::class, 'akun_delete'])->middleware('superadmin');
 
     Route::post('/dasboard/superadmin/create/pengguna',[SuperAdminController::class , 'create_pengguna'])->middleware('superadmin');
+    Route::put('/dasboard/superadmin/update/pengguna/{user:id}',[SuperAdminController::class , 'update_pengguna'])->middleware('superadmin');
 
     // Link & Header - Super Admin
     Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page'])->middleware('superadmin');

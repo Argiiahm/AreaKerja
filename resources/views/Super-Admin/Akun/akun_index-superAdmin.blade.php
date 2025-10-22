@@ -80,33 +80,94 @@
         </div>
 
         @if (session('success'))
-        <div id="modalSukses" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-xl shadow-lg w-[350px] text-center relative p-6">
-                <button id="closeSukses" class="absolute top-2 right-3 text-gray-400 text-xl hover:text-gray-600">×</button>
+            <div id="modalSukses" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-xl shadow-lg w-[350px] text-center relative p-6">
+                    <button id="closeSukses"
+                        class="absolute top-2 right-3 text-gray-400 text-xl hover:text-gray-600">×</button>
 
-                <div class="flex flex-col items-center justify-center space-y-4">
-                    <div class="flex items-center justify-center w-20 h-20 rounded-full bg-green-100">
-                        <div class="flex items-center justify-center w-14 h-14 rounded-full bg-green-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                                stroke="white" class="w-10 h-10">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full bg-green-100">
+                            <div class="flex items-center justify-center w-14 h-14 rounded-full bg-green-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                                    stroke="white" class="w-10 h-10">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
                         </div>
-                    </div>
 
-                    <p class="text-gray-800 font-semibold text-[15px]">Data User Berhasil Dihapus</p>
+                        <p class="text-gray-800 font-semibold text-[15px]">Data User Berhasil Dihapus</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <script>
-            setTimeout(() => {
-                document.getElementById('modalSukses')?.classList.add('hidden');
-            }, 2000);
+            <script>
+                setTimeout(() => {
+                    document.getElementById('modalSukses')?.classList.add('hidden');
+                }, 2000);
 
-            document.getElementById('closeSukses')?.addEventListener('click', () => {
-                document.getElementById('modalSukses').classList.add('hidden');
-            });
-        </script>
+                document.getElementById('closeSukses')?.addEventListener('click', () => {
+                    document.getElementById('modalSukses').classList.add('hidden');
+                });
+            </script>
+        @endif
+        @if (session('success2'))
+            <div id="modalSukses" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-xl shadow-lg w-[350px] text-center relative p-6">
+                    <button id="closeSukses"
+                        class="absolute top-2 right-3 text-gray-400 text-xl hover:text-gray-600">×</button>
+
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full bg-green-100">
+                            <div class="flex items-center justify-center w-14 h-14 rounded-full bg-green-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                                    stroke="white" class="w-10 h-10">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-800 font-semibold text-[15px]">Data User Berhasil Di Tambah</p>
+                    </div>
+                </div>
+            </div>
+            <script>
+                setTimeout(() => {
+                    document.getElementById('modalSukses')?.classList.add('hidden');
+                }, 2000);
+
+                document.getElementById('closeSukses')?.addEventListener('click', () => {
+                    document.getElementById('modalSukses').classList.add('hidden');
+                });
+            </script>
+        @endif
+        @if (session('success3'))
+            <div id="modalSukses" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-xl shadow-lg w-[350px] text-center relative p-6">
+                    <button id="closeSukses"
+                        class="absolute top-2 right-3 text-gray-400 text-xl hover:text-gray-600">×</button>
+
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full bg-green-100">
+                            <div class="flex items-center justify-center w-14 h-14 rounded-full bg-green-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                                    stroke="white" class="w-10 h-10">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-800 font-semibold text-[15px]">Data User Berhasil Di Ubah</p>
+                    </div>
+                </div>
+            </div>
+            <script>
+                setTimeout(() => {
+                    document.getElementById('modalSukses')?.classList.add('hidden');
+                }, 2000);
+
+                document.getElementById('closeSukses')?.addEventListener('click', () => {
+                    document.getElementById('modalSukses').classList.add('hidden');
+                });
+            </script>
         @endif
     </div>
 

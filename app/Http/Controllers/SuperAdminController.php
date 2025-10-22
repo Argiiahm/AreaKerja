@@ -1172,7 +1172,10 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Akun.view_akun_super-Admin', [
             "title" => "Kelola Akun",
-            "Data" => $user
+            "Data" => $user,
+            "Provinsi"  =>   Provinsi::all(),
+            "Kabupaten"  =>  Kabupaten::all(),
+            "Kecamatan"  =>  Daerah::all(),
         ]);
     }
     public function akun_add()
@@ -1201,11 +1204,13 @@ class SuperAdminController extends Controller
             "detail"     =>      "nullable"
         ]);
 
+
         $user = User::create([
             "username"   => $validasiData["username"],
             "email"      => $validasiData["email"],
             "password"   => $validasiData["password"] = Hash::make($request->password),
             "role"       => $validasiData["role"],
+            "status"       => $validasiData["status"],
         ]);
 
         if ($user->role === "pelamar") {
@@ -1258,15 +1263,123 @@ class SuperAdminController extends Controller
             ]);
         }
 
+        if ($user->role === "finance") {
+            $user->finance()->create([
+                "nama_lengkap"  =>    $validasiData["username"],
+                "provinsi"   =>    $validasiData["provinsi"],
+                "kota"       =>    $validasiData["kota"],
+                "kecamatan"  =>    $validasiData["kecamatan"],
+                "kode_pos"   =>    $validasiData["kode_pos"],
+                "detail_alamat"     =>    $validasiData["detail"]
+            ]);
+        }
 
-        return redirect('/dashboard/superadmin/akun');
+        return redirect('/dashboard/superadmin/akun')->with('success2', 'Data pengguna berhasil diperbarui');
     }
+    public function update_pengguna(Request $request, User $user)
+    {
+        $validasiData = $request->validate([
+            "username"   => "required",
+            "email"      => "required|email",
+            "password"   => "nullable|min:6",
+            "role"       => "required",
+            "status"     => "required|boolean",
+            "provinsi"   => "nullable",
+            "kota"       => "nullable",
+            "kecamatan"  => "nullable",
+            "kode_pos"   => "nullable",
+            "detail"     => "nullable"
+        ]);
+
+        $user->update([
+            "username" => $validasiData["username"],
+            "email"    => $validasiData["email"],
+            "password" => $request->filled('password')
+                ? Hash::make($request->password)
+                : $user->password,
+            "role"     => $validasiData["role"],
+            "status"   => $validasiData["status"],
+        ]);
+
+        if ($user->role === "pelamar" && $user->pelamars) {
+            $pelamar = $user->pelamars;
+            $pelamar->update([
+                "nama_pelamar" => $validasiData["username"],
+            ]);
+
+            if ($pelamar->alamat_pelamars()->exists()) {
+                $pelamar->alamat_pelamars()->latest()->first()->update([
+                    "provinsi"   => $validasiData["provinsi"],
+                    "kota"       => $validasiData["kota"],
+                    "kecamatan"  => $validasiData["kecamatan"],
+                    "kode_pos"   => $validasiData["kode_pos"],
+                    "detail"     => $validasiData["detail"],
+                ]);
+            }
+        }
+
+        if ($user->role === "perusahaan" && $user->perusahaan) {
+            $perusahaan = $user->perusahaan;
+            $perusahaan->update([
+                "nama_perusahaan" => $validasiData["username"],
+            ]);
+
+            if ($perusahaan->alamatperusahaan()->exists()) {
+                $perusahaan->alamatperusahaan()->latest()->first()->update([
+                    "provinsi"   => $validasiData["provinsi"],
+                    "kota"       => $validasiData["kota"],
+                    "kecamatan"  => $validasiData["kecamatan"],
+                    "kode_pos"   => $validasiData["kode_pos"],
+                    "detail"     => $validasiData["detail"],
+                ]);
+            }
+        }
+
+        if ($user->role === "superadmin" && $user->superadmins) {
+            $user->superadmins->update([
+                "nama_lengkap"   => $validasiData["username"],
+                "provinsi"       => $validasiData["provinsi"],
+                "kota"           => $validasiData["kota"],
+                "kecamatan"      => $validasiData["kecamatan"],
+                "kode_pos"       => $validasiData["kode_pos"],
+                "detail_alamat"  => $validasiData["detail"],
+            ]);
+        }
+
+        if ($user->role === "admin" && $user->admin) {
+            $user->admin->update([
+                "nama_lengkap"   => $validasiData["username"],
+                "provinsi"       => $validasiData["provinsi"],
+                "kota"           => $validasiData["kota"],
+                "kecamatan"      => $validasiData["kecamatan"],
+                "kode_pos"       => $validasiData["kode_pos"],
+                "detail_alamat"  => $validasiData["detail"],
+            ]);
+        }
+
+        if ($user->role === "finance" && $user->finance) {
+            $user->finance->update([
+                "nama_lengkap"   => $validasiData["username"],
+                "provinsi"       => $validasiData["provinsi"],
+                "kota"           => $validasiData["kota"],
+                "kecamatan"      => $validasiData["kecamatan"],
+                "kode_pos"       => $validasiData["kode_pos"],
+                "detail_alamat"  => $validasiData["detail"],
+            ]);
+        }
+
+        return redirect('/dashboard/superadmin/akun')->with('success3', 'Data pengguna berhasil diperbarui');
+    }
+
 
     public function akun_edit(User $user)
     {
         return view('Super-Admin.Akun.edit-akun_superAdmin', [
             "title" => "Kelola Akun",
-            "Data" => $user
+            "Data" => $user,
+            "Provinsi"  =>   Provinsi::all(),
+            "Kabupaten"  =>  Kabupaten::all(),
+            "Kecamatan"  =>  Daerah::all(),
         ]);
     }
     public function akun_delete(User $user)
