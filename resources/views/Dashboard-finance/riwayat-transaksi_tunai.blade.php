@@ -15,7 +15,7 @@
                             <th class="py-3 text-center">Jenis</th>
                             <th class="py-3 text-center">Dari</th>
                             <th class="py-3 text-center">Sumber Dana</th>
-                            <th class="py-3 text-center">Total Koin</th>
+                            <th class="py-3 text-center">Total</th>
                             <th class="py-3 text-center">Status</th>
                             <th class="py-3 text-center">Detail</th>
                         </tr>
@@ -161,7 +161,7 @@
 
             <div class="flex justify-center mt-4">
                 <div class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center">
-                    <i class="ph ph-check-circle w-10 h-10 text-orange-500 text-[40px]"></i>
+                    <i class="ph ph-check-circle w-10 h-10 text-orange-500 text-[40px]"></i> 
                 </div>
             </div>
 

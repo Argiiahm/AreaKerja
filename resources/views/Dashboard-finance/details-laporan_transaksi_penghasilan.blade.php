@@ -16,59 +16,75 @@
             <div class="text-sm">
                 <div class="flex items-center gap-6 justify-end text-orange-500 mb-2">
                     <i class="ph ph-printer text-2xl cursor-pointer"></i>
-                    <i class="ph ph-arrow-line-down text-2xl cursor-pointer"></i>
+                    <a href="{{ route('laporan.browsershot', $tanggal) }}">
+                        <i class="ph ph-arrow-line-down text-2xl cursor-pointer"></i>
+                    </a>
                 </div>
-                <p><span class="font-medium">Username</span> : Finance</p>
-                <p><span class="font-medium">Email</span> : finance.group@gmail.com</p>
-                <p><span class="font-medium">No.Telp</span> : 0816342825322</p>
+                <p><span class="font-medium">Username</span> : {{ Auth::user()->username }}</p>
+                <p><span class="font-medium">Email</span> : {{ Auth::user()->email }}</p>
+                {{-- <p><span class="font-medium">No.Telp</span> : 0816342825322</p> --}}
             </div>
         </div>
 
-        <h2 class="text-base font-semibold mb-3">Laporan Transaksi Penghasilan</h2>
 
         <div class="rounded-2xl border border-gray-300 overflow-hidden shadow-sm">
-            <div class="bg-orange-500 text-white text-sm font-semibold grid grid-cols-6 text-center py-2 min-w-[600px]">
-                <div>Transaksi</div>
-                <div>Perusahaan</div>
-                <div>Jenis Transaksi</div>
-                <div>Sumber Dana</div>
-                <div>Nominal IDR</div>
-                <div>Transaksi Koin</div>
-            </div>
-
+            <h2 class="text-base font-semibold m-3">
+                Laporan Transaksi Penghasilan — {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
+            </h2>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-gray-700 border-collapse min-w-[600px]">
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="px-3 py-2 text-center">691174849221</td>
-                            <td class="px-3 py-2 text-center">Applecorp.</td>
-                            <td class="px-3 py-2 text-center">Pasang Lowongan</td>
-                            <td class="px-3 py-2 text-center">BCA</td>
-                            <td class="px-3 py-2 text-center">Rp. 1.000.000</td>
-                            <td class="px-3 py-2 text-center">-</td>
+                    <thead class="bg-orange-500 text-white font-semibold text-center">
+                        <tr>
+                            <th class="px-3 py-2">Transaksi</th>
+                            <th class="px-3 py-2">Perusahaan</th>
+                            <th class="px-3 py-2">Jenis Transaksi</th>
+                            <th class="px-3 py-2">Sumber Dana</th>
+                            <th class="px-3 py-2">Nominal IDR</th>
+                            <th class="px-3 py-2">Transaksi Koin</th>
                         </tr>
-                        <tr class="border-b">
-                            <td class="px-3 py-2 text-center">691174849221</td>
-                            <td class="px-3 py-2 text-center">Applecorp.</td>
-                            <td class="px-3 py-2 text-center">Pasang Lowongan</td>
-                            <td class="px-3 py-2 text-center">Koin</td>
-                            <td class="px-3 py-2 text-center">-</td>
-                            <td class="px-3 py-2 text-center">30</td>
-                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @php
+                            use App\Models\HargaKoin;
+
+                            $totalKoin = 0;
+                        @endphp
+                        @forelse ($detail as $item)
+                            @php
+                                $koin = HargaKoin::where('nama', $item->pesanan)->first();
+                                if ($koin && isset($koin->harga)) {
+                                    $totalKoin += $koin->harga;
+                                }
+                            @endphp
+                            <tr class="border-b">
+                                <td class="px-3 py-2">{{ $item->id }}</td>
+                                <td class="px-3 py-2">{{ $item->perusahaan ?? '-' }}</td>
+                                <td class="px-3 py-2">{{ $item->pesanan }}</td>
+                                <td class="px-3 py-2">{{ $item->sumber_dana }}</td>
+                                <td class="px-3 py-2">
+                                    {{ $item->harga ? 'Rp ' . number_format($item->harga, 0, ',', '.') : '-' }}
+                                </td>
+                                <td class="px-3 py-2">{{ $koin->harga ?? '-' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="py-4 text-gray-500">Tidak ada transaksi pada tanggal ini.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
+            <div class="m-4 text-sm font-medium space-y-1">
+                <p class="flex justify-between max-w-xs">
+                    <span>Total Tunai</span>
+                    <span>: Rp {{ number_format($totalTunai, 0, ',', '.') }}</span>
+                </p>
+                <p class="flex justify-between max-w-xs">
+                    <span>Total Koin</span>
+                    <span>: {{ number_format($totalKoin, 0, ',', '.') }} Koin</span>
+                </p>
+            </div>
         </div>
 
-        <div class="mt-4 text-sm font-medium space-y-1">
-            <p class="flex justify-between max-w-xs">
-                <span>Total Tunai</span>
-                <span>: Rp 4.000.000,00</span>
-            </p>
-            <p class="flex justify-between max-w-xs">
-                <span>Total Koin</span>
-                <span>: 150 Koin</span>
-            </p>
-        </div>
     </div>
 @endsection

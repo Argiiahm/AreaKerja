@@ -41,7 +41,7 @@ class SuperAdminController extends Controller
         return view('Super-Admin.dashboard-superAdmin.dashboard-super_admin', [
             "title" => "Dashboard",
             "Perusahaan" => Perusahaan::count(),
-            "Lowongan" => LowonganPerusahaan::count(),
+            "Lowongan" => LowonganPerusahaan::whereNotNull('paket_id')->count(),
             "Pelamar" => Pelamar::whereNull('kategori')->count() + Pelamar::where('kategori', 'pelamar')->count(),
             "Kandidat" => Pelamar::where('kategori', 'kandidat aktif')->count()
         ]);
@@ -1395,6 +1395,34 @@ class SuperAdminController extends Controller
             "title" => "Image Header Social Media"
         ]);
     }
+
+    public function password_change(Request $request, User $user)
+    {
+        $request->validate([
+            "password" => "required",
+            "password_new" => "required|min:6|confirmed",
+        ], [
+            "password.required" => "Kata sandi lama wajib diisi",
+            "password_new.required" => "Kata sandi baru wajib diisi",
+            "password_new.min" => "Kata sandi baru minimal 6 karakter",
+            "password_new.confirmed" => "Kata sandi tidak sama",
+        ]);
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Kata sandi salah'])->withInput();
+        }
+
+        if ($request->password === $request->password_new) {
+            return back()->withErrors(['password_new' => 'Kata sandi tidak bisa sama dengan sandi lama'])->withInput();
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password_new)
+        ]);
+
+        return redirect('/dashboard/superadmin/pengaturan')->with('success', 'berhasil di ubah');
+    }
+
     public function pengaturan()
     {
         return view('Super-Admin.Pengaturan.pengaturan_superAdmin', [

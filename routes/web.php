@@ -122,7 +122,9 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/finance/catatantransaksi/tunai', [FinanceController::class, 'catatan_transaksi_tunai_detail'])->middleware('finance');
     Route::get('/dashboard/finance/catatantransaksi/koin', [FinanceController::class, 'catatan_transaksi_koin_detail'])->middleware('finance');
     Route::get('/dashboard/finance/laporan', [FinanceController::class, 'catatan_laporan_transaksi'])->middleware('finance');
-    Route::get('/dashboard/finance/laporan/penghasilan', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('finance');
+    Route::get('/dashboard/finance/laporan/penghasilan/{tanggal}', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('finance')->name('laporan.preview');
+    Route::get('/laporan-browsershot/{tanggal}', [FinanceController::class, 'laporanBrowsershot'])->name('laporan.browsershot')->middleware('finance');
+    // Route::get('/laporan-print/{tanggal}', [FinanceController::class, 'print'])->name('laporan.print')->middleware('finance');
 
     // Dashboard SuperAdmin
     Route::get('/dashboard/superadmin', [SuperAdminController::class, 'index'])->middleware('superadmin')->name('superadmin');
@@ -237,6 +239,9 @@ Route::middleware(['status'])->group(function () {
     // Link & Header - Super Admin
     Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pengaturan', [SuperAdminController::class, 'pengaturan'])->middleware('superadmin');
+
+    Route::put('/dashboard/superadmin/pengaturan/change_password/{user:id}',[SuperAdminController::class, 'password_change'])->middleware('superadmin');
+
 
     // Dashboard Admin
     Route::get('/dashboard/admin', [AdminController::class, 'index'])->middleware('admin');
