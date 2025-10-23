@@ -84,7 +84,7 @@
                         <tbody class="divide-y">
                             @php
                                 use App\Models\HargaPembayaran;
-                                $i = 1
+                                $i = 1;
                             @endphp
                             @foreach ($cash->sortByDesc('updated_at') as $c)
                                 @if ($c->created_at->isToday() && $c->status !== 'pending')
@@ -93,7 +93,7 @@
                                         $total = $pembayaran->harga ?? 0;
                                     @endphp
                                     <tr>
-                                        <td class="py-3 text-center">{{ $i++ }}</td> 
+                                        <td class="py-3 text-center">{{ $i++ }}</td>
                                         <td class="py-3 text-center">{{ $c->no_referensi }}</td>
                                         <td class="py-3 text-center">{{ $c->pesanan }}</td>
                                         <td class="py-3 text-center">{{ $c->dari }}</td>

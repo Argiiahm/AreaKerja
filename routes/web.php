@@ -125,6 +125,8 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/finance/laporan/penghasilan/{tanggal}', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('finance')->name('laporan.preview');
     Route::get('/laporan-browsershot/{tanggal}', [FinanceController::class, 'laporanBrowsershot'])->name('laporan.browsershot')->middleware('finance');
     // Route::get('/laporan-print/{tanggal}', [FinanceController::class, 'print'])->name('laporan.print')->middleware('finance');
+    Route::get('/finance/omset/pdf', [FinanceController::class, 'exportPDF'])->name('finance.omset.pdf')->middleware('finance');
+
 
     // Dashboard SuperAdmin
     Route::get('/dashboard/superadmin', [SuperAdminController::class, 'index'])->middleware('superadmin')->name('superadmin');

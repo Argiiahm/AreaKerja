@@ -149,8 +149,7 @@
             <div class="flex items-center px-8 gap-4">
                 <button class="relative">
                     <i class="ph ph-bell text-2xl text-orange-500"></i>
-                    <span
-                        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span>
+                    {{-- <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span> --}}
                 </button>
 
                 <div class="flex items-center gap-2 border border-orange-300 px-3 py-2 rounded-xl shadow-sm">
@@ -168,7 +167,6 @@
                     </div>
                     <div>
                         <p class="text-sm font-semibold">{{ Auth::user()->username }}</p>
-                        <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
             </div>

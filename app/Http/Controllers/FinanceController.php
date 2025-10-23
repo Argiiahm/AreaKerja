@@ -115,7 +115,7 @@ class FinanceController extends Controller
             case '6 Bulan Terakhir':
                 $startDate = $now->copy()->subMonths(5)->startOfMonth();
                 $endDate = $now->copy()->endOfMonth();
-                break; 
+                break;
 
             case '1 Tahun Terakhir':
                 $startDate = $now->copy()->subYear()->startOfMonth();
@@ -157,7 +157,6 @@ class FinanceController extends Controller
         $totalOmset = $data->sum('total');
         $rataRata = $data->count() > 0 ? $totalOmset / $data->count() : 0;
 
-        $tidakAdaData = $data->isEmpty();
 
         return view('Dashboard-finance.omset-finance', [
             "title"   => "Omset Perusahaan",
@@ -165,7 +164,6 @@ class FinanceController extends Controller
             'totalOmset' => $totalOmset,
             'rataRata' => $rataRata,
             'filter' => $filter,
-            'tidakAdaData' => $tidakAdaData,
         ]);
     }
 
@@ -412,5 +410,99 @@ class FinanceController extends Controller
         return response($pdf)
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="laporan-' . $tanggal . '.pdf"');
+    }
+
+    public function exportPDF(Request $request)
+    {
+        $filter = $request->get('filter', 'Semua');
+        $now = Carbon::now();
+
+        switch ($filter) {
+            case 'Bulan ini':
+                $startDate = $now->copy()->startOfMonth();
+                $endDate = $now->copy()->endOfMonth();
+                break;
+
+            case '1 Bulan Terakhir':
+                $startDate = $now->copy()->subMonth()->startOfMonth();
+                $endDate = $now->copy()->subMonth()->endOfMonth();
+                break;
+
+            case '3 Bulan Terakhir':
+                $startDate = $now->copy()->subMonths(2)->startOfMonth();
+                $endDate = $now->copy()->endOfMonth();
+                break;
+
+            case '6 Bulan Terakhir':
+                $startDate = $now->copy()->subMonths(5)->startOfMonth();
+                $endDate = $now->copy()->endOfMonth();
+                break;
+
+            case '1 Tahun Terakhir':
+                $startDate = $now->copy()->subYear()->startOfMonth();
+                $endDate = $now->copy()->endOfMonth();
+                break;
+
+            case '2 Tahun Terakhir':
+                $startDate = $now->copy()->subYears(2)->startOfMonth();
+                $endDate = $now->copy()->endOfMonth();
+                break;
+
+            default:
+                $startDate = null;
+                $endDate = null;
+                break;
+        }
+
+        $query = DB::table('catatan_cashes')
+            ->leftJoin('harga_pembayarans', 'catatan_cashes.pesanan', '=', 'harga_pembayarans.nama')
+            ->where('catatan_cashes.status', 'diterima');
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('catatan_cashes.created_at', [$startDate, $endDate]);
+        }
+
+        $data = $query
+            ->selectRaw('
+                YEAR(catatan_cashes.created_at) AS tahun,
+                MONTH(catatan_cashes.created_at) AS bulan,
+                SUM(harga_pembayarans.harga) AS total
+            ')
+            ->groupByRaw('YEAR(catatan_cashes.created_at), MONTH(catatan_cashes.created_at)')
+            ->orderByRaw('YEAR(catatan_cashes.created_at) DESC, MONTH(catatan_cashes.created_at) DESC')
+            ->get();
+
+        $listOmset = $data->map(function ($item, $index) {
+            $namaBulan = Carbon::create()->month($item->bulan)->translatedFormat('F');
+            return [
+                'no' => $index + 1,
+                'bulan' => $namaBulan . ' ' . $item->tahun,
+                'nominal' => $item->total ?? 0,
+            ];
+        });
+
+        $totalOmset = $data->sum('total');
+        $rataRata = $data->count() > 0 ? $totalOmset / $data->count() : 0;
+        $tanggalCetak = $now->translatedFormat('F j, Y, H:i');
+
+        $html = View::make('Dashboard-finance.Laporan.laporan-omset', [
+            'listOmset' => $listOmset,
+            'totalOmset' => $totalOmset,
+            'rataRata' => $rataRata,
+            'tanggalCetak' => $tanggalCetak,
+            'filter' => $filter,
+        ])->render();
+
+        $fileName = 'Laporan_Omset_' . now()->format('Ymd_His') . '.pdf';
+        $path = public_path($fileName);
+
+        Browsershot::html($html)
+            ->format('A4')
+            ->margins(15, 15, 15, 15)
+            ->showBackground()
+            ->setOption('args', ['--no-sandbox'])
+            ->save($path);
+
+        return response()->download($path)->deleteFileAfterSend(true);
     }
 }

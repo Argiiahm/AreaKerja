@@ -63,9 +63,10 @@
         <div class="border-t border-orange-400 mt-4"></div>
 
         <div class="mt-4">
-            <button class="bg-orange-500 text-white px-6 py-1 rounded-full text-sm hover:bg-orange-600 transition">
+            <a href="{{ route('finance.omset.pdf', ['filter' => $filter]) }}"
+                class="bg-orange-500 text-white px-6 py-1 rounded-full text-sm hover:bg-orange-600 transition">
                 Unduh
-            </button>
+            </a>
         </div>
     </div>
 @endsection
