@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\CatatanCash;
 use App\Models\PelamarLowongan;
 use App\Models\PembeliKandidat;
 use Illuminate\Support\Facades\Auth;
@@ -48,9 +49,14 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $PesanPerusahaan = \App\Models\PembeliKandidat::all();
+            $PesanPerusahaan = PembeliKandidat::all();
 
             $view->with(compact('PesanPerusahaan'));
+        });
+
+        View::composer('*', function ($view) {
+            $notifTfMasuk = CatatanCash::where('status', 'pending')->get();
+            $view->with('NotifTfMasuk', $notifTfMasuk);
         });
     }
 }

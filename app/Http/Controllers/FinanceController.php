@@ -34,7 +34,8 @@ class FinanceController extends Controller
             "title"      => "Dashboard",
             "koin"       => $koin,
             "cash"       => $cash,
-            "totalOmset" => $totalOmset
+            "totalOmset" => $totalOmset,
+            "NotifTfMasuk"  =>   CatatanCash::all()
         ]);
     }
 

@@ -536,8 +536,8 @@
                                 <a href="/dashboard/perusahaan/berlangganan/kandidat"
                                     class="block {{ Request()->is('dashboard/perusahaan/berlangganan/kandidat') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Beranda</a>
                             @else
-                            <a href="/dashboard/perusahaan/berlangganan"
-                                class="block {{ Request()->is('dashboard/perusahaan/berlangganan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Berlangganan</a>
+                                <a href="/dashboard/perusahaan/berlangganan"
+                                    class="block {{ Request()->is('dashboard/perusahaan/berlangganan') ? 'opacity-30' : '' }} py-2 px-3 text-[#fa6601] font-semibold">Berlangganan</a>
                             @endif
                         </li>
                         <li>
@@ -710,8 +710,6 @@
     @yield('content')
 
 
-
-
     @if (
         (Auth::check() &&
             Auth::user()->role === 'pelamar' &&
@@ -757,9 +755,6 @@
             </div>
         @endif
     @endif
-
-
-
 
     <footer class="bg-orange-500  text-white py-10 mt-32">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -824,4 +819,3 @@
 </body>
 
 </html>
-/  

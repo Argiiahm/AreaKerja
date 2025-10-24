@@ -59,8 +59,8 @@
                         <p class="px-6 text-sm font-semibold text-white/80">Umum</p>
                         <a href="/dashboard/finance" data-drawer-hide="logo-sidebar"
                             class="flex items-center gap-2 px-6 
-                                {{ Request()->is('dashboard/finance') 
-                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                {{ Request()->is('dashboard/finance')
+                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
                                     : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-gauge"></i>
                             <span>Dashboard</span>
@@ -72,8 +72,8 @@
 
                         <a href="/dashboard/finance/paketharga" data-drawer-hide="logo-sidebar"
                             class="flex items-center gap-2 px-6 
-                                {{ Request()->is('dashboard/finance/paketharga') 
-                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                {{ Request()->is('dashboard/finance/paketharga')
+                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
                                     : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-credit-card"></i>
                             <span>Paket Harga</span>
@@ -81,8 +81,8 @@
 
                         <a href="/dashboard/finance/omset" data-drawer-hide="logo-sidebar"
                             class="flex items-center gap-2 px-6 
-                                {{ Request()->is('dashboard/finance/omset') 
-                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                {{ Request()->is('dashboard/finance/omset')
+                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
                                     : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-hand-coins"></i>
                             <span>Omset Perusahaan</span>
@@ -91,8 +91,8 @@
                         <details class="group">
                             <summary
                                 class="flex items-center gap-2 px-6 cursor-pointer
-                                    {{ Request()->is('dashboard/finance/catatantransaksi') 
-                                        ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                    {{ Request()->is('dashboard/finance/catatantransaksi')
+                                        ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
                                         : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                 <i class="ph ph-notebook"></i>
                                 <span>Catatan Transaksi</span>
@@ -101,15 +101,15 @@
                             <div class="ml-12 mt-2 flex flex-col gap-1">
                                 <a href="/dashboard/finance/catatantransaksi/tunai"
                                     class="flex items-center gap-2 px-6 
-                                        {{ Request()->is('dashboard/finance/catatantransaksi/tunai') 
-                                            ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                        {{ Request()->is('dashboard/finance/catatantransaksi/tunai')
+                                            ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
                                             : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                     Riwayat Tunai
                                 </a>
                                 <a href="/dashboard/finance/catatantransaksi/koin"
                                     class="flex items-center gap-2 px-6 
-                                        {{ Request()->is('dashboard/finance/catatantransaksi/koin') 
-                                            ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                        {{ Request()->is('dashboard/finance/catatantransaksi/koin')
+                                            ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
                                             : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                     Riwayat Koin
                                 </a>
@@ -118,8 +118,8 @@
 
                         <a href="/dashboard/finance/laporan" data-drawer-hide="logo-sidebar"
                             class="flex items-center gap-2 px-6 
-                                {{ Request()->is('dashboard/finance/laporan') 
-                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium' 
+                                {{ Request()->is('dashboard/finance/laporan')
+                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
                                     : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-file-text"></i>
                             <span>Laporan Transaksi</span>
@@ -147,17 +147,46 @@
             <h1 class="text-2xl font-bold hidden lg:block md:block">{{ $title }}</h1>
 
             <div class="flex items-center px-8 gap-4">
-                <button class="relative">
+                <button id="notifBtn" class="relative focus:outline-none">
                     <i class="ph ph-bell text-2xl text-orange-500"></i>
-                    {{-- <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span> --}}
+                    @foreach ($NotifTfMasuk as $nm)
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">{{ $nm->where('status', 'pending')->count() }}</span>
+                    @endforeach
                 </button>
+
+                <div id="notifDropdown"
+                    class="hidden absolute right-2 mt-32 w-96 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
+                    <div class="flex justify-between items-center p-4 border-b">
+                        <h2 class="text-base font-semibold text-gray-700">Notifikasi</h2>
+                    </div>
+
+                    <div class="p-4 space-y-4 max-h-72 overflow-y-auto">
+                        <div class="flex space-x-3 items-start">
+                            <div class="flex-1">
+                                @foreach ($NotifTfMasuk as $nmd)
+                                    @if ($nmd->status === 'pending')
+                                        <p class="text-sm text-gray-700 leading-snug">
+                                            <span class="font-semibold text-gray-800">Ada Transaksi Masuk!, Dari
+                                                <span
+                                                    class="text-green-500 font-bold">{{ $nmd->dari }}</span></span>
+                                        </p>
+                                        <p class="text-xs text-gray-400 mt-1">{{ $nmd->created_at->diffForHumans() }}
+                                        </p>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="flex items-center gap-2 border border-orange-300 px-3 py-2 rounded-xl shadow-sm">
                     <div>
                         @if (Auth::user()->finance->img_profile)
                             <a href="/profile">
                                 <img class="w-10 h-10 object-cover rounded-full"
-                                    src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}" alt="">
+                                    src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}"
+                                    alt="">
                             </a>
                         @else
                             <img class="w-10 h-10 rounded-full"
@@ -167,6 +196,7 @@
                     </div>
                     <div>
                         <p class="text-sm font-semibold">{{ Auth::user()->username }}</p>
+                        <p class="text-sm font-normal">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
             </div>
@@ -176,6 +206,20 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script>
+        const notifBtn = document.getElementById('notifBtn');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        notifBtn.addEventListener('click', () => {
+            notifDropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!notifBtn.contains(e.target) && !notifDropdown.contains(e.target)) {
+                notifDropdown.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 
 </html>
