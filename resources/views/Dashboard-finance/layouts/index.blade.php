@@ -163,10 +163,10 @@
 
                     <div class="p-4 space-y-4 max-h-72 overflow-y-auto">
                         <div class="flex space-x-3 items-start">
-                            <div class="flex-1">
+                            <div class="flex-1 overflow-y-auto">
                                 @foreach ($NotifTfMasuk as $nmd)
                                     @if ($nmd->status === 'pending')
-                                        <p class="text-sm text-gray-700 leading-snug">
+                                        <p class="text-sm text-gray-700 leading-snug border-b my-2 py-2">
                                             <span class="font-semibold text-gray-800">Ada Transaksi Masuk!, Dari
                                                 <span
                                                     class="text-green-500 font-bold">{{ $nmd->dari }}</span></span>

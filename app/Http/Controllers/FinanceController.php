@@ -35,7 +35,7 @@ class FinanceController extends Controller
             "koin"       => $koin,
             "cash"       => $cash,
             "totalOmset" => $totalOmset,
-            "NotifTfMasuk"  =>   CatatanCash::all()
+            "NotifTfMasuk"  =>   CatatanCash::all() 
         ]);
     }
 

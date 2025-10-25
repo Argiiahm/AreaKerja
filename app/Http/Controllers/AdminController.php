@@ -458,8 +458,7 @@ class AdminController extends Controller
 
     public function hapus_event(Event $event)
     {
-        $event->delete($event->id);
-
+        $event->destroy($event->id);
         return redirect('/dashboard/admin/event');
     }
 }

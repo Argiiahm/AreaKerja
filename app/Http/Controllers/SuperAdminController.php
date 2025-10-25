@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alamatperusahaan;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Skill;
@@ -25,8 +24,10 @@ use App\Models\Alamatpelamar;
 use App\Models\KegiatanEvent;
 use App\Models\HargaPembayaran;
 use App\Models\Pengalamankerja;
+use App\Models\Alamatperusahaan;
 use App\Models\RiwayatPendidikan;
 use App\Models\LowonganPerusahaan;
+use Illuminate\Support\Facades\DB;
 use Spatie\Browsershot\Browsershot;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -820,7 +821,6 @@ class SuperAdminController extends Controller
     // Finance
     public function finance()
     {
-
         return view('Super-Admin.finance.finance-index_superAdmin', [
             "title" => "Paket Harga",
             "koin" => HargaKoin::all(),
@@ -1278,6 +1278,8 @@ class SuperAdminController extends Controller
     }
     public function update_pengguna(Request $request, User $user)
     {
+        $roleLama = $user->role;
+
         $validasiData = $request->validate([
             "username"   => "required",
             "email"      => "required|email",
@@ -1291,6 +1293,32 @@ class SuperAdminController extends Controller
             "detail"     => "nullable"
         ]);
 
+        if ($roleLama !== $request->role) {
+            switch ($roleLama) {
+                case 'pelamar':
+                    if ($user->pelamars) {
+                        $user->pelamars->alamat_pelamars()->delete();
+                        $user->pelamars->delete();
+                    }
+                    break;
+                case 'perusahaan':
+                    if ($user->perusahaan) {
+                        $user->perusahaan->alamatperusahaan()->delete();
+                        $user->perusahaan->delete();
+                    }
+                    break;
+                case 'admin':
+                    if ($user->admin) $user->admin->delete();
+                    break;
+                case 'finance':
+                    if ($user->finance) $user->finance->delete();
+                    break;
+                case 'superadmin':
+                    if ($user->superadmins) $user->superadmins->delete();
+                    break;
+            }
+        }
+
         $user->update([
             "username" => $validasiData["username"],
             "email"    => $validasiData["email"],
@@ -1301,75 +1329,89 @@ class SuperAdminController extends Controller
             "status"   => $validasiData["status"],
         ]);
 
-        if ($user->role === "pelamar" && $user->pelamars) {
-            $pelamar = $user->pelamars;
-            $pelamar->update([
-                "nama_pelamar" => $validasiData["username"],
-            ]);
+        switch ($request->role) {
+            case 'pelamar':
+                $pelamar = $user->pelamars()->firstOrCreate(
+                    ['user_id' => $user->id],
+                    ['nama_pelamar' => $validasiData["username"]]
+                );
 
-            if ($pelamar->alamat_pelamars()->exists()) {
-                $pelamar->alamat_pelamars()->latest()->first()->update([
-                    "provinsi"   => $validasiData["provinsi"],
-                    "kota"       => $validasiData["kota"],
-                    "kecamatan"  => $validasiData["kecamatan"],
-                    "kode_pos"   => $validasiData["kode_pos"],
-                    "detail"     => $validasiData["detail"],
-                ]);
-            }
-        }
+                $pelamar->alamat_pelamars()->updateOrCreate(
+                    ['pelamar_id' => $pelamar->id],
+                    [
+                        "provinsi"   => $validasiData["provinsi"],
+                        "kota"       => $validasiData["kota"],
+                        "kecamatan"  => $validasiData["kecamatan"],
+                        "kode_pos"   => $validasiData["kode_pos"],
+                        "detail"     => $validasiData["detail"],
+                    ]
+                );
+                break;
 
-        if ($user->role === "perusahaan" && $user->perusahaan) {
-            $perusahaan = $user->perusahaan;
-            $perusahaan->update([
-                "nama_perusahaan" => $validasiData["username"],
-            ]);
+            case 'perusahaan':
+                $perusahaan = $user->perusahaan()->firstOrCreate(
+                    ['user_id' => $user->id],
+                    ['nama_perusahaan' => $validasiData["username"]]
+                );
 
-            if ($perusahaan->alamatperusahaan()->exists()) {
-                $perusahaan->alamatperusahaan()->latest()->first()->update([
-                    "provinsi"   => $validasiData["provinsi"],
-                    "kota"       => $validasiData["kota"],
-                    "kecamatan"  => $validasiData["kecamatan"],
-                    "kode_pos"   => $validasiData["kode_pos"],
-                    "detail"     => $validasiData["detail"],
-                ]);
-            }
-        }
+                $perusahaan->alamatperusahaan()->updateOrCreate(
+                    ['perusahaan_id' => $perusahaan->id],
+                    [
+                        "provinsi"   => $validasiData["provinsi"],
+                        "kota"       => $validasiData["kota"],
+                        "kecamatan"  => $validasiData["kecamatan"],
+                        "kode_pos"   => $validasiData["kode_pos"],
+                        "detail"     => $validasiData["detail"],
+                    ]
+                );
+                break;
 
-        if ($user->role === "superadmin" && $user->superadmins) {
-            $user->superadmins->update([
-                "nama_lengkap"   => $validasiData["username"],
-                "provinsi"       => $validasiData["provinsi"],
-                "kota"           => $validasiData["kota"],
-                "kecamatan"      => $validasiData["kecamatan"],
-                "kode_pos"       => $validasiData["kode_pos"],
-                "detail_alamat"  => $validasiData["detail"],
-            ]);
-        }
+            case 'admin':
+                $user->admin()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        "nama_lengkap"  => $validasiData["username"],
+                        "provinsi"      => $validasiData["provinsi"],
+                        "kota"          => $validasiData["kota"],
+                        "kecamatan"     => $validasiData["kecamatan"],
+                        "kode_pos"      => $validasiData["kode_pos"],
+                        "detail_alamat" => $validasiData["detail"],
+                    ]
+                );
+                break;
 
-        if ($user->role === "admin" && $user->admin) {
-            $user->admin->update([
-                "nama_lengkap"   => $validasiData["username"],
-                "provinsi"       => $validasiData["provinsi"],
-                "kota"           => $validasiData["kota"],
-                "kecamatan"      => $validasiData["kecamatan"],
-                "kode_pos"       => $validasiData["kode_pos"],
-                "detail_alamat"  => $validasiData["detail"],
-            ]);
-        }
+            case 'finance':
+                $user->finance()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        "nama_lengkap"  => $validasiData["username"],
+                        "provinsi"      => $validasiData["provinsi"],
+                        "kota"          => $validasiData["kota"],
+                        "kecamatan"     => $validasiData["kecamatan"],
+                        "kode_pos"      => $validasiData["kode_pos"],
+                        "detail_alamat" => $validasiData["detail"],
+                    ]
+                );
+                break;
 
-        if ($user->role === "finance" && $user->finance) {
-            $user->finance->update([
-                "nama_lengkap"   => $validasiData["username"],
-                "provinsi"       => $validasiData["provinsi"],
-                "kota"           => $validasiData["kota"],
-                "kecamatan"      => $validasiData["kecamatan"],
-                "kode_pos"       => $validasiData["kode_pos"],
-                "detail_alamat"  => $validasiData["detail"],
-            ]);
+            case 'superadmin':
+                $user->superadmins()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        "nama_lengkap"  => $validasiData["username"],
+                        "provinsi"      => $validasiData["provinsi"],
+                        "kota"          => $validasiData["kota"],
+                        "kecamatan"     => $validasiData["kecamatan"],
+                        "kode_pos"      => $validasiData["kode_pos"],
+                        "detail_alamat" => $validasiData["detail"],
+                    ]
+                );
+                break;
         }
 
         return redirect('/dashboard/superadmin/akun')->with('success3', 'Data pengguna berhasil diperbarui');
     }
+
 
 
     public function akun_edit(User $user)
