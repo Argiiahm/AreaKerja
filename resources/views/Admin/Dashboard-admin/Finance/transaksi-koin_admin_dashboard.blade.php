@@ -53,8 +53,6 @@
                                 Transaksi Koin</th>
                             <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
                                 Status</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Aksi</th>
                             <th class="px-6 py-3 border-gray-300"></th>
                         </tr>
                     </thead>

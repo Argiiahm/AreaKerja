@@ -1458,7 +1458,7 @@ class SuperAdminController extends Controller
             return back()->withErrors(['password_new' => 'Kata sandi tidak bisa sama dengan sandi lama'])->withInput();
         }
 
-        $user->update([
+        $user->update([  
             'password' => Hash::make($request->password_new)
         ]);
 

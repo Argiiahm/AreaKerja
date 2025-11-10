@@ -37,7 +37,7 @@
                             <td class="px-6 py-3 text-gray-700">{{ $d->users->email }}</td>
                             <td class="px-6 py-3 text-gray-700">{{ $d->telepon_perusahaan }}</td>
                             <td class="px-6 py-3 text-gray-700">
-                                {{ $d->alamatperusahaan()->latest()->first()->utama ?? 'Belum Ada Data' }}</td>
+                                {{ $d->alamatperusahaan()->latest()->first()->detail ?? 'Belum Ada Data' }}</td>
                             <td class="px-6 py-3 text-gray-700">
                                 @if ($d->users->status === 0)
                                     <span class="bg-blue-500 text-green-100 text-sm font-medium px-2.5 py-0.5 rounded-sm">
