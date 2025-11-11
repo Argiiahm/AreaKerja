@@ -1,17 +1,17 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="p-6">
+    <div class="p-6" x-data="financeTabs()">
         <div class="mb-5">
-            <select id="kategori_select_finance" class="bg-orange-500 text-white px-10 py-2 rounded-md" name=""
-                id="">
-                <option id="" value="paket_harga">Paket Harga</option>
-                <option id="" value="riwayat">Riwayat</option>
-                <option id="" value="laporan">Laporan</option>
+            <select x-model="selected" @change="saveState" class="bg-orange-500 text-white px-10 py-2 rounded-md">
+                <option value="paket_harga">Paket Harga</option>
+                <option value="riwayat">Riwayat</option>
+                <option value="laporan">Laporan</option>
             </select>
         </div>
 
-        <div id="paket_harga_table" class="">
+        {{-- PAKET HARGA --}}
+        <div id="paket_harga_table" x-show="selected === 'paket_harga'" x-cloak>
             <div class="mb-10">
                 <div class="flex justify-between items-center mx-2 my-2">
                     <h2 class="text-lg font-semibold mb-3">Paket Harga Koin</h2>
@@ -23,7 +23,6 @@
                         <thead>
                             <tr class="bg-orange-500 text-white">
                                 <th class="py-3 px-4 text-left">Nama</th>
-
                                 <th class="py-3 text-left">Harga</th>
                             </tr>
                         </thead>
@@ -65,7 +64,8 @@
             </div>
         </div>
 
-        <div id="riwayat_table" class="hidden">
+        {{-- RIWAYAT --}}
+        <div id="riwayat_table" x-show="selected === 'riwayat'" x-cloak>
             <div class="mb-10">
                 <h2 class="text-lg font-semibold mb-3">Riwayat Transaksi Tunai Terbaru</h2>
                 <div class="overflow-x-auto bg-white rounded-xl shadow-md">
@@ -146,98 +146,87 @@
             </div>
         </div>
 
-        <div id="laporan_table" class="hidden">
+        {{-- LAPORAN --}}
+        <div id="laporan_table" x-show="selected === 'laporan'" x-cloak x-data="laporanData({{ $transaksi }})">
             <div class="overflow-x-auto">
                 <h1 class="text-2xl font-bold mb-2">Catatan Transaksi Penghasilan</h1>
-
                 <p class="mb-6">
-                    Hanya catatan transaksi dalam 12 bulan terakhir dapat ditampilkan. Silahkan download seluruh PDF
-                    anda.
+                    Hanya catatan transaksi dalam 12 bulan terakhir dapat ditampilkan.
                 </p>
 
                 <div class="bg-orange-500 rounded-lg p-4">
-                    <h2 class="text-lg font-semibold mb-4 text-white">Riwayat Koin</h2>
+                    <h2 class="text-lg font-semibold mb-4 text-white">Riwayat Transaksi</h2>
 
                     <div class="flex gap-4 mb-4">
                         <div class="relative">
-                            <select class="bg-white text-gray-700 px-4 py-2 pr-8 rounded border appearance-none">
-                                <option>Bulan</option>
-                                <option>Januari</option>
-                                <option>Februari</option>
-                                <option>Maret</option>
-                                <option>April</option>
-                                <option>Mei</option>
-                                <option>Juni</option>
-                                <option>Juli</option>
-                                <option>Agustus</option>
-                                <option>September</option>
-                                <option>Oktober</option>
-                                <option>November</option>
-                                <option>Desember</option>
+                            <select x-model="tahun" @change="filterData"
+                                class="border border-orange-500 rounded-md px-10 py-1 text-sm focus:ring-2 focus:ring-orange-400 text-orange-500 font-bold">
+                                <option value="">Tahun</option>
+                                <template x-for="t in tahunList" :key="t">
+                                    <option :value="t" x-text="t"></option>
+                                </template>
                             </select>
-                            <i class="fas fa-chevron-down absolute right-2 top-3 text-gray-500"></i>
                         </div>
 
                         <div class="relative">
-                            <select class="bg-white text-gray-700 px-4 py-2 pr-8 rounded border appearance-none">
-                                <option>Tahun</option>
-                                <option>2024</option>
-                                <option>2023</option>
-                                <option>2022</option>
+                            <select x-model="bulan" @change="filterData"
+                                class="border border-orange-500 rounded-md px-10 py-1 text-sm focus:ring-2 focus:ring-orange-400 text-orange-500 font-bold">
+                                <option value="">Bulan</option>
+                                <template x-for="(nama, key) in bulanList" :key="key">
+                                    <option :value="key" x-text="nama"></option>
+                                </template>
                             </select>
-                            <i class="fas fa-chevron-down absolute right-2 top-3 text-gray-500"></i>
                         </div>
+
                     </div>
 
                     <div class="bg-white rounded-lg overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="w-full">
-                                <thead class="">
+                                <thead>
                                     <tr>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">
-                                            Catatan Transaksi</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase">
+                                            Catatan</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase">
                                             Pendapatan</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">
-                                            Kom</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase">Koin
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase">
                                             Tanggal</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase">
                                             Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            Catatan_Transaksi_November</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">100.000.000</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">100.000</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">25 Januari 2024
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                            <button class="text-orange-500 hover:text-orange-700">
-                                                <i class="fas fa-download text-lg"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            Catatan_Transaksi_November</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">100.000.000</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">100.000</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">25 Januari 2024
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                            <button class="text-orange-500 hover:text-orange-700">
-                                                {{-- <i class="fa fa-download text-lg"></i> --}}
-                                            </button>
-                                        </td>
-                                    </tr>
+
+                                <tbody>
+                                    <template x-if="filtered.length === 0">
+                                        <tr>
+                                            <td colspan="4" class="text-center py-4 text-gray-500">
+                                                Tidak ada transaksi
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                    <template x-for="(row, i) in filtered" :key="i">
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-6 py-3 uppercase"
+                                                x-text="`TRANSAKSI_${row.jenis_transaksi}_${row.tanggal}`"></td>
+                                            <td class="px-6 py-3"
+                                                x-text="row.jenis_transaksi === 'Pembelian Koin' ? '-' : formatRupiah(row.total_penghasilan)">
+                                            </td>
+                                            <td class="px-6 py-3" x-text="row.total_koin ?? '-'"></td>
+                                            <td class="px-6 py-3"
+                                                x-text="new Date(row.tanggal).toLocaleDateString('id-ID', {day:'2-digit', month:'long', year:'numeric'})">
+                                            </td>
+                                            <td class="px-6 py-3">
+                                                <a :href="`/dashboard/superadmin/finance/detail/laporan/penghasilan/${row.tanggal}`"
+                                                    class="inline-block hover:scale-105 transition">
+                                                    <img src='{{ asset('Icon/icon-detail.png') }}' alt="Detail"
+                                                        class="w-5 h-5 mx-auto">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -245,6 +234,56 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+    <script>
+        function financeTabs() {
+            return {
+                selected: localStorage.getItem('finance_tab') || 'paket_harga',
+                saveState() {
+                    localStorage.setItem('finance_tab', this.selected);
+                }
+            }
+        }
+
+        function laporanData(initialData) {
+            return {
+                bulan: '',
+                tahun: '',
+                data: initialData,
+                filtered: initialData,
+                bulanList: {
+                    1: 'Januari',
+                    2: 'Februari',
+                    3: 'Maret',
+                    4: 'April',
+                    5: 'Mei',
+                    6: 'Juni',
+                    7: 'Juli',
+                    8: 'Agustus',
+                    9: 'September',
+                    10: 'Oktober',
+                    11: 'November',
+                    12: 'Desember'
+                },
+                tahunList: [2025, 2024, 2023, 2022],
+
+                filterData() {
+                    this.filtered = this.data.filter(item => {
+                        const tgl = new Date(item.tanggal);
+                        const matchBulan = this.bulan ? (tgl.getMonth() + 1) == this.bulan : true;
+                        const matchTahun = this.tahun ? tgl.getFullYear() == this.tahun : true;
+                        return matchBulan && matchTahun;
+                    });
+                },
+
+                formatRupiah(v) {
+                    return new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    }).format(v);
+                }
+            }
+        }
+    </script>
 @endsection

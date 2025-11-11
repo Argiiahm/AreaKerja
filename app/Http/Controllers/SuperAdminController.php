@@ -819,16 +819,112 @@ class SuperAdminController extends Controller
 
 
     // Finance
-    public function finance()
+    public function finance(Request $request)
     {
+        $bulanList = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+
+        $cash = DB::table('catatan_cashes')
+            ->leftJoin('harga_pembayarans', 'catatan_cashes.pesanan', '=', 'harga_pembayarans.nama')
+            ->select(
+                DB::raw('DATE(catatan_cashes.created_at) as tanggal'),
+                DB::raw('"Top Up" as jenis_transaksi'),
+                DB::raw('COALESCE(SUM(harga_pembayarans.harga), 0) as total_penghasilan'),
+                DB::raw('"-" as total_koin'),
+                DB::raw('COUNT(catatan_cashes.id) as total_transaksi')
+            )
+            ->where('catatan_cashes.status', 'diterima')
+            ->groupBy(DB::raw('DATE(catatan_cashes.created_at)'));
+
+        $koin = DB::table('catatan_koins')
+            ->leftJoin('harga_koins', 'catatan_koins.pesanan', '=', 'harga_koins.nama')
+            ->select(
+                DB::raw('DATE(catatan_koins.created_at) as tanggal'),
+                DB::raw('"Pembelian Koin" as jenis_transaksi'),
+                DB::raw('COALESCE(SUM(harga_koins.harga), 0) as total_penghasilan'),
+                DB::raw('COALESCE(SUM(harga_koins.harga), 0) as total_koin'),
+                DB::raw('COUNT(catatan_koins.id) as total_transaksi')
+            )
+            ->groupBy(DB::raw('DATE(catatan_koins.created_at)'));
+
+        $transaksi = $cash->unionAll($koin)
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
         return view('Super-Admin.finance.finance-index_superAdmin', [
             "title" => "Paket Harga",
             "koin" => HargaKoin::all(),
             "tunai" => HargaPembayaran::all(),
-            "cash"  =>  CatatanCash::all(),
-            "koins" =>  CatatanKoin::all()
+            "cash" => CatatanCash::all(),
+            "koins" => CatatanKoin::all(),
+            "transaksi" => $transaksi,
+            "bulanList" => $bulanList,
+            "tahunList" => [2025, 2024, 2023, 2022],
         ]);
     }
+
+
+
+    public function catatan_laporan_transaksi_penghasilan($tanggal)
+    {
+        $cashDetail = DB::table('catatan_cashes')
+            ->leftJoin('harga_pembayarans', 'catatan_cashes.pesanan', '=', 'harga_pembayarans.nama')
+            ->leftJoin('users', 'catatan_cashes.user_id', '=', 'users.id')
+            ->select(
+                'catatan_cashes.id',
+                'users.username as perusahaan',
+                'catatan_cashes.pesanan',
+                'harga_pembayarans.harga',
+                DB::raw('"Top Up" as jenis_transaksi'),
+                'catatan_cashes.sumber_dana',
+                DB::raw('NULL as koin'),
+                'catatan_cashes.created_at'
+            )
+            ->whereDate('catatan_cashes.created_at', $tanggal)
+            ->where('catatan_cashes.status', 'diterima')
+            ->get();
+
+
+        $koinDetail = DB::table('catatan_koins')
+            ->leftJoin('harga_koins', 'catatan_koins.pesanan', '=', 'harga_koins.nama')
+            ->leftJoin('users', 'catatan_koins.user_id', '=', 'users.id')
+            ->select(
+                'catatan_koins.id',
+                'users.username as perusahaan',
+                'catatan_koins.pesanan',
+                DB::raw('NULL as harga'),
+                DB::raw('"Pembelian Koin" as jenis_transaksi'),
+                DB::raw('"Koin" as sumber_dana'),
+            )
+            ->whereDate('catatan_koins.created_at', $tanggal)
+            ->get();
+
+        $detail = $cashDetail->merge($koinDetail)->sortByDesc('created_at');
+
+        $totalTunai = $cashDetail->sum('harga');
+        $totalKoin = $koinDetail->sum('koin');
+
+        return view('super-admin.finance.details-laporan', [
+            'title' => 'Catatan Transaksi',
+            'tanggal' => $tanggal,
+            'detail' => $detail,
+            'totalTunai' => $totalTunai,
+            'totalKoin' => $totalKoin
+        ]);
+    }
+
     public function finance_edit_paket_koin()
     {
         return view('Super-Admin.finance.edit_paket_harga-koin_superAdmin', [
@@ -1458,7 +1554,7 @@ class SuperAdminController extends Controller
             return back()->withErrors(['password_new' => 'Kata sandi tidak bisa sama dengan sandi lama'])->withInput();
         }
 
-        $user->update([  
+        $user->update([
             'password' => Hash::make($request->password_new)
         ]);
 

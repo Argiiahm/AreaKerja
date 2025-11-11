@@ -15,6 +15,8 @@
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/intro.js/minified/introjs.min.css" rel="stylesheet">
+    <script src="//unpkg.com/alpinejs" defer></script>
+
     @vite('resources/css/app.css')
 </head>
 <style>
@@ -432,6 +434,11 @@
                                     <li id="btn-profile">
                                         <a href="/dashboard/perusahaan/profile"
                                             class="block px-4 py-2 text-sm">Profile
+                                            Perusahaan</a>
+                                    </li>
+                                    <li id="btn-profile">
+                                        <a href="/dashboard/perusahaan"
+                                            class="block px-4 py-2 text-sm">Dashboard
                                             Perusahaan</a>
                                     </li>
                                     <li>

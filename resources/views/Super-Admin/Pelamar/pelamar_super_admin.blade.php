@@ -2,22 +2,23 @@
 @section('super_admin-content')
     {{ session()->forget('pelamar_id') }}
     {{-- {{ session()->forget('pelamar')->users->email }} --}}
-    <div class="p-6 flex justify-center">
+    <div class="p-6 flex justify-center" x-data="pelamarTabs()">
         <div class="w-full max-w-7xl">
 
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
 
                 <div class="flex items-center gap-3">
-                    <a id="btnAdd" href="/dashboard/superadmin/pelamar/add/kandidat"
+                    {{-- Tombol Tambah, href dinamis mengikuti value dropdown --}}
+                    <a :href="getAddUrl(selected)"
                         class="bg-orange-500 hover:bg-orange-600 transition text-white flex justify-center items-center px-4 py-2 rounded-md shadow">
                         <i class="ph ph-plus text-lg"></i>
                     </a>
 
-                    <select id="kategori_select"
+                    <select x-model="selected" @change="saveState"
                         class="bg-orange-500 text-white px-6 py-2 rounded-md focus:outline-none cursor-pointer hover:bg-orange-600 transition">
-                        <option id="kandidat_opt" value="kandidat">Kandidat</option>
-                        <option id="non_kandidat_opt" value="non_kandidat">Non Kandidat</option>
-                        <option id="calon_pelamar_opt" value="calon_kandidat">Calon Kandidat</option>
+                        <option value="kandidat">Kandidat</option>
+                        <option value="non_kandidat">Non Kandidat</option>
+                        <option value="calon_kandidat">Calon Kandidat</option>
                     </select>
                 </div>
 
@@ -28,7 +29,9 @@
                 </div>
             </div>
 
-            <div id="kandidat" class="bg-white border rounded-2xl shadow-sm overflow-x-auto transition-all">
+            {{-- KANDIDAT --}}
+            <div id="kandidat" x-show="selected === 'kandidat'" x-cloak
+                class="bg-white border rounded-2xl shadow-sm overflow-x-auto transition-all">
                 <table class="w-full">
                     <thead>
                         <tr class="bg-gray-100 text-left text-gray-700">
@@ -71,7 +74,9 @@
                 </table>
             </div>
 
-            <div id="non_kandidat" class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
+            {{-- NON KANDIDAT --}}
+            <div id="non_kandidat" x-show="selected === 'non_kandidat'" x-cloak
+                class="bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
                 <table class="w-full">
                     <thead>
                         <tr class="bg-gray-100 text-left text-gray-700">
@@ -111,8 +116,9 @@
                 </table>
             </div>
 
-            <div id="calon_kandidat"
-                class="hidden bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
+            {{-- CALON KANDIDAT --}}
+            <div id="calon_kandidat" x-show="selected === 'calon_kandidat'" x-cloak
+                class="bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
                 <table class="w-full">
                     <thead>
                         <tr class="bg-gray-100 text-left text-gray-700">
@@ -154,4 +160,18 @@
 
         </div>
     </div>
+
+    <script>
+        function pelamarTabs() {
+            return {
+                selected: localStorage.getItem('pelamar_tab') || 'kandidat',
+                saveState() {
+                    localStorage.setItem('pelamar_tab', this.selected);
+                },
+                getAddUrl(tab) {
+                    return `/dashboard/superadmin/pelamar/add/${tab}`;
+                }
+            }
+        }
+    </script>
 @endsection

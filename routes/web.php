@@ -122,8 +122,8 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/finance/catatantransaksi/tunai', [FinanceController::class, 'catatan_transaksi_tunai_detail'])->middleware('finance');
     Route::get('/dashboard/finance/catatantransaksi/koin', [FinanceController::class, 'catatan_transaksi_koin_detail'])->middleware('finance');
     Route::get('/dashboard/finance/laporan', [FinanceController::class, 'catatan_laporan_transaksi'])->middleware('finance');
-    Route::get('/dashboard/finance/laporan/penghasilan/{tanggal}', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('finance')->name('laporan.preview');
-    Route::get('/laporan-browsershot/{tanggal}', [FinanceController::class, 'laporanBrowsershot'])->name('laporan.browsershot')->middleware('finance');
+    Route::get('/dashboard/finance/laporan/penghasilan/{tanggal}', [FinanceController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('finance','superadmin')->name('laporan.preview');
+    Route::get('/laporan-browsershot/{tanggal}', [FinanceController::class, 'laporanBrowsershot'])->name('laporan.browsershot');
     // Route::get('/laporan-print/{tanggal}', [FinanceController::class, 'print'])->name('laporan.print')->middleware('finance');
     Route::get('/finance/omset/pdf', [FinanceController::class, 'exportPDF'])->name('finance.omset.pdf')->middleware('finance');
 
@@ -203,6 +203,8 @@ Route::middleware(['status'])->group(function () {
     Route::put('/dashboard/superadmin/update/harga/koin',[SuperAdminController::class, 'update_koin'])->middleware('superadmin');
     Route::put('/dashboard/superadmin/update/harga/tunai',[SuperAdminController::class, 'update_tunai'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/finance/edit/laporan', [SuperAdminController::class, 'finance_laporan'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/finance/detail/laporan/penghasilan/{tanggal}', [SuperAdminController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('superadmin');
+
 
     // Freeze Akun - Super Admin
     Route::get('/dashboard/superadmin/freeze', [SuperAdminController::class, 'freeze'])->middleware('superadmin');

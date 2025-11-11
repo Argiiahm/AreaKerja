@@ -1,17 +1,22 @@
 @extends('Super-Admin.layouts.index')
 @section('super_admin-content')
-    <div class="flex justify-center">
+    <div class="flex justify-center" x-data="perusahaanTabs()">
         <div class="w-full max-w-7xl p-6 space-y-6">
 
             <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
                 <div class="flex items-center gap-3">
-                    <a href="/dashboard/superadmin/perusahaan/add/perusahaan"
-                        class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 flex items-center gap-2 px-4 py-2 rounded-lg shadow-md transition-all">
-                        <i class="ph ph-plus text-2xl"></i>
-                        <span class="hidden sm:inline">Tambah</span>
-                    </a>
 
-                    <select id="kategori_select_perusahaan"
+                    {{-- Tombol Tambah hanya muncul jika kategori = perusahaan --}}
+                    <template x-if="selected === 'perusahaan'">
+                        <a href="/dashboard/superadmin/perusahaan/add/perusahaan"
+                            class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 flex items-center gap-2 px-4 py-2 rounded-lg shadow-md transition-all">
+                            <i class="ph ph-plus text-2xl"></i>
+                            <span class="hidden sm:inline">Tambah</span>
+                        </a>
+                    </template>
+
+                    {{-- Dropdown kategori --}}
+                    <select x-model="selected" @change="saveState"
                         class="bg-gray-100 border border-gray-300 text-gray-800 px-4 py-2 rounded-lg focus:ring-2 focus:ring-orange-400 transition-all">
                         <option value="perusahaan">Perusahaan</option>
                         <option value="recruitment">Recruitment</option>
@@ -30,11 +35,16 @@
 
             <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
                 <div class="bg-gray-100 px-6 py-4 flex items-center justify-between">
-                    <h2 id="table_title" class="text-lg font-semibold text-gray-700">Daftar Perusahaan</h2>
+                    <h2 id="table_title" class="text-lg font-semibold text-gray-700"
+                        x-text="getTitle(selected)">
+                        Daftar Perusahaan
+                    </h2>
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table id="perusahaan_table" class="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                    {{-- TABLE: Perusahaan --}}
+                    <table x-show="selected === 'perusahaan'" x-cloak
+                        class="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
                         <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr>
                                 <th class="px-6 py-3 text-left">ID</th>
@@ -45,7 +55,7 @@
                                 <th class="px-6 py-3 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-100"> 
+                        <tbody class="divide-y divide-gray-100">
                             @foreach ($Data as $d)
                                 <tr class="hover:bg-gray-50 transition-all">
                                     <td class="px-6 py-4 font-medium">{{ $loop->iteration }}</td>
@@ -53,7 +63,8 @@
                                     <td class="px-6 py-4">{{ $d->users->email }}</td>
                                     <td class="px-6 py-4">{{ $d->telepon_perusahaan }}</td>
                                     <td class="px-6 py-4">
-                                        {{ $d->alamatperusahaan()->latest()->first()->detail ?? 'belum ada data' }}</td>
+                                        {{ $d->alamatperusahaan()->latest()->first()->detail ?? 'belum ada data' }}
+                                    </td>
                                     <td class="px-6 py-4 text-center">
                                         <a href="/dashboard/superadmin/perusahaan/detail/{{ $d->id }}"
                                             class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-md text-sm transition-all">View</a>
@@ -63,7 +74,9 @@
                         </tbody>
                     </table>
 
-                    <table id="recruitment_table" class="hidden min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                    {{-- TABLE: Recruitment --}}
+                    <table x-show="selected === 'recruitment'" x-cloak
+                        class="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
                         <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr>
                                 <th class="px-6 py-3 text-left">ID</th>
@@ -89,8 +102,9 @@
                         </tbody>
                     </table>
 
-                    <table id="talent_hunter_table"
-                        class="hidden min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                    {{-- TABLE: Talent Hunter --}}
+                    <table x-show="selected === 'talent_hunter'" x-cloak
+                        class="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
                         <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr>
                                 <th class="px-6 py-3 text-left">ID</th>
@@ -116,7 +130,9 @@
                         </tbody>
                     </table>
 
-                    <table id="table_panggilan" class="hidden min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                    {{-- TABLE: Panggilan --}}
+                    <table x-show="selected === 'panggilan'" x-cloak
+                        class="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
                         <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr>
                                 <th class="px-6 py-3 text-left">ID</th>
@@ -143,15 +159,22 @@
     </div>
 
     <script>
-        document.getElementById('kategori_select_perusahaan').addEventListener('change', function() {
-            const selected = this.value;
-            const tables = ['perusahaan', 'recruitment', 'talent_hunter', 'panggilan'];
-            tables.forEach(name => {
-                document.getElementById(`${name}_table`)?.classList.add('hidden');
-            });
-            document.getElementById(`${selected}_table`)?.classList.remove('hidden');
-            document.getElementById('table_title').textContent =
-                selected.charAt(0).toUpperCase() + selected.slice(1).replace('_', ' ');
-        });
+        function perusahaanTabs() {
+            return {
+                selected: localStorage.getItem('perusahaan_tab') || 'perusahaan',
+                saveState() {
+                    localStorage.setItem('perusahaan_tab', this.selected);
+                },
+                getTitle(tab) {
+                    const map = {
+                        perusahaan: 'Daftar Perusahaan',
+                        recruitment: 'Daftar Recruitment',
+                        talent_hunter: 'Daftar Talent Hunter',
+                        panggilan: 'Daftar Panggilan'
+                    };
+                    return map[tab] || 'Daftar Perusahaan';
+                }
+            }
+        }
     </script>
 @endsection
