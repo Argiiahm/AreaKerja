@@ -151,7 +151,7 @@
                         @csrf
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Perusahaan</label>
-                            <input type="text" name="nama_perusahaan" required
+                            <input type="text" disabled name="nama_perusahaan" required
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                                 value="{{ Auth::user()->perusahaan->nama_perusahaan }}">
                         </div>
@@ -165,12 +165,18 @@
                             <input type="text" name="posisi" required
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400">
                         </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Pengalaman Kerja</label>
-                            <textarea name="pengalaman_kerja" rows="3" required
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 resize-none"></textarea>
+                        <div class="flex gap-2">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Pengalaman Kerja</label>
+                                <textarea name="pengalaman_kerja" rows="2" required
+                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 resize-none"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Deskripsi</label>
+                                <textarea name="deskripsi" rows="2" required
+                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 resize-none"></textarea>
+                            </div>
                         </div>
-
                         <div class="flex gap-2">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Gaji Awal</label>

@@ -27,6 +27,7 @@ use App\Models\Pengalamankerja;
 use App\Models\Alamatperusahaan;
 use App\Models\RiwayatPendidikan;
 use App\Models\LowonganPerusahaan;
+use App\Models\TalentHunter;
 use Illuminate\Support\Facades\DB;
 use Spatie\Browsershot\Browsershot;
 use Illuminate\Support\Facades\Auth;
@@ -599,7 +600,8 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.data-perusahaan_superAdmin', [
             "title" => "Data Perusahaan",
-            "Data" => Perusahaan::all()
+            "Data" => Perusahaan::all(),
+            "Talent_hunter" =>  TalentHunter::all()
         ]);
     }
     public function perusahaan_add()

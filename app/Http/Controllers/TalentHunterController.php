@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\HargaKoin;
 use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
+use App\Models\TalentHunter;
+use App\Models\Tipskerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,16 +64,21 @@ class TalentHunterController extends Controller
     public function isi_form(Request $request)
     {
         $validated = $request->validate([
-            "alamat"            => "required|string",
-            "posisi"            => "required|string",
-            "pengalaman_kerja"  => "required|string",
-            "gender"            => "required|string",
-            "gaji_awal"         => "required|numeric",
-            "gaji_akhir"        => "required|numeric",
+            "perusahaan_id"     => "nullable",
+            "alamat"            => "nullable",
+            "posisi"            => "nullable",
+            "pengalaman_kerja"  => "nullable",
+            "gender"            => "nullable",
+            "gaji_awal"         => "nullable",
+            "gaji_akhir"        => "nullable",
+            "deskripsi"        => "nullable",
         ]);
 
-        $perusahaan = Auth::user()->perusahaan;
+        $validated['perusahaan_id'] = Auth::user()->perusahaan->id;
 
+        
+        $perusahaan = Auth::user()->perusahaan;
+        
         $nama_perusahaan = $perusahaan->nama_perusahaan ?? '-';
         $alamat = $validated['alamat'];
         $posisi = $validated['posisi'];
@@ -79,18 +86,20 @@ class TalentHunterController extends Controller
         $gender = $validated['gender'];
         $gaji_awal = number_format($validated['gaji_awal'], 0, ',', '.');
         $gaji_akhir = number_format($validated['gaji_akhir'], 0, ',', '.');
-
+        
         $pesan = "Halo Talent Hunter 👋%0A"
-            . "Saya ingin mendaftarkan perusahaan kami.%0A%0A"
-            . "*Nama Perusahaan:* {$nama_perusahaan}%0A"
-            . "*Alamat:* {$alamat}%0A"
-            . "*Posisi yang Dibutuhkan:* {$posisi}%0A"
-            . "*Pengalaman Kerja:* {$pengalaman_kerja}%0A"
-            . "*Gender Kandidat:* {$gender}%0A"
-            . "*Range Gaji:* Rp {$gaji_awal} - Rp {$gaji_akhir}%0A%0A"
-            . "Mohon ditindaklanjuti ya, terima kasih 🙏";
-
+        . "Saya ingin mendaftarkan perusahaan kami.%0A%0A"
+        . "*Nama Perusahaan:* {$nama_perusahaan}%0A"
+        . "*Alamat:* {$alamat}%0A"
+        . "*Posisi yang Dibutuhkan:* {$posisi}%0A"
+        . "*Pengalaman Kerja:* {$pengalaman_kerja}%0A"
+        . "*Gender Kandidat:* {$gender}%0A"
+        . "*Range Gaji:* Rp {$gaji_awal} - Rp {$gaji_akhir}%0A%0A"
+        . "Mohon ditindaklanjuti ya, terima kasih 🙏";
+        
         $nomorAdmin = "6287874732189";
+        
+        TalentHunter::create($validated);
 
         return redirect()->away("https://wa.me/{$nomorAdmin}?text={$pesan}");
     }
