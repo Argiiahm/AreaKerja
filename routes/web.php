@@ -47,7 +47,13 @@ Route::middleware(['status'])->group(function () {
     // Route Landing Page
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/detail/job/{job:slug}', [HomeController::class, 'viewjob']);
+
+
     Route::get('/talenthunter', [TalentHunterController::class, 'index']);
+    Route::post('/beli/talenthunter',[TalentHunterController::class, 'beli'])->middleware('perusahaan');
+    Route::post('/form/talenthunter',[TalentHunterController::class, 'isi_form'])->middleware('perusahaan');
+
+
     Route::get('/tipskerja', [TipskerjaController::class, 'index']);
     Route::get('/tipskerja/details/{tipskerja:id}', [TipskerjaController::class, 'details']);
     Route::get('/daftarkandidat', [KandidatController::class, 'index'])->middleware('auth');

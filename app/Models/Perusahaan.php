@@ -23,4 +23,8 @@ class Perusahaan extends Model
         return $this->hasMany(LowonganPerusahaan::class, 'perusahaan_id');
     }
 
+    public function talent_hunter() {
+        return $this->hasMany(TalentHunter::class, 'perusahaan_id');
+    }
+
 }
