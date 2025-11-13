@@ -8,7 +8,7 @@
             <div class="flex items-center gap-3 py-6 border-b rounded-b-3xl shadow-md">
                 <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-40 h-40 object-contain">
                 <div class="w-full lg:w-[70%] text-left lg:text-center">
-                    <h1 class="text-lg font-bold">SEVEN INC</h1>
+                    <h1 class="text-lg font-bold">{{ $Data->perusahaan->nama_perusahaan }}</h1>
                 </div>
             </div>
 
@@ -16,17 +16,17 @@
 
                 <div>
                     <h2 class="font-bold text-black">Deskripsi</h2>
-                    <p>Perushaan Belum Menyelesaikan Bagian ini</p>
+                    <p>{{ $Data->deskripsi }}</p>
                 </div>
 
-                <div>
+                {{-- <div>
                     <h2 class="font-bold text-black">Culture Perusahaan</h2>
                     <p>Perushaan Belum Menyelesaikan Bagian ini</p>
-                </div>
+                </div> --}}
 
                 <div>
                     <h2 class="font-bold text-black">Alamat Perusahaan</h2>
-                    <p>Ngasinan, Kraguman, Jogonalan, Klaten, Jawa Tengah 57452</p>
+                    <p>{{ $Data->alamat }}</p>
                 </div>
 
                 <div>
@@ -39,17 +39,17 @@
                             <li>Detail Tambahan</li>
                         </ul>
                         <ul class="mt-2 space-y-1">
-                            <li>:Frontend</li>
-                            <li>:Laki Laki</li>
-                            <li>:1 Juta</li>
-                            <li>:Memiliki Pengalaman 1 tahun</li>
+                            <li>:{{ $Data->posisi }}</li>
+                            <li>:{{ $Data->gender }}</li>
+                            <li>:{{ $Data->gaji_awal }} - {{ $Data->gaji_akhir }}</li>
+                            <li>:{{ $Data->pengalaman_kerja }} </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div class="flex justify-center gap-4 pt-4">
-            <a href="/dashboard/superadmin/talenthunter/edit"
+            <a href="/dashboard/superadmin/talenthunter/edit/{{ $Data->id }}"
                 class="px-6 py-2 bg-orange-500 text-white font-medium rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors">
                 Edit
             </a>

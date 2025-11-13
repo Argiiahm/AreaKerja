@@ -198,9 +198,10 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/recrutiment/edit', [SuperAdminController::class, 'recrutiment_edit'])->middleware('superadmin');
 
     //Data Talent Hunter -SuperAdmin
-    Route::get('/dashboard/superadmin/talenthunter', [SuperAdminController::class, 'talent_hunter_detail'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/talenthunter/{talenthunter:id}', [SuperAdminController::class, 'talent_hunter_detail'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/perusahaan/add/talent_hunter', [SuperAdminController::class, 'talent_hunter_add'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/talenthunter/edit', [SuperAdminController::class, 'talent_hunter_edit'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/talenthunter/edit/{talent_hunter:id}', [SuperAdminController::class, 'talent_hunter_edit'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/talenthunter/update/{talent_hunter:id}', [SuperAdminController::class, 'talent_hunter_update'])->middleware('superadmin');
 
     // FInance - Super Admin
     Route::get('/dashboard/superadmin/finance', [SuperAdminController::class, 'finance'])->middleware('superadmin');
@@ -272,7 +273,7 @@ Route::middleware(['status'])->group(function () {
     Route::put('/dashboard/admin/banned/{user:id}', [AdminController::class, 'freeze_perusahaan'])->middleware('admin');
     Route::get('/dashboard/admin/perusahaan/view/lowongan', [AdminController::class, 'perusahaan_view_lowongan'])->middleware('admin');
     Route::get('/dashboard/admin/perusahaan/view/cv', [AdminController::class, 'perusahaan_view_cv'])->middleware('admin');
-    Route::get('/dashboard/admin/perusahaan/view/talenthunter', [AdminController::class, 'perusahaan_view_talenthunter'])->middleware('admin');
+    Route::get('/dashboard/admin/perusahaan/talenthunter/view/{talenthunter:id}', [AdminController::class, 'perusahaan_view_talenthunter'])->middleware('admin');
 
     Route::get('/dashboard/admin/finance', [AdminController::class, 'finance'])->middleware('admin');
     Route::get('/dashboard/admin/cari/finance/admin', [AdminController::class, 'finance_cari'])->middleware('admin');

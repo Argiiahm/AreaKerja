@@ -800,10 +800,11 @@ class SuperAdminController extends Controller
     }
 
     // Talent Hunter
-    public function talent_hunter_detail()
+    public function talent_hunter_detail(TalentHunter $talenthunter)
     {
         return view('Super-Admin.Perusahaan.Talent-Hunter.detail-tulent_hunter_superAdmin', [
-            "title" => "Data Talent Hunter"
+            "title" => "Data Talent Hunter",
+            "Data"  =>   $talenthunter
         ]);
     }
     public function talent_hunter_add()
@@ -812,11 +813,30 @@ class SuperAdminController extends Controller
             "title" => "Tambah Tulent Hunter"
         ]);
     }
-    public function talent_hunter_edit()
+    public function talent_hunter_edit(TalentHunter $talent_hunter)
     {
         return view('Super-Admin.Perusahaan.Talent-Hunter.edit-data_tulent-hunter_superAdmin', [
-            "title" => "Edit Tulent Hunter"
+            "title" => "Edit Tulent Hunter",
+            "Data"  =>  $talent_hunter
         ]);
+    }
+
+    public function talent_hunter_update(Request $request, TalentHunter $talent_hunter) {
+          $validated = $request->validate([
+            "perusahaan_id"     => "nullable",
+            "alamat"            => "nullable",
+            "posisi"            => "nullable",
+            "pengalaman_kerja"  => "nullable",
+            "gender"            => "nullable",
+            "gaji_awal"         => "nullable",
+            "gaji_akhir"        => "nullable",
+            "deskripsi"        => "nullable",
+        ]);
+
+        $validated['perusahaan_id'] = $talent_hunter->perusahaan->id;
+        $talent_hunter->update($validated);
+        return redirect('/dashboard/superadmin/perusahaan');
+
     }
 
 

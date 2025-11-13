@@ -1,4 +1,4 @@
-@extends('layouts.index')
+ @extends('layouts.index')
 
 @section('content')
     <section class="relative w-full h-screen pt-24">
@@ -168,8 +168,8 @@
                         <div class="flex gap-2">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Pengalaman Kerja</label>
-                                <textarea name="pengalaman_kerja" rows="2" required
-                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 resize-none"></textarea>
+                                <input name="pengalaman_kerja" required placeholder="Memiliki Pengalaman Minimal 1 Tahun"
+                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 resize-none">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Deskripsi</label>

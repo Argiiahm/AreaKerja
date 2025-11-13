@@ -15,6 +15,7 @@ use App\Models\LowonganPerusahaan;
 use App\Models\Pelamar;
 use App\Models\Perusahaan;
 use App\Models\Provinsi;
+use App\Models\TalentHunter;
 use App\Models\Tipskerja;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -142,7 +143,8 @@ class AdminController extends Controller
     {
         return view('Admin.Dashboard-admin.perusahaan.data-perusahaan_admin_dashboard', [
             "title"   =>   "Data Perusahaan",
-            "Data"    =>  Perusahaan::all()
+            "Data"    =>  Perusahaan::all(),
+            "talent_hunter"  =>  TalentHunter::all()
         ]);
     }
     public function perusahaan_view(Perusahaan $perusahaan)
@@ -187,10 +189,11 @@ class AdminController extends Controller
             "title"   =>   ""
         ]);
     }
-    public function perusahaan_view_talenthunter()
+    public function perusahaan_view_talenthunter(TalentHunter $talenthunter)
     {
         return view('Admin.Dashboard-admin.perusahaan.perusahaan_view_talenthunter_admin_dashboard', [
-            "title"   =>   ""
+            "title"   =>   "",
+            "Data"    =>   $talenthunter
         ]);
     }
 

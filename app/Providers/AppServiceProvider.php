@@ -45,11 +45,21 @@ class AppServiceProvider extends ServiceProvider
                     $unreadCount = $Pesan->count();
                 }
             }
+
+        if (Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')) {
+                $Pesan = PelamarLowongan::with('lowongan.perusahaan')
+                    ->where('status', '!=', 'pending')
+                    ->latest()
+                    ->get();
+
+                $unreadCount = $Pesan->count();
+            }
+
             $view->with(compact('Pesan', 'unreadCount'));
         });
 
         View::composer('*', function ($view) {
-            $PesanPerusahaan = PembeliKandidat::all();
+            $PesanPerusahaan = PembeliKandidat::all();{{  }}
 
             $view->with(compact('PesanPerusahaan'));
         });

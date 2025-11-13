@@ -111,7 +111,7 @@
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             @foreach ($Talent_hunter as $th)
-                                <tr x-show="matchesSearch('{{ strtolower($th->perusahaan->nama_perusahaan ?? '') }}', '{{ strtolower($th->perusahaan->users->email ?? '') }}', '{{ strtolower($th->perusahaan->telepon_perusahaan ?? '') }}','{{ strtolower($th->alamat ?? '') }}')"></tr> class="hover:bg-gray-50 transition-all">
+                                <tr x-show="matchesSearch('{{ strtolower($th->perusahaan->nama_perusahaan ?? '') }}', '{{ strtolower($th->perusahaan->users->email ?? '') }}', '{{ strtolower($th->perusahaan->telepon_perusahaan ?? '') }}','{{ strtolower($th->alamat ?? '') }}')" class="hover:bg-gray-50 transition-all">
                                     <td class="px-6 py-4 font-medium">{{ $loop->iteration }}</td>
                                     <td class="px-6 py-4">{{ $th->perusahaan->nama_perusahaan }}</td>
                                     <td class="px-6 py-4">{{ $th->perusahaan->users->email }}</td>
