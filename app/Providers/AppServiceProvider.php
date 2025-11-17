@@ -59,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $PesanPerusahaan = PembeliKandidat::all();{{  }}
+            $PesanPerusahaan = PembeliKandidat::all();
 
             $view->with(compact('PesanPerusahaan'));
         });

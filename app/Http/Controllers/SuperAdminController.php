@@ -27,6 +27,8 @@ use App\Models\Pengalamankerja;
 use App\Models\Alamatperusahaan;
 use App\Models\RiwayatPendidikan;
 use App\Models\LowonganPerusahaan;
+use App\Models\PelamarLowongan;
+use App\Models\PembeliKandidat;
 use App\Models\TalentHunter;
 use Illuminate\Support\Facades\DB;
 use Spatie\Browsershot\Browsershot;
@@ -329,53 +331,53 @@ class SuperAdminController extends Controller
         ]);
     }
 
-    public function unduhCv(Pelamar $pelamar)
-    {
-        $html = View::make('CV_PELAMAR.cv_pelamar', [
-            "Data" => $pelamar,
-            "pdf" => true
-        ])->render();
+        public function unduhCv(Pelamar $pelamar)
+        {
+            $html = View::make('CV_PELAMAR.cv_pelamar', [
+                "Data" => $pelamar,
+                "pdf" => true
+            ])->render();
 
-        $css = file_get_contents(public_path('build/assets/app-Dd7altkU.css'));
+            $css = file_get_contents(public_path('build/assets/app-CDYMvv0Y.css'));
 
-        $htmlWithCss = '
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>CV Pelamar</title>
-                        <style>' . $css . '</style>
-                          <link rel="stylesheet" type="text/css"
-                            href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
-                        <link rel="stylesheet" type="text/css"
-                            href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
-                        <script src="https://cdn.tailwindcss.com"></script>
-                    </head>
-                    <body>
-                        ' . $html . '
-                    </body>
-                    </html>
-                    ';
+            $htmlWithCss = '
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <title>CV Pelamar</title>
+                            <style>' . $css . '</style>
+                            <link rel="stylesheet" type="text/css"
+                                href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+                            <link rel="stylesheet" type="text/css"
+                                href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+                            <script src="https://cdn.tailwindcss.com"></script>
+                        </head>
+                        <body>
+                            ' . $html . '
+                        </body>
+                        </html>
+                        ';
 
 
-        $browserPath = BrowserPath::detect();
-        if (!$browserPath) {
-            return response()->json([
-                "error" => "Error"
-            ], 500);
+            $browserPath = BrowserPath::detect();
+            if (!$browserPath) {
+                return response()->json([
+                    "error" => "Error"
+                ], 500);
+            }
+
+            $pdf = Browsershot::html($htmlWithCss)
+                ->setOption('executablePath', $browserPath)
+                ->format('A3')
+                ->margins(10, 10, 10, 10)
+                ->waitUntilNetworkIdle()
+                ->pdf();
+
+            return response($pdf)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="cv-' . $pelamar->id . '.pdf"');
         }
-
-        $pdf = Browsershot::html($htmlWithCss)
-            ->setOption('executablePath', $browserPath)
-            ->format('A3')
-            ->margins(10, 10, 10, 10)
-            ->waitUntilNetworkIdle()
-            ->pdf();
-
-        return response($pdf)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="cv-' . $pelamar->id . '.pdf"');
-    }
 
 
 
@@ -601,7 +603,9 @@ class SuperAdminController extends Controller
         return view('Super-Admin.Perusahaan.data-perusahaan_superAdmin', [
             "title" => "Data Perusahaan",
             "Data" => Perusahaan::all(),
-            "Talent_hunter" =>  TalentHunter::all()
+            "Talent_hunter" =>  TalentHunter::all(),
+            "Recruitments"  =>  PembeliKandidat::all(),
+            "Panggilan"     => PelamarLowongan::all()
         ]);
     }
     public function perusahaan_add()
@@ -786,18 +790,19 @@ class SuperAdminController extends Controller
     }
 
     // Recrutiment
-    public function recrutiment_detail()
+    public function recrutiment_detail(Pelamar $pelamar)
     {
         return view('Super-Admin.Perusahaan.Recrutiment.detail_recrutiment_superAdmin', [
-            "title" => "Detail Kandidat"
+            "title" => "Detail Kandidat",
+            "Data"  => $pelamar
         ]);
     }
-    public function recrutiment_edit()
-    {
-        return view('Super-Admin.Perusahaan.Recrutiment.edit_kandidat_recrutiment_superAdmin', [
-            "title" => "Detail Pelamar"
-        ]);
-    }
+    // public function recrutiment_edit()
+    // {
+    //     return view('Super-Admin.Perusahaan.Recrutiment.edit_kandidat_recrutiment_superAdmin', [
+    //         "title" => "Detail Pelamar"
+    //     ]);
+    // }
 
     // Talent Hunter
     public function talent_hunter_detail(TalentHunter $talenthunter)

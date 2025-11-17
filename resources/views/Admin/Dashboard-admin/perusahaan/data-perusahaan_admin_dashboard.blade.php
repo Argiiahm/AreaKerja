@@ -107,19 +107,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-t">
-                        <td class="px-6 py-3 text-gray-700">001</td>
-                        <td class="px-6 py-3 text-gray-700">PT Maju Jaya</td>
-                        <td class="px-6 py-3 text-gray-700">info@majujaya.co.id</td>
-                        <td class="px-6 py-3 text-gray-700">0812-9000-999</td>
-                        <td class="px-6 py-3 text-gray-700">Jakarta Selatan</td>
-                        <td class="px-6 py-3">
-                            <a href="/dashboard/admin/recruitment/view/1"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">
-                                <i class="ph ph-eye text-lg"></i>
-                            </a>
-                        </td>
-                    </tr>
+                    @foreach ($Recruitments as $recruitment)
+                        @if ($recruitment->status === 'diterima')
+                            <tr x-show="matchesSearch(
+                                            '{{ strtolower($recruitment->lowongan_perusahaan->perusahaan->nama_perusahaan ?? '') }}',
+                                            '{{ strtolower($recruitment->lowongan_perusahaan->perusahaan->users->email ?? '') }}',
+                                            '{{ strtolower($recruitment->lowongan_perusahaan->perusahaan->telepon_perusahaan ?? '') }}',
+                                            '{{ strtolower($recruitment->lowongan_perusahaan->perusahaan->alamatperusahaan()->latest()->first()->detail ?? '') }}'
+                                        )"
+                                class="hover:bg-gray-50 transition-all">
+                                <td class="px-6 py-4 font-medium">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4">
+                                    {{ $recruitment->lowongan_perusahaan->perusahaan->nama_perusahaan }}</td>
+                                <td class="px-6 py-4">
+                                    {{ $recruitment->lowongan_perusahaan->perusahaan->users->email }}</td>
+                                <td class="px-6 py-4">
+                                    {{ $recruitment->lowongan_perusahaan->perusahaan->telepon_perusahaan }}</td>
+                                <td class="px-6 py-4">
+                                    {{ $recruitment->lowongan_perusahaan->perusahaan->alamatperusahaan()->latest()->first()->detail ?? 'belum ada data' }}
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <a href="/dashboard/admin/recruitment/view/{{ $recruitment->pelamar->id }}"
+                                        class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">
+                                        <i class="ph ph-eye text-lg"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
                 </tbody>
             </table>
         </div>

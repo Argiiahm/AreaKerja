@@ -91,11 +91,11 @@
                         </div>
 
                         <h2 class="text-white font-semibold text-base sm:text-lg mb-6">Kandidat Saya</h2>
-                        <button
+                        <button onclick="window.location='/dashboard/perusahaan/kandidat'"
                             class="bg-orange-500 text-white border-2 border-white font-semibold px-4 sm:px-6 py-2 rounded-lg mb-3 hover:bg-orange-600 transition text-sm sm:text-base">
                             Lihat Kandidat
                         </button>
-                        <button
+                        <button onclick="window.location='/dashboard/perusahaan/kandidatak'"
                             class="bg-white text-orange-500 font-semibold px-4 sm:px-6 py-2 rounded-lg shadow hover:bg-gray-100 transition text-sm sm:text-base">
                             Cari Kandidat
                         </button>

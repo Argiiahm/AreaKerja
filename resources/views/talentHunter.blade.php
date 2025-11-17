@@ -44,19 +44,19 @@
                 <h2 class="text-3xl font-bold mb-6">Langkah - Langkah Daftar Talent Hunter</h2>
                 <ul class="space-y-4 border-l-2 border-white pl-6">
                     <li class="relative">
-                        <div class="absolute -left-3 w-6 h-6 bg-white rounded-full border-2 border-white"></div>
+                        <div class="absolute -left-9 w-6 h-6 bg-white rounded-full border-2 border-white"></div>
                         Klik tombol daftar untuk mendaftarkan perusahaan anda
                     </li>
                     <li class="relative">
-                        <div class="absolute -left-3 w-6 h-6 bg-white rounded-full border-2 border-white"></div>
+                        <div class="absolute -left-9 w-6 h-6 bg-white rounded-full border-2 border-white"></div>
                         Isi formulir pendaftaran dan kirim
                     </li>
                     <li class="relative">
-                        <div class="absolute -left-3 w-6 h-6 bg-white rounded-full border-2 border-white"></div>
+                        <div class="absolute -left-9 w-6 h-6 bg-white rounded-full border-2 border-white"></div>
                         Tunggu pemberitahuan selanjutnya
                     </li>
                     <li class="relative">
-                        <div class="absolute -left-3 w-6 h-6 bg-white rounded-full border-2 border-white"></div>
+                        <div class="absolute -left-9 w-6 h-6 bg-white rounded-full border-2 border-white"></div>
                         Perusahaan berhasil didaftarkan
                     </li>
                 </ul>

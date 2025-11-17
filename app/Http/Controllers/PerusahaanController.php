@@ -44,6 +44,7 @@ class PerusahaanController extends Controller
     public function topup(Request $request)
     {
         // dd($request->all());
+        // dd($request->id_koin);
 
         $koin = HargaPembayaran::where('id', $request->id_koin)->get()->first();
         $bank = Bank::where('id', $request->id_bank)->get()->first();
@@ -68,7 +69,7 @@ class PerusahaanController extends Controller
         $validasi['expired_date'] = now()->addHours(24);
 
         $transaksi = CatatanCash::create($validasi);
-        return redirect('/dashboard/perusahaan')->with('success_topup', [
+        return back()->with('success_topup', [
             "id"          =>   $transaksi->id,
             'no_referensi' => $noref,
             'pesanan' => $koin->nama,
@@ -184,10 +185,10 @@ class PerusahaanController extends Controller
             'kode_pos' => 'nullable',
             'detail' =>   'nullable'
         ]);
-        
+
         $vData['perusahaan_id'] = Auth::user()->perusahaan->id;
         $vData['detail'] = $request->desa . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->provinsi;
-        
+
         Alamatperusahaan::create($vData);
         return redirect('/dashboard/perusahaan/tambah/alamat');
     }
@@ -305,7 +306,18 @@ class PerusahaanController extends Controller
     }
     public function kandidat()
     {
-        return view('Perusahaan.kandidat');
+        $perusahaan = Auth::user()->perusahaan;
+        $lowonganIds = $perusahaan->pasanglowongan->pluck('id');
+        $Kandidats = PembeliKandidat::whereIn('lowongan_id', $lowonganIds)->get();
+        return view('Perusahaan.kandidat', [
+            "Kandidats"  =>   $Kandidats,
+            "Skills"     =>    Divisi::all()
+        ]);
+    }
+
+    public function kandidat_delete(PembeliKandidat $kandidat) {
+        $kandidat->destroy($kandidat->id);
+        return back();
     }
 
     //pengaturan
@@ -689,5 +701,13 @@ class PerusahaanController extends Controller
     public function detail_event_kosong()
     {
         return view('Perusahaan.Event.detail-event-kosong');
+    }
+
+    public function koin()
+    {
+        return view('Perusahaan.koin-saya', [
+            "HargaKoin" => HargaPembayaran::all(),
+            "payment" => Bank::all()
+        ]);
     }
 }

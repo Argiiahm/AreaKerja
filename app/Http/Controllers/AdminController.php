@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Daerah;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Event;
+use App\Models\Daerah;
+use App\Models\Pelamar;
+use App\Models\Provinsi;
+use App\Models\Kabupaten;
+use App\Models\Tipskerja;
+use App\Models\Perusahaan;
 use App\Models\CatatanCash;
 use App\Models\CatatanKoin;
-use App\Models\Event;
-use App\Models\HargaPembayaran;
-use App\Models\Kabupaten;
-use App\Models\KegiatanEvent;
-use App\Models\LowonganPerusahaan;
-use App\Models\Pelamar;
-use App\Models\Perusahaan;
-use App\Models\Provinsi;
-use App\Models\TalentHunter;
-use App\Models\Tipskerja;
 use Illuminate\Support\Str;
+use App\Models\TalentHunter;
 use Illuminate\Http\Request;
+use App\Models\KegiatanEvent;
+use App\Models\HargaPembayaran;
+use App\Models\PembeliKandidat;
+use App\Models\LowonganPerusahaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -144,7 +145,8 @@ class AdminController extends Controller
         return view('Admin.Dashboard-admin.perusahaan.data-perusahaan_admin_dashboard', [
             "title"   =>   "Data Perusahaan",
             "Data"    =>  Perusahaan::all(),
-            "talent_hunter"  =>  TalentHunter::all()
+            "talent_hunter"  =>  TalentHunter::all(),
+            "Recruitments"  =>  PembeliKandidat::all(),
         ]);
     }
     public function perusahaan_view(Perusahaan $perusahaan)
@@ -153,6 +155,14 @@ class AdminController extends Controller
             "title"   =>   "",
             "data"    =>  $perusahaan,
             "lowongan" => LowonganPerusahaan::all()
+        ]);
+    }
+
+    public function recruitment_detail(Pelamar $pelamar)
+    {
+        return view('admin.dashboard-admin.perusahaan.detail-recruitment', [
+            "title" => "Detail Kandidat",
+            "Data"  => $pelamar
         ]);
     }
 

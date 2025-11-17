@@ -1,23 +1,35 @@
 @extends('layouts.index')
 @section('content')
+    @php
+        $nomorWA = '6287874732189';
+        $pesan =
+            'Halo admin, saya ingin Mencari Nama Pekerja.%0A' .
+            'Nama Perusahaan: ' .
+            Auth::user()->perusahaan->nama_perusahaan .
+            '%0A' .
+            'Email: ' .
+            Auth::user()->email .
+            '%0A' .
+            'Terima kasih.';
+    @endphp
+
     <div class="mt-24 md:mt-36 lg:mt-24">
         <section class="max-w-5xl mx-auto px-6 py-8">
             <div class="flex justify-center items-center mb-8">
                 <h2 class="bg-orange-500 text-white px-6 py-2 rounded-full font-semibold text-sm">
-                    Laporan Harian Pekerja
+                    Cari Nama Pekerja
                 </h2>
                 <div></div>
             </div>
 
             <div class="mb-6">
-                <h3 class="text-xl font-semibold mb-2">Lorem Ipsum</h3>
+                <h3 class="text-xl font-semibold mb-2">Cari Nama Pekerja</h3>
                 <p class="text-gray-700 leading-relaxed">
-                    Halaman ini dibuat untuk membantu perusahaan dalam proses perekrutan dengan menyediakan akses
-                    ke daftar track record pekerja yang pernah bermasalah. Dengan mengklik tombol ‘request’,
-                    Anda dapat mengajukan permintaan untuk menerima daftar tersebut melalui WhatsApp atau aplikasi pilihan
-                    lainnya.
-                    Fitur ini memberikan informasi penting yang bisa menjadi bahan pertimbangan tambahan sebelum
-                    mengambil keputusan untuk merekrut kandidat.
+                    Halaman ini dibuat untuk membantu perusahaan dalam mencari nama pekerja dan memeriksa riwayat atau
+                    informasi terkait karyawan tersebut. Dengan mengklik tombol ‘request’, Anda dapat mengajukan permintaan
+                    untuk menerima data tersebut melalui WhatsApp atau aplikasi pilihan lainnya. Fitur ini memberikan
+                    informasi penting yang dapat mendukung proses pengecekan dan memastikan keputusan yang lebih tepat dalam
+                    pengelolaan karyawan.
                 </p>
             </div>
 
@@ -29,14 +41,15 @@
                 <div>
                     <h4 class="font-semibold mb-1">Permintaan Panggilan</h4>
                     <p class="text-gray-600 text-sm">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et est elit. Etiam sagittis ut
-                        mauris molestie lacinia. Maecenas porttitor eros id dui iaculis malesuada.
+                        Halaman ini dibuat untuk membantu perusahaan dalam mencari nama pekerja dan memeriksa riwayat atau
+                        informasi terkait karyawan tersebut. Dengan mengklik tombol ‘request’
                     </p>
                 </div>
             </div>
 
             <div class="flex justify-end mt-8">
-                <a href="#" class="bg-orange-500 text-white px-6 py-2 rounded-md font-medium hover:bg-orange-600">
+                <a href="https://wa.me/{{ $nomorWA }}?text={{ $pesan }}" target="_blank"
+                    class="bg-orange-500 text-white px-6 py-2 rounded-md font-medium hover:bg-orange-600">
                     Kirim Permintaan
                 </a>
             </div>

@@ -57,11 +57,11 @@
             </div>
         </div>
 
-        <div class="flex justify-center">
+        {{-- <div class="flex justify-center">
             <button class="bg-orange-500 hover:bg-orange-600 text-white px-10 py-3 rounded-full font-medium transition">
                 Mendaftar
             </button>
-        </div>
+        </div> --}}
 
     </div>
 @endsection

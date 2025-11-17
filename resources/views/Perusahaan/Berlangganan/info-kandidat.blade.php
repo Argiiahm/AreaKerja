@@ -10,8 +10,8 @@
             <div class="relative max-w-5xl mx-auto px-6 py-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">Request Data</h2>
                 <p class="text-gray-200 max-w-2xl">
-                    Lorem Ipsum is simply dummy text of the printing typesetting industry.
-                    Lorem Ipsum has been industry's standard dummy text ever since the 1500s anada.
+                    Halaman ini dibuat untuk membantu perusahaan dalam proses perekrutan dengan menyediakan akses ke daftar
+                    track record pekerja yang pernah bermasalah.
                 </p>
             </div>
         </section>
@@ -21,7 +21,7 @@
 
                 <div class="bg-orange-500 text-white rounded-lg p-6 flex flex-col items-center text-center shadow-md">
                     <div class="text-3xl mb-4"><img src="{{ asset('Icon/check.png') }}" alt=""></div>
-                    <h3 class="font-semibold mb-2">Laporan Harian Pekerja</h3>
+                    <h3 class="font-semibold mb-2">List Pekerja Bermasalah</h3>
                     <a href="/dashboard/perusahaan/berlangganan/kandidat/info/laporan"
                         class="bg-white text-orange-500 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
                         Lebih Detail

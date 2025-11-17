@@ -106,6 +106,11 @@
                     disabled>
             </div>
 
+                }
+            });
+    </script>
+@endsection
+
             <div class="flex justify-center pt-2">
                 <a href="/dashboard/admin/profile/edit/{{ Auth::user()->admin->id }}"
                     class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-2 rounded-md">
@@ -138,7 +143,3 @@
                         document.getElementById("previewImageadmin").src = e.target.result;
                     };
                     reader.readAsDataURL(file);
-                }
-            });
-    </script>
-@endsection

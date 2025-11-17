@@ -111,13 +111,20 @@
                         <span class="sr-only">Open notification</span>
                         <i class="ph-fill text-[#fa6601] ph-bell text-3xl"></i>
                         @if (Auth::check() && Auth::user()->role === 'pelamar')
-                            @foreach ($Pesan as $p)
-                                @if ($p->status !== 'pending' && $p->pelamar_id === Auth::user()->pelamars->id && $p->is_read === 0)
-                                    <span
-                                        class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600">
-                                    </span>
-                                @endif
-                            @endforeach
+                            @php
+                                $user = Auth::user();
+                                $unread = $Pesan->where('status', '!=', 'pending')->where('is_read', 0)->count();
+                                $unreadPerusahaan = $PesanPerusahaan
+                                    ->where('status', 'pending')
+                                    ->where('pelamar_id', $user->pelamars->id)
+                                    ->where('is_read', 0)
+                                    ->count();
+                                $totalUnread = $unread + $unreadPerusahaan;
+                            @endphp
+                            @if ($totalUnread > 0)
+                                <span
+                                    class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600"></span>
+                            @endif
                         @elseif (Auth::check() && Auth::user()->role === 'perusahaan')
                             @foreach ($PesanPerusahaan as $pp)
                                 @if ($pp->status !== 'pending' && $pp->is_read === 0)
@@ -140,7 +147,8 @@
                                     Semua</a>
                             </div>
                             <ul class="max-h-80 mx-2 overflow-y-auto">
-                                @if ($Pesan->isNotEmpty())
+                                @if ($Pesan->isNotEmpty() || $PesanPerusahaan->isNotEmpty())
+
                                     @foreach ($Pesan as $p)
                                         @if ($p->status !== 'pending' && $p->pelamar_id === Auth::user()->pelamars->id)
                                             @php
@@ -192,7 +200,41 @@
                                             </li>
                                         @endif
                                     @endforeach
-
+                                    @if (Auth::user()->pelamars->kategori === 'kandidat aktif')
+                                        @foreach ($PesanPerusahaan as $pp)
+                                            @if ($pp->status === 'pending' && $pp->pelamar_id === Auth::user()->pelamars->id)
+                                                @php
+                                                    $lowongan = \App\Models\LowonganPerusahaan::find($pp->lowongan_id);
+                                                @endphp
+                                                <li
+                                                    class="px-4 py-3 {{ $pp->is_read === 0 ? 'bg-gray-200' : 'border-zinc-300' }} hover:bg-gray-50 transition">
+                                                    <button type="submit" class="text-left"
+                                                        onclick="window.location='/kandidat/rekrut'">
+                                                        <div class="flex items-start gap-3">
+                                                            <img class="w-10 h-10 rounded-full object-cover"
+                                                                src="{{ asset('storage/' . $lowongan->perusahaan->img_profile) }}"
+                                                                alt="Logo {{ $lowongan->perusahaan->nama_perusahaan }}">
+                                                            <div class="flex-1">
+                                                                <p class="text-sm text-gray-700">
+                                                                    <span
+                                                                        class="font-medium text-gray-900">Selamat!</span>
+                                                                    Anda telah di rekrut oleh perusahaan
+                                                                    <span
+                                                                        class="font-semibold">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
+                                                                    dan akan di tempatkan di bagian <span
+                                                                        class="font-semibold">{{ $lowongan->nama }}
+                                                                    </span>
+                                                                </p>
+                                                                <span class="text-xs text-gray-400">
+                                                                    {{ $pp->updated_at->diffForHumans() }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                     <div class="flex items-center justify-end px-5 pb-3 gap-2 mt-2">
                                         <i class="ph ph-checks text-blue-500 font-bold text-lg"></i>
                                         <button class="text-xs font-semibold text-gray-600 hover:text-blue-600">
@@ -437,12 +479,11 @@
                                             Perusahaan</a>
                                     </li>
                                     <li id="btn-profile">
-                                        <a href="/dashboard/perusahaan"
-                                            class="block px-4 py-2 text-sm">Dashboard
+                                        <a href="/dashboard/perusahaan" class="block px-4 py-2 text-sm">Dashboard
                                             Perusahaan</a>
                                     </li>
                                     <li>
-                                        <a href="" class="block px-4 py-2 text-sm">Koin Area Kerja</a>
+                                        <a href="/koin/areakerja" class="block px-4 py-2 text-sm">Koin Area Kerja</a>
                                     </li>
                                     <li>
                                         <a href="/dashboard/perusahaan/kandidat"
@@ -777,10 +818,24 @@
             <div>
                 <h3 class="font-bold mb-3">Kategori</h3>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:underline">Beranda</a></li>
-                    <li><a href="#" class="hover:underline">Provinsi Lainnya</a></li>
-                    <li><a href="#" class="hover:underline">Tips Kerja</a></li>
-                    <li><a href="#" class="hover:underline">Pasang Lowongan</a></li>
+                    @if (Auth::check() &&
+                            Auth::user()->role === 'perusahaan' &&
+                            Auth::user()->perusahaan &&
+                            Auth::user()->perusahaan->is_berlangganan === 0)
+                        <li><a href="/dashboard/perusahaan/berlangganan" class="hover:underline">Beranda</a></li>
+                    @elseif (Auth::check() &&
+                            Auth::user()->role === 'perusahaan' &&
+                            Auth::user()->perusahaan &&
+                            Auth::user()->perusahaan->is_berlangganan)
+                        <li><a href="/dashboard/perusahaan/berlangganan/kandidat" class="hover:underline">Beranda</a>
+                        </li>
+                    @else
+                        <li><a href="/" class="hover:underline">Beranda</a></li>
+                    @endif
+
+                    <li><a href="/" class="hover:underline">Provinsi Lainnya</a></li>
+                    <li><a href="/tipskerja" class="hover:underline">Tips Kerja</a></li>
+                    <li><a href="/pasanglowongan" class="hover:underline">Pasang Lowongan</a></li>
                 </ul>
             </div>
             <div>

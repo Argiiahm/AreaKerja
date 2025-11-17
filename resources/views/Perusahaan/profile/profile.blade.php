@@ -3,7 +3,6 @@
 @section('content')
     <div class="max-w-5xl mx-auto px-6 py-10 mt-32 space-y-10">
 
-        {{-- Bagian Profil --}}
         <div class="flex items-center gap-6">
             <div class="relative">
                 <div id="imgModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
@@ -32,7 +31,6 @@
             </div>
         </div>
 
-        {{-- Deskripsi --}}
         <div class="flex flex-col sm:flex-row gap-4">
             <label class="w-40 font-medium shrink-0">Deskripsi <span class="text-red-500">*</span></label>
             @if (Auth::user()->perusahaan->deskripsi)
@@ -45,9 +43,7 @@
             @endif
         </div>
 
-        {{-- Grid Utama --}}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {{-- Kiri (Badan Usaha, Visi, Misi) --}}
             <div class="md:col-span-2 space-y-5">
                 <div class="flex flex-col sm:flex-row items-start gap-4">
                     <label class="w-40 font-medium">Badan Usaha</label>
@@ -75,7 +71,6 @@
                 </div>
             </div>
 
-            {{-- Kanan (Kontak) --}}
             <div class="border border-orange-400 rounded-md p-5 bg-gray-50">
                 <h3 class="font-bold text-lg mb-3">Kontak</h3>
                 <ul class="text-sm space-y-2">
@@ -92,7 +87,6 @@
             </div>
         </div>
 
-        {{-- Tombol Lowongan --}}
         <div class="flex justify-center">
             <button onclick="window.location='/dashboard/perusahaan/lowongan'"
                 class="flex flex-col items-center border border-orange-400 rounded-xl p-6 hover:bg-orange-50 transition shadow-sm">
@@ -102,7 +96,6 @@
         </div>
     </div>
 
-    {{-- Script Modal --}}
     <script>
         const profileImg = document.getElementById("previewImagePerusahaan");
         const imgModalp = document.getElementById("imgModal");

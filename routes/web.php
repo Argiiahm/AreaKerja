@@ -194,8 +194,8 @@ Route::middleware(['status'])->group(function () {
     Route::put('/dashboard/superadmin/perusahaan/lowongan/update/{lowongan:id}', [SuperAdminController::class, 'lowongan_update'])->middleware('superadmin');
 
     // Data Recrutiment -Super Admin
-    Route::get('/dashboard/superadmin/recrutiment', [SuperAdminController::class, 'recrutiment_detail'])->middleware('superadmin');
-    Route::get('/dashboard/superadmin/recrutiment/edit', [SuperAdminController::class, 'recrutiment_edit'])->middleware('superadmin');
+    Route::get('/dashboard/superadmin/recrutiment/{pelamar:id}', [SuperAdminController::class, 'recrutiment_detail'])->middleware('superadmin');
+    // Route::get('/dashboard/superadmin/recrutiment/edit', [SuperAdminController::class, 'recrutiment_edit'])->middleware('superadmin');
 
     //Data Talent Hunter -SuperAdmin
     Route::get('/dashboard/superadmin/talenthunter/{talenthunter:id}', [SuperAdminController::class, 'talent_hunter_detail'])->middleware('superadmin');
@@ -274,6 +274,7 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/admin/perusahaan/view/lowongan', [AdminController::class, 'perusahaan_view_lowongan'])->middleware('admin');
     Route::get('/dashboard/admin/perusahaan/view/cv', [AdminController::class, 'perusahaan_view_cv'])->middleware('admin');
     Route::get('/dashboard/admin/perusahaan/talenthunter/view/{talenthunter:id}', [AdminController::class, 'perusahaan_view_talenthunter'])->middleware('admin');
+    Route::get('/dashboard/admin/recruitment/view/{pelamar:id}', [AdminController::class, 'recruitment_detail'])->middleware('admin');
 
     Route::get('/dashboard/admin/finance', [AdminController::class, 'finance'])->middleware('admin');
     Route::get('/dashboard/admin/cari/finance/admin', [AdminController::class, 'finance_cari'])->middleware('admin');
@@ -294,6 +295,7 @@ Route::middleware(['status'])->group(function () {
 
     //Perusahaan
     Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index'])->middleware(middleware: 'perusahaan');
+    Route::get('/koin/areakerja', [PerusahaanController::class, 'koin'])->middleware(middleware: 'perusahaan');
     Route::get('/dashboard/perusahaan/profile', [PerusahaanController::class, 'profile'])->middleware(middleware: 'perusahaan');
     Route::get('/dashboard/perusahaan/edit/profile', [PerusahaanController::class, 'edit_profile'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/update/profile/{perusahaan:id}', [PerusahaanController::class, 'update_profile'])->middleware('perusahaan');
@@ -311,6 +313,7 @@ Route::middleware(['status'])->group(function () {
     Route::delete('/dashboard/perusahaan/hapus/lowongan/{lowongan:slug}', [PerusahaanController::class, 'hapus_lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/lowongan/detail/{lowongan:slug}', [PerusahaanController::class, 'detail_lowongan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidat', [PerusahaanController::class, 'kandidat'])->middleware('perusahaan');
+    Route::delete('/dashboard/perusahaan/kandidat/delete/{kandidat:id}', [PerusahaanController::class, 'kandidat_delete'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak', [PerusahaanController::class, 'kandidat_ak'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/kandidatak/cv', [PerusahaanController::class, 'cv_kandidat'])->middleware('perusahaan');
     Route::post('/beli/kandidatak/{harga:id}', [PerusahaanController::class, 'beli_kandidat'])->middleware('perusahaan');
@@ -330,7 +333,6 @@ Route::middleware(['status'])->group(function () {
     //Event  Perusahaan
     Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/gabung/event/{event:id}', [PerusahaanController::class, 'gabung_event'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/detail/event/kosong', [PerusahaanController::class, 'detail_event_kosong'])->middleware('perusahaan');
 
     // Transaksi Top Up  
     Route::post('/dashboard/perusahaan/topup', [PerusahaanController::class, 'topup'])->middleware('perusahaan');
