@@ -102,7 +102,7 @@
                 </div>
 
                 <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-                    @foreach ($HargaKoin as $k)
+                    @foreach ($HargaKoin as $k) 
                         @if ($k->id != 1)
                             <div data-id="{{ $k->id }}"
                                 class="package-card relative w-64 h-52 rounded-xl p-6 flex flex-col items-center justify-between transition-all focus:outline-none select-none">

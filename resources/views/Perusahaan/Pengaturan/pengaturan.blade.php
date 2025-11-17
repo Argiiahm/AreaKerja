@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class="w-8/12">
-                <a href="#" class="bg-orange-500 hover:bg-orange-600 text-white pl-3 py-2 rounded-lg shadow block">
+                <a href="/dashboard/perusahaan/pengaturan/email" class="bg-orange-500 hover:bg-orange-600 text-white pl-3 py-2 rounded-lg shadow block">
                     Ganti E-mail
                 </a>
             </div>

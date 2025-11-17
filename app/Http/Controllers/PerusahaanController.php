@@ -357,6 +357,19 @@ class PerusahaanController extends Controller
         return redirect('/dashboard/perusahaan/pengaturan')->with('success', 'berhasil di ubah');
     }
 
+    public function email(){
+        return view('Perusahaan.Pengaturan.change-email');
+    }
+
+    public function email_change(Request $request, User $user){
+        $v = $request->validate([
+            "email"  => 'required|email'
+        ]);
+
+        $user->update($v);
+        return back()->with('email_success', 'Email berhasil diganti!');
+    }
+
 
     //pelamar
     public function pelamar(LowonganPerusahaan $lowongan)

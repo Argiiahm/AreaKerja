@@ -66,7 +66,7 @@
             </form>
 
             <div class="w-full sm:w-8/12">
-                <a href="#"
+                <a href="/dashboard/perusahaan/pengaturan/email"
                     class="bg-orange-500 hover:bg-orange-600 transition duration-300 ease-in-out text-white px-4 py-2 rounded-lg shadow block text-center">
                     Ganti Email
                 </a>

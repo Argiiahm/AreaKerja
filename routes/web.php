@@ -320,6 +320,8 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/pengaturan', [PerusahaanController::class, 'pengaturan'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/pengaturan/password', [PerusahaanController::class, 'password'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/pengaturan/password/change/{user}', [PerusahaanController::class, 'password_change'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/pengaturan/email', [PerusahaanController::class, 'email'])->middleware('perusahaan');
+    Route::put('/dashboard/perusahaan/pengaturan/email/change/{user}', [PerusahaanController::class, 'email_change'])->middleware('perusahaan');
 
     //Berlangganan
     Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan'])->middleware('perusahaan');
