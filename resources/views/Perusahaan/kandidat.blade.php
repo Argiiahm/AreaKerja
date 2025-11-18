@@ -45,7 +45,6 @@
 
                         @forelse ($Kandidats as $kandidat)
                             @if ($kandidat->status === 'diterima')
-                                {{-- FILTER BARU: x-show --}}
                                 <tr class="border-b"
                                     x-show="filter('{{ $kandidat->pelamar->nama_pelamar }}', '{{ $kandidat->pelamar->divisi }}')">
 
@@ -62,7 +61,7 @@
                                                 {{ $sk->skill }}
                                             </span>
                                         @endforeach
-                                        | {{ $kandidat->pelamar->divisi }}
+                                        | {{ implode(', ', json_decode($kandidat->pelamar->divisi, true) ?? []) }}
                                     </td>
 
                                     <td class="px-3 md:px-6 py-4 border-gray-300">
@@ -77,7 +76,8 @@
                                     </td>
 
                                     <td class="px-3 md:px-6 py-4 border-gray-300">
-                                        <form action="/dashboard/perusahaan/kandidat/delete/{{ $kandidat->id }}" method="POST">
+                                        <form action="/dashboard/perusahaan/kandidat/delete/{{ $kandidat->id }}"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit">
@@ -136,14 +136,24 @@
     </div>
 
     <script>
+        function parseJsonArray(str) {
+            try {
+                return JSON.parse(str);
+            } catch {
+                return [];
+            }
+        }
+
         function kandidatFilter() {
             return {
                 searchNama: "",
                 filterSkill: "",
 
-                filter(nama, skill) {
+                filter(nama, divisiJson) {
                     let cocokNama = nama.toLowerCase().includes(this.searchNama.toLowerCase());
-                    let cocokSkill = this.filterSkill === "" || this.filterSkill === skill;
+
+                    let divisiArray = parseJsonArray(divisiJson); // tambahan
+                    let cocokSkill = this.filterSkill === "" || divisiArray.includes(this.filterSkill);
 
                     return cocokNama && cocokSkill;
                 }

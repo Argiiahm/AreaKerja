@@ -3,7 +3,7 @@
 @section('content')
     <section class="relative w-full h-screen pt-24">
         <div class="absolute inset-0">
-            <img src="https://png.pngtree.com/background/20240507/original/pngtree-digital-marketing-website-displayed-on-rendered-office-desktop-picture-image_8837781.jpg"
+            <img src="{{ $link_sosial['tahunter_header']->link ?? 'https://msky-consult.com/wp-content/uploads/2025/03/business-legal-services-website-header.jpg' }}"
                 alt="Background" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-60"></div>
         </div>

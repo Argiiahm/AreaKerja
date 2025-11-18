@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Provinsi;
 use App\Models\CatatanCash;
 use App\Models\PelamarLowongan;
 use App\Models\PembeliKandidat;
+use App\Models\SosialLinks;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -46,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
-        if (Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')) {
+            if (Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')) {
                 $Pesan = PelamarLowongan::with('lowongan.perusahaan')
                     ->where('status', '!=', 'pending')
                     ->latest()
@@ -67,6 +69,16 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $notifTfMasuk = CatatanCash::where('status', 'pending')->get();
             $view->with('NotifTfMasuk', $notifTfMasuk);
+        });
+
+        View::composer('*', function ($view) {
+            if (Auth::check() && Auth::user()->role === 'admin') {
+                $view->with('Provinsi', Provinsi::all());
+            }
+        });
+
+        View::composer('*', function ($view) {
+            $view->with('link_sosial', SosialLinks::all()->keyBy('nama'));
         });
     }
 }

@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 use App\Models\TalentHunter;
 use Illuminate\Http\Request;
 use App\Models\KegiatanEvent;
-use App\Models\HargaPembayaran;
 use App\Models\PembeliKandidat;
 use App\Models\LowonganPerusahaan;
 use Illuminate\Support\Facades\Auth;
@@ -25,14 +24,42 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
+        $provinsi = $request->provinsi ?? 'DI YOGYAKARTA';
+
+        $perusahaan = Perusahaan::whereHas('alamatperusahaan', function ($q) use ($provinsi) {
+            $q->where('provinsi', $provinsi);
+        })->count();
+
+        $pelamars = Pelamar::whereHas('alamat_pelamars', function ($q) use ($provinsi) {
+            $q->where('provinsi', $provinsi);
+        })
+            ->where(function ($q) {
+                $q->whereNull('kategori')
+                    ->orWhere('kategori', 'pelamar');
+            })
+            ->count();
+
+        $kandidats = Pelamar::whereHas('alamat_pelamars', function ($q) use ($provinsi) {
+            $q->where('provinsi', $provinsi);
+        })
+            ->whereIn('kategori', ['kandidat aktif'])
+            ->count();
+
+
+        $lowongan = LowonganPerusahaan::whereHas('perusahaan.alamatperusahaan', function ($q) use ($provinsi) {
+            $q->where('provinsi', $provinsi);
+        })->whereNotNull("paket_id")->count();
+
         return view('Admin.Dashboard-admin.dashboard', [
             "title"    =>     "Dashboard",
-            "Perusahaan" =>  Perusahaan::count(),
-            "Lowongan" =>   LowonganPerusahaan::count(),
-            "Pelamar" => Pelamar::whereNull('kategori')->count() + Pelamar::where('kategori', 'pelamar')->count(),
-            "Kandidat"  =>  Pelamar::where('kategori', 'kandidat aktif')->count()
+            "Perusahaan" => $perusahaan,
+            "Lowongan" =>   $lowongan,
+            "Pelamar" =>    $pelamars,
+            "Kandidat"  =>  $kandidats,
+            "Provinsi"  =>  Provinsi::all()
         ]);
     }
     public function profile()

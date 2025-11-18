@@ -70,26 +70,50 @@
                         placeholder="Alamat Lengkap">
                 </div>
 
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Kecamatan</label>
-                    <input type="text" name="kecamatan" value="{{ old('kecamatan', $data->kecamatan) }}"
-                        class="w-full border border-gray-300 rounded-md p-3 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                        placeholder="Kecamatan">
-                </div>
+             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Provinsi <span class="text-red-500">*</span>
+                </label>
+                <select name="provinsi"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    @if ($data->provinsi)
+                        <option value="{{ $data->provinsi }}" selected disabled>{{ $data->provinsi }}</option>
+                    @else
+                        <option value="" selected disabled>Provinsi</option>
+                        <option value="jawa">jawa</option>
+                    @endif
+                </select>
+            </div>
 
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Kota</label>
-                    <input type="text" name="kota" value="{{ old('kota', $data->kota) }}"
-                        class="w-full border border-gray-300 rounded-md p-3 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                        placeholder="Kota">
-                </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Kota <span class="text-red-500">*</span>
+                </label>
+                <select name="kota"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    @if ($data->kota)
+                        <option value="{{ $data->kota }}" selected disabled>{{ $data->kota }}</option>
+                    @else
+                        <option value="" selected disabled>Kota</option>
+                        <option value="banjar">banjar</option>
+                    @endif
+                </select>
+            </div>
 
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Provinsi</label>
-                    <input type="text" name="provinsi" value="{{ old('provinsi', $data->provinsi) }}"
-                        class="w-full border border-gray-300 rounded-md p-3 placeholder-gray-400 focus:ring-2 focus:ring-orange-400 focus:outline-none"
-                        placeholder="Provinsi">
-                </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Kecamatan <span class="text-red-500">*</span>
+                </label>
+                <select name="kecamatan"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    @if ($data->kecamatan)
+                        <option value="{{ $data->kecamatan }}" selected disabled>{{ $data->kecamatan }}</option>
+                    @else
+                        <option value="" selected disabled>Kecamatan</option>
+                        <option value="padaherang">padaherang</option>
+                    @endif
+                </select>
+            </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Detail Alamat</label>

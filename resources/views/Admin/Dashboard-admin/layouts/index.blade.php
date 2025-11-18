@@ -77,10 +77,22 @@
             <hr class="border-gray-400 mx-6">
 
             <div class="mt-4 px-6">
-                <div class="w-full px-3 py-2 text-center rounded-md bg-white text-gray-800 text-sm font-medium">
-                    Yogyakarta
-                </div>
+                <form action="/dashboard/admin" method="GET" id="formKota">
+                    <select name="provinsi"
+                        class="w-full px-3 py-2 text-center rounded-md bg-white text-gray-800 text-sm font-medium"
+                        onchange="document.getElementById('formKota').submit()">
+
+                        @foreach ($Provinsi as $p)
+                            <option value="{{ $p->name }}" {{ request('provinsi','DI YOGYAKARTA') == $p->name ? 'selected' : '' }}>
+                                {{ $p->name }}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </form>
             </div>
+
+
 
             <div>
                 <p class="px-6 my-5 text-sm font-semibold text-white/70">Umum</p>

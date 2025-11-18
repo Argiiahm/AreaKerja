@@ -544,9 +544,11 @@
                                         <a href="/lowongan/tersimpan" class="block px-4 py-2 text-sm">Lowongan
                                             Tersimpan</a>
                                     </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 text-sm">Transaksi</a>
-                                    </li>
+                                    @if (Auth::check() && Auth::user()->role === 'pelamar')
+                                        <li>
+                                            <a href="/transaksi/pelamar" class="block px-4 py-2 text-sm">Transaksi</a>
+                                        </li>
+                                    @endif
                                     <li>
                                         <a href="/bantuan" class="block px-4 py-2 text-sm">Bantuan</a>
                                     </li>
@@ -854,16 +856,16 @@
             class="border-t border-orange-400 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between px-6 max-w-7xl mx-auto">
             <p class="text-sm text-orange-100">Get ease in applying for your dream job</p>
             <div class="flex gap-3 mt-4 md:mt-0">
-                <a href="#" class="p-2 border border-orange-200 rounded text-white hover:bg-orange-600">
+                <a href="{{ $link_sosial['facebook']->link ?? '' }}" class="p-2 border border-orange-200 rounded text-white hover:bg-orange-600">
                     <i class="ph ph-facebook-logo"></i>
                 </a>
-                <a href="#" class="p-2 border border-orange-200 rounded text-white hover:bg-orange-600">
+                <a href="{{ $link_sosial['instagram']->link ?? '' }}" class="p-2 border border-orange-200 rounded text-white hover:bg-orange-600">
                     <i class="ph ph-instagram-logo"></i>
                 </a>
-                <a href="#" class="p-2 border border-orange-200 rounded text-white hover:bg-orange-600">
+                <a href="{{ $link_sosial['linkedin']->link ?? '' }}" class="p-2 border border-orange-200 rounded text-white hover:bg-orange-600">
                     <i class="ph ph-twitter-logo"></i>
                 </a>
-                <a href="#" class="p-2 border border-orange-200 rounded text-white hover:bg-orange-600">
+                <a href="{{ $link_sosial['linkedin']->link ?? '' }}" class="p-2 border border-orange-200 rounded text-white hover:bg-orange-600">
                     <i class="ph ph-linkedin-logo"></i>
                 </a>
             </div>

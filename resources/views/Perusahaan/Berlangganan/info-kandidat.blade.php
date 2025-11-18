@@ -3,8 +3,10 @@
     <div class="mt-24">
         <section class="relative bg-gray-900 text-white">
             <div class="absolute inset-0">
-                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4" alt="Background"
-                    class="w-full h-full object-cover opacity-70">
+                <img src="{{ $link_sosial['request_data_header']->link ??
+                    'https://msky-consult.com/wp-content/uploads/2025/03/business-legal-services-website-header.jpg' }}"
+                    class="w-full h-full object-cover">
+
             </div>
 
             <div class="relative max-w-5xl mx-auto px-6 py-16">

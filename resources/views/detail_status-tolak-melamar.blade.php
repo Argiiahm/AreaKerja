@@ -4,7 +4,7 @@
         <div class="max-w-3xl mx-auto px-8 py-12 mt-40 bg-white rounded-xl shadow-md border border-gray-300">
             @php
                 $namapelamar = \App\Models\Pelamar::find($Data->pelamar_id);
-                $lowongan = \App\Models\LowonganPerusahaan::find($Data->lowongan_id);
+                $lo{{  }}an = \App\Models\LowonganPerusahaan::find($Data->lowongan_id);
             @endphp
             <div class="flex items-center gap-6 mb-10">
                 <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-48 h-auto">

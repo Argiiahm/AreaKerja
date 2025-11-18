@@ -3,8 +3,9 @@
 @section('content')
     <section class="relative w-full h-screen pt-24">
         <div class="absolute inset-0">
-            <img src="https://png.pngtree.com/background/20240507/original/pngtree-digital-marketing-website-displayed-on-rendered-office-desktop-picture-image_8837781.jpg"
-                alt="Background" class="w-full h-full object-cover">
+            <img src="{{ $link_sosial['daftar_kandidat_header']->link ??
+                'https://msky-consult.com/wp-content/uploads/2025/03/business-legal-services-website-header.jpg' }}"
+                class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-60"></div>
         </div>
         <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">

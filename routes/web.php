@@ -10,7 +10,7 @@ use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\PelamarController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SuperAdminController;{{  }}
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TalentHunterController;
 use App\Http\Controllers\TipskerjaController;
 use Illuminate\Support\Facades\Route;
@@ -42,12 +42,17 @@ Route::post('/verifikasi/kode', [AuthController::class, 'sendOtp']);
 Route::post('/verifikasi/kodeotp', [AuthController::class, 'verifikasi_kodeotp']);
 Route::put('/update/password', [AuthController::class, 'update_password']);
 
+Route::put('/update-kategori/{pelamar}', [ProfileController::class, 'updateKategori'])
+    ->name('update.kategori')->middleware('auth');
+
+
 
 Route::middleware(['status'])->group(function () {
     // Route Landing Page
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/detail/job/{job:slug}', [HomeController::class, 'viewjob']);
 
+    Route::get('/transaksi/pelamar',[PelamarController::class, 'transaksi'])->middleware('auth');
 
     Route::get('/talenthunter', [TalentHunterController::class, 'index']);
     Route::post('/beli/talenthunter',[TalentHunterController::class, 'beli'])->middleware('perusahaan');
@@ -249,6 +254,7 @@ Route::middleware(['status'])->group(function () {
 
     // Link & Header - Super Admin
     Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page'])->middleware('superadmin');
+    Route::post('/dashboard/superadmin', [SuperAdminController::class, 'pengaturan_page_c'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pengaturan', [SuperAdminController::class, 'pengaturan'])->middleware('superadmin');
 
     Route::put('/dashboard/superadmin/pengaturan/change_password/{user:id}',[SuperAdminController::class, 'password_change'])->middleware('superadmin');

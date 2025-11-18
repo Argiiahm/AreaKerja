@@ -1,9 +1,11 @@
 @extends('layouts.index')
 
 @section('content')
-     <section class="pt-24">
-        <img class="w-full object-cover" src="{{ asset('image/13819-lowongan-kerja-jasa-raharja-freepik 2.png') }}"
-            alt="">
+    <section class="pt-24">
+        <img src="{{ $link_sosial['tips_kerja_header']->link ??
+            'https://arbinger.com/wp-content/uploads/2023/04/develop-people-accountable_Header-img-02-scaled.jpg' }}"
+            class="w-full h-full object-cover">
+
     </section>
 
     <div class="max-w-screen-lg mx-auto pt-12">

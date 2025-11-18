@@ -3,8 +3,10 @@
 @section('content')
     <section class="relative w-full h-screen pt-24">
         <div class="absolute inset-0">
-            <img src="https://asset-2.tribunnews.com/palu/foto/bank/images/ilustrasi-berjabat-tangan45.jpg" alt="Background"
+            <img src="{{ $link_sosial['pasang_lowongan_header']->link ??
+                'https://arbinger.com/wp-content/uploads/2023/04/develop-people-accountable_Header-img-02-scaled.jpg' }}"
                 class="w-full h-full object-cover">
+
             <div class="absolute inset-0 bg-black bg-opacity-60"></div>
         </div>
         <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">

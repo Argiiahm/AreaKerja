@@ -26,6 +26,7 @@
 </head>
 
 <body>
+
     <div class="grid grid-cols-1 md:grid-cols-5 min-h-screen">
         <div class="col-span-2 login_img_section hidden md:flex items-center justify-center">
             <div class="relative h-screen flex flex-col items-center justify-center pt-1 max-w-md mx-auto w-full">
@@ -55,18 +56,11 @@
                 <div class="w-full">
                     <h1 class="text-gray-800 font-bold text-2xl mb-3 text-center">Masuk</h1>
                     <div class="flex gap-3 mt-4 md:mt-0 justify-center mb-8">
-                        <a href="#"
-                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                            <i class="ph ph-facebook-logo"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                            <i class="ph ph-google-logo"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                            <i class="ph ph-linkedin-logo"></i>
-                        </a>
+                        @if (session('error'))
+                            <p class="text-red-600 text-sm mt-1 animate-fadeIn">
+                                {{ session('error') }}
+                            </p>
+                        @endif
                     </div>
 
                     </p>

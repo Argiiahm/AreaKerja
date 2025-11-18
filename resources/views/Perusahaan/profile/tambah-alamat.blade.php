@@ -7,9 +7,9 @@
                 <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-40">
 
                 <div>
-                    <h2 class="font-bold text-xl">Seven_Inc</h2>
-                    <p class="text-gray-600 text-sm">Jasa TI dan Konsultan TI</p>
-                    <p class="text-gray-400 text-xs mt-1">Alamat default</p>
+                    <h2 class="font-bold text-xl">{{ Auth::user()->perusahaan->nama_perusahaan }}</h2>
+                    <p class="text-gray-600 text-sm">{{ Auth::user()->perusahaan->deskripsi }}</p>
+                    <p class="text-gray-400 text-xs mt-1">{{ Auth::user()->perusahaan->alamatperusahaan()->latest()->first()->detail }}</p>
                 </div>
             </div>
 

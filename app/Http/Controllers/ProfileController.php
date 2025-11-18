@@ -2,19 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alamatpelamar;
-use App\Models\LowonganPerusahaan;
-use App\Models\Organisasi;
+use App\Models\Skill;
+use App\Models\Daerah;
 use App\Models\Pelamar;
+use App\Models\Provinsi;
+use App\Models\Kabupaten;
+use App\Models\Organisasi;
+use Illuminate\Http\Request;
+use App\Models\Alamatpelamar;
 use App\Models\Pengalamankerja;
 use App\Models\RiwayatPendidikan;
-use App\Models\Skill;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+
+    public function updateKategori(Request $request, Pelamar $pelamar)
+    {
+        $pelamar->update([
+            'kategori' => $request->kategori
+        ]);
+
+        return back();
+    }
+
+
+
     public function profile()
     {
         return view('Data-profile.profile');
@@ -59,7 +74,6 @@ class ProfileController extends Controller
 
         $pelamar->sosmed()->create($sosmed);
         return redirect('/profile');
-
     }
 
     public function hapus_profile(Pelamar $pelamar)
@@ -82,7 +96,11 @@ class ProfileController extends Controller
     }
     public function form_data_alamat()
     {
-        return view('Data-profile.form_data-alamat');
+        return view('Data-profile.form_data-alamat', [
+            "Provinsi"    =>    Provinsi::all(),
+            "Kabupaten"   =>    Kabupaten::all(),
+            "Daerah"      =>  Daerah::all()
+        ]);
     }
 
     public function create_data_alamat(Request $request)

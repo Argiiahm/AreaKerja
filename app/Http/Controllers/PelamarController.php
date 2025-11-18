@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatatanCash;
 use App\Models\Pelamar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,4 +28,12 @@ class PelamarController extends Controller
 
         return back()->with('success', 'Lamaran berhasil dikirim!');
     }
+
+    public function transaksi() {
+        $cekRiwayat = CatatanCash::where('user_id', Auth::user()->id)->get()->first();
+        return view('transaksi-pelamar',[
+            "Data"    =>    $cekRiwayat
+        ]);
+    }
+
 }

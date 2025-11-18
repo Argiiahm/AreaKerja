@@ -28,16 +28,34 @@
                                     alt="">
                             @endif
                             <div>
-                                <select
-                                    class="border-2 border-orange-500 w-32 sm:w-40 p-2 rounded-md text-orange-500 font-semibold">
-                                    @if (Auth::user()->pelamars->kategori === 'calon kandidat')
-                                        <option value="">Calon Kandidat</option>
-                                    @elseif (Auth::user()->pelamars->kategori === 'kandidat aktif')
-                                        <option value="">Kandidat Aktif</option>
-                                    @else
-                                        <option value="">Pelamar Aktif</option>
-                                    @endif
-                                </select>
+                                @php
+                                    $current = Auth::user()->pelamars->kategori;
+
+                                    if ($current === null || $current === 'pelamar') {
+                                        $kategoris = ['pelamar'];
+                                    } elseif ($current === 'calon kandidat') {
+                                        $kategoris = ['calon kandidat'];
+                                    } elseif ($current === 'kandidat aktif' || $current === 'kandidat nonaktif') {
+                                        $kategoris = ['kandidat aktif', 'kandidat nonaktif'];
+                                    }
+                                @endphp
+                                {{-- <form action="{{ route('update.kategori', Auth::user()->pelamars->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT') --}}
+                                    <select name="kategori"
+                                        class="border-2 border-orange-500 w-32 sm:w-40 p-2 rounded-md text-orange-500 font-semibold"
+                                        onchange="this.form.submit()">
+
+                                        @foreach ($kategoris as $k)
+                                            <option value="{{ $k }}" {{ $current === $k ? 'selected' : '' }}>
+                                                {{ ucwords($k) }}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
+                                {{-- </form> --}}
+
+
                             </div>
                         </div>
 
@@ -488,4 +506,6 @@
                     }
                 });
         </script>
+
+
     @endsection

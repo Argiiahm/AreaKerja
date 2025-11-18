@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SosialLinks;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Skill;
@@ -331,16 +332,16 @@ class SuperAdminController extends Controller
         ]);
     }
 
-        public function unduhCv(Pelamar $pelamar)
-        {
-            $html = View::make('CV_PELAMAR.cv_pelamar', [
-                "Data" => $pelamar,
-                "pdf" => true
-            ])->render();
+    public function unduhCv(Pelamar $pelamar)
+    {
+        $html = View::make('CV_PELAMAR.cv_pelamar', [
+            "Data" => $pelamar,
+            "pdf" => true
+        ])->render();
 
-            $css = file_get_contents(public_path('build/assets/app-CDYMvv0Y.css'));
+        $css = file_get_contents(public_path('build/assets/app-CDYMvv0Y.css'));
 
-            $htmlWithCss = '
+        $htmlWithCss = '
                         <!DOCTYPE html>
                         <html lang="en">
                         <head>
@@ -360,24 +361,24 @@ class SuperAdminController extends Controller
                         ';
 
 
-            $browserPath = BrowserPath::detect();
-            if (!$browserPath) {
-                return response()->json([
-                    "error" => "Error"
-                ], 500);
-            }
-
-            $pdf = Browsershot::html($htmlWithCss)
-                ->setOption('executablePath', $browserPath)
-                ->format('A3')
-                ->margins(10, 10, 10, 10)
-                ->waitUntilNetworkIdle()
-                ->pdf();
-
-            return response($pdf)
-                ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'attachment; filename="cv-' . $pelamar->id . '.pdf"');
+        $browserPath = BrowserPath::detect();
+        if (!$browserPath) {
+            return response()->json([
+                "error" => "Error"
+            ], 500);
         }
+
+        $pdf = Browsershot::html($htmlWithCss)
+            ->setOption('executablePath', $browserPath)
+            ->format('A3')
+            ->margins(10, 10, 10, 10)
+            ->waitUntilNetworkIdle()
+            ->pdf();
+
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="cv-' . $pelamar->id . '.pdf"');
+    }
 
 
 
@@ -826,8 +827,9 @@ class SuperAdminController extends Controller
         ]);
     }
 
-    public function talent_hunter_update(Request $request, TalentHunter $talent_hunter) {
-          $validated = $request->validate([
+    public function talent_hunter_update(Request $request, TalentHunter $talent_hunter)
+    {
+        $validated = $request->validate([
             "perusahaan_id"     => "nullable",
             "alamat"            => "nullable",
             "posisi"            => "nullable",
@@ -841,7 +843,6 @@ class SuperAdminController extends Controller
         $validated['perusahaan_id'] = $talent_hunter->perusahaan->id;
         $talent_hunter->update($validated);
         return redirect('/dashboard/superadmin/perusahaan');
-
     }
 
 
@@ -1536,7 +1537,6 @@ class SuperAdminController extends Controller
     }
 
 
-
     public function akun_edit(User $user)
     {
         return view('Super-Admin.Akun.edit-akun_superAdmin', [
@@ -1556,10 +1556,51 @@ class SuperAdminController extends Controller
     //Link & Header
     public function pengaturan_page()
     {
+        $sosial = SosialLinks::all()->keyBy('nama');
+
         return view('Super-Admin.Pengaturan.pengaturan_page_superAdmin', [
-            "title" => "Image Header Social Media"
+            "title" => "Image Header Social Media",
+            "sosial"  =>  $sosial
         ]);
     }
+
+    public function pengaturan_page_c(Request $request)
+    {
+        $socials = ['facebook', 'youtube', 'instagram', 'linkedin'];
+
+        foreach ($socials as $s) {
+            SosialLinks::updateOrCreate(
+                ['nama' => $s],
+                ['link' => $request->$s]
+            );
+        }
+
+        $headers = [
+            'beranda_header',
+            'tips_kerja_header',
+            'pasang_lowongan_header',
+            'daftar_kandidat_header',
+            'tahunter_header',
+            'profil_pelamar_header',
+            'lowongan_tersimpan_header',
+            'faq_header',
+            'rekrut_pelamar_header',
+            'pelamar_perusahaan_header',
+            'kandidat_ak_header',
+            'berlangganan_header',
+            'request_data_header',
+        ];
+
+        foreach ($headers as $field) {
+            SosialLinks::updateOrCreate(
+                ['nama' => $field],
+                ['link' => $request->$field]
+            );
+        }
+
+        return back()->with('success', 'Pengaturan berhasil disimpan!');
+    }
+
 
     public function password_change(Request $request, User $user)
     {

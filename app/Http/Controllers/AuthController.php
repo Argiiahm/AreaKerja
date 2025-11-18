@@ -26,31 +26,44 @@ class AuthController extends Controller
             "password" => "required"
         ]);
 
-        if (Auth::attempt($v)) {
-            $user = Auth::user();
+        $user = User::where('username', $v['username'])->first();
 
-            if ($user->status === 0) {
-                $latestEvent = Event::latest()->first();
-
-                if ($user->role == 'superadmin') {
-                    return redirect('/dashboard/superadmin');
-                } elseif ($user->role == 'admin') {
-                    return redirect('/dashboard/admin');
-                } elseif ($user->role == 'pelamar') {
-                    return redirect('/')->with('show_event_modal',true)->with('latest_event',$latestEvent);
-                } elseif ($user->role == 'perusahaan') {
-                    return redirect('/dashboard/perusahaan')->with('show_event_modal',true)->with('latest_event',$latestEvent);
-                } elseif ($user->role == 'finance') {
-                    return redirect('/dashboard/finance');
-                }
-            } else {
-                Auth::logout();
-                return back()->with('error', 'Akun dibekukan');
-            }
-        } else {
-            return back()->with('error', 'Username atau password salah');
+        if (!$user) {
+            return back()->with('error', 'Akun tidak ditemukan');
         }
+
+        if (!Hash::check($v['password'], $user->password)) {
+            return back()->with('error', 'Password salah');
+        }
+
+        Auth::login($user);
+
+        if ($user->status !== 0) {
+            Auth::logout();
+            return back()->with('error', 'Akun dibekukan');
+        }
+
+        $latestEvent = Event::latest()->first();
+
+        if ($user->role == 'superadmin') {
+            return redirect('/dashboard/superadmin');
+        } elseif ($user->role == 'admin') {
+            return redirect('/dashboard/admin');
+        } elseif ($user->role == 'pelamar') {
+            return redirect('/')
+                ->with('show_event_modal', true)
+                ->with('latest_event', $latestEvent);
+        } elseif ($user->role == 'perusahaan') {
+            return redirect('/dashboard/perusahaan')
+                ->with('show_event_modal', true)
+                ->with('latest_event', $latestEvent);
+        } elseif ($user->role == 'finance') {
+            return redirect('/dashboard/finance');
+        }
+
+        return back()->with('error', 'Terjadi kesalahan');
     }
+
 
 
     public function register()
@@ -255,21 +268,21 @@ class AuthController extends Controller
 
 
     //Auth finance
-    public function login_finance()
-    {
-        return view('Auth.login-finance');
-    }
+    // public function login_finance()
+    // {
+    //     return view('Auth.login-finance');
+    // }
 
-    public function masuk_finance(Request $request)
-    {
-        $validasi_data = $request->validate([
-            "username"     =>     "required",
-            "password"     =>     "required"
-        ]);
+    // public function masuk_finance(Request $request)
+    // {
+    //     $validasi_data = $request->validate([
+    //         "username"     =>     "required",
+    //         "password"     =>     "required"
+    //     ]);
 
-        Auth::attempt($validasi_data);
-        return redirect('/dashboard/finance');
-    }
+    //     Auth::attempt($validasi_data);
+    //     return redirect('/dashboard/finance');
+    // }
 
     public function logout_finance(Request $request)
     {

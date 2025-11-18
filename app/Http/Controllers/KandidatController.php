@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
-use App\Models\CatatanCash;
 use App\Models\Divisi;
+use App\Models\Pelamar;
+use App\Models\CatatanCash;
 use Illuminate\Http\Request;
 use App\Models\HargaPembayaran;
-use App\Models\LowonganPerusahaan;
 use App\Models\PembeliKandidat;
+use App\Models\LowonganPerusahaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -144,12 +145,15 @@ class KandidatController extends Controller
 
     public function diterima_kandidat(Request $request, PembeliKandidat $p)
     {
-        // dd($request->all());
         $data = $request->validate([
-            "status"   => 'required'
+            "status" => 'required'
         ]);
 
         $p->update($data);
+
+        Pelamar::where('id', $p->pelamar_id)->update([
+            "kategori" => "kandidat nonaktif"
+        ]);
 
         return redirect()->back()->with('showModalSelesai', true);
     }

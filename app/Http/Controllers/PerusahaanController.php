@@ -202,7 +202,7 @@ class PerusahaanController extends Controller
 
     public function update_alamat(Request $request, Alamatperusahaan $alamatperusahaan)
     {
-        dd($request->all());
+        // dd($request->all());
         $vData = $request->validate([
             'label'  => 'nullable',
             'desa'   => 'nullable',
@@ -214,7 +214,7 @@ class PerusahaanController extends Controller
         ]);
 
         $vData['perusahaan_id'] = Auth::user()->perusahaan->id;
-        $vData['detail'] = $request->desa . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->provinsi;
+        // $vData['detail'] = $request->desa . ', ' . $request->kecamatan . ', ' . $request->kota . ', ' . $request->provinsi;
 
 
         $alamatperusahaan->update($vData);
