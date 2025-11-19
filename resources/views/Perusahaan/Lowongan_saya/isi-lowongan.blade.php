@@ -18,8 +18,9 @@
                 @endif
                 <div>
                     <h2 class="font-bold text-xl">{{ Auth::user()->perusahaan->nama_perusahaan }}</h2>
-                    <p class="text-gray-600 text-sm">Jasa TI dan Konsultan TI</p>
-                    <p class="text-gray-400 text-xs mt-1">Alamat default</p>
+                    <p class="text-gray-600 text-sm">{{ Auth::user()->perusahaan->deskripsi }}</p>
+                    <p class="text-gray-400 text-xs mt-1">
+                        {{ Auth::user()->perusahaan->alamatperusahaan()->latest()->first()->detail }}</p>
                 </div>
             </div>
 
@@ -49,8 +50,10 @@
                     <select name="jenis"
                         class="w-full border-2 rounded-md px-3 py-2 focus:ring-orange-400 focus:border-orange-400">
                         <option value="" selected disabled>Pilih Jenis Lowongan</option>
-                        <option value="fulltime">Full Time</option>
+                        <option value="fulltime">Fulltime</option>
                         <option value="middle">Middle</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="freelance">Freelance</option>
                     </select>
                 </div>
 

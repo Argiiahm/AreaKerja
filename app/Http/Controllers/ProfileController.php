@@ -21,11 +21,13 @@ class ProfileController extends Controller
 
     public function updateKategori(Request $request, Pelamar $pelamar)
     {
+        // dd($pelamar);
+        // dd($request->all());
         $pelamar->update([
             'kategori' => $request->kategori
         ]);
 
-        return back();
+        return back()->with('sucess_modal_kategori', 'oke!');
     }
 
 
@@ -40,7 +42,7 @@ class ProfileController extends Controller
 
 
         // if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
-        //     Storage::delete('public/' . $pelamar->img_profile);
+        //     Storage::delete('public/'{{  }}pelamar->img_profile);
         // }
 
         $vdata = $request->validate([
@@ -246,7 +248,7 @@ class ProfileController extends Controller
             "data" => $pengalamankerja
         ]);
     }
-
+ 
     public function update_pengalaman(Request $request, Pengalamankerja $pengalamankerja)
     {
         $vdata = $request->validate([

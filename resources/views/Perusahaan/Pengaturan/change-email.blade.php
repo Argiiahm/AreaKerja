@@ -2,15 +2,24 @@
 
 @section('content')
     <section class="mx-auto pt-40 px-4 sm:px-10">
-        <div class="flex flex-col sm:flex-row w-full mb-10 sm:items-center">
-            <div class="w-full sm:w-3/12 h-32 flex items-center justify-center mb-4 sm:mb-0">
-                <img src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="Logo"
-                    class="object-contain w-6/12 sm:w-10/12 max-h-28">
+        <div class="flex w-full mb-10">
+            <div class="w-3/12 h-32  flex items-center justify-center">
+                @if (Auth::user()->perusahaan->img_profile)
+                    <img id="previewImagePerusahaan"
+                        class="w-24 h-24 rounded-full object-cover cursor-pointer border border-orange-400 shadow-md"
+                        src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="Profile">
+                @else
+                    <img id="previewImagePerusahaan"
+                        class="w-24 h-24 rounded-full object-cover cursor-pointer border border-orange-400 shadow-md"
+                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                        alt="Profile">
+                @endif
             </div>
-            <div class="text-center sm:text-left">
-                <h1 class="text-2xl sm:text-3xl font-bold">Seven_Inc</h1>
-                <p class="text-sm text-gray-600">Jasa TI dan Konsultan TI</p>
-                <p class="text-sm text-gray-500">Jakarta Timur, DKI Jakarta, Indonesia</p>
+            <div>
+                <h1 class="text-3xl font-bold">{{ Auth::user()->perusahaan->nama_perusahaan }}</h1>
+                <p class="text-sm text-gray-600">{{ Auth::user()->perusahaan->jenis_perusahaan }}</p>
+                <p class="text-sm text-gray-500">
+                    {{ optional(Auth::user()->perusahaan->alamatperusahaan->first())->detail }}</p>
             </div>
         </div>
 
@@ -45,45 +54,44 @@
             </div>
         </div>
         @if (session('email_success'))
-<div id="alertSuccess"
-    class="fixed top-6 right-6 flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg
+            <div id="alertSuccess"
+                class="fixed top-6 right-6 flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg
            bg-white/80 backdrop-blur-md border border-green-300 
            text-green-700 font-medium z-[9999] 
            transition-all duration-300 opacity-0 translate-y-[-10px]">
 
-    <div class="w-3 h-3 rounded-full bg-green-500 animate-ping"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500 animate-ping"></div>
 
-    <p>{{ session('email_success') }}</p>
+                <p>{{ session('email_success') }}</p>
 
-    <button id="closeAlertBtn"
-        class="text-green-700 text-lg font-bold hover:scale-125 transition">
-        &times;
-    </button>
-</div>
+                <button id="closeAlertBtn" class="text-green-700 text-lg font-bold hover:scale-125 transition">
+                    &times;
+                </button>
+            </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const alertBox = document.getElementById("alertSuccess");
-        const closeBtn = document.getElementById("closeAlertBtn");
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const alertBox = document.getElementById("alertSuccess");
+                    const closeBtn = document.getElementById("closeAlertBtn");
 
-        if (alertBox) {
-            setTimeout(() => {
-                alertBox.classList.remove("opacity-0", "translate-y-[-10px]");
-                alertBox.classList.add("opacity-100", "translate-y-0");
-            }, 50);
+                    if (alertBox) {
+                        setTimeout(() => {
+                            alertBox.classList.remove("opacity-0", "translate-y-[-10px]");
+                            alertBox.classList.add("opacity-100", "translate-y-0");
+                        }, 50);
 
-            setTimeout(() => closeAlert(), 4000);
+                        setTimeout(() => closeAlert(), 4000);
 
-            function closeAlert() {
-                alertBox.classList.add("opacity-0", "translate-y-[-10px]");
-                setTimeout(() => alertBox.remove(), 300);
-            }
+                        function closeAlert() {
+                            alertBox.classList.add("opacity-0", "translate-y-[-10px]");
+                            setTimeout(() => alertBox.remove(), 300);
+                        }
 
-            closeBtn.addEventListener("click", closeAlert);
-        }
-    });
-</script>
-@endif
+                        closeBtn.addEventListener("click", closeAlert);
+                    }
+                });
+            </script>
+        @endif
 
     </section>
 @endsection

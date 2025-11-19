@@ -7,7 +7,7 @@
                 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 mt-24 sm:mt-32">
                     <p class="text-sm text-orange-600 font-medium">Dashboard</p>
                     <h1 class="text-xl sm:text-2xl font-bold leading-snug">
-                        Selamat Datang Di Area Kerja <br class="hidden sm:block"> Seven Inc
+                        Selamat Datang Di Area Kerja <br class="hidden sm:block"> {{ Auth::user()->perusahaan->nama_perusahaan }}
                     </h1>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 px-4 sm:px-6 lg:px-32 items-start">

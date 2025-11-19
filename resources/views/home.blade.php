@@ -128,7 +128,7 @@
             Lowongan berdasarkan pada aktivitas anda di areakerja
         </p>
 
-        <div id="section-umpan-lowongan" x-data="{ show: 5 }"
+        <div id="section-umpan-lowongan"
             class="relative grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3 overflow-visible">
             @forelse ($Data as $d)
                 @if ($d->paket_id)
@@ -206,7 +206,7 @@
             @endforelse
 
         </div>
-        <section id="berdasarkan-pencarian" x-data="{ show: 5 }" class="hidden mt-10">
+        <section id="berdasarkan-pencarian" class="hidden mt-10">
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
 
@@ -295,12 +295,12 @@
 
     </section>
 
-    <div class="my-20 flex justify-center" x-data="{ total: {{ $Data->count() }} }">
+    {{-- <div class="my-20 flex justify-center" x-data="{ total: {{ $Data->count() }} }">
         <button x-show="total > 5" @click="$dispatch('load-more')"
             class="bg-[#fa6601] px-12 py-2 text-white font-semibold rounded-md">
             Memuat
         </button>
-    </div>
+    </div> --}}
 
 
 

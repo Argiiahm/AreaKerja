@@ -24,7 +24,7 @@ class User extends Authenticatable
         'role',
         'verified',
         'status',
-        'alasan_freeze_akun'
+        'alasan_freeze_akun',
     ];
 
     /**

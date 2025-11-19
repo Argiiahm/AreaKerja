@@ -284,7 +284,7 @@
                                                                         <span
                                                                             class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
                                                                         di Lowongan <span
-                                                                            class="font-semibold">{{ $pelamar->divisi }}
+                                                                            class="font-semibold">{{ $pp->lowongan_perusahaan->nama }}
                                                                         </span>
                                                                         <span
                                                                             class="text-green-600 font-medium">{{ $pp->status }}</span>.

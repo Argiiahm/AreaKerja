@@ -379,7 +379,7 @@
                     <a href="/dashboard/superadmin/profile">
                         <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
                             <div>
-                                @if (Auth::user()->superadmins->img_profile)
+                                @if (optional(Auth::user()->superadmins)->img_profile)
                                     <img src="{{ asset('storage/' . Auth::user()->superadmins->img_profile) }}"
                                         alt="" class="w-9 h-9 rounded-full object-cover border">
                                 @else
@@ -388,7 +388,7 @@
                                 @endif
                             </div>
                             <div>
-                                <p class="text-sm font-semibold">{{ Auth::user()->superadmins->nama_lengkap }}</p>
+                                <p class="text-sm font-semibold">{{ Auth::user()->superadmins->nama_lengkap ?? 'belum ada nama_lengkap' }}</p>
                                 <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                             </div>
                         </div>

@@ -4,13 +4,21 @@
     <section class="mx-auto pt-40">
         <div class="flex w-full mb-10">
             <div class="w-3/12 h-32  flex items-center justify-center">
-                <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="object-contain w-10/12">
-
+                @if (Auth::user()->perusahaan->img_profile)
+                    <img id="previewImagePerusahaan"
+                        class="w-24 h-24 rounded-full object-cover cursor-pointer border border-orange-400 shadow-md"
+                        src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="Profile">
+                @else
+                    <img id="previewImagePerusahaan"
+                        class="w-24 h-24 rounded-full object-cover cursor-pointer border border-orange-400 shadow-md"
+                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                        alt="Profile">
+                @endif
             </div>
             <div>
-                <h1 class="text-3xl font-bold">Seven_Inc</h1>
-                <p class="text-sm text-gray-600">Jasa TI dan Konsultan TI</p>
-                <p class="text-sm text-gray-500">Jakarta Timur, DKI Jakarta, Indonesia</p>
+                <h1 class="text-3xl font-bold">{{ Auth::user()->perusahaan->nama_perusahaan }}</h1>
+                <p class="text-sm text-gray-600">{{ Auth::user()->perusahaan->jenis_perusahaan }}</p>
+                <p class="text-sm text-gray-500"> {{ optional(Auth::user()->perusahaan->alamatperusahaan->first())->detail }}</p>
             </div>
         </div>
         <div class="mt-8 w-full py-24 block space-y-5 mx-10">

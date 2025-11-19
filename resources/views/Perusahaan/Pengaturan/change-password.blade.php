@@ -2,15 +2,24 @@
 
 @section('content')
     <section class="mx-auto pt-40 px-4 sm:px-10">
-        <div class="flex flex-col sm:flex-row w-full mb-10 sm:items-center">
-            <div class="w-full sm:w-3/12 h-32 flex items-center justify-center mb-4 sm:mb-0">
-                <img src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="Logo"
-                    class="object-contain w-6/12 sm:w-10/12 max-h-28">
+        <div class="flex w-full mb-10">
+            <div class="w-3/12 h-32  flex items-center justify-center">
+                @if (Auth::user()->perusahaan->img_profile)
+                    <img id="previewImagePerusahaan"
+                        class="w-24 h-24 rounded-full object-cover cursor-pointer border border-orange-400 shadow-md"
+                        src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="Profile">
+                @else
+                    <img id="previewImagePerusahaan"
+                        class="w-24 h-24 rounded-full object-cover cursor-pointer border border-orange-400 shadow-md"
+                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                        alt="Profile">
+                @endif
             </div>
-            <div class="text-center sm:text-left">
-                <h1 class="text-2xl sm:text-3xl font-bold">Seven_Inc</h1>
-                <p class="text-sm text-gray-600">Jasa TI dan Konsultan TI</p>
-                <p class="text-sm text-gray-500">Jakarta Timur, DKI Jakarta, Indonesia</p>
+            <div>
+                <h1 class="text-3xl font-bold">{{ Auth::user()->perusahaan->nama_perusahaan }}</h1>
+                <p class="text-sm text-gray-600">{{ Auth::user()->perusahaan->jenis_perusahaan }}</p>
+                <p class="text-sm text-gray-500">
+                    {{ optional(Auth::user()->perusahaan->alamatperusahaan->first())->detail }}</p>
             </div>
         </div>
 

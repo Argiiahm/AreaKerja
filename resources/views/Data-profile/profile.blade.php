@@ -35,26 +35,28 @@
                                         $kategoris = ['pelamar'];
                                     } elseif ($current === 'calon kandidat') {
                                         $kategoris = ['calon kandidat'];
-                                    } elseif ($current === 'kandidat aktif' || $current === 'kandidat nonaktif') {
+                                    } elseif ($current === 'kandidat aktif') {
                                         $kategoris = ['kandidat aktif', 'kandidat nonaktif'];
+                                    } elseif ($current === 'kandidat nonaktif') {
+                                        $kategoris = ['kandidat nonaktif'];
                                     }
+
+                                    $alias = [
+                                        'pelamar' => 'Pelamar',
+                                        'calon kandidat' => 'Calon Kandidat',
+                                        'kandidat aktif' => 'Pekerja Aktif',
+                                        'kandidat nonaktif' => 'Bekerja',
+                                    ];
                                 @endphp
-                                {{-- <form action="{{ route('update.kategori', Auth::user()->pelamars->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT') --}}
-                                    <select name="kategori"
-                                        class="border-2 border-orange-500 w-32 sm:w-40 p-2 rounded-md text-orange-500 font-semibold"
-                                        onchange="this.form.submit()">
 
-                                        @foreach ($kategoris as $k)
-                                            <option value="{{ $k }}" {{ $current === $k ? 'selected' : '' }}>
-                                                {{ ucwords($k) }}
-                                            </option>
-                                        @endforeach
-
-                                    </select>
-                                {{-- </form> --}}
-
+                                <select id="kategoriSelect"
+                                    class="border-2 border-orange-500 w-32 sm:w-40 p-2 rounded-md text-orange-500 font-semibold">
+                                    @foreach ($kategoris as $k)
+                                        <option value="{{ $k }}" {{ $current === $k ? 'selected' : '' }}>
+                                            {{ $alias[$k] }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
                             </div>
                         </div>
@@ -479,6 +481,56 @@
             </form>
 
         </section>
+
+
+        <div id="modalKategori" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl p-6 max-w-sm w-full text-center shadow-lg">
+                <div class="flex justify-center mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01M5.5 5.5l13 13M12 3a9 9 0 100 18 9 9 0 000-18z" />
+                    </svg>
+                </div>
+
+                <p class="text-lg mb-2">Peringatan, Akun anda akan dinyatakan Non Aktif
+                    Ketika anda sudah dinyatakan bekerja</p>
+                <p class="text-gray-600 mb-4">
+                    Apakah anda yakin untuk merubah Status ?
+                </p>
+
+                <div class="flex justify-center gap-4 mt-4">
+                    <form action="/update-kategori/{{ Auth::user()->pelamars->id }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="kategori" value="kandidat nonaktif">
+                        <button type="submit" class="bg-green-600 text-white px-5 py-2 rounded-lg">Ya</button>
+                    </form>
+                    <button id="btnKategoriNo" class="bg-red-500 text-white px-5 py-2 rounded-lg">Tidak</button>
+                </div>
+            </div>
+        </div>
+
+        @if (session('sucess_modal_kategori'))
+            <div id="NotifmodalKategori" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+                <div class="bg-white rounded-xl p-6 max-w-sm w-full text-center shadow-lg">
+                    <div class="flex justify-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01M5.5 5.5l13 13M12 3a9 9 0 100 18 9 9 0 000-18z" />
+                        </svg>
+                    </div>
+
+                    <p class="text-lg mb-2">Akun Anda Sudah Dinyatakan tidak Aktif</p>
+
+                    <button id="closeYakategori" type="button"
+                        class="bg-green-600 text-white px-5 py-2 rounded-lg">Ya</button>
+                </div>
+            </div>
+        @endif
+
+
         <script>
             const profileImg = document.getElementById("previewImage");
             const imgModal = document.getElementById("imgModal");
@@ -505,6 +557,29 @@
                         reader.readAsDataURL(file);
                     }
                 });
+
+            const selectKategori = document.getElementById('kategoriSelect');
+            const modalKategori = document.getElementById('modalKategori');
+            const btnNo = document.getElementById('btnKategoriNo');
+
+            let selectedValue = null;
+            let lastValue = selectKategori.value;
+
+            selectKategori.addEventListener('change', function() {
+                selectedValue = this.value;
+                modalKategori.classList.remove('hidden');
+            });
+            btnNo.addEventListener('click', function() {
+                modalKategori.classList.add('hidden');
+                selectKategori.value = lastValue;
+            });
+
+            const NotifmodalKategori = document.getElementById('NotifmodalKategori');
+            const closeYakategori = document.getElementById('closeYakategori');
+
+            closeYakategori.addEventListener('click', () => {
+                NotifmodalKategori.classList.add('hidden');
+            })
         </script>
 
 

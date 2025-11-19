@@ -1,6 +1,12 @@
 @extends('layouts.index')
 
 @section('content')
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+
     <section class="pt-24">
         <img src="{{ $link_sosial['tips_kerja_header']->link ??
             'https://arbinger.com/wp-content/uploads/2023/04/develop-people-accountable_Header-img-02-scaled.jpg' }}"
@@ -8,14 +14,14 @@
 
     </section>
 
-    <div class="max-w-screen-lg mx-auto pt-12">
+    <div class="max-w-screen-lg mx-auto pt-12" x-data="{ open: false }">
 
         <div class="flex gap-3 items-center mx-4 lg:mx-0">
             <span class="px-10 py-2 rounded-full border cursor-pointer hover:bg-gray-100 transition">Tips</span>
             <span class="px-10 py-2 rounded-full bg-[#fa6601] text-white cursor-pointer shadow-md">Top News</span>
         </div>
 
-        <div class="mt-6 mx-4 lg:mx-0">
+        <div class="mt-6 mx-4 lg:mx-0 relative">
             <div class="flex justify-between items-start">
                 <h1 class="text-3xl font-bold leading-tight tracking-wide">
                     Artikel Areakerja.com
@@ -25,10 +31,41 @@
                     <button class="bg-[#fa6601] text-white px-4 py-2 rounded-full shadow-md hover:opacity-90 transition">
                         <i class="ph ph-arrow-up-right"></i>
                     </button>
-                    <button class="text-2xl text-gray-600 hover:text-[#fa6601] transition">
+
+                    {{-- SHARE BUTTON --}}
+                    <button @click="open = !open" class="text-2xl text-gray-600 hover:text-[#fa6601] transition">
                         <i class="ph ph-share-network"></i>
                     </button>
                 </div>
+            </div>
+
+            {{-- DROPDOWN SHARE --}}
+            <div x-show="open" x-cloak @click.outside="open = false" x-transition
+                class="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border py-2 z-[999]">
+
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(url('/tipskerja')) }}"
+                    target="_blank" class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100">
+                    <i class="ph ph-linkedin-logo text-xl"></i>
+                    <span>LinkedIn</span>
+                </a>
+
+                <a href="mailto:?subject=Lowongan Kerja&body={{ urlencode(url('/tipskerja')) }}"
+                    class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100">
+                    <i class="ph ph-envelope-simple text-xl"></i>
+                    <span>Email</span>
+                </a>
+
+                <a href="{{ url('/tipskerja') }}" class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100">
+                    <i class="ph ph-link text-xl"></i>
+                    <span>Website</span>
+                </a>
+
+                <a href="https://wa.me/?text={{ urlencode(url('/tipskerja')) }}" target="_blank"
+                    class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100">
+                    <i class="ph ph-whatsapp-logo text-xl"></i>
+                    <span>WhatsApp</span>
+                </a>
+
             </div>
 
             <div class="flex justify-between items-center mt-4 text-sm text-gray-600">

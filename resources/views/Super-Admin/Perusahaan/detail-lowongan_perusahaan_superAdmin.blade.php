@@ -56,7 +56,7 @@
                         <li>Minimal pendidikan SMA/SMK</li>
                         <li>Laki-laki/Perempuan</li>
                         <li>Umur 18-30</li>
-                        <li>Batas lamaran hingga dd/mm/yyyy</li>
+                        <li>Batas lamaran hingga {{ $Data->batas_lamaran }}</li>
                     </ul>
                 </div>
 
@@ -68,7 +68,8 @@
 
             <div class="flex flex-col items-center gap-3 mt-8">
                 @if ($Data->paket_id === null)
-                    <button type="button" class="bg-orange-500 text-white py-2 px-10 rounded-md w-fit">Lowongan Belum Memiliki Paket.</button>
+                    <button type="button" class="bg-orange-500 text-white py-2 px-10 rounded-md w-fit">Lowongan Belum
+                        Memiliki Paket.</button>
                 @else
                     @if ($Data->rekomendasi)
                         <button type="button" class="bg-orange-500 text-white py-2 px-10 rounded-md w-fit">Sudah Di

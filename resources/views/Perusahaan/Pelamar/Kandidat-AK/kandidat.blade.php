@@ -226,7 +226,11 @@
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                         <option value="" disabled selected>Pilih lowongan...</option>
                         @foreach ($lowongan as $lw)
-                            <option value="{{ $lw->id }}">{{ $lw->nama }}</option>
+                            @if ($lw->paket_id)
+                                <option value="{{ $lw->id }}">{{ $lw->nama }}</option>
+                            @else
+                                <p>Belum Ada Lowongan.</p>
+                            @endif
                         @endforeach
                     </select>
                 </div>

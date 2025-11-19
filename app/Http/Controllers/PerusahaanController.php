@@ -235,7 +235,8 @@ class PerusahaanController extends Controller
         }
 
         return view('Perusahaan.Lowongan_saya.lowongan', [
-            "Data"  => $data
+            "Data"  => $data,
+            "Pakets" =>  HargaKoin::all()
         ]);
     }
 

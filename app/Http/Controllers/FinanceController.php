@@ -35,7 +35,7 @@ class FinanceController extends Controller
             "koin"       => $koin,
             "cash"       => $cash,
             "totalOmset" => $totalOmset,
-            "NotifTfMasuk"  =>   CatatanCash::all() 
+            "NotifTfMasuk"  =>   CatatanCash::all()
         ]);
     }
 
@@ -281,6 +281,7 @@ class FinanceController extends Controller
 
     public function catatan_laporan_transaksi_penghasilan($tanggal)
     {
+        // dd($tanggal);
         $cashDetail = DB::table('catatan_cashes')
             ->leftJoin('harga_pembayarans', 'catatan_cashes.pesanan', '=', 'harga_pembayarans.nama')
             ->leftJoin('users', 'catatan_cashes.user_id', '=', 'users.id')

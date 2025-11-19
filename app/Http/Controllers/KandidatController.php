@@ -151,9 +151,9 @@ class KandidatController extends Controller
 
         $p->update($data);
 
-        Pelamar::where('id', $p->pelamar_id)->update([
-            "kategori" => "kandidat nonaktif"
-        ]);
+        // Pelamar::where('id', $p->pelamar_id)->update([
+        //     "kategori" => "kandidat nonaktif"
+        // ]);
 
         return redirect()->back()->with('showModalSelesai', true);
     }

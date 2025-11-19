@@ -380,11 +380,11 @@
                 pesananHidden.value = nama;
                 totalHidden.value = harga;
 
-                if (nama === "Pasang Lowongan Gold") {
+                if (nama === "Pasang Lowongan Bronze") {
                     paketIdHidden.value = 1;
                 } else if (nama === "Pasang Lowongan Silver") {
                     paketIdHidden.value = 2;
-                } else if (nama === "Pasang Lowongan Bronze") {
+                } else if (nama === "Pasang Lowongan Gold") {
                     paketIdHidden.value = 3;
                 }
 

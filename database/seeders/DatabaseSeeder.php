@@ -114,9 +114,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         PaketLowongan::create([
-            "nama"    =>      "Gold",
-            "publikasi"  =>    5,
-            "batas_listing"  => 5
+            "nama"    =>      "Bronze",
+            "publikasi"  =>    1,
+            "batas_listing"  => 1
         ]);
         PaketLowongan::create([
             "nama"    =>      "Silver",
@@ -124,9 +124,9 @@ class DatabaseSeeder extends Seeder
             "batas_listing"  => 3
         ]);
         PaketLowongan::create([
-            "nama"    =>      "Bronze",
-            "publikasi"  =>    1,
-            "batas_listing"  => 1
+            "nama"    =>      "Gold",
+            "publikasi"  =>    5,
+            "batas_listing"  => 5
         ]);
 
         HargaKoin::create([
