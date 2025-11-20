@@ -23,7 +23,7 @@
                             <h2 class="text-lg font-bold">{{ Auth::user()->perusahaan->nama_perusahaan }}</h2>
                             <p class="text-gray-600 text-sm">{{ Auth::user()->perusahaan->deskripsi }}</p>
                             <p class="text-gray-400 text-xs mt-1">
-                                {{ Auth::user()->perusahaan->alamatperusahaan()->latest()->first()->detail }}
+                                {{ optional(Auth::user()->perusahaan->alamatperusahaan()->latest()->first())->detail ?? '-' }}
                             </p>
                         </div>
                     </div>
@@ -179,7 +179,8 @@
                     <h2 class="text-lg font-bold">{{ Auth::user()->perusahaan->nama_perusahaan }}</h2>
                     <p class="text-gray-600 text-sm">{{ Auth::user()->perusahaan->deskripsi }}</p>
                     <p class="text-gray-400 text-xs mt-1">
-                        {{ Auth::user()->perusahaan->alamatperusahaan()->latest()->first()->detail }}
+                        {{ optional(Auth::user()->perusahaan->alamatperusahaan()->latest()->first())->detail ?? '-' }}
+
                     </p>
                 </div>
             </div>

@@ -4,16 +4,13 @@
     <div class="px-4 mt-10 flex justify-center">
         <div class="w-full max-w-7xl">
 
-            <!-- Bagian header -->
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
                 <p class="text-gray-500 text-sm mt-1">Overview aktivitas super admin</p>
             </div>
 
-            <!-- GRID CARD -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <!-- CARD -->
                 <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 rounded-2xl shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition duration-300">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-semibold text-gray-600 flex items-center gap-2">
@@ -30,7 +27,6 @@
                     </a>
                 </div>
 
-                <!-- CARD COPY → Kandidat -->
                 <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 rounded-2xl shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition duration-300">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-semibold text-gray-600 flex items-center gap-2">
@@ -47,7 +43,6 @@
                     </a>
                 </div>
 
-                <!-- CARD Non Kandidat -->
                 <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 rounded-2xl shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition duration-300">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-semibold text-gray-600 flex items-center gap-2">
@@ -64,7 +59,6 @@
                     </a>
                 </div>
 
-                <!-- CARD Lowongan -->
                 <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 rounded-2xl shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition duration-300">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-semibold text-gray-600 flex items-center gap-2">
