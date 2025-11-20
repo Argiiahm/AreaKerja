@@ -19,8 +19,8 @@
             </div>
             <div>
                 <h1 class="text-3xl font-bold">{{ Auth::user()->perusahaan->nama_perusahaan }}</h1>
-                <p class="text-sm text-gray-600">Jasa TI dan Konsultan TI</p>
-                <p class="text-sm text-gray-500">Jakarta Timur, DKI Jakarta, Indonesia</p>
+                <p class="text-sm text-gray-600">{{ Auth::user()->perusahaan->deskripsi }}</p>
+                <p class="text-sm text-gray-500">{{ Auth::user()->perusahaan->alamatperusahaan()->latest()->first()->detail }}</p>
             </div>
         </div>
 

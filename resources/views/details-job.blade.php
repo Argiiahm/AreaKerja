@@ -2,99 +2,84 @@
 
 @section('content')
     <section class="container max-w-screen-lg mx-auto pt-40">
-        <div class="flex items-center mx-5 lg:w-full lg:mx-auto md:w-auto  p-2 border border-gray-300 rounded-lg shadow-sm">
-            <div class="flex items-center flex-1 px-2">
-                <i class="ph ph-magnifying-glass text-zinc-900 text-lg mr-2"></i>
-                <input type="text" placeholder="Posisi lowongan, kata kunci, ..."
-                    class="w-full outline-none border-none placeholder-gray-500 text-gray-700" />
-            </div>
+        <form action="/" method="GET">
+            <div
+                class="flex items-center mx-5 lg:w-full lg:mx-auto md:w-auto p-2 border border-gray-300 rounded-lg shadow-sm">
 
-            <span class="w-px h-6 bg-gray-300"></span>
-
-            <div class="flex items-center flex-1 px-2">
-                <i class="ph ph-map-pin text-zinc-900 text-lg mr-2"></i>
-                <input type="text" placeholder="Kota, provinsi, kode pos..."
-                    class="w-full outline-none placeholder-gray-500 border-none text-gray-700" />
-            </div>
-
-            <button class="ml-2 bg-[#fa6601] cursor-pointer text-white font-medium px-4 py-2 rounded-lg">
-                <div class="hidden lg:block md:block">
-                    Cari Lowongan Kerja
+                <div class="flex items-center flex-1 px-2">
+                    <i class="ph ph-magnifying-glass text-zinc-900 text-lg mr-2"></i>
+                    <input name="search" type="text" placeholder="Posisi lowongan, kata kunci, ..."
+                        class="w-full outline-none border-none placeholder-gray-500 text-gray-700" />
                 </div>
-                <div class="block lg:hidden md:hidden">
-                    Cari
+
+                <span class="w-px h-6 bg-gray-300"></span>
+
+                <div class="flex items-center flex-1 px-2">
+                    <i class="ph ph-map-pin text-zinc-900 text-lg mr-2"></i>
+                    <input name="lokasi" type="text" placeholder="Kota, provinsi, kode pos..."
+                        class="w-full outline-none placeholder-gray-500 border-none text-gray-700" />
                 </div>
-            </button>
-        </div>
+
+                <button type="submit" class="ml-2 bg-[#fa6601] cursor-pointer text-white font-medium px-4 py-2 rounded-lg">
+                    <div class="hidden lg:block md:block">
+                        Cari Lowongan Kerja
+                    </div>
+                    <div class="block lg:hidden md:hidden">
+                        Cari
+                    </div>
+                </button>
+
+            </div>
+        </form>
 
 
-        <div class="flex justify-center my-10">
-            <p class="text-[#fa6601] font-semibold text-center lg:text-left md:text-left">Lamar Pekerjaan Kamu ~ <span
-                    class="font-normal block lg:inline md:inline text-zinc-600">Dengan Waktu
-                    Dan Langkah Yang Tepat</span></p>
+        <div class="flex justify-center my-10 mx-2">
+            <p class="text-[#fa6601] font-semibold text-center lg:text-left md:text-left">
+                Lamar Pekerjaan Kamu ~
+                <span class="font-normal block lg:inline md:inline text-zinc-600">
+                    Dengan Waktu Dan Langkah Yang Tepat
+                </span>
+            </p>
         </div>
 
         <div>
-            <p class="font-semibold text-zinc-700 px-2 lg:px-0">KATEGORI PEKERJAAN POPULER</p>
-            <div class="flex gap-3">
+            <p class="font-medium hidden lg:block md:block text-zinc-600 px-5 lg:px-0">
+                KATEGORI PEKERJAAN POPULER
+            </p>
 
-                <div class="px-2 lg:px-0 md:ml-5 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-4 gap-2 mt-5 flex-1">
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Teknologi</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Pelayanan</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Administrasi</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Pemasaran</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Pendidik</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Customer Service</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Keuangan</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Kasir</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Admin</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Programmer</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Marketing</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-700 font-bold">Multimedia</p>
-                    </div>
+            <div class="flex flex-col lg:flex-row md:flex-row gap-4 mx-2 mt-5">
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 w-full">
+                    @foreach ($Kategories as $kategori)
+                        <a href="/lowongan/kategori/{{ $kategori->id }}">
+                            <div class="border border-gray-300 py-2 shadow-sm">
+                                <p class="text-center text-zinc-500 font-medium text-sm">{{ $kategori->nama }}</p>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
-                <div class="mt-5 flex flex-col pr-2 lg:pr-0 md:mr-5 gap-2 w-32">
+
+                <div class="grid grid-cols-3 md:grid-cols-1 lg:grid-cols-1 gap-2 w-full lg:w-32 md:w-32">
                     <div
-                        class="border border-gray-300 border-l-4 border-l-red-600 py-2 flex items-center justify-center gap-1 shadow-sm text-red-600 font-semibold">
+                        class="border border-gray-300 border-l-4 border-l-red-600 py-2 flex items-center justify-center gap-1 shadow-sm text-red-600 font-semibold text-sm text-center">
                         <i class="ph ph-fire text-lg"></i>
                         Full Time
                     </div>
                     <div
-                        class="border border-gray-300 border-l-4 border-l-sky-500 py-2 flex items-center justify-center gap-1 shadow-sm text-sky-500 font-semibold">
+                        class="border border-gray-300 border-l-4 border-l-sky-500 py-2 flex items-center justify-center gap-1 shadow-sm text-sky-500 font-semibold text-sm text-center">
                         <i class="ph ph-globe text-lg"></i>
                         WFO/WFH
                     </div>
                     <div
-                        class="border border-gray-300 border-l-4 border-l-orange-600 py-2 flex items-center justify-center gap-1 shadow-sm text-orange-600 font-semibold">
+                        class="border border-gray-300 border-l-4 border-l-orange-600 py-2 flex items-center justify-center gap-1 shadow-sm text-orange-600 font-semibold text-sm text-center">
                         <i class="ph ph-graduation-cap text-lg"></i>
                         Graduate
                     </div>
                 </div>
+
             </div>
         </div>
+
     </section>
     <div class="mt-10 flex justify-center gap-10  items-center font-semibold border-b">
         <button class="border-b-2 border-[#fa6601] text-[13px] lg:text-[16px] md:text-[16px] cursor-pointer">UMPAN
@@ -113,7 +98,8 @@
                     <h1 class="font-bold text-xl">{{ $Data->nama }}</h1>
                     <p class="text-gray-500">{{ $Data->perusahaan->nama_perusahaan }} | {{ $Data->alamat }}</p>
                     <p class="bg-gray-200 w-fit my-3 px-3 py-1 text-gray-700 font-semibold rounded-md">
-                        Rp. {{ number_format($Data->gaji_awal, 0, ',', '.') }} – Rp. {{ number_format($Data->gaji_awal, 0, ',', '.') }} perbulan
+                        Rp. {{ number_format($Data->gaji_awal, 0, ',', '.') }} – Rp.
+                        {{ number_format($Data->gaji_awal, 0, ',', '.') }} perbulan
                     </p>
                     @if (Auth::check() && Auth::user()->role === 'pelamar')
                         <div class="flex items-center gap-10">
@@ -214,15 +200,13 @@
                     @if (!Auth::user()->pelamars->lowongan_perusahaan->contains($Data->id))
                         <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
                         <p class="text-center mb-6">
-                            CV akan dikirimkan ke <span
-                                class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+                            CV akan dikirimkan ke <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
                         </p>
 
                         <div class="flex justify-center gap-4">
                             <form action="/lamar/cepat" method="POST">
                                 @csrf
-                                <input type="text" name="lowongan_id" value="{{ $Data->id }}" id=""
-                                    hidden>
+                                <input type="text" name="lowongan_id" value="{{ $Data->id }}" id="" hidden>
                                 <button
                                     class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
                                     Kirim
@@ -252,57 +236,57 @@
         </div>
     @endif
 
-        @if (session('success'))
-            <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
-                    <h2 class="mt-2">Lamaran Anda Berhasil Terkirim</h2>
-                    <p class="text-zinc-400">Silahkan Menunggu Informasi Selanjutnya <br> Melalui Sytem Kamu.</p>
-                    <div class="flex justify-center mb-2">
-                        <img class="my-8" src="{{ asset('Icon/poplogout.png') }}" alt="">
-                    </div>
+    @if (session('success'))
+        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
+                <h2 class="mt-2">Lamaran Anda Berhasil Terkirim</h2>
+                <p class="text-zinc-400">Silahkan Menunggu Informasi Selanjutnya <br> Melalui Sytem Kamu.</p>
+                <div class="flex justify-center mb-2">
+                    <img class="my-8" src="{{ asset('Icon/poplogout.png') }}" alt="">
+                </div>
 
-                    <div>
-                        <button id="closeSuccessModal"
-                            class="inline-block rounded-md py-2 px-10 bg-orange-500 text-white font-semibold hover:bg-gray-800 transition">
-                            Selesai
-                        </button>
-                    </div>
+                <div>
+                    <button id="closeSuccessModal"
+                        class="inline-block rounded-md py-2 px-10 bg-orange-500 text-white font-semibold hover:bg-gray-800 transition">
+                        Selesai
+                    </button>
                 </div>
             </div>
-
-            <script>
-                const modalSuccess = document.getElementById("modalSuccess");
-                const closeSuccessModal = document.getElementById("closeSuccessModal");
-
-                closeSuccessModal.addEventListener("click", () => {
-                    modalSuccess.classList.add("hidden");
-                });
-            </script>
-        @endif
-
+        </div>
 
         <script>
-            const modal = document.getElementById("modal");
-            const openModalBtn = document.getElementById("openModalBtn");
-            const closeModalBtn = document.getElementById("closeModalBtn");
+            const modalSuccess = document.getElementById("modalSuccess");
+            const closeSuccessModal = document.getElementById("closeSuccessModal");
 
-            openModalBtn.addEventListener("click", () => {
-                modal.classList.remove("hidden");
-            });
-
-            closeModalBtn.addEventListener("click", () => {
-                modal.classList.add("hidden");
-            });
-
-            window.addEventListener("click", (e) => {
-                if (e.target === modal) {
-                    modal.classList.add("hidden");
-                }
-            });
-
-            document.getElementById("kirimBtn").addEventListener("click", () => {
-                alert("CV berhasil dikirim!");
-                modal.classList.add("hidden");
+            closeSuccessModal.addEventListener("click", () => {
+                modalSuccess.classList.add("hidden");
             });
         </script>
-    @endsection
+    @endif
+
+
+    <script>
+        const modal = document.getElementById("modal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        openModalBtn.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+        });
+
+        closeModalBtn.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+
+        document.getElementById("kirimBtn").addEventListener("click", () => {
+            alert("CV berhasil dikirim!");
+            modal.classList.add("hidden");
+        });
+    </script>
+@endsection

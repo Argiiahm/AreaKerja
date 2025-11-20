@@ -52,6 +52,8 @@ Route::middleware(['status'])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/detail/job/{job:slug}', [HomeController::class, 'viewjob']);
 
+    Route::get('/lowongan/kategori/{kategori:id}',[HomeController::class, 'lowongan_kategori']);
+
     Route::get('/transaksi/pelamar',[PelamarController::class, 'transaksi'])->middleware('auth');
 
     Route::get('/talenthunter', [TalentHunterController::class, 'index']);

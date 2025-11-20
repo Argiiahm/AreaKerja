@@ -4,17 +4,18 @@
 
         <div class="flex items-center justify-between p-4 mb-6">
             <div class="flex items-center space-x-4">
-                <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-40">
+                <img src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="Logo" class="w-40">
                 <div>
-                    <h2 class="font-bold text-xl">Seven_Inc</h2>
-                    <p class="text-gray-600 text-sm">Jasa TI dan Konsultan TI</p>
-                    <p class="text-gray-400 text-xs mt-1">Alamat default</p>
+                    <h2 class="font-bold text-xl">{{ Auth::user()->perusahaan->nama_perusahaan }}</h2>
+                    <p class="text-sm text-gray-600">{{ Auth::user()->perusahaan->deskripsi }}</p>
+                    <p class="text-sm text-gray-500">
+                        {{ Auth::user()->perusahaan->alamatperusahaan()->latest()->first()->detail }}</p>
                 </div>
             </div>
 
             <!-- <button class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 flex items-center shadow">
-                                                <span class="text-lg font-bold mr-2">+</span> Tambah
-                                            </button> -->
+                                                        <span class="text-lg font-bold mr-2">+</span> Tambah
+                                                    </button> -->
         </div>
 
         <h2 class="text-2xl font-bold mb-6 border-b-2 border-orange-400 pb-2">Edit Lowongan</h2>
@@ -54,8 +55,15 @@
 
                 <div>
                     <label class="block font-medium mb-1">Kategori</label>
-                    <input type="text" name="kategori" value="{{ $data->kategori }}"
-                        class="w-full border-2 rounded-md px-3 py-2 focus:ring-orange-400 focus:border-orange-400">
+                    <select name="kategori" class="form-select w-full border-2 rounded-md px-3 py-2 focus:ring-orange-400 focus:border-orange-400">
+                        @foreach ($kategoris as $kategori)
+                            <option value="{{ $kategori->nama }}"
+                                {{ old('kategori', $data->kategori) == $kategori->nama ? 'selected' : '' }}>
+                                {{ $kategori->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+
                 </div>
 
                 <div class="col-span-2">

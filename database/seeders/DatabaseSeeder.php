@@ -18,6 +18,7 @@ use App\Models\Perusahaan;
 use App\Models\SuperAdmin;
 use App\Models\PaketLowongan;
 use App\Models\HargaPembayaran;
+use App\Models\Kategories;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -112,6 +113,45 @@ class DatabaseSeeder extends Seeder
             "nama_perusahaan" =>  "Seven Inc",
             "telepon_perusahaan" =>  "0821212121"
         ]);
+
+        //Kategories
+        Kategories::create([
+            "nama"    =>   "Teknologi"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Pelayanan"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Administrasi"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Pemasaran"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Pendidikan"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Customer Service"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Keuangan"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Kasir"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Admin"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Programmer"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Marketing"
+        ]);
+        Kategories::create([
+            "nama"    =>   "Multimedia"
+        ]);
+
 
         PaketLowongan::create([
             "nama"    =>      "Bronze",

@@ -806,7 +806,7 @@
         @endif
     @endif
 
-    <footer class="bg-orange-500  text-white py-10 mt-32">
+    <footer class="bg-orange-500  text-white py-10 mt-52">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <div class="flex items-center gap-2">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategories;
 use App\Models\LowonganPerusahaan;
 use App\Models\PelamarLowongan;
 use App\Models\PembeliKandidat;
@@ -94,6 +95,7 @@ class HomeController extends Controller
             'historySearch' => session('history_search', []),
             'historyLokasi' => session('history_lokasi', []),
             'recentResult' => $recentResult,
+            'Kategories'   =>  Kategories::all()
         ]);
     }
 
@@ -102,7 +104,16 @@ class HomeController extends Controller
         return view('details-job', [
             "Data"  =>   $job,
             "Pesan" =>   PelamarLowongan::all(),
-            "PesanPerusahaan"  =>   PembeliKandidat::all()
+            "PesanPerusahaan"  =>   PembeliKandidat::all(),
+            'Kategories'   =>  Kategories::all()
+        ]);
+    }
+
+    public function lowongan_kategori(Kategories $kategori)
+    {
+        return view('lowongan-kategori', [
+            "Kategori"   =>   $kategori,
+            "Data"       =>   LowonganPerusahaan::all()
         ]);
     }
 

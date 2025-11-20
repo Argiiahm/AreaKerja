@@ -50,42 +50,13 @@
             <div class="flex flex-col lg:flex-row md:flex-row gap-4 mx-2 mt-5">
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 w-full">
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Teknologi</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Pelayanan</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Administrasi</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Pemasaran</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Pendidik</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Customer Service</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Keuangan</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Kasir</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Admin</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Programmer</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Marketing</p>
-                    </div>
-                    <div class="border border-gray-300 py-2 shadow-sm">
-                        <p class="text-center text-zinc-500 font-medium text-sm">Multimedia</p>
-                    </div>
+                    @foreach ($Kategories as $kategori)
+                        <a href="/lowongan/kategori/{{ $kategori->id }}">
+                            <div class="border border-gray-300 py-2 shadow-sm">
+                                <p class="text-center text-zinc-500 font-medium text-sm">{{ $kategori->nama }}</p>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
 
                 <div class="grid grid-cols-3 md:grid-cols-1 lg:grid-cols-1 gap-2 w-full lg:w-32 md:w-32">

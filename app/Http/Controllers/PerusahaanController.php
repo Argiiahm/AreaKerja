@@ -21,6 +21,7 @@ use App\Models\HargaPembayaran;
 use App\Models\PelamarLowongan;
 use App\Models\PembeliKandidat;
 use App\Models\Alamatperusahaan;
+use App\Models\Kategories;
 use App\Models\LowonganPerusahaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -242,7 +243,9 @@ class PerusahaanController extends Controller
 
     public function isi_lowongan()
     {
-        return view('Perusahaan.Lowongan_saya.isi-lowongan');
+        return view('Perusahaan.Lowongan_saya.isi-lowongan',[
+            "kategoris"   =>     Kategories::all()
+        ]);
     }
 
     public function create_lowongan(Request $request)
@@ -253,6 +256,7 @@ class PerusahaanController extends Controller
             "jenis"   =>    "required",
             "gaji_awal"  =>   "required",
             "gaji_akhir"  =>   "required",
+            "kategori"  =>   "required",
             "deskripsi"   =>    "required",
             "syarat_pekerjaan"  =>   "required",
             "batas_lamaran"        =>   "required"
@@ -269,7 +273,8 @@ class PerusahaanController extends Controller
     {
 
         return view('Perusahaan.Lowongan_saya.edit-lowongan', [
-            "data"   =>  $lowongan
+            "data"   =>  $lowongan,
+            "kategoris" => Kategories::all()
         ]);
     }
 
@@ -281,6 +286,7 @@ class PerusahaanController extends Controller
             "jenis"   =>    "required",
             "gaji_awal"  =>   "required",
             "gaji_akhir"  =>   "required",
+            "kategori"  =>   "required",
             "deskripsi"   =>    "required",
             "syarat_pekerjaan"  =>   "required",
             "batas_lamaran"        =>   "required"

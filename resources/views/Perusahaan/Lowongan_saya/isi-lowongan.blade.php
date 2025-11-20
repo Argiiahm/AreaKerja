@@ -59,8 +59,13 @@
 
                 <div>
                     <label class="block font-medium mb-1">Kategori</label>
-                    <input type="text" name="kategori"
+                    <select name="kategori"
                         class="w-full border-2 rounded-md px-3 py-2 focus:ring-orange-400 focus:border-orange-400">
+                        <option value="" selected disabled>Pilih Kategori</option>
+                        @foreach ($kategoris as $kategori)
+                            <option value="{{ $kategori->nama }}">{{ $kategori->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="col-span-2">
