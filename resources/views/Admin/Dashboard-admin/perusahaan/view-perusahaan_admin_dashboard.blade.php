@@ -6,7 +6,7 @@
         <div class="bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
 
             <div class="flex items-center gap-3 py-6 border-b rounded-b-3xl shadow-md">
-                <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-40 h-40 object-contain">
+                <img src="{{ asset('storage/' . $data->img_profile) }}" alt="Logo" class="w-40 h-40 object-contain">
                 <div class="w-full lg:w-[70%] text-left lg:text-center">
                     <h1 class="text-lg font-bold">{{ $data->nama_perusahaan }}</h1>
                 </div>
@@ -23,21 +23,15 @@
 
                 <div>
                     <h2 class="font-bold text-black">Visi</h2>
-                    <ul class="list-disc list-inside mt-2 space-y-1">
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>{{ $data->visi }}</li>
                     </ul>
                 </div>
 
                 <div>
                     <h2 class="font-bold text-black">Misi</h2>
-                    <ul class="list-disc list-inside mt-2 space-y-1">
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                        <li>{{ $data->misi }}</li>
                     </ul>
                 </div>
 
@@ -81,14 +75,6 @@
                 </div>
             </div>
 
-        </div>
-        <div class="flex gap-3 items-center flex-col p-4 bg-gray-50">
-            <button class="px-6 py-2 bg-gray-700 text-white text-sm rounded-md shadow hover:bg-gray-800">
-                Jadikan Rekomendasi
-            </button>
-            <button class="px-16 py-2 bg-gray-300 text-black text-sm rounded-md shadow hover:bg-gray-400">
-                Kembali
-            </button>
         </div>
     </div>
     <script>

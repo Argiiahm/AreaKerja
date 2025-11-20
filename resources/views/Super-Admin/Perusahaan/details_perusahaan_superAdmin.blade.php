@@ -94,7 +94,7 @@
                     <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 w-[350px] text-center relative">
                         <div class="text-gray-600 text-5xl mb-3"><i class="ph ph-trash"></i></div>
                         <p class="text-gray-800 font-semibold mb-5">Yakin akan hapus data?</p>
-                        <div class="flex justify-center space-x-4"
+                        <div class="flex justify-center space-x-4">
                             <form action="/dashboard/superadmin/perusahaan/delete/perusahaan/{{ $Data->users->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
