@@ -13,11 +13,9 @@
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="{{ public_path('css/tailwind.css') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
     <script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     @vite('resources/css/app.css')
 </head>
 
@@ -28,6 +26,45 @@
 
     trix-toolbar [data-trix-button-group="file-tools"] {
         display: none;
+    }
+
+    /* SIDEBAR */
+    aside {
+        background: #0f172a;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    aside a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        margin: 4px 12px;
+        border-radius: 12px;
+        transition: 0.25s;
+        color: #cbd5f5;
+    }
+
+    aside a:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: white;
+    }
+
+    aside a.active {
+        background: linear-gradient(135deg, #f97316, #fb923c);
+        color: white;
+        box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+    }
+
+    aside i {
+        font-size: 18px;
+    }
+
+    aside p {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #64748b;
+        margin: 16px 20px 6px;
     }
 
     .profile-img {
@@ -56,162 +93,151 @@
         max-width: 90%;
         max-height: 90%;
     }
+
+    /* TOPBAR */
+    .topbar {
+        background: white;
+        padding: 16px 20px;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    /* PROFILE */
+    .profile-box {
+        background: white;
+        padding: 8px 12px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .profile-box img {
+        width: 38px;
+        height: 38px;
+        border-radius: 999px;
+        object-fit: cover;
+    }
+
+    /* NOTIF */
+    #notif {
+        border-radius: 14px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    #notif ul li:hover {
+        background: #f8fafc;
+    }
+
+    /* SCROLL */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #94a3b8;
+        border-radius: 10px;
+    }
 </style>
 
 <body class="bg-gray-50">
-    <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
-        type="button"
-        class="inline-flex items-center p-2 mt-4 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none">
-        <i class="ph ph-list text-xl"></i>
-        <span class="sr-only">Open sidebar</span>
+    <!-- MOBILE BUTTON -->
+    <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" class="p-2 m-3 sm:hidden">
+        <i class="ph ph-list text-2xl"></i>
     </button>
 
+    <!-- SIDEBAR -->
     <aside id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-[#fa6601] text-white flex flex-col justify-between overflow-y-auto"
-        aria-label="Sidebar">
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 flex flex-col justify-between overflow-y-auto">
 
         <div>
-            <div class="flex justify-between items-center py-6 px-4">
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="Logo" class="w-12 h-12">
-                    <span class="font-semibold">areakerja.com</span>
-                </div>
-                <button data-drawer-hide="logo-sidebar" aria-controls="logo-sidebar"
-                    class="sm:hidden inline-flex items-center p-2 text-gray-300 hover:text-white">
-                    <i class="ph ph-x text-xl"></i>
-                </button>
+
+            <!-- LOGO -->
+            <div class="flex items-center gap-3 p-5">
+                <img src="{{ asset('image/logo_area_kerja_putih.png') }}" class="w-10">
+                <span class="text-white font-semibold">areakerja</span>
             </div>
 
-            <hr class="border-gray-400 mx-6">
+            <!-- UMUM -->
+            <p>Umum</p>
 
-            {{-- UMUM --}}
-            <div>
-                <p class="px-6 my-5 text-sm font-semibold text-white/70">Umum</p>
-                <a href="/dashboard/superadmin"
-                    class="flex items-center gap-2 px-6 
-                {{ Request()->is('dashboard/superadmin')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin')
-    ? asset('Icon/dashboard-icon-black.png')
-    : asset('Icon/dashboard-icon.png') }}" alt="">
-                    <span>Dashboard</span>
-                </a>
-            </div>
+            <a href="/dashboard/superadmin" class="{{ Request()->is('dashboard/superadmin') ? 'active' : '' }}">
+                <i class="ph ph-squares-four"></i> Dashboard
+            </a>
 
-            {{-- SUPER ADMIN --}}
-            <div class="space-y-3">
-                <p class="px-6 text-sm my-5 font-semibold text-white/70">Super Admin</p>
+            <!-- SUPER ADMIN -->
+            <p>Super Admin</p>
 
-                <a href="/dashboard/superadmin/pelamar"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pelamar')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/pelamar') ? asset('Icon/Pelamar OREN.png') : asset('Icon/Account.png') }}"
-                        alt="">
-                    <span>Data Pelamar</span>
-                </a>
+            <a href="/dashboard/superadmin/pelamar"
+                class="{{ Request()->is('dashboard/superadmin/pelamar') ? 'active' : '' }}">
+                <i class="ph ph-users"></i> Data Pelamar
+            </a>
 
-                <a href="/dashboard/superadmin/perusahaan"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/perusahaan')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/perusahaan')
-    ? asset('Icon/Data Perusahaan OREN.png')
-    : asset('Icon/Commission.png') }}" alt="">
-                    <span>Data Perusahaan</span>
-                </a>
+            <a href="/dashboard/superadmin/perusahaan"
+                class="{{ Request()->is('dashboard/superadmin/perusahaan') ? 'active' : '' }}">
+                <i class="ph ph-buildings"></i> Data Perusahaan
+            </a>
 
-                <a href="/dashboard/superadmin/finance"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/finance')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/finance') ? asset('Icon/Finance OREN.png') : asset('Icon/Finance.png') }}"
-                        alt="">
-                    <span>Finance</span>
-                </a>
+            <a href="/dashboard/superadmin/finance"
+                class="{{ Request()->is('dashboard/superadmin/finance') ? 'active' : '' }}">
+                <i class="ph ph-wallet"></i> Finance
+            </a>
 
-                <a href="/dashboard/superadmin/freeze"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/freeze')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/freeze')
-    ? asset('Icon/Akun Freeze OREN.png')
-    : asset('Icon/Akun Freeze.png') }}" alt="">
-                    <span>Akun Freeze</span>
-                </a>
+            <a href="/dashboard/superadmin/freeze"
+                class="{{ Request()->is('dashboard/superadmin/freeze') ? 'active' : '' }}">
+                <i class="ph ph-snowflake"></i> Akun Freeze
+            </a>
 
-                <a href="/dashboard/superadmin/tipskerja"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/tipskerja')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/tipskerja')
-    ? asset('Icon/Tips Kerja OREN.png')
-    : asset('Icon/Tips kerja.png') }}" alt="">
-                    <span>Tips Kerja</span>
-                </a>
+            <a href="/dashboard/superadmin/tipskerja"
+                class="{{ Request()->is('dashboard/superadmin/tipskerja') ? 'active' : '' }}">
+                <i class="ph ph-newspaper"></i> Tips Kerja
+            </a>
 
-                <a href="/dashboard/superadmin/event"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/event')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/event') ? asset('Icon/Event OREN.png') : asset('Icon/Bank Event.png') }}"
-                        alt="">
-                    <span>Event</span>
-                </a>
-            </div>
+            <a href="/dashboard/superadmin/event"
+                class="{{ Request()->is('dashboard/superadmin/event') ? 'active' : '' }}">
+                <i class="ph ph-calendar"></i> Event
+            </a>
 
-            {{-- MANAJEMEN AKUN --}}
-            <div class="space-y-3">
-                <p class="px-6 text-sm my-5 font-semibold text-white/70">Manajemen Akun</p>
+            <!-- MANAJEMEN AKUN -->
+            <p>Manajemen Akun</p>
 
-                <a href="/dashboard/superadmin/akun"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/akun')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/akun') ? asset('Icon/Settings-orange.png') : asset('Icon/Settings.png') }}"
-                        alt="">
-                    <span>Akun</span>
-                </a>
+            <a href="/dashboard/superadmin/akun"
+                class="{{ Request()->is('dashboard/superadmin/akun') ? 'active' : '' }}">
+                <i class="ph ph-users-three"></i> Akun
+            </a>
 
-                <a href="/dashboard/superadmin/pengaturan_page"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pengaturan_page')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/pengaturan_page')
-    ? asset('Icon/Settings-orange.png')
-    : asset('Icon/Settings.png') }}" alt="">
-                    <span>Link & Header</span>
-                </a>
+            <a href="/dashboard/superadmin/pengaturan_page"
+                class="{{ Request()->is('dashboard/superadmin/pengaturan_page') ? 'active' : '' }}">
+                <i class="ph ph-link"></i> Link & Header
+            </a>
 
-                <a href="/dashboard/superadmin/pengaturan"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pengaturan')
-    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ Request()->is('dashboard/superadmin/pengaturan')
-    ? asset('Icon/Settings-orange.png')
-    : asset('Icon/Settings.png') }}" alt="">
-                    <span>Pengaturan</span>
-                </a>
-            </div>
+            <a href="/dashboard/superadmin/pengaturan"
+                class="{{ Request()->is('dashboard/superadmin/pengaturan') ? 'active' : '' }}">
+                <i class="ph ph-gear"></i> Pengaturan
+            </a>
+
         </div>
 
-        <div class="px-6 my-6">
-            <form action="/logout" class="flex items-center gap-2" method="post">
+        <!-- LOGOUT -->
+        <div class="p-4">
+            <form action="/logout" method="POST">
                 @csrf
                 @method('DELETE')
-                <i class="ph ph-sign-out text-lg"></i>
-                <button type="submit" class="hover:text-gray-200">Keluar</button>
+                <button class="w-full flex items-center gap-2 text-red-400 hover:text-red-500">
+                    <i class="ph ph-sign-out"></i> Keluar
+                </button>
             </form>
         </div>
+
     </aside>
 
 
     <div class="p-4 sm:ml-64">
-        <div class="flex justify-between items-center mb-6">
-            <h1 id="title" class="text-2xl font-bold hidden lg:block md:block">{{ $title }} </h1>
+        <div class="topbar flex justify-between items-center mb-6">
+            <h1 id="title" class="text-xl font-bold hidden md:block">{{ $title }}</h1>
 
-            <div class="flex items-center px-8 gap-4">
+            <div class="flex items-center gap-4">
                 @php
                     $unread = $Pesan->where('status', '!=', 'pending')->where('is_read', 0)->count();
                     $unreadPerusahaan = $PesanPerusahaan
@@ -224,7 +250,7 @@
                 <button type="button" id="notifikasi" aria-expanded="false" data-dropdown-toggle="notif"
                     data-dropdown-placement="bottom" class="relative">
                     <span class="sr-only">Open notification</span>
-                    <i class="ph ph-bell text-2xl text-[#606060]"></i>
+                    <i class="ph ph-bell text-xl"></i>
 
                     @if ($totalUnread > 0)
                         <span class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600"></span>
@@ -368,16 +394,13 @@
 
                 @if (Auth::check() && Auth::user()->role == 'superadmin')
                     <a href="/dashboard/superadmin/profile">
-                        <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
-                            <div>
-                                @if (optional(Auth::user()->superadmins)->img_profile)
-                                    <img src="{{ asset('storage/' . Auth::user()->superadmins->img_profile) }}" alt=""
-                                        class="w-9 h-9 rounded-full object-cover border">
-                                @else
-                                    <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
-                                        alt="Profile Picture" class="w-9 h-9 rounded-full object-cover border">
-                                @endif
-                            </div>
+                        <div class="profile-box">
+                            @if (optional(Auth::user()->superadmins)->img_profile)
+                                <img src="{{ asset('storage/' . Auth::user()->superadmins->img_profile) }}" alt="">
+                            @else
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                                    alt="Profile Picture">
+                            @endif
                             <div>
                                 <p class="text-sm font-semibold">
                                     {{ Auth::user()->superadmins->nama_lengkap ?? 'belum ada nama_lengkap' }}

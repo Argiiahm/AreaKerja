@@ -118,8 +118,7 @@
 
             <div>
                 <label class="block text-sm mb-1">Website</label>
-                <input type="text" name="website" value="www.bambangkurnia.com"
-                    class="w-full border rounded-md px-3 py-2">
+                <input type="text" name="website" value="www.bambangkurnia.com" class="w-full border rounded-md px-3 py-2">
             </div>
 
             <div>

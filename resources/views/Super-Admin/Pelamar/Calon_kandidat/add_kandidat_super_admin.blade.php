@@ -86,7 +86,7 @@
             const form = document.getElementById('updateForm');
             const items = dropdown.querySelectorAll('li');
 
-            window.previewImage = function(event) {
+            window.previewImage = function (event) {
                 const output = document.getElementById('preview');
                 output.src = URL.createObjectURL(event.target.files[0]);
             }

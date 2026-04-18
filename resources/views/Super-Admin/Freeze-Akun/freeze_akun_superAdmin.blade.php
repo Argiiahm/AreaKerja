@@ -1,55 +1,63 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="p-6 bg-gray-50 min-h-screen">
-        {{-- Header --}}
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-semibold text-gray-800">Manajemen Pengguna</h1>
-            <div class="flex items-center space-x-2">
-                <input type="text" placeholder="Cari nama / username..." id="searchInput"
-                    class="border border-gray-300 bg-white rounded-lg px-4 py-2 w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
-                <button type="button" onclick="searchTable()"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium shadow transition">
-                    Cari
-                </button>
-            </div>
+<div class="p-8 bg-[#F9FAFB] min-h-screen">
+    {{-- Header Section --}}
+    <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Manajemen Pengguna</h1>
+            <p class="text-sm text-gray-500 mt-1">Kelola status aktif/freeze untuk semua pengguna terdaftar.</p>
         </div>
+    </div>
 
-        {{-- Table Container --}}
-        <div class="bg-white border border-gray-200 rounded-xl shadow-md overflow-x-auto">
-            <table id="myTable" class="w-full text-sm text-left border-collapse">
-                <thead class="bg-gray-800 text-white text-sm uppercase tracking-wide">
-                    <tr>
-                        <th class="px-6 py-3">No</th>
-                        <th class="px-6 py-3">Username</th>
-                        <th class="px-6 py-3">Email</th>
-                        <th class="px-6 py-3">Role</th>
-                        <th class="px-6 py-3">Telepon</th>
-                        <th class="px-6 py-3">Alamat</th>
-                        <th class="px-6 py-3">Status</th>
-                        <th class="px-6 py-3 text-center">Aksi</th>
+    {{-- Filter & Search Card --}}
+    <div class="bg-white border border-gray-200 rounded-2xl p-4 mb-6 shadow-sm flex items-center gap-3">
+        <div class="relative flex-1 group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="ph ph-magnifying-glass text-gray-400 group-focus-within:text-gray-900 transition-colors"></i>
+            </div>
+            <input type="text" id="searchInput" placeholder="Cari berdasarkan nama pengguna, email, atau role..."
+                class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-900 focus:border-gray-900 outline-none transition-all text-sm">
+        </div>
+    </div>
+
+    {{-- Table Section --}}
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto no-scrollbar">
+            <table id="myTable" class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50/50 border-b border-gray-100">
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">No</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Username</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Email</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Role</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Telepon</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Alamat</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest text-center">Status</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-100">
                     @foreach ($Data as $d)
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-3 text-gray-700">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-3 text-gray-800 font-medium">{{ $d->username }}</td>
-                            <td class="px-6 py-3 text-gray-700">{{ $d->email }}</td>
-                            <td class="px-6 py-3 capitalize">
-                                <span
-                                    class="px-2 py-1 text-xs rounded-full 
-                                    @if ($d->role === 'superadmin') bg-purple-100 text-purple-700
-                                    @elseif ($d->role === 'admin') bg-green-100 text-green-700
-                                    @elseif ($d->role === 'perusahaan') bg-blue-100 text-blue-700
-                                    @elseif ($d->role === 'pelamar') bg-yellow-100 text-yellow-700
-                                    @else bg-red-100 text-red-600 @endif">
+                        <tr class="freeze-row hover:bg-gray-50/50 transition-colors group">
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm font-semibold text-gray-900">{{ $d->username }}</span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ $d->email }}</td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider
+                                            @if ($d->role === 'superadmin') bg-purple-50 text-purple-600 border border-purple-100
+                                            @elseif ($d->role === 'admin') bg-green-50 text-green-600 border border-green-100
+                                            @elseif ($d->role === 'perusahaan') bg-blue-50 text-blue-600 border border-blue-100
+                                            @elseif ($d->role === 'pelamar') bg-yellow-50 text-yellow-600 border border-yellow-100
+                                            @else bg-gray-50 text-gray-600 border border-gray-100 @endif">
                                     {{ $d->role }}
                                 </span>
                             </td>
 
                             {{-- Telepon --}}
-                            <td class="px-6 py-3 text-gray-700">
+                            <td class="px-6 py-4 text-sm text-gray-500">
                                 @if ($d->role == 'pelamar')
                                     {{ $d->pelamars->telepon_pelamar ?? '-' }}
                                 @elseif ($d->role == 'perusahaan')
@@ -60,7 +68,7 @@
                             </td>
 
                             {{-- Alamat --}}
-                            <td class="px-6 py-3 text-gray-700">
+                            <td class="px-6 py-4 text-sm text-gray-500">
                                 @if ($d->role == 'pelamar')
                                     {{ $d->pelamars()->latest()->first()->alamat_pelamars()->latest()->first()->provinsi ?? '-' }}
                                 @elseif ($d->role == 'perusahaan')
@@ -75,13 +83,13 @@
                             </td>
 
                             {{-- Status --}}
-                            <td class="px-6 py-3">
+                            <td class="px-6 py-4 text-center">
                                 @if ($d->status === 0)
-                                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-600 border border-green-100 uppercase mt-auto mb-auto">
                                         Aktif
                                     </span>
                                 @elseif ($d->status === 1)
-                                    <span class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-50 text-red-600 border border-red-100 uppercase mt-auto mb-auto">
                                         Banned
                                     </span>
                                 @endif
@@ -89,10 +97,12 @@
 
                             {{-- Aksi --}}
                             <td class="px-6 py-4 text-center">
-                                <a href="/dashboard/superadmin/freeze/detail/{{ $d->id }}"
-                                    class="inline-flex items-center justify-center p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition">
-                                    <img src="{{ asset('Icon/fzd.png') }}" alt="Freeze" class="w-5 h-5">
-                                </a>
+                                <div class="flex justify-center items-center gap-2">
+                                    <a href="/dashboard/superadmin/freeze/detail/{{ $d->id }}"
+                                        class="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all" title="Detail / Freeze Akun">
+                                        <i class="ph ph-prohibit text-lg"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -100,17 +110,18 @@
             </table>
         </div>
     </div>
+</div>
 
-    {{-- Script Search --}}
-    <script>
-        document.getElementById("searchInput").addEventListener("keyup", function() {
-            let input = this.value.toLowerCase();
-            let rows = document.querySelectorAll("#myTable tbody tr");
+{{-- Script Search --}}
+<script>
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let input = this.value.toLowerCase();
+        let rows = document.querySelectorAll(".freeze-row");
 
-            rows.forEach(row => {
-                let rowText = row.innerText.toLowerCase();
-                row.style.display = rowText.includes(input) ? "" : "none";
-            });
+        rows.forEach(row => {
+            let rowText = row.innerText.toLowerCase();
+            row.style.display = rowText.includes(input) ? "" : "none";
         });
-    </script>
+    });
+</script>
 @endsection

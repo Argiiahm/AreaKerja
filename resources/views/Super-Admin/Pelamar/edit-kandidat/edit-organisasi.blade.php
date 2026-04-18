@@ -1,6 +1,6 @@
 @extends('Super-Admin.layouts.index')
 @section('super_admin-content')
-        <section class="pt-40 mx-10">
+    <section class="pt-40 mx-10">
         <div class="mt-10 border-2 border-orange-500 p-6 sm:p-10 rounded-lg">
             <div class="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
                 <div class="flex flex-col items-center">
@@ -8,7 +8,8 @@
                         src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
                         alt="">
                     <div>
-                        <select class="border-2 border-orange-500 w-32 sm:w-40 p-2 rounded-md text-orange-500 font-semibold">
+                        <select
+                            class="border-2 border-orange-500 w-32 sm:w-40 p-2 rounded-md text-orange-500 font-semibold">
                             <option value="">Pelamar Aktif</option>
                         </select>
                     </div>
@@ -38,7 +39,7 @@
         </div>
         <div class=" mx-auto bg-white p-6">
             <h2 class="text-xl font-semibold text-gray-800 border-b-2 border-orange-500 pb-1 mb-6">
-              Edit Organisasi
+                Edit Organisasi
             </h2>
             <form class="space-y-4" action="/update/superadmin/kandidat/organisasi/{{ $Data->id }}" method="POST">
                 @csrf
@@ -49,7 +50,7 @@
                         Organisasi</label>
                     <input type="text" name="nama_organisasi" id="nama_organisasi"
                         class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
-                        placeholder="nama_organisasi" value="{{ old('nama_organisasi',$Data->nama_organisasi) }}" />
+                        placeholder="nama_organisasi" value="{{ old('nama_organisasi', $Data->nama_organisasi) }}" />
                 </div>
                 <div>
                     <label for="jabatan"

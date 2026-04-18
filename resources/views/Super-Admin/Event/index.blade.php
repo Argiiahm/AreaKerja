@@ -1,86 +1,117 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="p-6" x-data="eventSearch()">
-        <div class="block lg:flex justify-between items-center mb-4">
-            <a href="/dashboard/superadmin/event/add"
-                class="bg-gray-700 border text-white px-4 py-2 rounded-md">Buat Event</a>
-            <div class="flex items-center space-x-2 mt-0 lg:mt-0 md:mt">
-                <input type="text" placeholder="Cari event (nama / status / tanggal)..."
-                    x-model="search"
-                    class="border border-gray-300 rounded-md px-3 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                <button class="bg-gray-700 text-white px-4 py-2 rounded-md">Cari</button>
-            </div>
+<div class="p-8 bg-[#F9FAFB] min-h-screen">
+    {{-- Header Section --}}
+    <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Manajemen Event</h1>
+            <p class="text-sm text-gray-500 mt-1">Kelola jadwal, kuota, dan status event aktif Anda.</p>
         </div>
+        
+        <a href="/dashboard/superadmin/event/add" class="inline-flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-black transition-all shadow-sm">
+            <i class="ph ph-plus-circle text-lg"></i>
+            Buat Event Baru
+        </a>
+    </div>
 
-        <div id="table_koin" class="-my-2 py-2 overflow-x-auto sm:-mx-6 lg:-mx-8 pr-10 lg:px-8">
-            <div class="align-middle inline-block min-w-full overflow-hidden px-8 pt-3">
-                <table class="min-w-full">
-                    <thead>
-                        <tr>
-                            <th class="py-3 border-gray-300 text-center leading-4 tracking-wider">Status</th>
-                            <th class="py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">Nama</th>
-                            <th class="py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">Quota</th>
-                            <th class="py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">Mulai</th>
-                            <th class="py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">Selesai</th>
-                            <th class="py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        @foreach ($Data as $d)
-                            <tr class="px-6 py-4 whitespace-no-wrap border-gray-500 border-b hover:bg-gray-50 transition-all"
-                                x-show="matchesSearch('{{ strtolower($d->title ?? '') }}', '{{ strtolower($d->status ?? '') }}', '{{ strtolower($d->tgl_mulai ?? '') }}', '{{ strtolower($d->tgl_akhir ?? '') }}')">
-                                <td class="px-2 py-1">
-                                    <span
-                                        class="bg-green-500 py-1 px-4 rounded-md text-white">{{ $d->status }}</span>
-                                </td>
-                                <td class="py-4 whitespace-no-wrap border-gray-500 text-blue-500">
-                                    <a href="/dashboard/superadmin/event/detail/{{ $d->id }}">{{ $d->title }}</a>
-                                </td>
-                                <td class="py-4 whitespace-no-wrap border-gray-500 text-sm leading-5">
-                                    {{ $d->kuota }}
-                                </td>
-                                <td class="py-4 whitespace-no-wrap border-gray-500 text-sm leading-5">
-                                    {{ $d->tgl_mulai }}
-                                    <span class="pl-2 text-gray-600">{{ $d->jam_mulai }}</span>
-                                </td>
-                                <td class="py-4 whitespace-no-wrap border-gray-500 text-sm leading-5">
-                                    {{ $d->tgl_akhir }}
-                                    <span class="pl-2 text-gray-600">{{ $d->jam_akhir }}</span>
-                                </td>
-                                <td
-                                    class="py-4 whitespace-no-wrap text-white font-bold border-gray-500 text-sm leading-5">
-                                    <form action="/dashboard/superadmin/event/hapus/{{ $d->id }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Apakah Anda Yakin?')">
-                                            <i class="ph ph-trash text-2xl bg-gray-700 p-0.5 rounded-md"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+    {{-- Filter & Search Card --}}
+    <div class="bg-white border border-gray-200 rounded-2xl p-4 mb-6 shadow-sm flex items-center gap-3">
+        <div class="relative flex-1 group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="ph ph-magnifying-glass text-gray-400 group-focus-within:text-gray-900 transition-colors"></i>
             </div>
+            <input type="text" id="searchInput" placeholder="Cari nama event, status, atau tanggal..."
+                class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-900 focus:border-gray-900 outline-none transition-all text-sm">
         </div>
     </div>
 
-    <script>
-        function eventSearch() {
-            return {
-                search: '',
-                matchesSearch(nama, status, mulai, akhir) {
-                    const keyword = this.search.toLowerCase().trim();
-                    if (keyword === '') return true; 
-                    return (
-                        nama.includes(keyword) ||
-                        status.includes(keyword) ||
-                        mulai.includes(keyword) ||
-                        akhir.includes(keyword)
-                    );
+    {{-- Table Section --}}
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50/50 border-b border-gray-100">
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Status</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Nama Event</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest text-center">Kuota</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Waktu Pelaksanaan</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @foreach ($Data as $d)
+                    <tr class="event-row hover:bg-gray-50/50 transition-colors group"
+                        data-search="{{ strtolower(($d->title ?? '') . ' ' . ($d->status ?? '') . ' ' . ($d->tgl_mulai ?? '') . ' ' . ($d->tgl_akhir ?? '')) }}">
+                        
+                        <td class="px-6 py-4">
+                            @if(strtolower($d->status) == 'aktif' || strtolower($d->status) == 'active')
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-600 border border-green-100 uppercase">
+                                    {{ $d->status }}
+                                </span>
+                            @else
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gray-100 text-gray-500 border border-gray-200 uppercase">
+                                    {{ $d->status }}
+                                </span>
+                            @endif
+                        </td>
+                        
+                        <td class="px-6 py-4">
+                            <a href="/dashboard/superadmin/event/detail/{{ $d->id }}" class="text-sm font-semibold text-gray-900 hover:text-blue-600 transition-colors block">
+                                {{ $d->title }}
+                            </a>
+                            <span class="text-[10px] text-gray-400">ID: #EVT-{{ $d->id }}</span>
+                        </td>
+
+                        <td class="px-6 py-4 text-center">
+                            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-50 border border-gray-100">
+                                <i class="ph ph-users text-gray-400"></i>
+                                <span class="text-xs font-bold text-gray-700">{{ $d->kuota }}</span>
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-medium text-gray-700">{{ $d->tgl_mulai }}</span>
+                                <span class="text-[10px] text-gray-400">s/d {{ $d->tgl_akhir }}</span>
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end items-center gap-2">
+                                <a href="/dashboard/superadmin/event/edit/{{ $d->id }}" class="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all">
+                                    <i class="ph ph-pencil-simple text-lg"></i>
+                                </a>
+                                <form action="/dashboard/superadmin/event/hapus/{{ $d->id }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('Apakah Anda Yakin?')" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all">
+                                        <i class="ph ph-trash text-lg"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#searchInput').on('input', function() {
+            let keyword = $(this).val().toLowerCase().trim();
+            $('.event-row').each(function() {
+                let rowSearch = String($(this).data('search')).toLowerCase();
+                if (keyword === '' || rowSearch.includes(keyword)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
                 }
-            }
-        }
-    </script>
+            });
+        });
+    });
+</script>
 @endsection

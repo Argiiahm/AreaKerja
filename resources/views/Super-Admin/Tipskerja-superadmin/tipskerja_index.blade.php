@@ -1,168 +1,236 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="p-6 bg-gray-50 min-h-screen">
-        <div class="flex flex-wrap items-center justify-between mb-6">
-            <div class="flex flex-wrap items-center space-x-3 text-sm text-gray-700">
-                <span class="font-medium text-gray-900">Semua ({{ $all }})</span>
-                <span id="btn_terbit" class="text-blue-600 hover:text-blue-800 cursor-pointer font-medium transition">
-                    | Telah Terbit ({{ $terbit }})
-                </span>
-                <span id="btn_blmterbit" class="text-blue-600 hover:text-blue-800 cursor-pointer font-medium transition">
-                    | Draf ({{ $noterbit }})
-                </span>
-            </div>
-
-            <a href="/dashboard/superadmin/tipskerja/add"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow transition">
-                + Buat Post
-            </a>
+    <div class="p-8 bg-[#F9FAFB] min-h-screen">
+        {{-- Header & Stats --}}
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Manajemen Konten</h1>
+            <p class="text-sm text-gray-500 mt-1">Kelola artikel, tips kerja, dan publikasi konten Anda.</p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-md p-5 mb-6 border border-gray-200">
-            <div class="flex flex-col md:flex-row justify-between gap-4 items-center">
-                <div class="flex flex-wrap items-center gap-3">
+        {{-- Toolbar & Navigation --}}
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+            <div class="px-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center bg-white gap-4">
+                {{-- Tabs --}}
+                <div class="flex space-x-6">
+                    <button id="btn_all" class="status-tab active py-4 text-sm transition-all focus:outline-none border-b-2 border-black font-semibold text-gray-900">Semua
+                        ({{ $all }})</button>
+                    <button id="btn_terbit" class="status-tab py-4 text-sm transition-all focus:outline-none border-b-2 border-transparent text-gray-500 hover:text-gray-700">Telah Terbit
+                        ({{ $terbit }})</button>
+                    <button id="btn_blmterbit" class="status-tab py-4 text-sm transition-all focus:outline-none border-b-2 border-transparent text-gray-500 hover:text-gray-700">Draf
+                        ({{ $noterbit }})</button>
+                </div>
+
+                {{-- Create Button --}}
+                <div class="py-3">
+                    <a href="/dashboard/superadmin/tipskerja/add"
+                        class="inline-flex items-center gap-2 bg-gray-900 text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-black transition-all">
+                        <i class="ph ph-plus-circle text-lg"></i>
+                        Buat Post baru
+                    </a>
+                </div>
+            </div>
+
+            {{-- Filters Bar --}}
+            <div class="p-4 bg-gray-50/50 border-b border-gray-100 flex flex-wrap gap-3 items-center justify-between">
+                <div class="flex items-center gap-2">
                     <select id="filterSelect"
-                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition">
-                        <option value="created_at">Tanggal</option>
-                        <option value="title">Nama</option>
+                        class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium focus:ring-1 focus:ring-gray-900 outline-none">
+                        <option value="title">Urutkan: Nama</option>
+                        <option value="created_at">Urutkan: Tanggal</option>
                     </select>
 
+                    <div class="h-6 w-[1px] bg-gray-300 mx-1"></div>
+
                     <button type="button" onclick="setAction('update')"
-                        class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm shadow-sm transition">
-                        Terapkan
-                    </button>
+                        class="text-xs font-semibold text-gray-600 hover:text-gray-900 px-3 py-2 bg-white border border-gray-200 shadow-sm rounded-lg">Terbitkan</button>
                     <button type="button" onclick="setAction('delete')"
-                        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm shadow-sm transition">
-                        Hapus
-                    </button>
+                        class="text-xs font-semibold text-red-500 hover:text-red-700 px-3 py-2 bg-white border border-red-200 shadow-sm rounded-lg">Hapus</button>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-2">
-                    <input id="searchInput" type="text" placeholder="Cari nama/tanggal..."
-                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 w-48 transition">
-                    <button type="button" onclick="searchTable()"
-                        class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg text-sm transition">
-                        Cari
-                    </button>
+                <div class="relative w-full md:w-64">
+                    <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input id="searchInput" onkeyup="searchTable()" type="text" placeholder="Cari judul..."
+                        class="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-xs focus:ring-1 focus:ring-gray-900 outline-none">
                 </div>
             </div>
+
+            {{-- Table Content --}}
+            <form id="bulkAction" method="POST">
+                @csrf
+                <input type="hidden" name="_method" id="formMethod">
+                <input type="hidden" name="status" id="statusField">
+
+                <div class="overflow-x-auto no-scrollbar">
+                    <table class="w-full text-left border-separate border-spacing-0">
+                        <thead class="bg-white">
+                            <tr>
+                                <th class="px-6 py-4 border-b border-gray-100 w-10">
+                                    <input type="checkbox" id="mainCheckbox"
+                                        class="rounded border-gray-300 text-gray-900 focus:ring-gray-900 w-4 h-4">
+                                </th>
+                                <th
+                                    class="px-6 py-4 border-b border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                    Judul Artikel</th>
+                                <th
+                                    class="px-6 py-4 border-b border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                    Penulis</th>
+                                <th
+                                    class="px-6 py-4 border-b border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-widest text-center">
+                                    Status</th>
+                                <th
+                                    class="px-6 py-4 border-b border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-widest text-right">
+                                    Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table_body">
+                            {{-- Merge data for dynamic filtering --}}
+                            @foreach ($sudah_terbit as $d)
+                                <tr class="row-terbit hover:bg-gray-50/50 transition-all group">
+                                    <td class="px-6 py-4 border-b border-gray-50">
+                                        <input name="ids[]" type="checkbox" value="{{ $d->id }}"
+                                            class="rounded border-gray-300 text-gray-900 focus:ring-gray-900 w-4 h-4">
+                                    </td>
+                                    <td class="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer" onclick="window.location.href='/dashboard/superadmin/tipskerja/edit/{{ $d->id }}'">
+                                        <div
+                                            class="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors cursor-pointer">
+                                            {{ $d->title }}</div>
+                                        <div class="text-[10px] text-gray-400 mt-0.5">ID: #TIP-{{ $d->id }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 border-b border-gray-50">
+                                        <span class="text-sm text-gray-600">{{ $d->penulis }}</span>
+                                    </td>
+                                    <td class="px-6 py-4 border-b border-gray-50 text-center">
+                                        <span
+                                            class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-50 text-green-600 border border-green-100 uppercase">Terbit</span>
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border-b border-gray-50 text-right text-sm text-gray-500 font-mono">
+                                        {{ $d->created_at->format('d/m/Y') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            @foreach ($belum_terbit as $d)
+                                <tr class="row-draf hover:bg-gray-50/50 transition-all group">
+                                    <td class="px-6 py-4 border-b border-gray-50">
+                                        <input name="ids[]" type="checkbox" value="{{ $d->id }}"
+                                            class="rounded border-gray-300 text-gray-900 focus:ring-gray-900 w-4 h-4">
+                                    </td>
+                                    <td class="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer" onclick="window.location.href='/dashboard/superadmin/tipskerja/edit/{{ $d->id }}'">
+                                        <div
+                                            class="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                            {{ $d->title }}</div>
+                                        <div class="text-[10px] text-gray-400 mt-0.5">ID: #TIP-{{ $d->id }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 border-b border-gray-50">
+                                        <span class="text-sm text-gray-600">{{ $d->penulis }}</span>
+                                    </td>
+                                    <td class="px-6 py-4 border-b border-gray-50 text-center">
+                                        <span
+                                            class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-500 border border-gray-200 uppercase">Draf</span>
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border-b border-gray-50 text-right text-sm text-gray-500 font-mono">
+                                        {{ $d->created_at->format('d/m/Y') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </form>
         </div>
-
-        <form id="bulkAction" method="POST">
-            @csrf
-            <input type="hidden" name="_method" id="formMethod">
-            <input type="hidden" name="status" id="statusField">
-
-            <div id="sudah_terbit" class="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-white">
-                <table class="w-full text-sm text-left border-collapse">
-                    <thead class="bg-gray-800 text-white text-sm uppercase tracking-wide">
-                        <tr>
-                            <th class="px-5 py-3"><input type="checkbox" id="checkAllTerbit" class="w-4 h-4"></th>
-                            <th class="px-5 py-3">Judul</th>
-                            <th class="px-5 py-3">Penulis</th>
-                            <th class="px-5 py-3">Tanggal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($sudah_terbit as $d)
-                            <tr class="border-b hover:bg-gray-100 transition">
-                                <td class="px-5 py-3">
-                                    <input name="ids[]" type="checkbox" value="{{ $d->id }}" class="w-4 h-4">
-                                </td>
-                                <td class="px-5 py-3 text-blue-600 hover:text-blue-800 font-medium cursor-pointer">
-                                    {{ $d->title }}
-                                </td>
-                                <td class="px-5 py-3 text-gray-700">{{ $d->penulis }}</td>
-                                <td class="px-5 py-3 text-gray-600">{{ $d->created_at->format('d M Y') }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="belum_terbit" class="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-white hidden">
-                <table class="w-full text-sm text-left border-collapse">
-                    <thead class="bg-gray-800 text-white text-sm uppercase tracking-wide">
-                        <tr>
-                            <th class="px-5 py-3"><input type="checkbox" id="checkAllBelum" class="w-4 h-4"></th>
-                            <th class="px-5 py-3">Judul</th>
-                            <th class="px-5 py-3">Penulis</th>
-                            <th class="px-5 py-3">Tanggal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($belum_terbit as $d)
-                            <tr class="border-b hover:bg-gray-100 transition">
-                                <td class="px-5 py-3">
-                                    <input name="ids[]" type="checkbox" value="{{ $d->id }}" class="w-4 h-4">
-                                </td>
-                                <td class="px-5 py-3 text-blue-600 hover:text-blue-800 font-medium cursor-pointer">
-                                    {{ $d->title }}
-                                </td>
-                                <td class="px-5 py-3 text-gray-700">{{ $d->penulis }}</td>
-                                <td class="px-5 py-3 text-gray-600">{{ $d->created_at->format('d M Y') }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </form>
     </div>
 
     <script>
-        let btn_terbit = document.getElementById("btn_terbit");
-        let btn_blmterbit = document.getElementById("btn_blmterbit");
+        const tabs = document.querySelectorAll('.status-tab');
+        const rowsTerbit = document.querySelectorAll('.row-terbit');
+        const rowsDraf = document.querySelectorAll('.row-draf');
 
-        let belum_terbit = document.getElementById('belum_terbit');
-        let sudah_terbit = document.getElementById('sudah_terbit');
+        function setActiveTab(id) {
+            tabs.forEach(tab => {
+                tab.classList.remove('border-black', 'text-gray-900', 'font-semibold');
+                tab.classList.add('border-transparent', 'text-gray-500');
+            });
+            const activeTab = document.getElementById(id);
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+            activeTab.classList.add('border-black', 'text-gray-900', 'font-semibold');
+        }
 
-        btn_blmterbit.addEventListener("click", () => {
-            sudah_terbit.classList.add('hidden');
-            belum_terbit.classList.remove('hidden');
-        });
+        function filterTab(type) {
+            if (type === 'all') {
+                setActiveTab('btn_all');
+                rowsTerbit.forEach(r => r.style.display = "");
+                rowsDraf.forEach(r => r.style.display = "");
+            } else if (type === 'terbit') {
+                setActiveTab('btn_terbit');
+                rowsTerbit.forEach(r => r.style.display = "");
+                rowsDraf.forEach(r => r.style.display = "none");
+            } else {
+                setActiveTab('btn_blmterbit');
+                rowsTerbit.forEach(r => r.style.display = "none");
+                rowsDraf.forEach(r => r.style.display = "");
+            }
+        }
 
-        btn_terbit.addEventListener("click", () => {
-            belum_terbit.classList.add('hidden');
-            sudah_terbit.classList.remove('hidden');
-        });
+        document.getElementById('btn_all').onclick = () => filterTab('all');
+        document.getElementById('btn_terbit').onclick = () => filterTab('terbit');
+        document.getElementById('btn_blmterbit').onclick = () => filterTab('draf');
 
         function setAction(action) {
             let form = document.getElementById('bulkAction');
+            let selected = document.querySelectorAll("input[name='ids[]']:checked");
+
+            if (selected.length === 0) {
+                alert("Pilih minimal satu item!");
+                return;
+            }
 
             if (action === 'update') {
                 form.action = "/ubah/status/tipskerja";
                 document.getElementById('formMethod').value = "PUT";
                 document.getElementById('statusField').value = "terbit";
             } else if (action === 'delete') {
+                if (!confirm('Yakin ingin menghapus item terpilih?')) return;
                 form.action = "/delete/tipskerja";
                 document.getElementById('formMethod').value = "DELETE";
             }
-
             form.submit();
         }
 
-        document.getElementById("checkAllTerbit").addEventListener("change", function() {
-            document.querySelectorAll("#sudah_terbit input[name='ids[]']").forEach(cb => cb.checked = this.checked);
+        // Checkbox logic
+        document.getElementById("mainCheckbox").addEventListener("change", function() {
+            document.querySelectorAll("input[name='ids[]']").forEach(cb => {
+                if (cb.closest('tr').style.display !== 'none') {
+                    cb.checked = this.checked;
+                }
+            });
         });
 
-        document.getElementById("checkAllBelum").addEventListener("change", function() {
-            document.querySelectorAll("#belum_terbit input[name='ids[]']").forEach(cb => cb.checked = this.checked);
-        });
-
+        // Modern Real-time Search
         function searchTable() {
             let input = document.getElementById("searchInput").value.toLowerCase();
-            let filterBy = document.getElementById("filterSelect").value;
+            let sortBy = document.getElementById("filterSelect").value;
+            let tbody = document.getElementById("table_body");
+            let rows = Array.from(tbody.querySelectorAll("tr"));
 
-            let table = document.querySelector("#sudah_terbit:not(.hidden) table, #belum_terbit:not(.hidden) table");
-            let rows = table.querySelectorAll("tbody tr");
-
+            // search filtering
             rows.forEach(row => {
-                let colText = "";
-                if (filterBy === "title") colText = row.cells[1].innerText.toLowerCase();
-                else if (filterBy === "created_at") colText = row.cells[3].innerText.toLowerCase();
-
-                row.style.display = colText.includes(input) ? "" : "none";
+                let title = row.querySelector('td:nth-child(2) div').innerText.toLowerCase();
+                let date = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
+                
+                let matches = title.includes(input) || date.includes(input);
+                if(row.style.display !== 'none' || matches) {
+                    // Need to check the current tab
+                    let isTerbit = row.classList.contains('row-terbit');
+                    let showTerbit = document.getElementById('btn_terbit').classList.contains('border-black') || document.getElementById('btn_all').classList.contains('border-black');
+                    let showDraf = document.getElementById('btn_blmterbit').classList.contains('border-black') || document.getElementById('btn_all').classList.contains('border-black');
+                    
+                    if ((isTerbit && showTerbit) || (!isTerbit && showDraf)) {
+                        row.style.display = matches ? "" : "none";
+                    }
+                }
             });
         }
     </script>

@@ -63,7 +63,8 @@
                                 <a href="/dashboard/superadmin/perusahaan/lowongan/detail/{{ $p->id }}"
                                     class="text-blue-600 hover:underline">{{ $p->nama }}</a>
                                 <p class="text-gray-500 text-xs">{{ $p->alamat }} •
-                                    {{ $p->created_at->diffForHumans() }}</p>
+                                    {{ $p->created_at->diffForHumans() }}
+                                </p>
                             @endif
                         @endforeach
 
@@ -74,7 +75,8 @@
                                 <a href="/dashboard/superadmin/perusahaan/lowongan/detail/{{ $p->id }}"
                                     class="text-blue-600 hover:underline">{{ $p->nama }}</a>
                                 <p class="text-gray-500 text-xs">{{ $p->alamat }} •
-                                    {{ $p->created_at->diffForHumans() }}</p>
+                                    {{ $p->created_at->diffForHumans() }}
+                                </p>
                             @endif
                         @endforeach
                     </div>
@@ -85,8 +87,7 @@
                     class="bg-orange-500 text-white py-2 px-10 rounded-md">Tambah Lowongan</a>
                 <a href="/dashboard/superadmin/perusahaan/edit/perusahaan/{{ $Data->id }}"
                     class="bg-blue-500 text-white py-2 px-32 rounded-md">Edit</a>
-                <button data-id="{{ $Data->users->id }}"
-                    class="btnHapus bg-red-500 text-white py-2 px-32 rounded-md">
+                <button data-id="{{ $Data->users->id }}" class="btnHapus bg-red-500 text-white py-2 px-32 rounded-md">
                     Hapus
                 </button>
                 <div id="modalKonfirmasi-{{ $Data->users->id }}"
@@ -95,7 +96,8 @@
                         <div class="text-gray-600 text-5xl mb-3"><i class="ph ph-trash"></i></div>
                         <p class="text-gray-800 font-semibold mb-5">Yakin akan hapus data?</p>
                         <div class="flex justify-center space-x-4">
-                            <form action="/dashboard/superadmin/perusahaan/delete/perusahaan/{{ $Data->users->id }}" method="POST">
+                            <form action="/dashboard/superadmin/perusahaan/delete/perusahaan/{{ $Data->users->id }}"
+                                method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"

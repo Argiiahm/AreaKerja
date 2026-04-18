@@ -1,46 +1,60 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8 mt-10 border border-gray-200">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-3">📝 Tambah Artikel Tips Kerja</h2>
-
-        <form action="/dashboard/superadmin/tipskerja/create/post" method="POST" enctype="multipart/form-data" class="space-y-6">
+<div class="p-8 bg-white min-h-screen">
+    <div class="max-w-4xl mx-auto">
+        <form action="/dashboard/superadmin/tipskerja/create/post" method="POST" enctype="multipart/form-data">
             @csrf
-
-            <div>
-                <label for="title" class="block text-sm font-semibold text-gray-700 mb-1">Judul Artikel</label>
-                <input type="text" id="title" name="title" placeholder="Masukkan judul artikel..."
-                    class="w-full border-2 border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition duration-200">
-            </div>
-
-            <div>
-                <label for="uploadMedia"
-                    class="cursor-pointer flex items-center gap-2 w-fit bg-orange-500 text-white px-4 py-2 rounded-lg shadow hover:bg-orange-600 transition duration-200">
-                    <i class="ph ph-upload-simple text-lg"></i> Tambahkan Media
-                </label>
-                <input id="uploadMedia" type="file" name="image" hidden>
-                <p class="text-sm text-gray-500 mt-1">Format yang didukung: JPG, PNG, atau JPEG.</p>
-            </div>
-
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Isi Artikel</label>
-                <input id="x" type="hidden" name="content">
-                <div
-                    class="border-2 border-gray-300 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-orange-500">
-                    <trix-editor input="x" class="trix-content bg-gray-50 p-3 min-h-[250px]"></trix-editor>
+            
+            {{-- Header Fix: Tombol di dalam Form --}}
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-100">
+                <div>
+                    <h1 class="text-xl font-bold text-gray-900">Buat Post Baru</h1>
+                    <p class="text-xs text-gray-500 mt-1">Tulis dan publikasikan tips kerja terbaru.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="/dashboard/superadmin/tipskerja" class="px-4 py-2 text-xs font-medium text-gray-500 hover:text-gray-800 transition-all">Batal</a>
+                    {{-- Button Type Submit murni tanpa JS --}}
+                    <button type="submit" class="bg-gray-900 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-black transition-all shadow-sm">
+                        Simpan & Terbitkan
+                    </button>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 pt-4 border-t mt-6">
-                <button type="submit"
-                    class="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-lg shadow transition duration-200">
-                    Simpan
-                </button>
-                <a href="/dashboard/superadmin/tipskerja"
-                    class="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg shadow transition duration-200">
-                    Batal
-                </a>
+            <div class="space-y-8">
+                {{-- Input Judul --}}
+                <div class="space-y-2">
+                    <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Judul Artikel</label>
+                    <input type="text" name="title" required placeholder="Masukkan judul artikel di sini..."
+                        class="w-full text-2xl font-bold text-gray-900 border-none p-0 focus:ring-0 placeholder:text-gray-200 bg-transparent">
+                    <div class="h-[1px] bg-gray-100 w-full"></div>
+                </div>
+
+                {{-- Upload Media Simple (Murni HTML) --}}
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col gap-2">
+                    <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Gambar Unggulan</label>
+                    <input type="file" name="image" 
+                        class="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-gray-900 file:text-white hover:file:bg-black cursor-pointer">
+                    <p class="text-[10px] text-gray-400 italic">*Format: JPG, PNG, atau WEBP (Maks 2MB)</p>
+                </div>
+
+                {{-- Editor Trix (Trix menangani input tersembunyi secara internal) --}}
+                <div class="space-y-2">
+                    <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Konten Artikel</label>
+                    <div class="prose max-w-none">
+                        <input id="x" type="hidden" name="content">
+                        <trix-editor input="x" class="trix-content border-none p-0 focus:ring-0 min-h-[400px]"></trix-editor>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
+</div>
+
+<style>
+    /* Trix Overhaul untuk tampilan bersih */
+    trix-toolbar { @apply sticky top-0 bg-white z-10 py-2 border-b border-gray-50 mb-4; }
+    trix-toolbar .trix-button { @apply bg-transparent border-none scale-90 hover:bg-gray-50 rounded-md !important; }
+    .trix-content { @apply text-gray-700 leading-relaxed border-none outline-none !important; }
+</style>
 @endsection

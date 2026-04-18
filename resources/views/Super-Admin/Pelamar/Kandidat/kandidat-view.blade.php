@@ -64,13 +64,17 @@
             @if ($Data->sosmed)
                 <ul class="space-y-1 text-sm">
                     <li><span class="font-bold">Instagram</span> :
-                        {{ $Data->sosmed->latest()->first()->instagram ?? 'tidak ada data' }}</li>
+                        {{ $Data->sosmed->latest()->first()->instagram ?? 'tidak ada data' }}
+                    </li>
                     <li><span class="font-bold">LinkedIn</span> :
-                        {{ $Data->sosmed->latest()->first()->linkedin ?? 'tidak ada data' }}</li>
+                        {{ $Data->sosmed->latest()->first()->linkedin ?? 'tidak ada data' }}
+                    </li>
                     <li><span class="font-bold">Website</span> :
-                        {{ $Data->sosmed->latest()->first()->website ?? 'tidak ada data' }}</li>
+                        {{ $Data->sosmed->latest()->first()->website ?? 'tidak ada data' }}
+                    </li>
                     <li><span class="font-bold">Twitter</span> :
-                        {{ $Data->sosmed->latest()->first()->twitter ?? 'tidak ada data' }}</li>
+                        {{ $Data->sosmed->latest()->first()->twitter ?? 'tidak ada data' }}
+                    </li>
                 </ul>
             @else
                 <p class="text-gray-500">Data Masih Kosong</p>
@@ -82,7 +86,8 @@
             <ul class="list-decimal ml-6 space-y-1 text-sm">
                 @forelse ($Data->organisasi as $o)
                     <li>{{ $o->nama_organisasi ?? 'belum ada data' }} | {{ $o->jabatan ?? 'belum ada data' }} |
-                        {{ $o->tahun_awal ?? 'belum ada data' }} - {{ $o->tahun_akhir ?? 'belum ada data' }}</li>
+                        {{ $o->tahun_awal ?? 'belum ada data' }} - {{ $o->tahun_akhir ?? 'belum ada data' }}
+                    </li>
                 @empty
                     <p class="text-gray-500">Belum Ada Data</p>
                 @endforelse
@@ -94,7 +99,8 @@
             <ul class="list-decimal ml-6 space-y-1 text-sm">
                 @forelse ($Data->pengalaman_kerja as $k)
                     <li>{{ $k->posisi_kerja ?? 'belum ada data' }} | {{ $k->nama_perusahaan ?? 'belum ada data' }} |
-                        {{ $k->tahun_awal ?? 'belum ada data' }} - {{ $k->tahun_akhir ?? 'belum ada data' }}</li>
+                        {{ $k->tahun_awal ?? 'belum ada data' }} - {{ $k->tahun_akhir ?? 'belum ada data' }}
+                    </li>
                 @empty
                     <p class="text-gray-500">Belum Ada Data</p>
                 @endforelse
@@ -117,7 +123,9 @@
                 class="px-6 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded-md shadow">Edit</a>
             <a href="/cv/{{ $Data->id }}/unduh"
                 class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md shadow">Unduh</a>
-            <button data-id="{{ $Data->id }}" class="btnHapus px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md shadow">Hapus</button data-id="{{ $Data->id }}">
+            <button data-id="{{ $Data->id }}"
+                class="btnHapus px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md shadow">Hapus</button
+                data-id="{{ $Data->id }}">
         </div>
 
         @include('CV_PELAMAR.cv_pelamar')

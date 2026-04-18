@@ -6,9 +6,8 @@
             <h2 class="text-lg font-semibold mb-6">EDIT Perusahaan</h2>
             <div class="flex items-center gap-2 mb-5">
                 @if ($Data->img_profile)
-                    <img id="previewImage"
-                        src="{{ asset('storage/' . $Data->img_profile) }}"
-                        class="w-24 h-24 rounded-ful mb-2">   
+                    <img id="previewImage" src="{{ asset('storage/' . $Data->img_profile) }}"
+                        class="w-24 h-24 rounded-ful mb-2">
                 @else
                     <img id="previewImage"
                         src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
@@ -80,11 +79,13 @@
                         </div>
                         <div>
                             <label class="block text-sm mb-1">Visi *</label>
-                            <textarea name="visi" rows="2" class="w-full border rounded-md px-3 py-2 text-sm" placeholder="Visi">{{ $Data->visi }}</textarea>
+                            <textarea name="visi" rows="2" class="w-full border rounded-md px-3 py-2 text-sm"
+                                placeholder="Visi">{{ $Data->visi }}</textarea>
                         </div>
                         <div>
                             <label class="block text-sm mb-1">Misi *</label>
-                            <textarea name="misi" rows="2" class="w-full border rounded-md px-3 py-2 text-sm" placeholder="Misi">{{ $Data->misi }}</textarea>
+                            <textarea name="misi" rows="2" class="w-full border rounded-md px-3 py-2 text-sm"
+                                placeholder="Misi">{{ $Data->misi }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -94,9 +95,8 @@
                     <div class="grid md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm mb-1">No. Perusahaan</label>
-                            <input name="telepon_perusahaan" type="text"
-                                class="w-full border rounded-md px-3 py-2 text-sm" placeholder="No. Perusahaan"
-                                value="{{ $Data->telepon_perusahaan }}">
+                            <input name="telepon_perusahaan" type="text" class="w-full border rounded-md px-3 py-2 text-sm"
+                                placeholder="No. Perusahaan" value="{{ $Data->telepon_perusahaan }}">
                         </div>
                         <div>
                             <label class="block text-sm mb-1">No. Whatsapp</label>
@@ -118,7 +118,7 @@
         const fileInput = document.getElementById('foto');
         const previewImage = document.getElementById('previewImage');
 
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
             const file = this.files[0];
             if (file) {
                 previewImage.src = URL.createObjectURL(file);

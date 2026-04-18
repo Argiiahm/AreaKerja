@@ -13,7 +13,8 @@
                         class="flex items-center gap-2 border-2 bg-orange-500 px-6 py-2 rounded-lg w-full sm:w-auto justify-center cursor-pointer">
                         <i class="ph ph-upload-simple text-2xl text-white"></i>
                         <span class="text-white">Upload</span>
-                        <input type="file" name="img_profile" id="foto" class="hidden" accept="image/*" form="perusahaanForm">
+                        <input type="file" name="img_profile" id="foto" class="hidden" accept="image/*"
+                            form="perusahaanForm">
                     </label>
                     <button type="button" onclick="removeImage()"
                         class="flex items-center gap-2 border border-orange-500 px-6 py-2 rounded-lg w-full sm:w-auto justify-center">
@@ -57,13 +58,13 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm mb-1">Nama Perusahaan *</label>
-                            <input name="nama_perusahaan" type="text"
-                                class="w-full border rounded-md px-3 py-2 text-sm" placeholder="Nama Perusahaan">
+                            <input name="nama_perusahaan" type="text" class="w-full border rounded-md px-3 py-2 text-sm"
+                                placeholder="Nama Perusahaan">
                         </div>
                         <div>
                             <label class="block text-sm mb-1">Legalitas *</label>
-                            <input name="legalitas" type="text"
-                                class="w-full border rounded-md px-3 py-2 text-sm" placeholder="Legalitas">
+                            <input name="legalitas" type="text" class="w-full border rounded-md px-3 py-2 text-sm"
+                                placeholder="Legalitas">
                         </div>
                         <div>
                             <label class="block text-sm mb-1">Deskripsi Perusahaan *</label>
@@ -88,13 +89,13 @@
                     <div class="grid md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm mb-1">No. Perusahaan</label>
-                            <input name="telepon_perusahaan" type="text"
-                                class="w-full border rounded-md px-3 py-2 text-sm" placeholder="No. Perusahaan">
+                            <input name="telepon_perusahaan" type="text" class="w-full border rounded-md px-3 py-2 text-sm"
+                                placeholder="No. Perusahaan">
                         </div>
                         <div>
                             <label class="block text-sm mb-1">No. Whatsapp</label>
-                            <input name="whatsapp" type="text"
-                                class="w-full border rounded-md px-3 py-2 text-sm" placeholder="No. Whatsapp">
+                            <input name="whatsapp" type="text" class="w-full border rounded-md px-3 py-2 text-sm"
+                                placeholder="No. Whatsapp">
                         </div>
                     </div>
                 </div>
@@ -111,7 +112,7 @@
         const fileInput = document.getElementById('foto');
         const previewImage = document.getElementById('previewImage');
 
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
             const file = this.files[0];
             if (file) {
                 previewImage.src = URL.createObjectURL(file);

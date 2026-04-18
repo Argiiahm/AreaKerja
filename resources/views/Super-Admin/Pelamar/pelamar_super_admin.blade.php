@@ -1,178 +1,172 @@
 @extends('Super-Admin.layouts.index')
 @section('super_admin-content')
     {{ session()->forget('pelamar_id') }}
-    <div class="p-6 flex justify-center" x-data="pelamarTabs()">
-        <div class="w-full max-w-7xl">
+    <div class="p-6">
 
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <!-- TOP CONTROL -->
+        <div class="flex flex-col lg:flex-row justify-between gap-4 mb-6">
 
-                <div class="flex items-center gap-3">
-                    <a :href="getAddUrl(selected)"
-                        class="bg-orange-500 hover:bg-orange-600 transition text-white flex justify-center items-center px-4 py-2 rounded-md shadow">
-                        <i class="ph ph-plus text-lg"></i>
-                    </a>
+            <!-- TABS & ADD BTN -->
+            <div class="flex items-center gap-3">
+                <a id="addPelamarUrl" href="/dashboard/superadmin/pelamar/add/kandidat"
+                    class="bg-orange-500 hover:bg-orange-600 transition text-white flex justify-center items-center h-[42px] w-[42px] min-w-[42px] rounded-xl shadow">
+                    <i class="ph ph-plus text-lg"></i>
+                </a>
 
-                    <select x-model="selected" @change="saveState"
-                        class="bg-orange-500 text-white px-6 py-2 rounded-md focus:outline-none cursor-pointer hover:bg-orange-600 transition">
-                        <option value="kandidat">Kandidat</option>
-                        <option value="non_kandidat">Non Kandidat</option>
-                        <option value="calon_kandidat">Calon Kandidat</option>
-                    </select>
+                <div class="flex bg-gray-100 p-1 rounded-2xl w-fit shadow-inner">
+                    <button class="tab-btn px-5 py-2 rounded-xl text-sm font-medium transition whitespace-nowrap"
+                        data-tab="kandidat">
+                        Kandidat
+                    </button>
+
+                    <button class="tab-btn px-5 py-2 rounded-xl text-sm font-medium transition whitespace-nowrap"
+                        data-tab="non_kandidat">
+                        Non Kandidat
+                    </button>
+
+                    <button class="tab-btn px-5 py-2 rounded-xl text-sm font-medium transition whitespace-nowrap"
+                        data-tab="calon_kandidat">
+                        Calon Kandidat
+                    </button>
                 </div>
-
-                <div class="flex items-center gap-2 w-full md:w-auto justify-end">
-                    <input type="text" placeholder="Cari nama / username..." x-model="search"
-                        class="border border-gray-300 rounded-md px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <button class="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded-md transition">Cari</button>
-                </div>
             </div>
 
-            <div id="kandidat" x-show="selected === 'kandidat'" x-cloak
-                class="bg-white border rounded-2xl shadow-sm overflow-x-auto transition-all">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-gray-100 text-left text-gray-700">
-                            <th class="px-6 py-3 font-semibold">ID</th>
-                            <th class="px-6 py-3 font-semibold">Nama</th>
-                            <th class="px-6 py-3 font-semibold">Pendidikan</th>
-                            <th class="px-6 py-3 font-semibold">Skill</th>
-                            <th class="px-6 py-3 font-semibold">Alamat</th>
-                            <th class="px-6 py-3 font-semibold text-center">Detail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php $i = 1; @endphp
-                        @foreach ($pelamar as $p)
-                            @if ($p->kategori === 'kandidat aktif')
-                                <tr x-show="matchesSearch('{{ strtolower($p->nama_pelamar ?? '') }}', '{{ strtolower($p->skill->sortByDesc('created_at')->first()->skill ?? '') }}')"
-                                    class="hover:bg-gray-50 border-b">
-                                    <td class="px-6 py-3 text-gray-700">{{ $i++ }}</td>
-                                    <td class="px-6 py-3 text-gray-700">{{ $p->nama_pelamar ?? 'belum terisi' }}</td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->riwayat_pendidikan->sortByDesc('created_at')->first()->pendidikan ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->skill->sortByDesc('created_at')->first()->skill ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->alamat_pelamars->sortByDesc('created_at')->first()->detail ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-4 text-center">
-                                        <a href="/dashboard/superadmin/kandidat_view/{{ $p->id }}"
-                                            class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md transition">
-                                            View
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="non_kandidat" x-show="selected === 'non_kandidat'" x-cloak
-                class="bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-gray-100 text-left text-gray-700">
-                            <th class="px-6 py-3 font-semibold">ID</th>
-                            <th class="px-6 py-3 font-semibold">Nama</th>
-                            <th class="px-6 py-3 font-semibold">Pendidikan</th>
-                            <th class="px-6 py-3 font-semibold">Skill</th>
-                            <th class="px-6 py-3 font-semibold">Alamat</th>
-                            <th class="px-6 py-3 font-semibold text-center">Detail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pelamar as $p)
-                            @if ($p->kategori === null)
-                                <tr x-show="matchesSearch('{{ strtolower($p->nama_pelamar ?? '') }}', '{{ strtolower($p->skill->sortByDesc('created_at')->first()->skill ?? '') }}')"
-                                    class="hover:bg-gray-50 border-b">
-                                    <td class="px-6 py-3 text-gray-700">{{ $i++ }}</td>
-                                    <td class="px-6 py-3 text-gray-700">{{ $p->nama_pelamar ?? 'belum terisi' }}</td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->riwayat_pendidikan->sortByDesc('created_at')->first()->pendidikan ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->skill->sortByDesc('created_at')->first()->skill ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->alamat_pelamars->sortByDesc('created_at')->first()->detail ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-4 text-center">
-                                        <a href="/dashboard/superadmin/nonkandidat_view/{{ $p->id }}"
-                                            class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md transition">
-                                            View
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="calon_kandidat" x-show="selected === 'calon_kandidat'" x-cloak
-                class="bg-white border rounded-2xl shadow-sm overflow-x-auto mt-6 transition-all">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-gray-100 text-left text-gray-700">
-                            <th class="px-6 py-3 font-semibold">ID</th>
-                            <th class="px-6 py-3 font-semibold">Nama</th>
-                            <th class="px-6 py-3 font-semibold">Pendidikan</th>
-                            <th class="px-6 py-3 font-semibold">Skill</th>
-                            <th class="px-6 py-3 font-semibold">Alamat</th>
-                            <th class="px-6 py-3 font-semibold text-center">Detail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pelamar as $p)
-                            @if ($p->kategori === 'calon kandidat')
-                                <tr x-show="matchesSearch('{{ strtolower($p->nama_pelamar ?? '') }}', '{{ strtolower($p->skill->sortByDesc('created_at')->first()->skill ?? '') }}')"
-                                    class="hover:bg-gray-50 border-b">
-                                    <td class="px-6 py-3 text-gray-700">{{ $i++ }}</td>
-                                    <td class="px-6 py-3 text-gray-700">{{ $p->nama_pelamar ?? 'belum terisi' }}</td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->riwayat_pendidikan->sortByDesc('created_at')->first()->pendidikan ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->skill->sortByDesc('created_at')->first()->skill ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-3 text-gray-700">
-                                        {{ $p->alamat_pelamars->sortByDesc('created_at')->first()->detail ?? 'belum ada data' }}
-                                    </td>
-                                    <td class="px-6 py-4 text-center">
-                                        <a href="/dashboard/superadmin/nonkandidat_view/{{ $p->id }}"
-                                            class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md transition">
-                                            View
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
+            <!-- SEARCH -->
+            <div class="relative w-full lg:w-80">
+                <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="searchInput" placeholder="Cari kandidat..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200
+                                               focus:ring-2 focus:ring-orange-400 focus:border-orange-400
+                                               shadow-sm text-sm transition">
             </div>
 
         </div>
+
+        <!-- TABLE -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between">
+                <h2 class="font-semibold text-gray-800 text-sm capitalize">
+                    <span id="tabTitle">Kandidat</span>
+                </h2>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-center">
+                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs border-b border-gray-200">
+                        <tr>
+                            <th class="px-6 py-3 border-r border-gray-200">ID</th>
+                            <th class="px-6 py-3 border-r border-gray-200">Nama</th>
+                            <th class="px-6 py-3 border-r border-gray-200">Skill</th>
+                            <th class="px-6 py-3 border-r border-gray-200">Pendidikan</th>
+                            <th class="px-6 py-3 border-r border-gray-200">Alamat</th>
+                            <th class="px-6 py-3">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @foreach ($pelamar as $p)
+                            @php
+                                $kat = 'non_kandidat';
+                                if ($p->kategori === 'kandidat aktif')
+                                    $kat = 'kandidat';
+                                else if ($p->kategori === 'calon kandidat')
+                                    $kat = 'calon_kandidat';
+
+                                $searchStr = strtolower(($p->nama_pelamar ?? '') . ' ' . ($p->skill->pluck('skill')->implode(' ') ?? '') . ' ' . ($p->riwayat_pendidikan->pluck('pendidikan')->implode(' ') ?? '') . ' ' . ($p->alamat_pelamars->pluck('detail')->implode(' ') ?? ''));
+                            @endphp
+                            <tr class="pelamar-row hover:bg-gray-50 transition hidden" data-kategori="{{ $kat }}"
+                                data-search="{{ $searchStr }}">
+
+                                <td class="px-6 py-3 border-r border-gray-200 text-gray-500">
+                                    {{ $p->id }}
+                                </td>
+
+                                <td class="px-6 py-3 border-r border-gray-200 font-medium text-gray-800">
+                                    {{ $p->nama_pelamar ?: 'N/A' }}
+                                </td>
+
+                                <td class="px-6 py-3 border-r border-gray-200 text-gray-600">
+                                    {{ $p->skill->pluck('skill')->implode(', ') ?: 'N/A' }}
+                                </td>
+
+                                <td class="px-6 py-3 border-r border-gray-200 text-gray-600">
+                                    {{ $p->riwayat_pendidikan->pluck('pendidikan')->implode(', ') ?: 'N/A' }}
+                                </td>
+
+                                <td class="px-6 py-3 border-r border-gray-200 text-gray-600">
+                                    {{ $p->alamat_pelamars->pluck('detail')->implode(', ') ?: 'N/A' }}
+                                </td>
+
+                                <td class="px-6 py-3">
+                                    <div class="flex justify-center gap-2">
+                                        <a href="/dashboard/superadmin/{{ $p->kategori === 'kandidat aktif' ? 'kandidat_view' : 'nonkandidat_view' }}/{{ $p->id }}"
+                                            class="p-2 rounded-lg bg-gray-100 hover:bg-blue-500 hover:text-white transition">
+                                            <i class="ph ph-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        function pelamarTabs() {
-            return {
-                selected: localStorage.getItem('pelamar_tab') || 'kandidat',
-                search: '',
-                saveState() {
-                    localStorage.setItem('pelamar_tab', this.selected);
-                },
-                getAddUrl(tab) {
-                    return `/dashboard/superadmin/pelamar/add/${tab}`;
-                },
-                matchesSearch(nama, skill) {
-                    const keyword = this.search.toLowerCase();
-                    return nama.includes(keyword) || skill.includes(keyword);
-                }
+        $(document).ready(function () {
+            let selectedTab = localStorage.getItem('pelamar_tab') || 'kandidat';
+
+            function updateUI() {
+                // Style Tabs
+                $('.tab-btn').each(function () {
+                    if ($(this).data('tab') === selectedTab) {
+                        $(this).removeClass('text-gray-500 hover:text-gray-700').addClass('bg-white shadow text-gray-900');
+                    } else {
+                        $(this).removeClass('bg-white shadow text-gray-900').addClass('text-gray-500 hover:text-gray-700');
+                    }
+                });
+
+                // Update Table Title
+                $('#tabTitle').text(selectedTab.replace('_', ' '));
+
+                // Update Add Candidate URL
+                $('#addPelamarUrl').attr('href', '/dashboard/superadmin/pelamar/add/' + selectedTab);
+
+                filterTable();
             }
-        }
+
+            function filterTable() {
+                let keyword = $('#searchInput').val().toLowerCase().trim();
+
+                $('.pelamar-row').each(function () {
+                    let rowKat = $(this).data('kategori');
+                    let rowSearch = String($(this).data('search')).toLowerCase();
+
+                    let matchesTab = (rowKat === selectedTab);
+                    let matchesKey = (keyword === '' || rowSearch.includes(keyword));
+
+                    if (matchesTab && matchesKey) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            // Tab click listener
+            $('.tab-btn').click(function () {
+                selectedTab = $(this).data('tab');
+                localStorage.setItem('pelamar_tab', selectedTab);
+                updateUI();
+            });
+
+            // Search input listener
+            $('#searchInput').on('input', function () {
+                filterTable();
+            });
+
+            // Run initial render
+            updateUI();
+        });
     </script>
 @endsection
