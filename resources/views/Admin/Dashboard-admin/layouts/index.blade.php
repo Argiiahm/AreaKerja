@@ -6,347 +6,267 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AreaKerja.com | Admin Dashboard</title>
-    <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}" type="image/x-icon">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}">
+
+    <!-- PHOSPHOR ICON -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+    <!-- TRIX -->
     <link rel="stylesheet" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
     <script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
+    <!-- ALPINE -->
     <script src="//unpkg.com/alpinejs" defer></script>
+
     @vite('resources/css/app.css')
 
+    <style>
+        body {
+            background: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+        }
+
+        trix-toolbar [data-trix-button-group="file-tools"] {
+            display: none;
+        }
+
+        /* SIDEBAR */
+        aside {
+            background: #0f172a;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        aside a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            margin: 4px 12px;
+            border-radius: 12px;
+            transition: 0.25s;
+            color: #cbd5f5;
+        }
+
+        aside a:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+        }
+
+        aside a.active {
+            background: linear-gradient(135deg, #f97316, #fb923c);
+            color: white;
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        aside i {
+            font-size: 18px;
+        }
+
+        aside p {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #64748b;
+            margin: 16px 20px 6px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        /* PROFILE */
+        .profile-box {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-box img {
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+        }
+
+        /* NOTIF */
+        #notif {
+            border-radius: 14px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        #notif ul li:hover {
+            background: #f8fafc;
+        }
+
+        /* MODAL IMAGE */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 999px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        /* SCROLL */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
-<style>
-    trix-toolbar [data-trix-button-group="file-tools"] {
-        display: none;
-    }
+<body>
 
-    .profile-img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        cursor: pointer;
-        object-fit: cover;
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* gambar di modal */
-    .modal img {
-        max-width: 90%;
-        max-height: 90%;
-    }
-</style>
-
-<body class="bg-gray-50">
-    <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
-        type="button"
-        class="inline-flex items-center p-2 mt-4 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none">
-        <i class="ph ph-list text-xl"></i>
-        <span class="sr-only">Open sidebar</span>
+    <!-- MOBILE BUTTON -->
+    <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" class="p-2 m-3 sm:hidden">
+        <i class="ph ph-list text-2xl"></i>
     </button>
 
-    <aside id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-[#606060] text-white flex flex-col justify-between"
-        aria-label="Sidebar">
+    <!-- SIDEBAR -->
+    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen flex flex-col justify-between">
 
         <div>
-            <div class="flex justify-between items-center py-6 px-4">
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('image/logo_area_kerja_putih.png') }}" alt="Logo" class="w-12 h-12">
-                    <span class="font-semibold">areakerja.com</span>
-                </div>
-                <button data-drawer-hide="logo-sidebar" aria-controls="logo-sidebar"
-                    class="sm:hidden inline-flex items-center p-2 text-gray-300 hover:text-white">
-                    <i class="ph ph-x text-xl"></i>
-                </button>
+
+            <!-- LOGO -->
+            <div class="flex items-center gap-3 p-5">
+                <img src="{{ asset('image/logo_area_kerja_putih.png') }}" class="w-10">
+                <span class="text-white font-semibold">areakerja</span>
             </div>
 
-            <hr class="border-gray-400 mx-6">
-
-            <div class="mt-4 px-6">
+            <!-- FILTER -->
+            <div class="px-4 mb-5">
                 <form action="/dashboard/admin" method="GET" id="formKota">
-                    <select name="provinsi"
-                        class="w-full px-3 py-2 text-center rounded-md bg-white text-gray-800 text-sm font-medium"
-                        onchange="document.getElementById('formKota').submit()">
 
-                        @foreach ($Provinsi as $p)
-                            <option value="{{ $p->name }}" {{ request('provinsi','DI YOGYAKARTA') == $p->name ? 'selected' : '' }}>
-                                {{ $p->name }}
-                            </option>
-                        @endforeach
+                    <div class="relative group">
 
-                    </select>
+                        <!-- LABEL FLOAT -->
+                        <span class="absolute -top-2 left-3 bg-[#0f172a] px-1 text-[10px] text-gray-400">
+                            Pilih Provinsi
+                        </span>
+
+                        <!-- SELECT -->
+                        <select name="provinsi"
+                            class="w-full pl-10 pr-10 py-3 rounded-2xl text-sm 
+                       bg-[#020617] text-gray-200
+                       border border-gray-700 
+                       shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]
+                       focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400
+                       transition-all duration-200 appearance-none cursor-pointer"
+                            onchange="document.getElementById('formKota').submit()">
+                            @foreach ($Provinsi as $p)
+                                <option value="{{ $p->name }}"
+                                    {{ request('provinsi', 'DI YOGYAKARTA') == $p->name ? 'selected' : '' }}>
+                                    {{ $p->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </form>
             </div>
 
+            <!-- MENU -->
+            <p>Menu</p>
 
+            <a href="/dashboard/admin" class="{{ Request()->is('dashboard/admin') ? 'active' : '' }}">
+                <i class="ph ph-squares-four"></i> Dashboard
+            </a>
 
-            <div>
-                <p class="px-6 my-5 text-sm font-semibold text-white/70">Umum</p>
-                <a href="/dashboard/admin"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : '' }}">
+            <a href="/dashboard/admin/profile" class="{{ Request()->is('dashboard/admin/profile') ? 'active' : '' }}">
+                <i class="ph ph-user"></i> Profile
+            </a>
 
-                    @if (Request()->is('dashboard/admin'))
-                        <img src="{{ asset('Icon/dashboard-icon-black.png') }}" alt="">
-                    @else
-                        <img src="{{ asset('Icon/dashboard-icon.png') }}" alt="">
-                    @endif
+            <a href="/dashboard/admin/pelamar" class="{{ Request()->is('dashboard/admin/pelamar') ? 'active' : '' }}">
+                <i class="ph ph-users"></i> Pelamar
+            </a>
 
-                    <span>Dashboard</span>
-                </a>
-            </div>
+            <a href="/dashboard/admin/perusahaan"
+                class="{{ Request()->is('dashboard/admin/perusahaan') ? 'active' : '' }}">
+                <i class="ph ph-buildings"></i> Perusahaan
+            </a>
 
+            <a href="/dashboard/admin/finance" class="{{ Request()->is('dashboard/admin/finance') ? 'active' : '' }}">
+                <i class="ph ph-wallet"></i> Finance
+            </a>
 
-            <div class="space-y-3">
-                <p class="px-6 text-sm my-5 font-semibold text-white/70">Finance</p>
-                <a href="/dashboard/admin/profile"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/profile') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/bussiness-man 1.png') }}" alt="">
-                    <span>Profile</span>
-                </a>
+            <a href="/dashboard/admin/tipskerja"
+                class="{{ Request()->is('dashboard/admin/tipskerja') ? 'active' : '' }}">
+                <i class="ph ph-newspaper"></i> Tips Kerja
+            </a>
 
-                <a href="/dashboard/admin/pelamar"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/pelamar') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/user-profile 1.png') }}" alt="">
-                    <span>Pelamar</span>
-                </a>
+            <a href="/dashboard/admin/event" class="{{ Request()->is('dashboard/admin/event') ? 'active' : '' }}">
+                <i class="ph ph-calendar"></i> Event
+            </a>
 
-                <a href="/dashboard/admin/perusahaan"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/perusahaan') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/office 3.png') }}" alt="">
-                    <span>Perusahaan</span>
-                </a>
-
-                <a href="/dashboard/admin/finance"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/finance') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/budget 1.png') }}" alt="">
-                    <span>Finance</span>
-                </a>
-
-                <a href="/dashboard/admin/tipskerja"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/tipskerja') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/news 2.png') }}" alt="">
-                    <span>Tips Kerja</span>
-                </a>
-
-                <a href="/dashboard/admin/event"
-                    class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/admin/event') ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium' : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3  hover:bg-white hover:text-black rounded-lg' }}">
-                    <img src="{{ asset('Icon/calendar 2.png') }}" alt="">
-                    <span>Event</span>
-                </a>
-            </div>
         </div>
 
-        <div class="px-6 mb-6">
+        <!-- LOGOUT -->
+        <div class="p-4">
             <form action="/logout" method="POST">
                 @csrf
                 @method('DELETE')
-                <button class="flex itn-out text-lg"></i>
-                    <i class="ph ph-sign-out text-lg"></i>
-                    <span class="pl-3">Keluar</span>
+                <button class="w-full flex items-center gap-2 text-red-400 hover:text-red-500">
+                    <i class="ph ph-sign-out"></i> Keluar
                 </button>
             </form>
         </div>
+
     </aside>
 
+    <!-- CONTENT -->
     <div class="p-4 sm:ml-64">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold hidden lg:block md:block">{{ $title }}</h1>
 
-            <div class="flex items-center px-8 gap-4">
-                @php
-                    $unread = $Pesan->where('status', '!=', 'pending')->where('is_read', 0)->count();
-                    $unreadPerusahaan = $PesanPerusahaan
-                        ->where('status', '!=', 'pending')
-                        ->where('is_read', 0)
-                        ->count();
-                    $totalUnread = $unread + $unreadPerusahaan;
-                @endphp
+        <div class="topbar flex justify-between items-center mb-6">
 
-                <button type="button" id="notifikasi" aria-expanded="false" data-dropdown-toggle="notif"
-                    data-dropdown-placement="bottom" class="relative">
-                    <span class="sr-only">Open notification</span>
-                    <i class="ph ph-bell text-2xl text-[#606060]"></i>
+            <h1 class="text-xl font-bold">{{ $title }}</h1>
 
-                    @if ($totalUnread > 0)
-                        <span
-                            class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600"></span>
-                    @endif
+            <div class="flex items-center gap-4">
+
+                <!-- NOTIF -->
+                <button id="notifikasi">
+                    <i class="ph ph-bell text-xl"></i>
                 </button>
-                <div id="notif"
-                    class="z-50 hidden my-4 w-96 text-base bg-white divide-y divide-gray-100 rounded-lg shadow-lg">
-                    <div class="flex items-center justify-between px-4 py-3">
-                        <span class="block text-sm font-semibold text-gray-900">Notifikasi</span>
-                        <a href="#" class="text-sm font-medium text-orange-500 hover:underline">Lihat
-                            Semua</a>
-                    </div>
-                    <ul class="max-h-80 mx-2 overflow-y-auto">
-                        @if ($Pesan->isNotEmpty() || $PesanPerusahaan->isNotEmpty())
-                            @foreach ($Pesan as $p)
-                                @if ($p->status !== 'pending')
-                                    @php
-                                        $pelamar = \App\Models\Pelamar::find($p->pelamar_id);
-                                        $lowongan = \App\Models\LowonganPerusahaan::find($p->lowongan_id);
-                                    @endphp
-                                    <li
-                                        class="px-4 py-3 {{ $p->is_read === 0 ? 'bg-gray-200' : 'border-zinc-300' }} hover:bg-gray-50 transition">
-                                        <form action="/detail/notif/read/{{ $p->id }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="text-left ">
-                                                <div class="flex items-start gap-3">
-                                                    <img class="w-10 h-10 rounded-full object-cover"
-                                                        src="{{ asset('storage/' . $lowongan->perusahaan->img_profile) }}"
-                                                        alt="Logo {{ $lowongan->perusahaan->nama_perusahaan }}">
-                                                    <div class="flex-1">
-                                                        @if ($p->status === 'diterima')
-                                                            <p class="text-sm text-gray-700">
-                                                                <span class="font-medium text-gray-900">Selamat!</span>
-                                                                Lamaran dari pelamar <span
-                                                                    class="font-medium text-gray-900">{{ $pelamar->nama_pelamar }}</span>ke
-                                                                Perusahaan
-                                                                <span
-                                                                    class="font-semibold">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
-                                                                divisi <span
-                                                                    class="font-semibold">{{ $lowongan->nama }}</span>
-                                                                telah
-                                                                <span
-                                                                    class="text-green-600 font-medium">{{ $p->status }}</span>.
-                                                            </p>
-                                                        @elseif ($p->status === 'ditolak')
-                                                            <p class="text-sm text-gray-700">
-                                                                <span class="font-medium text-gray-900">Mohon
-                                                                    Maaf!</span>
-                                                                Lamaran dari pelamar <span
-                                                                    class="font-medium text-gray-900">{{ $pelamar->nama_pelamar }}</span>
-                                                                ke Perusahaan
-                                                                <span
-                                                                    class="font-semibold">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
-                                                                divisi <span
-                                                                    class="font-semibold">{{ $lowongan->nama }}</span>
-                                                                <span class="text-red-600 font-medium">Belum
-                                                                    Bisa di terima</span>.
-                                                            </p>
-                                                        @endif
-                                                        <span class="text-xs text-gray-400">
-                                                            {{ $p->updated_at->diffForHumans() }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </button>
-                                        </form>
-                                    </li>
-                                @endif
-                            @endforeach
-                            @foreach ($PesanPerusahaan as $pp)
-                                @if ($pp->status !== 'pending')
-                                    @php
-                                        $pelamar = \App\Models\Pelamar::find($pp->pelamar_id);
-                                        $lowongan = \App\Models\LowonganPerusahaan::find($pp->lowongan_id);
-                                    @endphp
-                                    <li
-                                        class="px-4 py-3 {{ $pp->is_read === 0 ? 'bg-gray-200' : 'border-zinc-300' }} hover:bg-gray-50 transition">
-                                        <form action="/detail/notif/read/perusahaan/{{ $pp->id }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="text-left ">
-                                                <div class="flex items-start gap-3">
-                                                    <img class="w-10 h-10 rounded-full object-cover"
-                                                        src="{{ asset('storage/' . $pelamar->img_profile) }}"
-                                                        alt="Logo {{ $pelamar->nama_pelamar }}">
-                                                    <div class="flex-1">
-                                                        @if ($pp->status === 'diterima')
-                                                            <p class="text-sm text-gray-700">
-                                                                <span class="font-medium text-gray-900">Selamat!</span>
-                                                                Rekrutmen dari
-                                                                <span
-                                                                    class="font-medium text-gray-900">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
-                                                                kepada
-                                                                <span
-                                                                    class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
-                                                                yang di tempatkan di posisi
-                                                                <span
-                                                                    class="font-semibold">{{ $lowongan->nama }}</span>
-                                                                </span>Telah
-                                                                <span
-                                                                    class="text-green-600 font-medium">{{ $pp->status }}</span>.
-                                                            </p>
-                                                        @elseif ($pp->status === 'ditolak')
-                                                            <p class="text-sm text-gray-700">
-                                                                <span class="font-medium text-gray-900">Mohon
-                                                                    Maaf!</span>
-                                                                Rekrutmen dari
-                                                                <span
-                                                                    class="font-medium text-gray-900">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
-                                                                kepada Kandidat
-                                                                <span
-                                                                    class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
-                                                                yang di tempatkan di posisi <span
-                                                                    class="font-semibold">{{ $lowongan->nama }}</span>
-                                                                <span
-                                                                    class="text-red-600 font-medium">{{ $pp->status }}</span>.
-                                                            </p>
-                                                        @endif
-                                                        <span class="text-xs text-gray-400">
-                                                            {{ $pp->updated_at->diffForHumans() }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </button>
-                                        </form>
-                                    </li>
-                                @endif
-                            @endforeach
 
-
-                            <div class="flex items-center justify-end px-5 pb-3 gap-2 mt-2">
-                                <i class="ph ph-checks text-blue-500 font-bold text-lg"></i>
-                                <button class="text-xs font-semibold text-gray-600 hover:text-blue-600">
-                                    Tandai Baca
-                                </button>
-                            </div>
-                        @else
-                            <li class="px-4 py-6 text-center text-sm text-gray-500">
-                                Belum ada notifikasi.
-                            </li>
-                        @endif
-                    </ul>
-
-                </div>
-
-                <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
-                    <div>
-                        @if (Auth::user()->admin->img_profile)
-                            <img class="w-10 h-10 object-cover rounded-full"
-                                src="{{ asset('storage/' . Auth::user()->admin->img_profile) }}" alt="">
-                        @else
-                            <img class="w-10 h-10 rounded-full"
-                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
-                                alt="">
-                        @endif
-                    </div>
+                <!-- PROFILE -->
+                <div class="profile-box">
+                    <img src="https://ui-avatars.com/api/?name={{ Auth::user()->username }}">
                     <div>
                         <p class="text-sm font-semibold">{{ Auth::user()->username }}</p>
                         <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
+
             </div>
         </div>
+
         @yield('admin-content')
+
     </div>
 
     <script src="{{ asset('js/admin.js') }}"></script>

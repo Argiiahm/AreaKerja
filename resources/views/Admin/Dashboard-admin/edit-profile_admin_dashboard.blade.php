@@ -1,7 +1,7 @@
 @extends('Admin.Dashboard-admin.layouts.index')
 
 @section('admin-content')
-    <div class="p-6 mt-8 px-5 lg:px-20 md:px-5 border-2">
+    <div class="p-6 mt-8 px-5 lg:px-20 md:px-5 border-2 border-gray-200">
         <h2 class="text-lg font-semibold mb-6">Edit Profile</h2>
 
         <form action="/dashboard/admin/profile/update/{{ Auth::user()->admin->id }}" method="POST" class="space-y-5" enctype="multipart/form-data">
@@ -14,10 +14,10 @@
                         <img id="modalImg" alt="Zoomed" class="w-40 h-40 sm:w-40 object-cover rounded-full">
                     </div>
                     @if (Auth::user()->admin->img_profile)
-                        <img id="previewImageadmin" class="w-20 h-20 rounded-full object-cover border profile-img"
+                        <img id="previewImageadmin" class="w-20 h-20 rounded-full object-cover border border-gray-200 profile-img"
                             src="{{ asset('storage/' . Auth::user()->admin->img_profile) }}" alt="">
                     @else
-                        <img id="previewImageadmin" class="w-20 h-20 rounded-full object-cover border profile-img"
+                        <img id="previewImageadmin" class="w-20 h-20 rounded-full object-cover border border-gray-200 profile-img"
                             src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
                             alt="">
                     @endif
@@ -48,13 +48,13 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Email</label>
                     <input type="email" name="email" value="{{ Auth::user()->email }}"
-                        class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Username</label>
                     <input type="text" name="username" value="{{ Auth::user()->username }}"
-                        class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 </div>
             </div>
 
@@ -62,14 +62,14 @@
             <div>
                 <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
                 <input type="text" name="nama_lengkap" value="{{ Auth::user()->admin->nama_lengkap }}"
-                    class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
             </div>
 
             {{-- Alamat: Provinsi, Kota, Kecamatan --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Provinsi</label>
-                    <select id="provinsi" name="provinsi" class="w-full border rounded-md p-2">
+                    <select id="provinsi" name="provinsi" class="w-full border border-gray-200 rounded-md p-2">
                         <option value="" disabled {{ !Auth::user()->admin->provinsi ? 'selected' : '' }}>Pilih Provinsi</option>
                         @foreach ($Provinsi as $p)
                             <option value="{{ $p->name }}" data-id="{{ $p->id }}"
@@ -82,7 +82,7 @@
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Kota/Kabupaten</label>
-                    <select id="kota" name="kota" class="w-full border rounded-md p-2">
+                    <select id="kota" name="kota" class="w-full border border-gray-200 rounded-md p-2">
                         <option value="" disabled {{ !Auth::user()->admin->kota ? 'selected' : '' }}>Pilih Kota / Kabupaten</option>
                         @foreach ($Kabupaten as $k)
                             @if (Auth::user()->admin->kota == $k->name)
@@ -94,7 +94,7 @@
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Kecamatan</label>
-                    <select id="kecamatan" name="kecamatan" class="w-full border rounded-md p-2">
+                    <select id="kecamatan" name="kecamatan" class="w-full border border-gray-200 rounded-md p-2">
                         <option value="" disabled {{ !Auth::user()->admin->kecamatan ? 'selected' : '' }}>Pilih Kecamatan</option>
                         @foreach ($Daerah as $d)
                             @if (Auth::user()->admin->kecamatan == $d->name)
@@ -110,12 +110,12 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Desa</label>
                     <input type="text" name="desa" value="{{ Auth::user()->admin->desa }}"
-                        class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-1">Kode Pos</label>
                     <input type="text" name="kode_pos" value="{{ Auth::user()->admin->kode_pos }}"
-                        class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 </div>
             </div>
 
@@ -123,7 +123,7 @@
             <div>
                 <label class="block text-sm font-medium mb-1">Detail Lainnya</label>
                 <input type="text" name="detail_alamat" value="{{ Auth::user()->admin->detail__alamat }}"
-                    class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
             </div>
 
             {{-- Tombol --}}

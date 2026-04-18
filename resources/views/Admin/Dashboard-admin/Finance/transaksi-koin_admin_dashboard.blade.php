@@ -1,122 +1,111 @@
-    @extends('Admin.Dashboard-admin.layouts.index')
+@extends('Admin.Dashboard-admin.layouts.index')
 
 @section('admin-content')
-    <div class="p-6">
-
-
-        <div class="block lg:flex justify-between items-center mb-4">
-            <div class="space-x-2 grid grid-cols-2 gap-2 lg:inline md:inline mb-5 lg:mb-0">
-                <button id="btn_koin" class="bg-gray-700 border  text-white px-4 py-2 rounded-md">Koin</button>
-                <button id="btn_tunai" class="border text-gray-700 px-4 py-2 rounded-md">Tunai</button>
+    <div class="p-8 bg-[#F9FAFB] min-h-screen font-sans">
+        {{-- Header Section --}}
+        <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Laporan Keuangan</h1>
+                <p class="text-sm text-gray-500 mt-1">Kelola transaksi koin dan pembayaran tunai dalam satu dasbor.</p>
             </div>
 
-            <div class="flex items-center space-x-2">
-                <form method="GET" action="/dashboard/admin/cari/finance/admin" class="flex items-center space-x-2">
-                    <div class="flex border border-gray-300 rounded-lg overflow-hidden h-10">
-                        <select name="filter"
-                            class="px-10 text-sm text-gray-700 focus:outline-none border-r border-gray-300">
-                            <option value="no_referensi" {{ request('filter') == 'no_referensi' ? 'selected' : '' }}>No. Ref
-                            </option>
-                            <option value="user_id" {{ request('filter') == 'dari' ? 'selected' : '' }}>ID User</option>
-                        </select>
-
-                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari..."
-                            class="px-3 text-sm text-gray-700 focus:outline-none w-40">
-                    </div>
-
-                    <button type="submit" class="bg-gray-700 text-white px-6 h-10 rounded-lg">
-                        Cari
-                    </button>
-                </form>
-
+            <div class="bg-white border border-gray-200 p-1 rounded-xl flex shadow-sm w-fit">
+                <button id="btn_koin" onclick="switchTab('koin')"
+                    class="tab-btn active px-6 py-2 text-sm font-medium rounded-lg transition-all">Koin</button>
+                <button id="btn_tunai" onclick="switchTab('tunai')"
+                    class="tab-btn px-6 py-2 text-sm font-medium rounded-lg transition-all text-gray-500 hover:text-gray-700">Tunai</button>
             </div>
         </div>
 
+        {{-- Filter & Search --}}
+        <div class="bg-white border border-gray-200 rounded-2xl p-4 mb-6 shadow-sm">
+            <form method="GET" action="/dashboard/admin/cari/finance/admin" class="flex flex-col md:flex-row gap-3">
+                <div class="relative flex-1 group">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 group-focus-within:text-gray-900"></i>
+                    </div>
+                    <input type="text" name="q" value="{{ request('q') }}"
+                        placeholder="Cari nomor referensi, ID user..."
+                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-900 focus:border-gray-900 outline-none transition-all text-sm">
+                </div>
 
-        <!-- Koin -->
-        <div id="table_koin" class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
-            <div class="align-middle inline-block min-w-full shadow overflow-hidden bg-white  px-8 pt-3 rounded-lg">
-                <table class="min-w-full">
+                <div class="flex gap-2">
+                    <select name="filter"
+                        class="bg-white border border-gray-200 rounded-xl pl-4 pr-10 py-2.5 text-sm focus:ring-1 focus:ring-gray-900 outline-none min-w-[140px]">
+                        <option value="no_referensi" {{ request('filter') == 'no_referensi' ? 'selected' : '' }}>No.
+                            Referensi</option>
+                        <option value="user_id" {{ request('filter') == 'dari' ? 'selected' : '' }}>ID User</option>
+                    </select>
+                    <button type="submit"
+                        class="bg-gray-900 text-white px-8 py-2.5 rounded-xl font-medium text-sm hover:bg-black transition-colors">
+                        Terapkan
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {{-- Main Table Card --}}
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+            {{-- Koin Table --}}
+            <div id="table_koin" class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr>
-                            <th class="px-6 py-3 border-gray-300 text-center leading-4 tracking-wider">
-                                No</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                No.Referensi</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                jenis</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Dari</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Sumber Dana</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Transaksi Koin</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
+                        <tr class="bg-gray-50/50 border-b border-gray-100">
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider w-16">No</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">No. Referensi
+                            </th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Jenis</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Pengirim</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Sumber Dana
+                            </th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right">
+                                Nominal</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-center">
                                 Status</th>
-                            <th class="px-6 py-3 border-gray-300"></th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white text-center ">
+                    <tbody class="divide-y divide-gray-100">
                         @foreach ($koin as $k)
-                        {{-- {{ $k }} --}}
-                            <tr class="border-b">
-                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500">
-                                    {{ $loop->iteration }}
+                            <tr class="hover:bg-gray-50/50 transition-colors group">
+                                <td class="px-6 py-4 text-sm text-gray-400">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $k->no_referensi }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">{{ $k->pesanan }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">{{ $k->dari }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">{{ $k->sumber_dana }}</td>
+                                <td class="px-6 py-4 text-sm font-bold text-gray-900 text-right">
+                                    {{ number_format($k->total) }} <span
+                                        class="text-[10px] text-gray-400 font-normal ml-0.5 uppercase tracking-tighter">Koin</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-gray-500">
-                                    <div class="text-sm leading-5">{{ $k->no_referensi }}</div>
+                                <td class="px-6 py-4 text-center">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+                                        Success
+                                    </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                    {{ $k->pesanan }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                    {{ $k->dari }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                    {{ $k->sumber_dana }}</td>
-                                <td cla ss="px-6 py-4 whitespace-no-wrap  border-gray-500 text-sm leading-5">
-                                    {{ $k->total }} Koin</td>
-                                <td
-                                    class="px-6 py-4 whitespace-no-wrap text-green-500 font-bold  border-gray-500 text-sm leading-5">
-                                    Success
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-right border-gray-500 text-sm leading-5">
-
-                                </td>
+                            </tr>
                         @endforeach
-                        </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        <div id="table_tunai" class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8 hidden">
-            <div
-                class="align-middle inline-block min-w-full shadow overflow-hidden bg-white  px-8 pt-3 rounded-lg rounded-br-lg">
-                <table class="min-w-full">
+            {{-- Tunai Table --}}
+            <div id="table_tunai" class="hidden overflow-x-auto custom-scrollbar">
+                @php use App\Models\HargaPembayaran; @endphp
+                <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr>
-                            <th class="px-6 py-3 border-gray-300 text-center leading-4 tracking-wider">
-                                No</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                No.Referensi</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                jenis</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Dari</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Sumber Dana</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Transaksi Tunai</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
-                                Status</th>
-                            <th class="px-6 py-3 border-gray-300 text-center text-sm leading-4 tracking-wider">
+                        <tr class="bg-gray-50/50 border-b border-gray-100">
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">No</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">No. Referensi
+                            </th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Jenis</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Pengirim</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right">
+                                Nominal</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-center">
                                 Aksi</th>
-                            <th class="px-6 py-3 border-gray-300"></th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white text-center ">
-                        @php
-                            use App\Models\HargaPembayaran;
-                        @endphp
+                    <tbody class="divide-y divide-gray-100">
                         @foreach ($data as $d)
                             @php
                                 $pembayaran = HargaPembayaran::where('nama', $d->pesanan)->first();
@@ -124,25 +113,26 @@
                                 $admin = 2000;
                                 $total = $awal + $admin;
                             @endphp
-                            <tr>
-                                <td class="py-3 text-center">{{ $loop->iteration }}</td>
-                                <td class="py-3 text-center">{{ $d->no_referensi }}</td>
-                                <td class="py-3 text-center">{{ $d->pesanan }}</td>
-                                <td class="py-3 text-center">{{ $d->dari }}</td>
-                                <td class="py-3 text-center">{{ $d->sumber_dana }}</td>
-                                <td class="py-3 text-center">Rp. {{ number_format($awal, 0, ',', '.') }}</td>
-                                <td class="py-3 text-center">{{ $d->status }}</td>
-                                <td class="px-6 py-4">
-                                    <button class="open-detail" data-id="{{ $d->id }}"
-                                        data-no="{{ $d->no_referensi }}" data-jenis="{{ $d->pesanan }}"
-                                        data-dari="{{ $d->dari }}" data-sumber="{{ $d->sumber_dana }}"
+                            <tr class="hover:bg-gray-50/50 transition-colors">
+                                <td class="px-6 py-4 text-sm text-gray-400">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $d->no_referensi }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">{{ $d->pesanan }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">{{ $d->dari }}</td>
+                                <td class="px-6 py-4 text-sm font-bold text-gray-900 text-right">Rp
+                                    {{ number_format($awal, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-center">
+                                    <button
+                                        class="open-detail inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 transition-colors text-gray-500"
+                                        data-id="{{ $d->id }}" data-no="{{ $d->no_referensi }}"
+                                        data-jenis="{{ $d->pesanan }}" data-dari="{{ $d->dari }}"
+                                        data-sumber="{{ $d->sumber_dana }}"
                                         data-waktu="{{ $d->created_at->format('d M Y') }}"
-                                        data-nominal="Rp. {{ number_format($pembayaran->harga ?? 0, 0, ',', '.') }}"
-                                        data-admin="Rp. {{ number_format($admin, 0, ',', '.') }}"
-                                        data-total="Rp. {{ number_format($total, 0, ',', '.') }}"
-                                        data-status="{{ $d->status }}"
+                                        data-nominal="Rp {{ number_format($awal, 0, ',', '.') }}"
+                                        data-admin="Rp {{ number_format($admin, 0, ',', '.') }}"
+                                        data-total="Rp {{ number_format($total, 0, ',', '.') }}"
+                                        data-status="{{ strtolower($d->status) }}"
                                         data-bukti="{{ $d->bukti ? asset('storage/' . $d->bukti) : asset('Icon/no-image.png') }}">
-                                        <img src="{{ asset('Icon/fzd.png') }}" alt="detail">
+                                        <i class="ph ph-eye text-lg"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -151,189 +141,146 @@
                 </table>
             </div>
         </div>
-        <div id="detailModal"
-            class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-4 py-12">
+    </div>
 
-            {{-- MODAL PENDING --}}
-            <div id="modalPending"
-                class="hidden bg-white w-full max-w-md p-8 relative rounded-xl shadow-lg overflow-y-auto">
-                <button onclick="closeDetail()"
-                    class="absolute top-3 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+    {{-- Modern Modal Layer --}}
+    <div id="detailModal"
+        class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div id="modalContent"
+            class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-gray-100 relative">
+            <button onclick="closeDetail()"
+                class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 transition-colors">
+                <i class="ph ph-x text-2xl"></i>
+            </button>
 
-                <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
-                        <i class="ph ph-warning-circle text-orange-500 text-[36px]"></i>
+            <div class="p-8">
+                <div id="statusIconContainer" class="flex flex-col items-center text-center mb-8">
+                    <div id="statusIconBox"
+                        class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-colors">
+                        <i id="statusIcon" class="text-3xl"></i>
                     </div>
-                    <h2 class="text-lg font-semibold mt-3">Top Up Konfirmasi</h2>
+                    <h3 id="statusTitle" class="text-xl font-bold text-gray-900"></h3>
+                    <p class="text-sm text-gray-500 mt-1">Detail rincian transaksi penggunna</p>
                 </div>
 
-                <div class="mt-6 space-y-2 text-sm">
-                    <div class="flex justify-between"><span>No.Transaksi</span><span id="d_no"></span></div>
-                    <div class="flex justify-between"><span>Status</span><span
-                            class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">Pending</span></div>
-                    <div class="flex justify-between"><span>Jenis</span><span id="d_jenis"></span></div>
-                    <div class="flex justify-between"><span>Nama Pengirim</span><span id="d_dari"></span></div>
-                    <div class="flex justify-between"><span>Metode</span><span id="d_sumber"></span></div>
-                    <div class="flex justify-between"><span>Tanggal</span><span id="d_waktu"></span></div>
-                    <div class="flex justify-between"><span>Nominal</span><span id="d_nominal"></span></div>
-                    <div class="flex justify-between"><span>Biaya Admin</span><span id="d_admin"></span></div>
-                    <div class="flex justify-between font-semibold border-t pt-2"><span>Total</span><span
-                            id="d_total"></span></div>
-                </div>
+                <div class="space-y-4 mb-8">
+                    <div class="flex justify-between text-sm"><span class="text-gray-400">ID Transaksi</span><span
+                            id="m_no" class="font-medium text-gray-900"></span></div>
+                    <div class="flex justify-between text-sm"><span class="text-gray-400">Nama Pengirim</span><span
+                            id="m_dari" class="font-medium text-gray-900"></span></div>
+                    <div class="flex justify-between text-sm"><span class="text-gray-400">Metode</span><span
+                            id="m_sumber" class="font-medium text-gray-900"></span></div>
+                    <div class="flex justify-between text-sm"><span class="text-gray-400">Waktu</span><span
+                            id="m_waktu" class="font-medium text-gray-900"></span></div>
 
-                <div class="flex justify-between mt-5">
-                    <button id="lihatBuktiPending" class="bg-orange-500 text-white px-4 py-2 rounded">Lihat Bukti</button>
-                    <div class="space-x-2">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded">Terima</button>
-                        <button class="bg-red-500 text-white px-4 py-2 rounded">Tolak</button>
+                    <div class="pt-4 border-t border-dashed border-gray-100 space-y-2">
+                        <div class="flex justify-between text-sm"><span class="text-gray-400">Nominal</span><span
+                                id="m_nominal" class="text-gray-900"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-400">Biaya Admin</span><span
+                                id="m_admin" class="text-gray-900"></span></div>
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-gray-900 font-semibold">Total Bayar</span>
+                            <span id="m_total" class="text-xl font-bold text-gray-900 tracking-tight"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {{-- MODAL BERHASIL --}}
-            <div id="modalSuccess"
-                class="hidden bg-white w-full max-w-md p-8 relative rounded-xl shadow-lg overflow-y-auto">
-                <button onclick="closeDetail()"
-                    class="absolute top-3 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                <div class="flex flex-col gap-3">
+                    <button id="lihatBukti"
+                        class="w-full py-3 bg-gray-50 text-gray-700 rounded-xl font-medium hover:bg-gray-100 transition-all flex items-center justify-center gap-2 border border-gray-200">
+                        <i class="ph ph-image"></i> Lihat Bukti Transfer
+                    </button>
 
-                <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                        <i class="ph ph-check-circle text-green-500 text-[36px]"></i>
+                    <div id="actionButtons" class="hidden flex gap-3 mt-2">
+                        <button
+                            class="flex-1 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-black transition-all">Terima</button>
+                        <button
+                            class="flex-1 py-3 bg-white text-red-600 border border-red-100 rounded-xl font-semibold hover:bg-red-50 transition-all">Tolak</button>
                     </div>
-                    <h2 class="text-lg font-semibold mt-3">Top Up Berhasil</h2>
                 </div>
-
-                <div class="mt-6 space-y-2 text-sm">
-                    <div class="flex justify-between"><span>No.Transaksi</span><span id="s_no"></span></div>
-                    <div class="flex justify-between"><span>Status</span><span
-                            class="bg-green-500 text-white text-xs px-2 py-1 rounded-full">Berhasil</span></div>
-                    <div class="flex justify-between"><span>Jenis</span><span id="s_jenis"></span></div>
-                    <div class="flex justify-between"><span>Nama Pengirim</span><span id="s_dari"></span></div>
-                    <div class="flex justify-between"><span>Metode</span><span id="s_sumber"></span></div>
-                    <div class="flex justify-between"><span>Tanggal</span><span id="s_waktu"></span></div>
-                    <div class="flex justify-between"><span>Nominal</span><span id="s_nominal"></span></div>
-                    <div class="flex justify-between"><span>Admin</span><span id="s_admin"></span></div>
-                    <div class="flex justify-between font-semibold border-t pt-2"><span>Total</span><span
-                            id="s_total"></span></div>
-                </div>
-
-                <div class="text-center mt-5">
-                    <button id="lihatBuktiSuccess" class="bg-orange-500 text-white px-4 py-2 rounded">Lihat Bukti</button>
-                </div>
-            </div>
-
-            {{-- MODAL DITOLAK --}}
-            <div id="modalDitolak"
-                class="hidden bg-white w-full max-w-md p-8 relative rounded-xl shadow-lg overflow-y-auto">
-                <button onclick="closeDetail()"
-                    class="absolute top-3 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-
-                <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
-                        <i class="ph ph-x-circle text-red-500 text-[36px]"></i>
-                    </div>
-                    <h2 class="text-lg font-semibold mt-3">Top Up Ditolak</h2>
-                </div>
-
-                <div class="mt-6 space-y-2 text-sm">
-                    <div class="flex justify-between"><span>No.Transaksi</span><span id="t_no"></span></div>
-                    <div class="flex justify-between"><span>Status</span><span
-                            class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">Ditolak</span></div>
-                    <div class="flex justify-between"><span>Jenis</span><span id="t_jenis"></span></div>
-                    <div class="flex justify-between"><span>Nama Pengirim</span><span id="t_dari"></span></div>
-                    <div class="flex justify-between"><span>Metode</span><span id="t_sumber"></span></div>
-                    <div class="flex justify-between"><span>Tanggal</span><span id="t_waktu"></span></div>
-                    <div class="flex justify-between"><span>Nominal</span><span id="t_nominal"></span></div>
-                    <div class="flex justify-between"><span>Admin</span><span id="t_admin"></span></div>
-                    <div class="flex justify-between font-semibold border-t pt-2"><span>Total</span><span
-                            id="t_total"></span></div>
-                </div>
-
-                <div class="text-center mt-5">
-                    <button id="lihatBuktiDitolak" class="bg-orange-500 text-white px-4 py-2 rounded">Lihat Bukti</button>
-                </div>
-            </div>
-        </div>
-
-        {{-- MODAL GAMBAR --}}
-        <div id="imageModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-            <div class="relative">
-                <img id="modalImage" src="" alt="Bukti" class="max-h-screen rounded-lg shadow-lg">
-                <button onclick="closeImage()"
-                    class="absolute top-2 right-2 text-white text-3xl hover:text-gray-300">&times;</button>
             </div>
         </div>
     </div>
 
+    {{-- Simple Image Preview --}}
+    <div id="imageModal" onclick="this.classList.add('hidden')"
+        class="hidden fixed inset-0 bg-black/90 z-[60] flex items-center justify-center p-4 cursor-zoom-out">
+        <img id="modalImage" src="" alt="Bukti" class="max-h-[90vh] rounded-lg">
+    </div>
+
     <script>
-        const detailBtns = document.querySelectorAll(".open-detail");
+        function switchTab(type) {
+            const btnKoin = document.getElementById('btn_koin');
+            const btnTunai = document.getElementById('btn_tunai');
+            const tableKoin = document.getElementById('table_koin');
+            const tableTunai = document.getElementById('table_tunai');
+
+            if (type === 'koin') {
+                btnKoin.classList.add('active');
+                btnTunai.classList.remove('active');
+                btnTunai.classList.add('text-gray-500');
+                tableKoin.classList.remove('hidden');
+                tableTunai.classList.add('hidden');
+            } else {
+                btnTunai.classList.add('active');
+                btnKoin.classList.remove('active');
+                btnKoin.classList.add('text-gray-500');
+                tableTunai.classList.remove('hidden');
+                tableKoin.classList.add('hidden');
+            }
+        }
+
         const detailModal = document.getElementById("detailModal");
-        const modalPending = document.getElementById("modalPending");
-        const modalSuccess = document.getElementById("modalSuccess");
-        const modalDitolak = document.getElementById("modalDitolak");
         const imageModal = document.getElementById("imageModal");
         const modalImage = document.getElementById("modalImage");
 
         function closeDetail() {
             detailModal.classList.add("hidden");
-            modalPending.classList.add("hidden");
-            modalSuccess.classList.add("hidden");
-            modalDitolak.classList.add("hidden");
         }
 
-        function closeImage() {
-            imageModal.classList.add("hidden");
-        }
-
-        detailBtns.forEach(btn => {
+        document.querySelectorAll(".open-detail").forEach(btn => {
             btn.addEventListener("click", () => {
                 const d = btn.dataset;
-                closeDetail();
                 detailModal.classList.remove("hidden");
 
+                // Map Data
+                document.getElementById("m_no").innerText = d.no;
+                document.getElementById("m_dari").innerText = d.dari;
+                document.getElementById("m_sumber").innerText = d.sumber;
+                document.getElementById("m_waktu").innerText = d.waktu;
+                document.getElementById("m_nominal").innerText = d.nominal;
+                document.getElementById("m_admin").innerText = d.admin;
+                document.getElementById("m_total").innerText = d.total;
+
+                const iconBox = document.getElementById("statusIconBox");
+                const icon = document.getElementById("statusIcon");
+                const title = document.getElementById("statusTitle");
+                const actions = document.getElementById("actionButtons");
+
+                // Reset & Apply Status Style
+                actions.classList.add("hidden");
                 if (d.status === "pending") {
-                    modalPending.classList.remove("hidden");
-                    document.getElementById("d_no").innerText = d.no;
-                    document.getElementById("d_jenis").innerText = d.jenis;
-                    document.getElementById("d_dari").innerText = d.dari;
-                    document.getElementById("d_sumber").innerText = d.sumber;
-                    document.getElementById("d_waktu").innerText = d.waktu;
-                    document.getElementById("d_nominal").innerText = "Rp " + d.nominal;
-                    document.getElementById("d_admin").innerText = "Rp " + d.admin;
-                    document.getElementById("d_total").innerText = "Rp " + d.total;
-                    document.getElementById("lihatBuktiPending").onclick = () => {
-                        modalImage.src = d.bukti;
-                        imageModal.classList.remove("hidden");
-                    };
-                } else if (d.status === "diterima") {
-                    modalSuccess.classList.remove("hidden");
-                    document.getElementById("s_no").innerText = d.no;
-                    document.getElementById("s_jenis").innerText = d.jenis;
-                    document.getElementById("s_dari").innerText = d.dari;
-                    document.getElementById("s_sumber").innerText = d.sumber;
-                    document.getElementById("s_waktu").innerText = d.waktu;
-                    document.getElementById("s_nominal").innerText = "Rp " + d.nominal;
-                    document.getElementById("s_admin").innerText = "Rp " + d.admin;
-                    document.getElementById("s_total").innerText = "Rp " + d.total;
-                    document.getElementById("lihatBuktiSuccess").onclick = () => {
-                        modalImage.src = d.bukti;
-                        imageModal.classList.remove("hidden");
-                    };
+                    iconBox.className =
+                        "w-16 h-16 rounded-2xl flex items-center justify-center mb-4 bg-orange-50 text-orange-500";
+                    icon.className = "ph ph-clock-counter-clockwise text-3xl";
+                    title.innerText = "Konfirmasi Top Up";
+                    actions.classList.remove("hidden");
+                } else if (d.status === "diterima" || d.status === "berhasil" || d.status === "success") {
+                    iconBox.className =
+                        "w-16 h-16 rounded-2xl flex items-center justify-center mb-4 bg-green-50 text-green-500";
+                    icon.className = "ph ph-check-circle text-3xl";
+                    title.innerText = "Top Up Berhasil";
                 } else {
-                    modalDitolak.classList.remove("hidden");
-                    document.getElementById("t_no").innerText = d.no;
-                    document.getElementById("t_jenis").innerText = d.jenis;
-                    document.getElementById("t_dari").innerText = d.dari;
-                    document.getElementById("t_sumber").innerText = d.sumber;
-                    document.getElementById("t_waktu").innerText = d.waktu;
-                    document.getElementById("t_nominal").innerText = "Rp " + d.nominal;
-                    document.getElementById("t_admin").innerText = "Rp " + d.admin;
-                    document.getElementById("t_total").innerText = "Rp " + d.total;
-                    document.getElementById("lihatBuktiDitolak").onclick = () => {
-                        modalImage.src = d.bukti;
-                        imageModal.classList.remove("hidden");
-                    };
+                    iconBox.className =
+                        "w-16 h-16 rounded-2xl flex items-center justify-center mb-4 bg-red-50 text-red-500";
+                    icon.className = "ph ph-x-circle text-3xl";
+                    title.innerText = "Top Up Ditolak";
                 }
+
+                document.getElementById("lihatBukti").onclick = () => {
+                    modalImage.src = d.bukti;
+                    imageModal.classList.remove("hidden");
+                };
             });
         });
     </script>
