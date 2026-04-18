@@ -88,53 +88,97 @@
     @if (Auth::check() && Auth::user()->role === 'pelamar' && Auth::user()->pelamars->nama_pelamar == null)
         <script>
             window.onload = function() {
+                const isMobile = window.innerWidth < 768;
                 let intro = introJs();
 
-                intro.setOptions({
-                    steps: [{
-                            element: '#user-menu-button',
-                            intro: `
-                                <div style="max-width:180px; text-align:center">
-                                    <img src="{{ asset('image/Lengkapi Profile.png') }}" style="width:100%; border-radius:12px;" />
-                                </div>
-                            `,
-                            position: 'right',
-                            tooltipClass: 'notif-profil'
-                        },
-                        {
-                            element: '#btn-profile',
-                            intro: `
-                                <div style="max-width:180px; text-align:center">
-                                    <img src="{{ asset('image/Klik Profil.png') }}" style="width:100%; border-radius:12px;" />
-                                </div>
-                            `,
-                            position: 'right',
-                            tooltipClass: 'notif-profil'
-                        }
-                    ],
-                    showButtons: false,
-                    showBullets: false,
-                    showProgress: false,
-                    exitOnOverlayClick: false,
-                    showStepNumbers: false,
-                    disableInteraction: false
-                });
+                if (isMobile) {
+                    // Mode HP: target elemen yang terlihat di mobile navbar
+                    const mobileProfileBtn = document.querySelector('#mobile-profile-btn');
 
-                intro.onafterchange(function(targetElement) {
-                    if (targetElement.id === "btn-profile") {
-                        document.querySelector('#user-menu')?.classList.remove('hidden');
+                    // Buka hamburger menu supaya mobile-profile-btn terlihat
+                    const hamburgerBtn = document.querySelector('[data-collapse-toggle="navbar-sticky"]');
+                    if (hamburgerBtn) {
+                        hamburgerBtn.click();
                     }
-                });
 
-                document.querySelector('#user-menu-button').addEventListener('click', () => {
-                    intro.nextStep();
-                });
+                    intro.setOptions({
+                        steps: [
+                            {
+                                element: '#mobile-profile-btn',
+                                intro: `
+                                    <div style="max-width:220px; text-align:center">
+                                        <img src="{{ asset('image/Lengkapi Profile.png') }}" style="width:100%; border-radius:10px;" />
+                                        <p style="margin-top:8px; font-size:13px; color:#555;">Ketuk foto profil untuk melengkapi data kamu!</p>
+                                    </div>
+                                `,
+                                position: 'bottom',
+                                tooltipClass: 'notif-profil'
+                            }
+                        ],
+                        showButtons: false,
+                        showBullets: false,
+                        showProgress: false,
+                        exitOnOverlayClick: true,
+                        showStepNumbers: false,
+                        disableInteraction: false
+                    });
 
-                document.querySelector('#btn-profile').addEventListener('click', () => {
-                    intro.exit();
-                });
+                    if (mobileProfileBtn) {
+                        mobileProfileBtn.addEventListener('click', () => {
+                            intro.exit();
+                        });
+                    }
 
-                intro.start();
+                    intro.start();
+
+                } else {
+                    // Mode Desktop/Tablet
+                    intro.setOptions({
+                        steps: [{
+                                element: '#user-menu-button',
+                                intro: `
+                                    <div style="max-width:180px; text-align:center">
+                                        <img src="{{ asset('image/Lengkapi Profile.png') }}" style="width:100%; border-radius:12px;" />
+                                    </div>
+                                `,
+                                position: 'right',
+                                tooltipClass: 'notif-profil'
+                            },
+                            {
+                                element: '#btn-profile',
+                                intro: `
+                                    <div style="max-width:180px; text-align:center">
+                                        <img src="{{ asset('image/Klik Profil.png') }}" style="width:100%; border-radius:12px;" />
+                                    </div>
+                                `,
+                                position: 'right',
+                                tooltipClass: 'notif-profil'
+                            }
+                        ],
+                        showButtons: false,
+                        showBullets: false,
+                        showProgress: false,
+                        exitOnOverlayClick: false,
+                        showStepNumbers: false,
+                        disableInteraction: false
+                    });
+
+                    intro.onafterchange(function(targetElement) {
+                        if (targetElement.id === "btn-profile") {
+                            document.querySelector('#user-menu')?.classList.remove('hidden');
+                        }
+                    });
+
+                    document.querySelector('#user-menu-button').addEventListener('click', () => {
+                        intro.nextStep();
+                    });
+
+                    document.querySelector('#btn-profile').addEventListener('click', () => {
+                        intro.exit();
+                    });
+
+                    intro.start();
+                }
             };
         </script>
     @endif

@@ -4,7 +4,7 @@
     <section class="relative w-full h-screen pt-24">
         <div class="absolute inset-0">
             <img src="{{ $link_sosial['daftar_kandidat_header']->link ??
-                'https://msky-consult.com/wp-content/uploads/2025/03/business-legal-services-website-header.jpg' }}"
+                'https://t4.ftcdn.net/jpg/13/87/87/85/360_F_1387878547_U3djpI3zLI51eyPqJ9QIoeqrrL7NzG4U.jpg' }}"
                 class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-60"></div>
         </div>

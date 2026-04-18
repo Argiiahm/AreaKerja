@@ -255,82 +255,113 @@
 
     <!-- Modal -->
     @if (Auth::check() && Auth::user()->role === 'perusahaan')
-        <div id="modalDetails"
-            class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modalDetails" class="hidden fixed inset-0 z-[9999] flex items-center justify-center p-4">
+            <div onclick="closeDetail()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+
             <div
-                class="bg-white w-full max-w-md p-8 relative mx-10 shadow-lg max-h-[calc(100vh-3rem)] overflow-y-auto rounded-lg">
-                <button onclick="closeDetail()"
-                    class="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                class="bg-white w-full max-w-md relative shadow-2xl max-h-[90vh] overflow-hidden rounded-2xl border border-slate-100 z-10 animate-in fade-in zoom-in duration-200">
 
-                <h2 class="text-xl font-bold text-center mb-10">Pasang Lowongan</h2>
+                <div class="p-6 border-b border-slate-100 relative">
+                    <button type="button" onclick="closeDetail()"
+                        class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 transition-colors text-3xl leading-none">
+                        &times;
+                    </button>
+                    <h2 class="text-xl font-bold text-slate-800 text-center">Konfirmasi Pembayaran</h2>
+                    <p class="text-center text-slate-500 text-sm mt-1">Selesaikan aktivasi lowongan Anda</p>
+                </div>
 
-                <form id="formBeli" action="/topup/lowongan" method="POST">
+                <form id="formBeli" action="/topup/lowongan" method="POST" class="p-6">
                     @csrf
-                    <div class="flex justify-between border-b border-dashed pb-2">
-                        <span>Nama Paket</span>
-                        <input type="text" disabled id="d_nama"
-                            class="font-medium border-none bg-transparent text-right" value="">
-                        <input type="hidden" name="pesanan" id="pesanan_hidden">
-                    </div>
 
-                    <div class="flex justify-between border-b border-dashed pt-2 pb-2">
-                        <span>Harga</span>
-                        <input type="text" disabled id="d_harga"
-                            class="bg-orange-500 text-white text-center text-xs px-3 py-1 rounded-full" value="">
-                        <input type="hidden" name="total" id="total_hidden">
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl">
+                            <span class="text-sm text-slate-600">Paket Terpilih</span>
+                            <input type="text" disabled id="d_nama"
+                                class="font-bold text-slate-800 bg-transparent text-right outline-none w-1/2"
+                                value="">
+                            <input type="hidden" name="pesanan" id="pesanan_hidden">
+                        </div>
+
+                        <div
+                            class="flex justify-between items-center p-3 bg-orange-50 rounded-xl border border-orange-100">
+                            <span class="text-sm text-orange-700 font-medium">Total Harga</span>
+                            <div class="flex items-center gap-1">
+                                <input type="text" disabled id="d_harga"
+                                    class="bg-transparent text-orange-600 font-bold text-right w-24 outline-none"
+                                    value="">
+                                <span class="text-xs font-bold text-orange-600"></span>
+                            </div>
+                            <input type="hidden" name="total" id="total_hidden">
+                        </div>
                     </div>
 
                     <input type="hidden" name="paket_id" id="paket_id_hidden">
 
-                    <div class="overflow-x-auto rounded-lg shadow my-2">
-                        <table class="w-full text-sm text-left border-collapse">
-                            <thead>
-                                <tr>
-                                    <th class="px-4 py-3">Pilih</th>
-                                    <th class="px-4 py-3">Lowongan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $lowongan = Auth::user()->perusahaan->pasanglowongan;
-                                    $tanpaPaket = $lowongan->whereNull('paket_id');
-                                @endphp
+                    <label class="block text-sm font-semibold text-slate-700 mb-2 ml-1">Pilih Lowongan yang Akan
+                        Diaktivasi</label>
+                    <div class="overflow-hidden rounded-xl border border-slate-200 mb-6 bg-slate-50">
+                        <div class="max-h-48 overflow-y-auto custom-scrollbar">
+                            <table class="w-full text-sm text-left border-collapse">
+                                <tbody class="divide-y divide-slate-200">
+                                    @php
+                                        $lowongan = Auth::user()->perusahaan->pasanglowongan;
+                                        $tanpaPaket = $lowongan->whereNull('paket_id');
+                                    @endphp
 
-                                @if ($tanpaPaket->count() > 0)
-                                    @foreach ($tanpaPaket as $p)
-                                        <tr class="bg-gray-200">
-                                            <td class="px-4 py-3">
-                                                <input name="id_lowongan" type="radio" value="{{ $p->id }}"
-                                                    class="w-4 h-4">
-                                            </td>
-                                            <td class="px-4 py-3 text-blue-600 font-medium cursor-pointer">
-                                                {{ $p->nama }}
+                                    @if ($tanpaPaket->count() > 0)
+                                        @foreach ($tanpaPaket as $p)
+                                            <tr class="hover:bg-white transition-colors group">
+                                                <td class="px-4 py-3 w-10">
+                                                    <input name="id_lowongan" type="radio" value="{{ $p->id }}"
+                                                        required
+                                                        class="w-4 h-4 text-orange-500 border-slate-300 focus:ring-orange-500 cursor-pointer radio-lowongan">
+                                                </td>
+                                                <td class="px-2 py-3 text-slate-700 font-medium group-hover:text-orange-600 transition-colors cursor-pointer"
+                                                    onclick="this.parentElement.querySelector('input').click()">
+                                                    {{ $p->nama }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="2" class="px-4 py-8 text-center text-slate-500">
+                                                Belum ada draf lowongan. <br>
+                                                <a href="/dashboard/perusahaan/lowongan"
+                                                    class="text-orange-500 underline font-bold">Buat dulu yuk!</a>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                @else
-                                    <span class="w-full flex justify-center py-2">
-                                        <a class="bg-zinc-700 px-8 py-1 text-white rounded-md"
-                                            href="/dashboard/perusahaan/lowongan">Tambah Lowongan</a>
-                                    </span>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="flex justify-between border-b border-dashed pt-2 pb-2">
-                        <div class="flex items-center gap-2">
-                            <span>Saldo Koin Anda</span>
-                            <span id="saldo_koin"
-                                class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full">{{ $totalKoin }}</span>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <input class="border-2" type="checkbox" id="konfirmasi" required>
-                            <p id="p" class="text-zinc-600"></p>
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded w-full">Beli</button>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between px-1">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Saldo:</span>
+                                <div
+                                    class="flex items-center gap-1 bg-emerald-100 text-emerald-700 px-2 py-1 rounded-md text-xs font-bold">
+                                    <span id="saldo_koin">{{ $totalKoin }}</span> Koin
+                                </div>
+                            </div>
+                            <p id="p" class="text-[10px] font-bold italic"></p>
+                        </div>
+
+                        <label class="flex items-start gap-3 cursor-pointer group p-1">
+                            <input class="mt-1 border-slate-300 rounded text-orange-500 focus:ring-orange-500"
+                                type="checkbox" id="konfirmasi" required>
+                            <span
+                                class="text-xs text-slate-500 leading-tight group-hover:text-slate-700 transition-colors">
+                                Saya menyetujui pemotongan saldo koin untuk aktivasi ini.
+                            </span>
+                        </label>
+
+                        <button type="submit" id="submitBtn"
+                            class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.98]">
+                            Konfirmasi & Bayar
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -357,58 +388,98 @@
     @endif
 
     <script>
-        const detailBtns = document.querySelectorAll(".open-detail");
-        const modalDetails = document.getElementById("modalDetails");
-        const d_nama = document.getElementById("d_nama");
-        const d_harga = document.getElementById("d_harga");
-        const saldoKoin = document.getElementById("saldo_koin");
-        const formBeli = document.getElementById("formBeli");
-        const pesananHidden = document.getElementById("pesanan_hidden");
-        const totalHidden = document.getElementById("total_hidden");
-        const paketIdHidden = document.getElementById("paket_id_hidden");
-        const submitBtn = formBeli.querySelector("button[type='submit']");
-        const checkboxKoin = document.getElementById("konfirmasi");
-        const pesan = document.getElementById("p");
+        document.addEventListener("DOMContentLoaded", function() {
 
-        detailBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const nama = btn.dataset.nama;
-                const harga = parseInt(btn.dataset.harga);
+            const detailBtns = document.querySelectorAll(".open-detail");
+            const modalDetails = document.getElementById("modalDetails");
+            const d_nama = document.getElementById("d_nama");
+            const d_harga = document.getElementById("d_harga");
+            const saldoKoin = document.getElementById("saldo_koin");
+            const formBeli = document.getElementById("formBeli");
+            const pesananHidden = document.getElementById("pesanan_hidden");
+            const totalHidden = document.getElementById("total_hidden");
+            const paketIdHidden = document.getElementById("paket_id_hidden");
+            const submitBtn = formBeli ? formBeli.querySelector("button[type='submit']") : null;
+            const checkboxKoin = document.getElementById("konfirmasi");
+            const pesan = document.getElementById("p");
 
-                d_nama.value = nama;
-                d_harga.value = new Intl.NumberFormat("id-ID").format(harga) + " Koin";
-                pesananHidden.value = nama;
-                totalHidden.value = harga;
+            if (!modalDetails) return;
 
-                if (nama === "Pasang Lowongan Bronze") {
-                    paketIdHidden.value = 1;
-                } else if (nama === "Pasang Lowongan Silver") {
-                    paketIdHidden.value = 2;
-                } else if (nama === "Pasang Lowongan Gold") {
-                    paketIdHidden.value = 3;
-                }
+            detailBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
 
-                const koin = parseInt(saldoKoin.textContent);
-                if (koin < harga) {
-                    checkboxKoin.checked = false;
-                    checkboxKoin.disabled = true;
-                    submitBtn.disabled = true;
-                    submitBtn.classList.add("opacity-50", "cursor-not-allowed");
-                    pesan.innerHTML = "Saldo Tidak Mencukupi";
-                } else {
-                    checkboxKoin.checked = true;
-                    checkboxKoin.disabled = false;
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
-                    pesan.innerHTML = "Saldo Mencukupi";
-                }
+                    const nama = btn.dataset.nama;
+                    const harga = parseInt(btn.dataset.harga);
 
-                modalDetails.classList.remove("hidden");
+                    // isi data
+                    if (d_nama) d_nama.value = nama;
+                    if (d_harga) d_harga.value = new Intl.NumberFormat("id-ID").format(harga) +
+                        " Koin";
+                    if (pesananHidden) pesananHidden.value = nama;
+                    if (totalHidden) totalHidden.value = harga;
+
+                    // set paket id
+                    if (paketIdHidden) {
+                        if (nama === "Pasang Lowongan Bronze") paketIdHidden.value = 1;
+                        else if (nama === "Pasang Lowongan Silver") paketIdHidden.value = 2;
+                        else if (nama === "Pasang Lowongan Gold") paketIdHidden.value = 3;
+                    }
+
+                    // cek saldo
+                    const koin = saldoKoin ? parseInt(saldoKoin.textContent) : 0;
+
+                    if (koin < harga) {
+                        if (checkboxKoin) {
+                            checkboxKoin.checked = false;
+                            checkboxKoin.disabled = true;
+                        }
+
+                        if (submitBtn) {
+                            submitBtn.disabled = true;
+                            submitBtn.classList.add("opacity-50", "cursor-not-allowed");
+                        }
+
+                        if (pesan) {
+                            pesan.innerHTML = "Saldo Tidak Mencukupi";
+                            pesan.classList.remove("text-green-500");
+                            pesan.classList.add("text-red-500");
+                        }
+
+                    } else {
+                        if (checkboxKoin) {
+                            checkboxKoin.checked = true;
+                            checkboxKoin.disabled = false;
+                        }
+
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+                        }
+
+                        if (pesan) {
+                            pesan.innerHTML = "Saldo Mencukupi";
+                            pesan.classList.remove("text-red-500");
+                            pesan.classList.add("text-green-500");
+                        }
+                    }
+
+                    // tampilkan modal
+                    modalDetails.classList.remove("hidden");
+                });
             });
+
+            // close modal kalau klik luar
+            modalDetails.addEventListener("click", function(e) {
+                if (e.target === modalDetails) {
+                    closeDetail();
+                }
+            });
+
         });
 
         function closeDetail() {
-            modalDetails.classList.add("hidden");
+            const modal = document.getElementById("modalDetails");
+            if (modal) modal.classList.add("hidden");
         }
     </script>
 @endsection

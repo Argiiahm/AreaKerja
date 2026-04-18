@@ -1,7 +1,6 @@
 @extends('Super-Admin.layouts.index')
 @section('super_admin-content')
         <section class="pt-40 mx-10">
-        <h1 class="font-semibold">Profile Akun</h1>
         <div class="mt-10 border-2 border-orange-500 p-6 sm:p-10 rounded-lg">
             <div class="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
                 <div class="flex flex-col items-center">

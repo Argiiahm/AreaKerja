@@ -7,7 +7,8 @@
                 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 mt-24 sm:mt-32">
                     <p class="text-sm text-orange-600 font-medium">Dashboard</p>
                     <h1 class="text-xl sm:text-2xl font-bold leading-snug">
-                        Selamat Datang Di Area Kerja <br class="hidden sm:block"> {{ Auth::user()->perusahaan->nama_perusahaan }}
+                        Selamat Datang Di Area Kerja <br class="hidden sm:block">
+                        {{ Auth::user()->perusahaan->nama_perusahaan }}
                     </h1>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 px-4 sm:px-6 lg:px-32 items-start">
@@ -22,7 +23,7 @@
                                 <div
                                     class="bg-white rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
                                     <div class="flex items-start sm:items-center gap-3 sm:gap-4">
-                                        <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo"
+                                        <img src="{{ asset('storage/' . $datas->perusahaan->img_profile) }}" alt="Logo"
                                             class="w-12 h-12 sm:w-14 sm:h-14">
                                         <div class="text-sm sm:text-base">
                                             <p class="text-gray-800 font-semibold">{{ $datas->perusahaan->nama_perusahaan }}
@@ -48,7 +49,7 @@
                                 <div
                                     class="bg-white rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
                                     <div class="flex items-start sm:items-center gap-3 sm:gap-4">
-                                        <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo"
+                                        <img src="{{ asset('storage/' . $datas->perusahaan->img_profile) }}" alt="Logo"
                                             class="w-12 h-12 sm:w-14 sm:h-14">
                                         <div class="text-sm sm:text-base">
                                             <p class="text-gray-800 font-semibold">
@@ -64,8 +65,7 @@
                                     <div class="flex items-center gap-2 sm:gap-3">
                                         <span
                                             class="px-3 py-1 border rounded-lg bg-red-500 text-white text-xs sm:text-sm">Kadaluarsa</span>
-                                        <button
-                                            onclick="window.location='/dashboard/perusahaan/lowongan'"
+                                        <button onclick="window.location='/dashboard/perusahaan/lowongan'"
                                             class="bg-zinc-500 text-white px-3 sm:px-4 py-1 rounded-lg hover:bg-zinc-600 transition text-xs sm:text-sm">
                                             Lihat Pelamar
                                         </button>
@@ -387,10 +387,5 @@
         btn_list.addEventListener("click", () => {
             list_pembayaran.classList.toggle("hidden");
         });
-
-        // document.addEventListener("click", (e) => {
-        //     const modal = document.getElementById("modalKonfirmasi");
-        //     if (modal && e.target === modal) modal.remove();
-        // });
     </script>
 @endsection

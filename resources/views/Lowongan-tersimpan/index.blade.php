@@ -4,7 +4,7 @@
     <section class="w-full h-screen pt-24">
         <div class="absolute inset-0">
             <img src="{{ $link_sosial['lowongan_tersimpan_header']->link ??
-                'https://nebula.wsimg.com/abac5203914d654d42ea84b512be90b4?AccessKeyId=D20E7372B83C25CA2C64&disposition=0&alloworigin=1' }}"
+        'https://nebula.wsimg.com/abac5203914d654d42ea84b512be90b4?AccessKeyId=D20E7372B83C25CA2C64&disposition=0&alloworigin=1' }}"
                 class="w-full h-full object-cover">
 
             <div class="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -21,13 +21,12 @@
     </section>
     <section class="container max-w-screen-lg mx-auto mt-10">
         <div class="grid grid-cols-1 gap-5">
-            @foreach ($Data as $d)
+            @forelse ($Data as $d)
                 @if ($d->paket_id)
                     <a href="/lowongan/tersimpan/detail/{{ $d->slug }}">
                         <div class="flex gap-5 shadow-md p-4">
                             <div>
-                                <img class="w-20" src="{{ asset('storage/' . $d->perusahaan->img_profile) }}"
-                                    alt="">
+                                <img class="w-20" src="{{ asset('storage/' . $d->perusahaan->img_profile) }}" alt="">
                             </div>
                             <div class="w-full">
                                 <p>{{ $d->perusahaan->nama_perusahaan }}</p>
@@ -43,7 +42,12 @@
                         </div>
                     </a>
                 @endif
-            @endforeach
+
+            @empty
+                <div class="text-center py-10">
+                    <p class="text-gray-500">Tidak ada lowongan tersimpan.</p>
+                </div>
+            @endforelse
         </div>
     </section>
 @endsection

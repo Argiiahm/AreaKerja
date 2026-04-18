@@ -374,7 +374,7 @@ class FinanceController extends Controller
             'totalKoin' => $totalKoin
         ]);
 
-        $css = file_get_contents(public_path('build/assets/app-B4zNTkcG.css'));
+        $css = file_get_contents(public_path('build/assets/app-BMqTkzxn.css'));
 
         $htmlWithCss = '
                     <!DOCTYPE html>

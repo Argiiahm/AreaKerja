@@ -19,49 +19,51 @@ class AuthController extends Controller
     {
         return view('Auth.login');
     }
+
+    // Login
     public function masuk(Request $request)
     {
         $v = $request->validate([
             "username" => "required",
             "password" => "required"
+        ], [
+            "username.required" => "Username wajib diisi.",
+            "password.required" => "Password wajib diisi.",
         ]);
 
         $user = User::where('username', $v['username'])->first();
 
+        // cek user
         if (!$user) {
-            return back()->with('error', 'Akun tidak ditemukan');
+            return back()->with('error', 'Akun tidak ditemukan')->withInput();
         }
 
+        // cek password
         if (!Hash::check($v['password'], $user->password)) {
-            return back()->with('error', 'Password salah');
+            return back()->with('error', 'Password salah')->withInput();
+        }
+
+        // cek status sebelum login
+        if ($user->status !== 0) {
+            return back()->with('error', 'Akun dibekukan');
         }
 
         Auth::login($user);
 
-        if ($user->status !== 0) {
-            Auth::logout();
-            return back()->with('error', 'Akun dibekukan');
-        }
-
         $latestEvent = Event::latest()->first();
 
-        if ($user->role == 'superadmin') {
-            return redirect('/dashboard/superadmin');
-        } elseif ($user->role == 'admin') {
-            return redirect('/dashboard/admin');
-        } elseif ($user->role == 'pelamar') {
-            return redirect('/')
+        return match ($user->role) {
+            'superadmin' => redirect('/dashboard/superadmin'),
+            'admin' => redirect('/dashboard/admin'),
+            'pelamar' => redirect('/')
                 ->with('show_event_modal', true)
-                ->with('latest_event', $latestEvent);
-        } elseif ($user->role == 'perusahaan') {
-            return redirect('/dashboard/perusahaan')
+                ->with('latest_event', $latestEvent),
+            'perusahaan' => redirect('/dashboard/perusahaan')
                 ->with('show_event_modal', true)
-                ->with('latest_event', $latestEvent);
-        } elseif ($user->role == 'finance') {
-            return redirect('/dashboard/finance');
-        }
-
-        return back()->with('error', 'Terjadi kesalahan');
+                ->with('latest_event', $latestEvent),
+            'finance' => redirect('/dashboard/finance'),
+            default => back()->with('error', 'Role tidak dikenali'),
+        };
     }
 
 
@@ -77,43 +79,54 @@ class AuthController extends Controller
     {
         $validasi_data = $request->validate([
             "username" => "required",
-            "email"    => "required|email",
+            "email"    => "required|email|unique:users,email",
             "password" => "required",
-            "role"     => "required"
+            "role"     => "required",
+            "telepon_pelamar" => "required"
+        ], [
+            "username.required" => "Username wajib diisi.",
+            "email.required"    => "Email wajib diisi.",
+            "email.email"       => "Format email tidak valid.",
+            "email.unique"      => "Email sudah digunakan, coba yang lain.",
+            "password.required" => "Password wajib diisi.",
+            "role.required"     => "Role wajib diisi.",
+            "telepon_pelamar.required" => "No. telepon wajib diisi.",
         ]);
 
-        $validasi_data['password'] = Hash::make($request->password);
-        $user = User::create($validasi_data);
+        DB::transaction(function () use ($validasi_data) {
 
-        $validasi_dataPelamar = $request->validate([
-            "telepon_pelamar" => "required",
-        ]);
+            $validasi_data['password'] = Hash::make($validasi_data['password']);
 
-        $user->pelamars()->create($validasi_dataPelamar);
+            $user = User::create($validasi_data);
+
+            $user->pelamars()->create([
+                "telepon_pelamar" => $validasi_data['telepon_pelamar']
+            ]);
+        });
 
         return back()->with('success', 'Akun Berhasil Dibuat');
     }
-
-
-    public function logout(Request $request)
-    {
-        $request->session()->regenerateToken();
-        $request->session()->invalidate();
-
-        return redirect('/');
-    }
-
 
     // Perusahaan Register
     public function buat_perusahaan(Request $request)
     {
         $v = $request->validate([
             "username" => "required",
-            "email"    => "required|email",
+            "email"    => "required|email|unique:users,email",
             "password" => "required",
             "role"     => "required"
+        ], [
+            "username.required" => "Username wajib diisi.",
+            "email.required"    => "Email wajib diisi.",
+            "email.email"       => "Format email tidak valid.",
+            "email.unique"      => "Email sudah digunakan, coba yang lain.",
+            "password.required" => "Password wajib diisi.",
+            "password.min"      => "Password minimal 6 karakter.",
+            "role.required"     => "Role wajib diisi.",
+            "telepon_pelamar.required" => "No. telepon wajib diisi.",
         ]);
 
+        DB::beginTransaction();
         $v['password'] = Hash::make($request->password);
         $user = User::create($v);
 
@@ -125,6 +138,7 @@ class AuthController extends Controller
         $v2['nama_perusahaan']  = $request->username;
 
         $user->perusahaan()->create($v2);
+        DB::commit();
         return back()->with('success', 'Akun Berhasil Dibuat');
     }
 
@@ -133,6 +147,7 @@ class AuthController extends Controller
         return view('Auth.verifikasi');
     }
 
+    // Kirim OTP
     public function sendOtp(Request $request)
     {
         $request->validate([
@@ -181,6 +196,7 @@ class AuthController extends Controller
         ]);
     }
 
+    // Update Password
     public function update_password(Request $request)
     {
         $request->validate([
@@ -220,8 +236,7 @@ class AuthController extends Controller
     }
 
 
-
-
+    // Verifikasi OTP
     public function verifikasi_kodeotp(Request $request)
     {
         $otp_input = implode('', $request->otp);
@@ -254,7 +269,7 @@ class AuthController extends Controller
     }
 
 
-
+    // Ubah password
     public function change_password()
     {
 
@@ -265,208 +280,12 @@ class AuthController extends Controller
         return view('Auth.change-password');
     }
 
-
-
-    //Auth finance
-    // public function login_finance()
-    // {
-    //     return view('Auth.login-finance');
-    // }
-
-    // public function masuk_finance(Request $request)
-    // {
-    //     $validasi_data = $request->validate([
-    //         "username"     =>     "required",
-    //         "password"     =>     "required"
-    //     ]);
-
-    //     Auth::attempt($validasi_data);
-    //     return redirect('/dashboard/finance');
-    // }
-
-    public function logout_finance(Request $request)
+    // Logout
+    public function logout(Request $request)
     {
-        $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login/finance');
-    }
-
-
-
-    public function register_finance()
-    {
-        return view('Auth.Register-finance');
-    }
-
-    public function buat_finance(Request $request)
-    {
-        $v = $request->validate([
-            "username"      =>      "required",
-            "email"         =>      "required|email",
-            "role"          =>      "required",
-            "password"      =>      "required"
-        ]);
-
-        $v['password']      =    Hash::make($request->password);
-        $u = User::create($v);
-
-        $v2 = $request->validate([
-            "nama_lengkap"      =>      "nullable",
-        ]);
-
-        $u->finance()->create($v2);
-
-        return redirect('/login/finance');
-    }
-
-
-    public function verifikasi_finance()
-    {
-        return view('Auth.verifikasi-finance');
-    }
-
-    public function verifikasi_finance_otp()
-    {
-        return view('Auth.verifikasi-finance-otp');
-    }
-
-    public function change_password_finance()
-    {
-        return view('Auth.change-password-finance');
-    }
-
-
-
-    //Auth Admin
-    public function login_admin()
-    {
-        return view('Auth.login-admin');
-    }
-
-
-    public function masuk_admin(Request $request)
-    {
-        $v = $request->validate([
-            "username"  =>   'required',
-            "password"  =>   'required'
-        ]);
-        Auth::attempt($v);
-        return redirect('/dashboard/admin');
-    }
-
-
-    public function register_admin()
-    {
-        return view('Auth.Register-admin');
-    }
-
-
-    public function buat_admin(Request $request)
-    {
-        $v = $request->validate([
-            "username"  =>   'required',
-            "email"    =>    'required|email',
-            "role"    =>    'required',
-            "password"  =>   'required',
-        ]);
-
-        $v['password']   =  Hash::make($request->password);
-        $user = User::create($v);
-
-        $v2  = $request->validate([
-            "nama_lengkap"  =>      "nullable"
-        ]);
-
-        $user->admin()->create($v2);
-        return redirect('/login/admin');
-    }
-
-
-    public function verifikasi_admin()
-    {
-        return view('Auth.verifikasi-admin');
-    }
-
-    public function verifikasi_admin_otp()
-    {
-        return view('Auth.verifikasi-otp-admin');
-    }
-
-    public function change_password_admin()
-    {
-        return view('Auth.change-password-admin');
-    }
-
-
-
-
-    //Auth Super Admin
-    public function login_super_admin()
-    {
-        return view('Auth.login-super-admin');
-    }
-
-    public function masuk_super_admin(Request $request)
-    {
-        $validasi_data = $request->validate([
-            "username"     =>     "required",
-            "password"     =>     "required"
-        ]);
-
-        if (Auth::attempt($validasi_data)) {
-            if (Auth::user()->role == "superadmin") {
-                return redirect('/dashboard/superadmin');
-            }
-        } else {
-            return back();
-        }
-    }
-
-    public function logout_super_admin(Request $request)
-    {
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+
         return redirect('/');
-    }
-
-
-    public function register_super_admin()
-    {
-        return view('Auth.Register-super-admin');
-    }
-
-    public function buat_super_admin(Request $request)
-    {
-        $v = $request->validate([
-            "username"      =>      "required",
-            "email"         =>      "required|email",
-            "role"          =>      "required",
-            "password"      =>      "required"
-        ]);
-
-
-        $v['password']      =    Hash::make($request->password);
-        $u =  User::create($v);
-
-        $v2 = $request->validate(["nama_lengkap"  =>      "nullable"]);
-
-        $u->superadmins()->create($v2);
-        return redirect('/login/super/admin');
-    }
-
-
-    public function verifikasi_super_admin()
-    {
-        return view('Auth.verifikasi-super-admin');
-    }
-
-    public function verifikasi_super_admin_otp()
-    {
-        return view('Auth.verifikasi-otp-super-admin');
-    }
-
-    public function change_password_super_admin()
-    {
-        return view('Auth.change-password-super-admin');
     }
 }

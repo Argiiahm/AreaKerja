@@ -11,6 +11,8 @@
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ public_path('css/tailwind.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
@@ -20,6 +22,10 @@
 </head>
 
 <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
     trix-toolbar [data-trix-button-group="file-tools"] {
         display: none;
     }
@@ -84,12 +90,11 @@
                 <a href="/dashboard/superadmin"
                     class="flex items-center gap-2 px-6 
                 {{ Request()->is('dashboard/superadmin')
-                    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin')
-                        ? asset('Icon/dashboard-icon-black.png')
-                        : asset('Icon/dashboard-icon.png') }}"
-                        alt="">
+    ? asset('Icon/dashboard-icon-black.png')
+    : asset('Icon/dashboard-icon.png') }}" alt="">
                     <span>Dashboard</span>
                 </a>
             </div>
@@ -100,8 +105,8 @@
 
                 <a href="/dashboard/superadmin/pelamar"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pelamar')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/pelamar') ? asset('Icon/Pelamar OREN.png') : asset('Icon/Account.png') }}"
                         alt="">
                     <span>Data Pelamar</span>
@@ -109,19 +114,18 @@
 
                 <a href="/dashboard/superadmin/perusahaan"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/perusahaan')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/perusahaan')
-                        ? asset('Icon/Data Perusahaan OREN.png')
-                        : asset('Icon/Commission.png') }}"
-                        alt="">
+    ? asset('Icon/Data Perusahaan OREN.png')
+    : asset('Icon/Commission.png') }}" alt="">
                     <span>Data Perusahaan</span>
                 </a>
 
                 <a href="/dashboard/superadmin/finance"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/finance')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/finance') ? asset('Icon/Finance OREN.png') : asset('Icon/Finance.png') }}"
                         alt="">
                     <span>Finance</span>
@@ -129,30 +133,28 @@
 
                 <a href="/dashboard/superadmin/freeze"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/freeze')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/freeze')
-                        ? asset('Icon/Akun Freeze OREN.png')
-                        : asset('Icon/Akun Freeze.png') }}"
-                        alt="">
+    ? asset('Icon/Akun Freeze OREN.png')
+    : asset('Icon/Akun Freeze.png') }}" alt="">
                     <span>Akun Freeze</span>
                 </a>
 
                 <a href="/dashboard/superadmin/tipskerja"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/tipskerja')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/tipskerja')
-                        ? asset('Icon/Tips Kerja OREN.png')
-                        : asset('Icon/Tips kerja.png') }}"
-                        alt="">
+    ? asset('Icon/Tips Kerja OREN.png')
+    : asset('Icon/Tips kerja.png') }}" alt="">
                     <span>Tips Kerja</span>
                 </a>
 
                 <a href="/dashboard/superadmin/event"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/event')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/event') ? asset('Icon/Event OREN.png') : asset('Icon/Bank Event.png') }}"
                         alt="">
                     <span>Event</span>
@@ -165,8 +167,8 @@
 
                 <a href="/dashboard/superadmin/akun"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/akun')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/akun') ? asset('Icon/Settings-orange.png') : asset('Icon/Settings.png') }}"
                         alt="">
                     <span>Akun</span>
@@ -174,23 +176,21 @@
 
                 <a href="/dashboard/superadmin/pengaturan_page"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pengaturan_page')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/pengaturan_page')
-                        ? asset('Icon/Settings-orange.png')
-                        : asset('Icon/Settings.png') }}"
-                        alt="">
+    ? asset('Icon/Settings-orange.png')
+    : asset('Icon/Settings.png') }}" alt="">
                     <span>Link & Header</span>
                 </a>
 
                 <a href="/dashboard/superadmin/pengaturan"
                     class="flex items-center gap-2 px-6 {{ Request()->is('dashboard/superadmin/pengaturan')
-                        ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
-                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-5 rounded-md shadow bg-white text-gray-700 text-md font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                     <img src="{{ Request()->is('dashboard/superadmin/pengaturan')
-                        ? asset('Icon/Settings-orange.png')
-                        : asset('Icon/Settings.png') }}"
-                        alt="">
+    ? asset('Icon/Settings-orange.png')
+    : asset('Icon/Settings.png') }}" alt="">
                     <span>Pengaturan</span>
                 </a>
             </div>
@@ -227,8 +227,7 @@
                     <i class="ph ph-bell text-2xl text-[#606060]"></i>
 
                     @if ($totalUnread > 0)
-                        <span
-                            class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600"></span>
+                        <span class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600"></span>
                     @endif
                 </button>
                 <div id="notif"
@@ -266,11 +265,9 @@
                                                                 Perusahaan
                                                                 <span
                                                                     class="font-semibold">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
-                                                                divisi <span
-                                                                    class="font-semibold">{{ $lowongan->nama }}</span>
+                                                                divisi <span class="font-semibold">{{ $lowongan->nama }}</span>
                                                                 telah
-                                                                <span
-                                                                    class="text-green-600 font-medium">{{ $p->status }}</span>.
+                                                                <span class="text-green-600 font-medium">{{ $p->status }}</span>.
                                                             </p>
                                                         @elseif ($p->status === 'ditolak')
                                                             <p class="text-sm text-gray-700">
@@ -282,8 +279,7 @@
                                                                 ke Perusahaan
                                                                 <span
                                                                     class="font-semibold">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
-                                                                divisi <span
-                                                                    class="font-semibold">{{ $lowongan->nama }}</span>
+                                                                divisi <span class="font-semibold">{{ $lowongan->nama }}</span>
                                                                 <span class="text-red-600 font-medium">Belum
                                                                     Bisa di terima</span>.
                                                             </p>
@@ -306,8 +302,7 @@
                                     @endphp
                                     <li
                                         class="px-4 py-3 {{ $pp->is_read === 0 ? 'bg-gray-200' : 'border-zinc-300' }} hover:bg-gray-50 transition">
-                                        <form action="/detail/notif/read/perusahaan/{{ $pp->id }}"
-                                            method="POST">
+                                        <form action="/detail/notif/read/perusahaan/{{ $pp->id }}" method="POST">
                                             @csrf
                                             @method('PUT')
                                             <button type="submit" class="text-left ">
@@ -323,13 +318,11 @@
                                                                 <span
                                                                     class="font-medium text-gray-900">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
                                                                 kepada
-                                                                <span
-                                                                    class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
+                                                                <span class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
                                                                 yang di tempatkan di posisi
                                                                 <span class="font-semibold">{{ $lowongan->nama }}
                                                                 </span>Telah
-                                                                <span
-                                                                    class="text-green-600 font-medium">{{ $pp->status }}</span>.
+                                                                <span class="text-green-600 font-medium">{{ $pp->status }}</span>.
                                                             </p>
                                                         @elseif ($pp->status === 'ditolak')
                                                             <p class="text-sm text-gray-700">
@@ -339,12 +332,10 @@
                                                                 <span
                                                                     class="font-medium text-gray-900">{{ $lowongan->perusahaan->nama_perusahaan }}</span>
                                                                 kepada Kandidat
-                                                                <span
-                                                                    class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
+                                                                <span class="font-semibold">{{ $pelamar->nama_pelamar }}</span>
                                                                 yang di tempatkan di posisi <span
                                                                     class="font-semibold">{{ $lowongan->nama }}</span>
-                                                                <span
-                                                                    class="text-red-600 font-medium">{{ $pp->status }}</span>.
+                                                                <span class="text-red-600 font-medium">{{ $pp->status }}</span>.
                                                             </p>
                                                         @endif
                                                         <span class="text-xs text-gray-400">
@@ -380,15 +371,17 @@
                         <div class="flex items-center gap-2 border border-[#606060] px-3 py-2 rounded-xl shadow-sm">
                             <div>
                                 @if (optional(Auth::user()->superadmins)->img_profile)
-                                    <img src="{{ asset('storage/' . Auth::user()->superadmins->img_profile) }}"
-                                        alt="" class="w-9 h-9 rounded-full object-cover border">
+                                    <img src="{{ asset('storage/' . Auth::user()->superadmins->img_profile) }}" alt=""
+                                        class="w-9 h-9 rounded-full object-cover border">
                                 @else
                                     <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
                                         alt="Profile Picture" class="w-9 h-9 rounded-full object-cover border">
                                 @endif
                             </div>
                             <div>
-                                <p class="text-sm font-semibold">{{ Auth::user()->superadmins->nama_lengkap ?? 'belum ada nama_lengkap' }}</p>
+                                <p class="text-sm font-semibold">
+                                    {{ Auth::user()->superadmins->nama_lengkap ?? 'belum ada nama_lengkap' }}
+                                </p>
                                 <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                             </div>
                         </div>

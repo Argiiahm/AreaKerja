@@ -1,15 +1,9 @@
 @extends('layouts.index')
 
 @section('content')
-    <style>
-        [x-cloak] {
-            display: none !important;
-        }
-    </style>
-
     <section class="pt-24">
         <img src="{{ $link_sosial['tips_kerja_header']->link ??
-            'https://arbinger.com/wp-content/uploads/2023/04/develop-people-accountable_Header-img-02-scaled.jpg' }}"
+        'https://www.walkproduction.com/wp-content/uploads/2022/09/WP_Blog2025_Images_Article51.webp' }}"
             class="w-full h-full object-cover">
 
     </section>

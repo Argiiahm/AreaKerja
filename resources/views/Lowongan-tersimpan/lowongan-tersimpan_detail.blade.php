@@ -55,15 +55,6 @@
                                     Lamar Cepat
                                 </button>
                             @endif
-
-                            <div class="flex items-center gap-3">
-                                <button title="Simpan" class="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg shadow-sm">
-                                    <i class="ph ph-bookmark-simple text-xl text-gray-700"></i>
-                                </button>
-                                <button title="Laporkan" class="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg shadow-sm">
-                                    <i class="ph ph-prohibit text-xl text-gray-700"></i>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,12 +107,9 @@
             <aside class="w-full lg:w-[30%] lg:pl-4">
                 <div class="bg-white rounded-2xl shadow-md p-6">
                     <div class="flex justify-between items-center mb-5">
-                        <h2 class="text-lg font-bold text-gray-800 leading-tight">
-                            Lowongan Lain di {{ $Data->perusahaan->nama_perusahaan }}
+                        <h2 class="">
+                            Lowongan Lain di <span class="font-bold">{{ $Data->perusahaan->nama_perusahaan }}</span>
                         </h2>
-                        <a href="#" class="text-orange-500 font-semibold hover:underline text-sm">
-                            Lihat Semua
-                        </a>
                     </div>
                     <div class="space-y-4">
                         @forelse ($Rekomendasi as $s)

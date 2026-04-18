@@ -55,13 +55,11 @@
             <div class="w-10/12 px-8 md:w-full lg:w-10/12">
                 <div class="w-full">
                     <h1 class="text-gray-800 font-bold text-2xl mb-3 text-center">Masuk</h1>
-                    <div class="flex gap-3 mt-4 md:mt-0 justify-center mb-8">
-                        @if (session('error'))
-                            <p class="text-red-600 text-sm mt-1 animate-fadeIn">
-                                {{ session('error') }}
-                            </p>
-                        @endif
-                    </div>
+                    @if (session('error'))
+                        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
                     </p>
                     <form class="" action="/masuk" method="POST">

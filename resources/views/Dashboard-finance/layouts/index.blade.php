@@ -10,6 +10,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
 
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
@@ -20,6 +23,10 @@
     @vite('resources/css/app.css')
 
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
         .drawer-backdrop {
             display: none !important;
         }
@@ -60,8 +67,8 @@
                         <a href="/dashboard/finance" data-drawer-hide="logo-sidebar"
                             class="flex items-center gap-2 px-6 
                                 {{ Request()->is('dashboard/finance')
-                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
-                                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-gauge"></i>
                             <span>Dashboard</span>
                         </a>
@@ -73,8 +80,8 @@
                         <a href="/dashboard/finance/paketharga" data-drawer-hide="logo-sidebar"
                             class="flex items-center gap-2 px-6 
                                 {{ Request()->is('dashboard/finance/paketharga')
-                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
-                                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-credit-card"></i>
                             <span>Paket Harga</span>
                         </a>
@@ -82,8 +89,8 @@
                         <a href="/dashboard/finance/omset" data-drawer-hide="logo-sidebar"
                             class="flex items-center gap-2 px-6 
                                 {{ Request()->is('dashboard/finance/omset')
-                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
-                                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-hand-coins"></i>
                             <span>Omset Perusahaan</span>
                         </a>
@@ -92,8 +99,8 @@
                             <summary
                                 class="flex items-center gap-2 px-6 cursor-pointer
                                     {{ Request()->is('dashboard/finance/catatantransaksi')
-                                        ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
-                                        : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                 <i class="ph ph-notebook"></i>
                                 <span>Catatan Transaksi</span>
                                 <span class="ml-auto transition-transform group-open:rotate-180">▼</span>
@@ -102,15 +109,15 @@
                                 <a href="/dashboard/finance/catatantransaksi/tunai"
                                     class="flex items-center gap-2 px-6 
                                         {{ Request()->is('dashboard/finance/catatantransaksi/tunai')
-                                            ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
-                                            : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                     Riwayat Tunai
                                 </a>
                                 <a href="/dashboard/finance/catatantransaksi/koin"
                                     class="flex items-center gap-2 px-6 
                                         {{ Request()->is('dashboard/finance/catatantransaksi/koin')
-                                            ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
-                                            : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                                     Riwayat Koin
                                 </a>
                             </div>
@@ -119,8 +126,8 @@
                         <a href="/dashboard/finance/laporan" data-drawer-hide="logo-sidebar"
                             class="flex items-center gap-2 px-6 
                                 {{ Request()->is('dashboard/finance/laporan')
-                                    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
-                                    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
+    ? 'mx-6 py-2 my-2 rounded-md shadow bg-white text-orange-600 font-medium'
+    : 'hover:translate-x-0.5 transition-all duration-500 py-2 hover:mx-3 hover:bg-white hover:text-black rounded-lg' }}">
                             <i class="ph ph-file-text"></i>
                             <span>Laporan Transaksi</span>
                         </a>
@@ -168,8 +175,7 @@
                                     @if ($nmd->status === 'pending')
                                         <p class="text-sm text-gray-700 leading-snug border-b my-2 py-2">
                                             <span class="font-semibold text-gray-800">Ada Transaksi Masuk!, Dari
-                                                <span
-                                                    class="text-green-500 font-bold">{{ $nmd->dari }}</span></span>
+                                                <span class="text-green-500 font-bold">{{ $nmd->dari }}</span></span>
                                         </p>
                                         <p class="text-xs text-gray-400 mt-1">{{ $nmd->created_at->diffForHumans() }}
                                         </p>
@@ -185,8 +191,7 @@
                         @if (Auth::user()->finance->img_profile)
                             <a href="/profile">
                                 <img class="w-10 h-10 object-cover rounded-full"
-                                    src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}"
-                                    alt="">
+                                    src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}" alt="">
                             </a>
                         @else
                             <img class="w-10 h-10 rounded-full"

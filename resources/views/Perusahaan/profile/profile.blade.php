@@ -39,7 +39,8 @@
                     readonly>
             @else
                 <textarea rows="2"
-                    class="flex-1 border border-orange-400 rounded-md p-2 focus:ring-2 focus:ring-orange-400 bg-gray-50" readonly></textarea>
+                    class="flex-1 border border-orange-400 rounded-md p-2 focus:ring-2 focus:ring-orange-400 bg-gray-50"
+                    readonly></textarea>
             @endif
         </div>
 
@@ -51,7 +52,8 @@
                         class="flex-1 border border-orange-400 rounded-md p-2 focus:ring-2 focus:ring-orange-400 bg-gray-50">
                         @if (Auth::user()->perusahaan->jenis_perusahaan)
                             <option value="{{ Auth::user()->perusahaan->jenis_perusahaan }}">
-                                {{ Auth::user()->perusahaan->jenis_perusahaan }}</option>
+                                {{ Auth::user()->perusahaan->jenis_perusahaan }}
+                            </option>
                         @else
                             <option>Pilih badan usaha</option>
                         @endif
@@ -75,9 +77,19 @@
                 <h3 class="font-bold text-lg mb-3">Kontak</h3>
                 <ul class="text-sm space-y-2">
                     <li><span class="font-semibold">Website :</span>
-                        <a href="{{ Auth::user()->perusahaan->website_perusahaan }}" class="text-blue-600 hover:underline">
+                        @php
+                            $url = Auth::user()->perusahaan->website_perusahaan;
+                            if (!preg_match('~^https?://~', $url)) {
+                                $url = 'https://' . $url;
+                            }
+                        @endphp
+
+                        <a href="{{ $url }}" target="_blank" rel="noopener noreferrer"
+                            class="text-blue-600 hover:underline">
                             {{ Auth::user()->perusahaan->website_perusahaan }}
                         </a>
+
+
                     </li>
                     <li><span class="font-semibold">Telepon :</span> {{ Auth::user()->perusahaan->telepon_perusahaan }}
                     </li>

@@ -944,7 +944,7 @@ class SuperAdminController extends Controller
         $totalTunai = $cashDetail->sum('harga');
         $totalKoin = $koinDetail->sum('koin');
 
-        return view('super-admin.finance.details-laporan', [
+        return view('Super-Admin.finance.details-laporan', [
             'title' => 'Catatan Transaksi',
             'tanggal' => $tanggal,
             'detail' => $detail,
@@ -1581,7 +1581,7 @@ class SuperAdminController extends Controller
             'pasang_lowongan_header',
             'daftar_kandidat_header',
             'tahunter_header',
-            'profil_pelamar_header',
+            'profil_pelamar_header', 
             'lowongan_tersimpan_header',
             'faq_header',
             'rekrut_pelamar_header',

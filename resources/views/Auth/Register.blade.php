@@ -37,21 +37,6 @@
                 </div>
                 <div class="w-full">
                     <h1 class=" font-bold text-2xl mb-4 text-center text-[#fa6601]">Buat Akun</h1>
-                    {{-- <div class="flex gap-3 justify-center mb-6">
-                        <a href="#"
-                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                            <i class="ph ph-facebook-logo"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                            <i class="ph ph-google-logo"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 border border-gray-500 rounded-full flex items-center justify-center text-black hover:bg-orange-600 hover:-translate-y-1 duration-500">
-                            <i class="ph ph-linkedin-logo"></i>
-                        </a>
-                    </div> --}}
-
                     <div class="flex justify-center mb-6">
                         <div class="flex bg-gray-200 rounded-full w-max p-1">
                             <button id="pelamar"
@@ -63,7 +48,15 @@
                             </button>
                         </div>
                     </div>
-
+                    @if ($errors->any())
+                        <div class="bg-red-100 text-red-700 p-3 mb-4 rounded">
+                            <ul class="text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <!-- form regist Pelamar -->
                     <form id="form-pelamar" action="/buat" method="POST">
                         @csrf
