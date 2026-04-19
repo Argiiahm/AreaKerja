@@ -80,7 +80,15 @@ class AuthController extends Controller
         $validasi_data = $request->validate([
             "username" => "required|unique:users,username",
             "email"    => "required|email|unique:users,email",
-            "password" => "required|min:6",
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[A-Z]/',
+                'regex:/[a-z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
+            ],
             "role"     => "required",
             "telepon_pelamar" => ["required", "regex:/^(?:628|08)[0-9]+$/"],
         ], [
@@ -90,7 +98,8 @@ class AuthController extends Controller
             "email.email"       => "Format email tidak valid.",
             "email.unique"      => "Email sudah digunakan, coba yang lain.",
             "password.required" => "Password wajib diisi.",
-            "password.min"       => "Password minimal 6 Karakter.",
+            "password.min"       => "Password minimal 8 Karakter.",
+            'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol.',
             "role.required"     => "Role wajib diisi.",
             "telepon_pelamar.required" => "No. telepon wajib diisi.",
             "telepon_pelamar.regex" => "Nomor telepon harus diawali dengan 628, atau 08."
@@ -121,7 +130,15 @@ class AuthController extends Controller
         $validasi_user = $request->validate([
             "username" => "required|unique:users,username",
             "email"    => "required|email|unique:users,email",
-            "password" => "required|min:6",
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[A-Z]/',
+                'regex:/[a-z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
+            ],
             "role"     => "required"
         ], [
             "username.required" => "Username wajib diisi.",
@@ -130,7 +147,8 @@ class AuthController extends Controller
             "email.email"       => "Format email tidak valid.",
             "email.unique"      => "Email sudah digunakan, coba yang lain.",
             "password.required" => "Password wajib diisi.",
-            "password.min"      => "Password minimal 6 karakter.",
+            "password.min"      => "Password minimal 8 karakter.",
+            'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol.',
             "role.required"     => "Role wajib diisi.",
         ]);
 
