@@ -7,13 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Register</title>
     <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
     @vite('resources/css/app.css')
     <style>
         .login_img_section {
@@ -25,7 +22,7 @@
     </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100" data-old-type="{{ old('type') }}">
     <div class="grid grid-cols-1 md:grid-cols-5 min-h-screen">
 
         <div class="col-span-3 flex justify-center items-center bg-white">
@@ -60,37 +57,38 @@
                     <!-- form regist Pelamar -->
                     <form id="form-pelamar" action="/buat" method="POST">
                         @csrf
+                        <input type="hidden" name="type" value="pelamar">
                         <label for="name" class="font-semibold">Nama Pengguna</label>
-                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="name" class="pl-2 w-full outline-none border-none" type="text"
-                                name="username" placeholder="Nama Pengguna" />
+                        <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
+                            <input id="name" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text"
+                                name="username" placeholder="Nama Pengguna" value="{{ old('username') }}"/>
                         </div>
 
                         <label for="email" class="font-semibold">E-Mail</label>
-                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="email" class="pl-2 w-full outline-none border-none" type="email"
-                                name="email" placeholder="E-Mail" />
+                        <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
+                            <input id="email" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="email"
+                                name="email" placeholder="E-Mail" value="{{ old('email') }}" />
                         </div>
 
                         <label for="tlp" class="font-semibold">No. Tlp</label>
-                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="tlp" class="pl-2 w-full outline-none border-none" type="text"
-                                name="telepon_pelamar" placeholder="No. Tlp" />
+                        <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
+                            <input id="tlp" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text"
+                                name="telepon_pelamar" placeholder="No. Tlp" value="{{ old('telepon_pelamar') }}" />
                         </div>
 
-                        <input id="text" class="pl-2 w-full outline-none border-none" type="hidden" name="role"
+                        <input id="text" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="hidden" name="role"
                             value="pelamar" />
 
                         <label for="password" class="font-semibold">Kata Sandi</label>
 
-                        <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
-                            <input class="pl-2 w-full outline-none border-none" type="password" name="password"
+                        <div class="flex items-center border-2 border-gray-200 py-2 mt-2 px-3 mb-3">
+                            <input class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="password" name="password"
                                 id="password" placeholder="Kata Sandi" />
                         </div>
 
                         <div class="flex items-center justify-center mb-4">
                             <label class="flex items-center text-gray-500 font-semibold">
-                                <input type="checkbox" class="mr-2 border" required>
+                                <input type="checkbox" class="mr-2 border border-gray-200" required>
                                 <span class="text-[12px] text-black">saya menyetujui <a class="text-[#fa6601]">syarat
                                         dan ketentuan</a> yang
                                     berlaku</span>
@@ -108,39 +106,40 @@
                     <!-- form login perusahaan -->
                     <form action="/buat/perusahaan" method="POST" id="form-perusahaan" class="hidden">
                         @csrf
+                        <input type="hidden" name="type" value="perusahaan">
                         <label for="name" class="font-semibold">Nama Perusahaan</label>
-                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="name" class="pl-2 w-full outline-none border-none" type="text"
-                                name="username" placeholder="Nama Perusahaan" />
+                        <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
+                            <input id="name" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text"
+                                name="username" placeholder="Nama Perusahaan"  value="{{ old('username') }}"/>
                         </div>
 
-                        <input class="pl-2 w-full outline-none border-none" type="text" name="nama_perusahaan"
+                        <input class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text" name="nama_perusahaan"
                             hidden />
 
                         <label for="email" class="font-semibold">E-Mail</label>
-                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="email" class="pl-2 w-full outline-none border-none" type="email"
-                                name="email" placeholder="E-Mail" />
+                        <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
+                            <input id="email" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="email"
+                                name="email" placeholder="E-Mail" value="{{ old('email') }}" />
                         </div>
 
                         <label for="telepon_perusahaan" class="font-semibold">No. Tlp Perusahaan</label>
-                        <div class="flex items-center border-2 mt-2 mb-4 py-2 px-3">
-                            <input id="telepon_perusahaan" class="pl-2 w-full outline-none border-none"
-                                type="number" name="telepon_perusahaan" placeholder="No. Tlp Perusahaan" />
+                        <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
+                            <input id="telepon_perusahaan" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="number" name="telepon_perusahaan" value="{{ old('telepon_perusahaan') }}" placeholder="No. Tlp Perusahaan" />
                         </div>
 
-                        <input id="role" hidden class="pl-2 w-full outline-none border-none" type="text"
+                        <input id="role" hidden class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text"
                             name="role" value="perusahaan" placeholder="" />
 
                         <label for="password" class="font-semibold">Kata Sandi</label>
-                        <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
-                            <input class="pl-2 w-full outline-none border-none" type="password" name="password"
+                        <div class="flex items-center border-2 border-gray-200 py-2 mt-2 px-3 mb-3">
+                            <input class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="password" name="password"
                                 id="password" placeholder="Kata Sandi" />
                         </div>
 
                         <div class="flex items-center justify-center mb-4">
                             <label class="flex items-center text-gray-500 font-semibold">
-                                <input type="checkbox" class="mr-2 border" required>
+                                <input type="checkbox" class="mr-2 border border-gray-200" required>
                                 <span class="text-[12px] text-black">saya menyetujui <a class="text-[#fa6601]">syarat
                                         dan ketentuan</a> yang
                                     berlaku</span>
@@ -172,7 +171,7 @@
 
                 <div class="flex justify-center mt-6">
                     <a href="/login"
-                        class="px-8 py-4 w-52 border-2 border-white text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
+                        class="px-8 py-4 w-52 border-2 border-gray-200 text-white font-bold rounded-full bg-transparent hover:bg-white/20 hover:-translate-y-1 transition-all duration-500  text-center">
                         Masuk
                     </a>
                 </div>
@@ -181,7 +180,7 @@
     </div>
 
     @if (session('success'))
-        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modalSuccess" class="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
 
                 <h2 class="text-lg font-bold my-2">Selamat! Akun anda berhasil dibuat.</h2>

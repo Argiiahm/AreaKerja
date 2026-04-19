@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             "username"           =>    "Argii",
             "email"              =>    "argi@gmail.com",
-            "password"           =>     Hash::make('123'),
+            "password"           =>     Hash::make('123456'),
             "role"               =>     "superadmin",
             "verified"           =>     1,
             "alasan_freeze_akun" =>     null
@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             "username"           =>    "Seno Roblox",
             "email"              =>    "seno@gmail.com",
-            "password"           =>     Hash::make('123'),
+            "password"           =>     Hash::make('123456'),
             "role"               =>     "admin",
             "verified"           =>     1,
             "alasan_freeze_akun" =>     null
@@ -87,7 +87,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             "username"           =>    "Rehan",
             "email"              =>    "rehan@gmail.com",
-            "password"           =>     Hash::make('123'),
+            "password"           =>     Hash::make('123456'),
             "role"               =>     "finance",
             "verified"           =>     1,
             "alasan_freeze_akun" =>     null
@@ -102,7 +102,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             "username"           =>    "Seven Inc",
             "email"              =>    "seveninc@gmail.com",
-            "password"           =>     Hash::make('123'),
+            "password"           =>     Hash::make('123456'),
             "role"               =>     "perusahaan",
             "verified"           =>     1,
             "alasan_freeze_akun" =>     null

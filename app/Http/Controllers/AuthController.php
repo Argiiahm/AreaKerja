@@ -78,29 +78,37 @@ class AuthController extends Controller
     public function buat(Request $request)
     {
         $validasi_data = $request->validate([
-            "username" => "required",
+            "username" => "required|unique:users,username",
             "email"    => "required|email|unique:users,email",
-            "password" => "required",
+            "password" => "required|min:6",
             "role"     => "required",
-            "telepon_pelamar" => "required"
+            "telepon_pelamar" => ["required", "regex:/^(?:628|08)[0-9]+$/"],
         ], [
             "username.required" => "Username wajib diisi.",
+            "username.unique"   => "Username sudah digunakan.",
             "email.required"    => "Email wajib diisi.",
             "email.email"       => "Format email tidak valid.",
             "email.unique"      => "Email sudah digunakan, coba yang lain.",
             "password.required" => "Password wajib diisi.",
+            "password.min"       => "Password minimal 6 Karakter.",
             "role.required"     => "Role wajib diisi.",
             "telepon_pelamar.required" => "No. telepon wajib diisi.",
+            "telepon_pelamar.regex" => "Nomor telepon harus diawali dengan 628, atau 08."
         ]);
 
         DB::transaction(function () use ($validasi_data) {
 
+            // Normalisasi nomor telepon
+            $telepon = preg_replace('/[^0-9\+]/', '', $validasi_data['telepon_pelamar']);
+            $telepon = preg_replace('/^62/', '0', $telepon);
+
+            // Hash Password
             $validasi_data['password'] = Hash::make($validasi_data['password']);
 
             $user = User::create($validasi_data);
 
             $user->pelamars()->create([
-                "telepon_pelamar" => $validasi_data['telepon_pelamar']
+                "telepon_pelamar" => $telepon
             ]);
         });
 
@@ -110,34 +118,45 @@ class AuthController extends Controller
     // Perusahaan Register
     public function buat_perusahaan(Request $request)
     {
-        $v = $request->validate([
-            "username" => "required",
+        $validasi_user = $request->validate([
+            "username" => "required|unique:users,username",
             "email"    => "required|email|unique:users,email",
-            "password" => "required",
+            "password" => "required|min:6",
             "role"     => "required"
         ], [
             "username.required" => "Username wajib diisi.",
+            "username.unique"   => "Username sudah digunakan.",
             "email.required"    => "Email wajib diisi.",
             "email.email"       => "Format email tidak valid.",
             "email.unique"      => "Email sudah digunakan, coba yang lain.",
             "password.required" => "Password wajib diisi.",
             "password.min"      => "Password minimal 6 karakter.",
             "role.required"     => "Role wajib diisi.",
-            "telepon_pelamar.required" => "No. telepon wajib diisi.",
         ]);
 
         DB::beginTransaction();
-        $v['password'] = Hash::make($request->password);
-        $user = User::create($v);
 
-        $v2 = $request->validate([
-            "telepon_perusahaan" => "required",
-            "nama_perusahaan"    => "nullable"
+        // Hash Password
+        $validasi_user['password'] = Hash::make($request->password);
+        $user = User::create($validasi_user);
+
+        // Validasi Perusahaan Akun
+        $validasi_perusahaan = $request->validate([
+            "telepon_perusahaan" => ["required", "regex:/^(?:628|08)[0-9]+$/"],
+        ], [
+            "telepon_perusahaan.required" => "No. telepon wajib diisi.",
+            "telepon_perusahaan.regex" => "Nomor telepon harus diawali dengan 628, atau 08."
         ]);
 
-        $v2['nama_perusahaan']  = $request->username;
+        // Normalisasi nomor telepon
+        $telepon = preg_replace('/[^0-9\+]/', '', $validasi_perusahaan['telepon_perusahaan']);
+        $telepon = preg_replace('/^62/', '0', $telepon);
 
-        $user->perusahaan()->create($v2);
+        $validasi_perusahaan['nama_perusahaan']  = $request->username;
+
+        // Create Perusahaan
+        $user->perusahaan()->create($validasi_perusahaan);
+
         DB::commit();
         return back()->with('success', 'Akun Berhasil Dibuat');
     }
