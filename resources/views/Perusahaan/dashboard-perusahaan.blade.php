@@ -213,7 +213,7 @@
 
         {{-- ---- MODAL: Pilih Paket ---- --}}
         <div id="modalTopup"
-            class="fixed inset-0 bg-black bg-opacity-45 backdrop-blur-sm hidden items-center justify-center z-50">
+            class="fixed inset-0 bg-black/65 bg-opacity-45 backdrop-blur-sm hidden items-center justify-center z-50">
             <div class="bg-white rounded-2xl w-full max-w-lg p-7 shadow-xl animate-slideUp">
                 <div class="flex justify-between items-center mb-5">
                     <h2 class="text-base font-bold text-gray-900 m-0">Top Up Koin</h2>
@@ -252,7 +252,7 @@
 
         {{-- ---- MODAL: Metode Pembayaran ---- --}}
         <div id="modalPembayaran"
-            class="fixed inset-0 bg-black bg-opacity-45 backdrop-blur-sm hidden items-center justify-center z-50">
+            class="fixed inset-0 bg-black/65 bg-opacity-45 backdrop-blur-sm hidden items-center justify-center z-50">
             <div class="bg-white rounded-2xl w-full max-w-lg p-7 shadow-xl animate-slideUp">
                 <div class="flex justify-between items-center mb-5">
                     <h2 class="text-base font-bold text-gray-900 m-0">Metode Pembayaran</h2>
@@ -291,7 +291,7 @@
     {{-- ---- MODAL: Konfirmasi Transaksi (session) ---- --}}
     @if (session('success_topup'))
         <div id="modalKonfirmasi"
-            class="fixed inset-0 bg-black bg-opacity-45 backdrop-blur-sm flex items-center justify-center z-50">
+            class="fixed inset-0 bg-black/65 bg-opacity-45 backdrop-blur-sm flex items-center justify-center z-50">
             <div class="bg-white rounded-2xl w-full max-w-lg p-7 shadow-xl animate-slideUp">
                 <div class="modal-header mb-5">
                     <h2 class="text-base font-bold text-gray-900 m-0">Konfirmasi Pembayaran</h2>

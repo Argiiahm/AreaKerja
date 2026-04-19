@@ -4,10 +4,10 @@
     <section class="relative w-full h-screen pt-24">
         <div class="absolute inset-0">
             <img src="{{ $link_sosial['pasang_lowongan_header']->link ??
-                'https://arbinger.com/wp-content/uploads/2023/04/develop-people-accountable_Header-img-02-scaled.jpg' }}"
+                'https://www.shutterstock.com/image-illustration/blue-black-gradient-background-dark-600nw-2657331673.jpg' }}"
                 class="w-full h-full object-cover">
 
-            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+            <div class="absolute inset-0 bg-black/65 bg-opacity-60"></div>
         </div>
         <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">
             <div class="max-w-lg">
@@ -28,13 +28,13 @@
             @foreach ($Pakets as $p)
                 @if ($p->nama === 'Gold')
                     <div
-                        class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500">
+                        class="bg-white rounded-lg shadow-md border border-gray-200 text-center hover:-translate-y-2 transition-all duration-500">
                         <div class="bg-yellow-500 p-5">
                             <h2 class="text-xl font-bold text-white">GOLD</h2>
                         </div>
                         <div class="p-6">
                             <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
-                            <p class="text-sm text-gray-500 mb-6 border-b pb-5">5 Kali Publikasi di semua jaringan
+                            <p class="text-sm text-gray-500 mb-6 border-b border-gray-200 pb-5">5 Kali Publikasi di semua jaringan
                                 AreaKerja.com</p>
                             <ul class="space-y-2 text-gray-600 mb-6">
                                 <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Website &
@@ -84,13 +84,13 @@
             @foreach ($Pakets as $p)
                 @if ($p->nama === 'Silver')
                     <div
-                        class="bg-white rounded-lg shadow-md transform  lg:translate-y-[-1rem] md:translate-y-[-1rem] translate-y-0 border text-center hover:-translate-y-6 transition-all duration-500 ">
+                        class="bg-white rounded-lg shadow-md transform  lg:translate-y-[-1rem] md:translate-y-[-1rem] translate-y-0 border border-gray-200 text-center hover:-translate-y-6 transition-all duration-500 ">
                         <div class="bg-[#979aa0] p-5">
                             <h2 class="text-xl font-bold text-white">Silver</h2>
                         </div>
                         <div class="p-6">
                             <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
-                            <p class="text-sm text-gray-500 mb-6 border-b pb-5">3 Kali Publikasi di semua jaringan
+                            <p class="text-sm text-gray-500 mb-6 border-b border-gray-200 pb-5">3 Kali Publikasi di semua jaringan
                                 AreaKerja.com</p>
                             <ul class="space-y-2 text-gray-600 mb-6">
                                 <li class="flex items-center gap-2"><i class="ph ph-check font-semibold"></i>Website
@@ -143,13 +143,13 @@
             @foreach ($Pakets as $p)
                 @if ($p->nama === 'Bronze')
                     <div
-                        class="bg-white rounded-lg shadow-md border text-center hover:-translate-y-2 transition-all duration-500 ">
+                        class="bg-white rounded-lg shadow-md border border-gray-200 text-center hover:-translate-y-2 transition-all duration-500 ">
                         <div class="bg-[#71665d] p-5">
                             <h2 class="text-xl font-bold text-white">Bronze</h2>
                         </div>
                         <div class="p-6">
                             <p class="mt-2 font-semibold text-gray-700">Lebih Banyak Benefit</p>
-                            <p class="text-sm text-gray-500 mb-6 border-b pb-5">1 Kali Publikasi di semua jaringan
+                            <p class="text-sm text-gray-500 mb-6 border-b border-gray-200 pb-5">1 Kali Publikasi di semua jaringan
                                 AreaKerja.com
                             </p>
                             <ul class="space-y-2 text-gray-600 mb-6">
@@ -277,7 +277,7 @@
                         <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl">
                             <span class="text-sm text-slate-600">Paket Terpilih</span>
                             <input type="text" disabled id="d_nama"
-                                class="font-bold text-slate-800 bg-transparent text-right outline-none w-1/2"
+                                class="font-bold text-slate-800 bg-transparent border border-gray-200 text-right outline-none w-1/2"
                                 value="">
                             <input type="hidden" name="pesanan" id="pesanan_hidden">
                         </div>
@@ -287,7 +287,7 @@
                             <span class="text-sm text-orange-700 font-medium">Total Harga</span>
                             <div class="flex items-center gap-1">
                                 <input type="text" disabled id="d_harga"
-                                    class="bg-transparent text-orange-600 font-bold text-right w-24 outline-none"
+                                    class="bg-transparent text-orange-600 border border-gray-200 font-bold text-right w-24 outline-none"
                                     value="">
                                 <span class="text-xs font-bold text-orange-600"></span>
                             </div>
