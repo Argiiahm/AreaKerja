@@ -7,7 +7,7 @@
             alt="Background"
             class="absolute inset-0 w-full h-full object-cover brightness-50">
         
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="absolute inset-0 bg-black/65 bg-opacity-50"></div>
 
         <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">
             <div class="max-w-lg">

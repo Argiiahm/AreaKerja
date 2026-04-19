@@ -6,7 +6,7 @@
             <img src="{{ $link_sosial['daftar_kandidat_header']->link ??
                 'https://t4.ftcdn.net/jpg/13/87/87/85/360_F_1387878547_U3djpI3zLI51eyPqJ9QIoeqrrL7NzG4U.jpg' }}"
                 class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+            <div class="absolute inset-0 bg-black/65 bg-opacity-60"></div>
         </div>
         <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">
             <div class="max-w-lg">
@@ -55,11 +55,6 @@
 
     <div class="flex justify-center py-10">
         <div class="bg-white  rounded-2xl w-full max-w-5xl overflow-hidden">
-
-            <div class="bg-gradient-to-r from-orange-400 to-yellow-400 text-center py-4">
-                <h2 class="text-xl font-bold text-black">Cara Daftar Kandidat</h2>
-            </div>
-
             <div class="flex flex-col md:flex-row items-center p-6">
                 <div class="w-48 h-48 bg-orange-500 rounded-lg overflow-hidden mr-6">
                     <img src="{{ asset('image/1.png') }}" alt="" class="object-cover w-full h-full">
@@ -88,7 +83,7 @@
 
         <input type="number" name="harga_pembayaran" hidden value="{{ $Harga->id }}">
 
-        <div id="formModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div id="formModal" class="hidden fixed inset-0 bg-black/65 z-50 flex items-center justify-center">
             <div class="bg-white rounded-2xl shadow-lg p-6 w-[400px] md:w-[500px] relative">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-xl font-bold text-gray-800">Daftar Kandidat</h3>
@@ -98,7 +93,7 @@
                 <div>
                     <div id="dropdownWrapper" class="relative">
                         <button id="dropdownBtn" type="button"
-                            class="w-full flex flex-wrap gap-2 items-center px-3 py-2 border rounded-lg bg-white text-gray-700">
+                            class="w-full flex flex-wrap gap-2 items-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-700">
                             <span id="placeholder" class="text-gray-400">Divisi</span>
                             <span id="selectedChips" class="flex flex-wrap gap-2"></span>
                             <svg class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,7 +103,7 @@
                         </button>
 
                         <div id="dropdownMenu"
-                            class="hidden absolute z-50 mt-2 w-full bg-white border rounded-lg shadow-lg">
+                            class="hidden absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg">
                             <ul class="max-h-48 overflow-y-auto text-sm text-gray-700">
                                 @foreach ($divisi as $d)
                                     <li>
@@ -132,16 +127,16 @@
         </div>
 
         <!-- Modal Pembayaran -->
-        <div id="modalPembayaran" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div id="modalPembayaran" class="hidden fixed inset-0 bg-black/65 z-50 flex items-center justify-center">
             <div class="bg-white rounded-2xl shadow-lg w-[400px] md:w-[500px] relative p-6">
-                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <div class="flex justify-between items-center border-b border-gray-200 pb-3 mb-4">
                     <h2 class="text-lg font-bold">Daftar Kandidat</h2>
                     <button id="closeModalPembayaran" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
                 </div>
 
                 <h3 class="text-gray-700 font-semibold mb-2">Metode Pembayaran</h3>
                 <div id="dropdownBankBtn"
-                    class="border rounded-lg px-4 py-2 flex items-center justify-between cursor-pointer mb-4">
+                    class="border border-gray-200 rounded-lg px-4 py-2 flex items-center justify-between cursor-pointer mb-4">
                     <div class="flex items-center gap-2">
                         <span class="text-orange-500">⇄</span>
                         <span>Transfer Bank</span>
@@ -152,7 +147,7 @@
                 <div id="list_p" class="space-y-3 hidden">
                     @foreach ($payment as $p)
                         <div
-                            class="flex items-center justify-between border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-50 select-bank">
+                            class="flex items-center justify-between border border-gray-200 rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-50 select-bank">
                             <div class="flex items-center gap-3">
                                 <img src="{{ asset($p->logo_img) }}" alt="" class="w-12 h-12">
                                 <span>{{ $p->nama_bank }}</span>
@@ -179,7 +174,7 @@
     </form>
 
     @if (session('konfirmasi_transaksi'))
-        <div id="modalKonfirmasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modalKonfirmasi" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-2xl p-6 w-[450px] shadow-lg relative">
                 <h2 class="text-lg font-bold mb-4">Konfirmasi Pembayaran</h2>
                 <div class="border border-orange-500 rounded-xl p-4 space-y-2">

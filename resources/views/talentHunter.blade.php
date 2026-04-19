@@ -5,7 +5,7 @@
         <div class="absolute inset-0">
             <img src="{{ $link_sosial['tahunter_header']->link ?? 'https://msky-consult.com/wp-content/uploads/2025/03/business-legal-services-website-header.jpg' }}"
                 alt="Background" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/65 bg-opacity-60"></div>
+            <div class="absolute inset-0 bg-black/65/65 bg-opacity-60"></div>
         </div>
 
         <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">

@@ -7,7 +7,7 @@
         'https://nebula.wsimg.com/abac5203914d654d42ea84b512be90b4?AccessKeyId=D20E7372B83C25CA2C64&disposition=0&alloworigin=1' }}"
                 class="w-full h-full object-cover">
 
-            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+            <div class="absolute inset-0 bg-black/65/65 bg-opacity-60"></div>
         </div>
         <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">
             <div class="max-w-lg">

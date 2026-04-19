@@ -4,7 +4,7 @@
         <div class="absolute inset-0">
             <img src="https://png.pngtree.com/background/20240507/original/pngtree-digital-marketing-website-displayed-on-rendered-office-desktop-picture-image_8837781.jpg"
                 alt="Background" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+            <div class="absolute inset-0 bg-black/65 bg-opacity-60"></div>
         </div>
         <div class="relative z-10 flex items-center justify-start h-full px-6 lg:px-20">
             <div class="max-w-lg">

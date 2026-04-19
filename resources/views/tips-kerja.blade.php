@@ -11,7 +11,7 @@
     <div class="max-w-screen-lg mx-auto pt-12" x-data="{ open: false }">
 
         <div class="flex gap-3 items-center mx-4 lg:mx-0">
-            <span class="px-10 py-2 rounded-full border cursor-pointer hover:bg-gray-100 transition">Tips</span>
+            <span class="px-10 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-100 transition">Tips</span>
             <span class="px-10 py-2 rounded-full bg-[#fa6601] text-white cursor-pointer shadow-md">Top News</span>
         </div>
 
@@ -35,7 +35,7 @@
 
             {{-- DROPDOWN SHARE --}}
             <div x-show="open" x-cloak @click.outside="open = false" x-transition
-                class="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border py-2 z-[999]">
+                class="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-[999]">
 
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(url('/tipskerja')) }}"
                     target="_blank" class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100">

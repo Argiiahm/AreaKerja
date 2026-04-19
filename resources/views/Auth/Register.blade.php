@@ -180,7 +180,7 @@
     </div>
 
     @if (session('success'))
-        <div id="modalSuccess" class="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modalSuccess" class="fixed inset-0 bg-black/65/60 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
 
                 <h2 class="text-lg font-bold my-2">Selamat! Akun anda berhasil dibuat.</h2>

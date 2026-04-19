@@ -137,7 +137,7 @@
     </div>
 
     <!-- Modal Hapus Akun -->
-    <div id="modalDelete" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden items-center justify-center z-[9999] transition-opacity">
+    <div id="modalDelete" class="fixed inset-0 bg-black/65/40 backdrop-blur-sm hidden items-center justify-center z-[9999] transition-opacity">
         <div id="modalBox" class="bg-white rounded-2xl w-[90%] max-w-md shadow-2xl p-6 transform scale-90 opacity-0 transition-all duration-300">
             <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4 mx-auto">
                 <i class="ph ph-warning text-red-600 text-2xl"></i>

@@ -5,7 +5,7 @@
 
         <div class="flex items-center gap-6">
             <div class="relative">
-                <div id="imgModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+                <div id="imgModal" class="hidden fixed inset-0 bg-black/65/70 flex items-center justify-center z-50">
                     <img id="modalImg" alt="Zoomed" class="w-80 h-80 rounded-full shadow-lg bg-white object-cover">
                 </div>
 

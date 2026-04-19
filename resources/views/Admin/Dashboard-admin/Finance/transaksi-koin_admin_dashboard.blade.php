@@ -204,7 +204,7 @@
 
     {{-- Simple Image Preview --}}
     <div id="imageModal" onclick="this.classList.add('hidden')"
-        class="hidden fixed inset-0 bg-black/90 z-[60] flex items-center justify-center p-4 cursor-zoom-out">
+        class="hidden fixed inset-0 bg-black/65/90 z-[60] flex items-center justify-center p-4 cursor-zoom-out">
         <img id="modalImage" src="" alt="Bukti" class="max-h-[90vh] rounded-lg">
     </div>
 

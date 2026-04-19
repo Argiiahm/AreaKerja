@@ -185,7 +185,7 @@
     </div>
 
     {{-- Modal Notifikasi --}}
-    <div id="modalNotif" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div id="modalNotif" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden justify-center items-center z-50">
         <div class="bg-white p-6 rounded-lg w-full max-w-sm text-center">
             <h2 class="text-lg font-semibold mb-3 text-red-600">Data User Belum Disimpan</h2>
             <p class="mb-5 text-gray-600">Simpan data akun terlebih dahulu sebelum menambahkan detail lainnya.</p>
@@ -194,7 +194,7 @@
     </div>
 
     {{-- Modal Alamat --}}
-    <div id="modalAlamat" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div id="modalAlamat" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden justify-center items-center z-50">
         <div class="bg-white p-6 rounded-lg w-full max-w-md">
             <h2 class="text-lg font-semibold mb-4">Tambah Alamat</h2>
             <form action="/dashboard/superadmin/pelamar/create/alamat" method="POST">
@@ -237,7 +237,7 @@
         </div>
     </div>
     {{-- Modal Pendidikan --}}
-    <div id="modalPendidikan" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div id="modalPendidikan" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden justify-center items-center z-50">
         <div class="bg-white p-6 rounded-lg w-full max-w-md">
             <h2 class="text-lg font-semibold mb-4">Tambah Pendidikan</h2>
             <form action="/dashboard/superadmin/pelamar/create/pendidikan" method="POST">
@@ -260,7 +260,7 @@
         </div>
     </div>
     {{-- Modal Organisasi --}}
-    <div id="modalOrganisasi" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div id="modalOrganisasi" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden justify-center items-center z-50">
         <div class="bg-white p-6 rounded-lg w-full max-w-md">
             <h2 class="text-lg font-semibold mb-4">Tambah Organisasi</h2>
             <form action="/dashboard/superadmin/pelamar/create/organisasi" method="POST">
@@ -284,7 +284,7 @@
         </div>
     </div>
     {{-- Modal Pengalaman --}}
-    <div id="modalPengalaman" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div id="modalPengalaman" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden justify-center items-center z-50">
         <div class="bg-white p-6 rounded-lg w-full max-w-md">
             <h2 class="text-lg font-semibold mb-4">Tambah Pengalaman Kerja</h2>
             <form action="/dashboard/superadmin/pelamar/create/pengalaman" method="POST">
@@ -310,7 +310,7 @@
         </div>
     </div>
     {{-- Modal Skill --}}
-    <div id="modalSkill" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div id="modalSkill" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden justify-center items-center z-50">
         <div class="bg-white p-6 rounded-lg w-full max-w-md">
             <h2 class="text-lg font-semibold mb-4">Tambah Skill</h2>
             <form action="/dashboard/superadmin/pelamar/create/skill" method="POST">

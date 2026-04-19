@@ -9,7 +9,7 @@
         <div class="relative grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3 overflow-visible">
             @forelse ($Data as $d)
                 @if ($d->paket_id && $d->kategori === $Kategori->nama)
-                    <div class="relative border p-8 overflow-visible">
+                    <div class="relative border border-gray-200 p-8 overflow-visible">
 
                         <div x-data="{ open: false }" class="absolute top-3 right-3 z-[1]">
                             <button @click="open = !open" class="text-3xl p-1 relative z-[1000]">
@@ -17,7 +17,7 @@
                             </button>
 
                             <div x-show="open" @click.outside="open = false" x-transition
-                                class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-xl border py-2 z-[1500]">
+                                class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-xl border border-gray-200 py-2 z-[1500]">
 
                                 <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(url('/detail/job/' . $d->slug)) }}"
                                     target="_blank" class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100">
@@ -83,103 +83,4 @@
             @endforelse
         </div>
     </section>
-
-
-    @if (Auth::check() && Auth::user()->role === 'pelamar' && Auth::user()->pelamars->nama_pelamar == null)
-        <script>
-            window.onload = function() {
-                const isMobile = window.innerWidth < 768;
-                let intro = introJs();
-
-                if (isMobile) {
-                    // Mode HP: target elemen yang terlihat di mobile navbar
-                    const mobileProfileBtn = document.querySelector('#mobile-profile-btn');
-
-                    // Buka hamburger menu supaya mobile-profile-btn terlihat
-                    const hamburgerBtn = document.querySelector('[data-collapse-toggle="navbar-sticky"]');
-                    if (hamburgerBtn) {
-                        hamburgerBtn.click();
-                    }
-
-                    intro.setOptions({
-                        steps: [
-                            {
-                                element: '#mobile-profile-btn',
-                                intro: `
-                                    <div style="max-width:220px; text-align:center">
-                                        <img src="{{ asset('image/Lengkapi Profile.png') }}" style="width:100%; border-radius:10px;" />
-                                        <p style="margin-top:8px; font-size:13px; color:#555;">Ketuk foto profil untuk melengkapi data kamu!</p>
-                                    </div>
-                                `,
-                                position: 'bottom',
-                                tooltipClass: 'notif-profil'
-                            }
-                        ],
-                        showButtons: false,
-                        showBullets: false,
-                        showProgress: false,
-                        exitOnOverlayClick: true,
-                        showStepNumbers: false,
-                        disableInteraction: false
-                    });
-
-                    if (mobileProfileBtn) {
-                        mobileProfileBtn.addEventListener('click', () => {
-                            intro.exit();
-                        });
-                    }
-
-                    intro.start();
-
-                } else {
-                    // Mode Desktop/Tablet
-                    intro.setOptions({
-                        steps: [{
-                                element: '#user-menu-button',
-                                intro: `
-                                    <div style="max-width:180px; text-align:center">
-                                        <img src="{{ asset('image/Lengkapi Profile.png') }}" style="width:100%; border-radius:12px;" />
-                                    </div>
-                                `,
-                                position: 'right',
-                                tooltipClass: 'notif-profil'
-                            },
-                            {
-                                element: '#btn-profile',
-                                intro: `
-                                    <div style="max-width:180px; text-align:center">
-                                        <img src="{{ asset('image/Klik Profil.png') }}" style="width:100%; border-radius:12px;" />
-                                    </div>
-                                `,
-                                position: 'right',
-                                tooltipClass: 'notif-profil'
-                            }
-                        ],
-                        showButtons: false,
-                        showBullets: false,
-                        showProgress: false,
-                        exitOnOverlayClick: false,
-                        showStepNumbers: false,
-                        disableInteraction: false
-                    });
-
-                    intro.onafterchange(function(targetElement) {
-                        if (targetElement.id === "btn-profile") {
-                            document.querySelector('#user-menu')?.classList.remove('hidden');
-                        }
-                    });
-
-                    document.querySelector('#user-menu-button').addEventListener('click', () => {
-                        intro.nextStep();
-                    });
-
-                    document.querySelector('#btn-profile').addEventListener('click', () => {
-                        intro.exit();
-                    });
-
-                    intro.start();
-                }
-            };
-        </script>
-    @endif
 @endsection

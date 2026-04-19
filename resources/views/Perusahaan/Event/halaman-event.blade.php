@@ -30,7 +30,7 @@
                         <img src="{{ asset('storage/' . $item->image) }}" alt="Event {{ $item->title }}"
                             class="w-full h-[500px] object-cover">
 
-                        <div class="absolute inset-0 bg-black bg-opacity-50 p-10 flex flex-col justify-end">
+                        <div class="absolute inset-0 bg-black/65 bg-opacity-50 p-10 flex flex-col justify-end">
                             <h2 class="text-3xl font-bold text-white mb-3">{{ $item->title }}</h2>
                             <p class="text-white text-lg mb-6 max-w-3xl">
                                 {!! Str::limit(strip_tags($item->content), 100, '...') !!}

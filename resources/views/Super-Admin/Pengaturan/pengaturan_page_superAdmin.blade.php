@@ -69,7 +69,7 @@
                             <img src="{{ $sosial[$key]->link }}" 
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                             <div onclick="showModal('{{ $sosial[$key]->link }}')" 
-                                class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
+                                class="absolute inset-0 bg-black/65/40 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
                                 <span class="text-white text-xs font-medium px-3 py-1 border border-white rounded-full">Lihat Detail</span>
                             </div>
                         @else

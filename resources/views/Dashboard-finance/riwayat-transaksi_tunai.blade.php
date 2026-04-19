@@ -62,7 +62,7 @@
 
     {{-- Modal Detail --}}
     <div id="detailModal"
-        class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-4 py-12">
+        class="hidden fixed inset-0 bg-black/65 bg-opacity-60 flex items-center justify-center z-50 px-4 py-12">
         {{-- Modal Pending --}}
         <div id="modalPending"
             class="hidden bg-white w-full max-w-md p-8 pr-4 relative shadow-lg max-h-[calc(100vh-3rem)] overflow-y-auto">
@@ -280,7 +280,7 @@
         </div>
     </div>
 
-    <div id="imageModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div id="imageModal" class="hidden fixed inset-0 bg-black/65 bg-opacity-70 flex items-center justify-center z-50">
         <div class="relative">
             <img id="modalImage" src="" alt="Bukti" class="max-h-screen rounded-lg shadow-lg">
             <button onclick="closeImage()"

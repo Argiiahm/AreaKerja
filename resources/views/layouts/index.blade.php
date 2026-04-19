@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
     @vite('resources/css/app.css')
 
 
@@ -414,7 +415,7 @@
     {{-- Event Modal --}}
     @if (Auth::check() && session('show_event_modal') && session('latest_event'))
         @php $event = session('latest_event'); @endphp
-        <div id="eventModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+        <div id="eventModal" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50 px-4">
             <div class="bg-white shadow-xl w-3/4 lg:w-3/5 p-6 rounded-xl">
                 <h1 class="text-4xl text-gray-500 font-bold border-b-2 py-3">🎉 Event Untukmu!</h1>
                 <div class="overflow-y-auto max-h-[60vh] mt-4">

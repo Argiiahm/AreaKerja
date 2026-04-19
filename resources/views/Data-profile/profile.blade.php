@@ -368,13 +368,13 @@
     </section>
 
     <div id="imgModal"
-        class="hidden fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 cursor-pointer">
+        class="hidden fixed inset-0 bg-black/65/90 z-[100] flex items-center justify-center p-4 cursor-pointer">
         <img id="modalImg" alt="Zoomed"
             class="max-w-full max-h-full rounded-lg shadow-2xl transition-transform duration-300">
     </div>
 
     <div id="modalKategori"
-        class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[110] backdrop-blur-sm p-4">
+        class="hidden fixed inset-0 bg-black/65/60 flex items-center justify-center z-[110] backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl transform transition-all scale-100">
             <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i class="ph ph-warning-octagon text-5xl text-red-500"></i>
@@ -400,7 +400,7 @@
 
     @if (session('sucess_modal_kategori'))
         <div id="NotifmodalKategori"
-            class="fixed inset-0 bg-black/60 flex items-center justify-center z-[120] backdrop-blur-sm p-4">
+            class="fixed inset-0 bg-black/65/60 flex items-center justify-center z-[120] backdrop-blur-sm p-4">
             <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl">
                 <div class="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
                     <i class="ph ph-check-circle text-5xl text-emerald-500"></i>

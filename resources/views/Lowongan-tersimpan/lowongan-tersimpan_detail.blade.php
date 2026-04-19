@@ -5,7 +5,7 @@
         <div class="flex flex-col lg:flex-row gap-10">
 
             <div class="flex-1 rounded-2xl shadow-md overflow-hidden">
-                <div class="flex flex-col md:flex-row gap-6 p-8 border-b">
+                <div class="flex flex-col md:flex-row gap-6 p-8 border-b border-gray-200">
                     <div class="flex-shrink-0 mx-auto md:mx-0">
                         <img src="{{ asset('storage/' . $Data->perusahaan->img_profile) }}" alt="Logo Perusahaan"
                             class="w-24 h-24 rounded-lg object-cover">
@@ -61,7 +61,7 @@
 
                 <div class="p-8 space-y-8">
                     <div>
-                        <h2 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Detail Lowongan</h2>
+                        <h2 class="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">Detail Lowongan</h2>
                         <p class="text-gray-600 mb-4">Berikut merupakan deskripsi lengkap terkait perusahaan yang anda tuju.
                         </p>
 
@@ -76,13 +76,13 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-3 text-gray-700 border-t pt-4">
+                        <div class="flex items-center gap-3 text-gray-700 border-t border-gray-200 pt-4">
                             <i class="ph ph-map-pin text-orange-500 text-lg"></i>
                             <span>{{ $Data->alamat }}</span>
                         </div>
                     </div>
 
-                    <div class="border-t pt-6">
+                    <div class="border-t border-gray-200 pt-6">
                         <div class="mb-3 my-8 py-4">
                             <h3 class="font-semibold text-lg mb-2">Deskripsi Lowongan</h3>
                             <ul class="list-disc pl-6">
@@ -148,7 +148,7 @@
         </div>
     </section>
 
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div id="modal" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] border-2 border-purple-500">
             @php
                 $pelamar = Auth::user()->pelamars; // relasi ke tabel pelamars
@@ -213,7 +213,7 @@
 
     @if ($beliData)
         <div id="modalKonfirmasi"
-            class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+            class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
             <div class="bg-white rounded-2xl p-8 w-[380px] text-center border-t-4 border-orange-500 shadow-xl">
                 <h2 class="text-lg font-semibold text-gray-800 mb-3">Konfirmasi Rekrutmen</h2>
                 <p class="text-gray-600 mb-6">
@@ -239,7 +239,7 @@
         </div>
 
         <div id="modalSelesai"
-            class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+            class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
             <div class="relative bg-white rounded-2xl p-8 w-[400px] text-center shadow-xl">
                 <button id="closeSelesai"
                     class="absolute top-4 right-5 text-gray-400 hover:text-black text-xl transition">
@@ -262,7 +262,7 @@
             </div>
         </div>
 
-        <div id="modalAlasan" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div id="modalAlasan" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-2xl p-8 w-[420px] text-center shadow-lg relative">
                 <h2 class="text-lg font-semibold text-gray-800 mb-6">Pilih Alasan</h2>
 
@@ -316,7 +316,7 @@
     @endif
 
     @if (session('success'))
-        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modalSuccess" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
                 <h2 class="mt-2">Lamaran Anda Berhasil Terkirim</h2>
                 <p class="text-zinc-400">Silahkan Menunggu Informasi Selanjutnya <br> Melalui Sytem Kamu.</p>
@@ -345,7 +345,7 @@
     @endif
 
     <div id="modalKonfirmasitolak"
-        class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+        class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-8 w-[380px] text-center border-t-4 border-orange-500 shadow-xl">
             <h2 class="text-lg font-semibold text-gray-800 mb-3">Konfirmasi Rekrutmen</h2>
             <p class="text-gray-600 mb-6">
@@ -368,7 +368,7 @@
 
 
     <div id="modalTolakSelesai"
-        class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+        class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-8 w-[340px] text-center border-t-4 border-orange-500 shadow-xl relative">
             <button onclick="closeModalTolakSelesai()"
                 class="absolute top-3 right-4 text-gray-500 text-xl font-bold hover:text-gray-700">&times;</button>

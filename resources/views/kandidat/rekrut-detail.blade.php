@@ -151,7 +151,7 @@
         </div>
 
         <div id="modalKonfirmasi"
-            class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+            class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
             <div class="bg-white rounded-2xl p-8 w-[380px] text-center border-t-4 border-orange-500 shadow-xl">
                 <h2 class="text-lg font-semibold text-gray-800 mb-3">Konfirmasi Rekrutmen</h2>
                 <p class="text-gray-600 mb-6">
@@ -177,7 +177,7 @@
         </div>
 
         <div id="modalSelesai"
-            class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+            class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
             <div class="relative bg-white rounded-2xl p-8 w-[400px] text-center shadow-xl">
                 <button id="closeSelesai" class="absolute top-4 right-5 text-gray-400 hover:text-black text-xl transition">
                     &times;
@@ -200,7 +200,7 @@
         </div>
 
         <div id="modalKonfirmasitolak"
-            class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+            class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
             <div class="bg-white rounded-2xl p-8 w-[380px] text-center border-t-4 border-orange-500 shadow-xl">
                 <h2 class="text-lg font-semibold text-gray-800 mb-3">Konfirmasi Rekrutmen</h2>
                 <p class="text-gray-600 mb-6">
@@ -220,7 +220,7 @@
             </div>
         </div>
 
-        <div id="modalAlasan" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div id="modalAlasan" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-2xl p-8 w-[420px] text-center shadow-lg relative">
                 <h2 class="text-lg font-semibold text-gray-800 mb-6">Pilih Alasan</h2>
 
@@ -273,7 +273,7 @@
         </div>
 
         <div id="modalTolakSelesai"
-            class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+            class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
             <div class="bg-white rounded-2xl p-8 w-[340px] text-center border-t-4 border-orange-500 shadow-xl relative">
                 <button onclick="closeModalTolakSelesai()"
                     class="absolute top-3 right-4 text-gray-500 text-xl font-bold hover:text-gray-700">&times;</button>

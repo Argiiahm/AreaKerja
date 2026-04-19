@@ -154,7 +154,7 @@
                     </button>
                 </div>
                 <div id="modalPembayaran"
-                    class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+                    class="fixed inset-0 bg-black/65 bg-opacity-50 hidden items-center justify-center z-50">
                     <div class="bg-white rounded-2xl shadow-lg w-[400px] md:w-[500px] relative p-6">
                         <div class="flex justify-between items-center border-b pb-3 mb-4">
                             <h2 class="text-lg font-bold">Daftar Kandidat</h2>
@@ -202,7 +202,7 @@
 
 
         @if (session('success_topup'))
-            <div id="modalKonfirmasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div id="modalKonfirmasi" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white rounded-2xl p-6 w-[450px] shadow-lg relative">
                     <h2 class="text-lg font-bold mb-4">Konfirmasi Pembayaran</h2>
                     <div class="border border-orange-500 rounded-xl p-4 space-y-2">

@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="mx-2 mt-32 lg:mx-0 md:mx-0 px-0 lg:px-20 md:px-20">
-        <div class="border rounded-lg shadow bg-white">
+        <div class="border rounded-lg border-gray-200 shadow bg-white">
             <div class="flex justify-between items-start p-6">
                 <div>
                     <h1 class="font-bold text-xl">{{ $Data->nama }}</h1>
@@ -44,17 +44,17 @@
             <div class="px-6 pb-6">
                 <h2 class="font-semibold text-lg mb-3">Detail Lowongan</h2>
 
-                <div class="flex items-center gap-3 mb-3 border-b pb-5">
+                <div class="flex items-center gap-3 mb-3 border-b border-gray-200 pb-5">
                     <i class="ph ph-briefcase text-gray-500 text-lg"></i>
                     <span class="bg-gray-200 px-3 py-1 rounded-md text-sm font-semibold">{{ $Data->jenis }}</span>
                 </div>
 
-                <div class="flex items-center gap-3 mb-5 border-b pb-5">
+                <div class="flex items-center gap-3 mb-5 border-b border-gray-200 pb-5">
                     <i class="ph ph-map-pin text-gray-500 text-lg"></i>
                     <span>{{ $Data->alamat }}</span>
                 </div>
 
-                <div class="mb-6 border-b pb-5">
+                <div class="mb-6 border-b border-gray-200 pb-5">
                     <div class="mb-3 my-8 py-4">
                         <h3 class="font-semibold text-lg mb-2">Deskripsi Lowongan</h3>
                         <ul class="list-disc pl-6">
@@ -82,7 +82,7 @@
     </section>
 
     @if (Auth::check())
-        <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div id="modal" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center hidden">
             <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] border-2 border-purple-500">
                 @php
                     $pelamar = Auth::user()->pelamars;
@@ -147,7 +147,7 @@
     @endif
 
     @if (session('success'))
-        <div id="modalSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modalSuccess" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
                 <h2 class="mt-2">Lamaran Anda Berhasil Terkirim</h2>
                 <p class="text-zinc-400">Silahkan Menunggu Informasi Selanjutnya <br> Melalui Sytem Kamu.</p>

@@ -29,7 +29,7 @@
 
         @if (session('success') || session('success2') || session('success3'))
             <div id="modalSukses"
-                class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity">
+                class="fixed inset-0 bg-black/65/40 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity">
                 <div
                     class="bg-white rounded-2xl shadow-xl w-[350px] text-center relative p-8 transform scale-100 opacity-100 transition-all duration-300">
                     <button id="closeSukses" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">

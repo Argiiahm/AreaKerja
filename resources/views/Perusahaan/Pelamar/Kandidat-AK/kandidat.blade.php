@@ -7,7 +7,7 @@
                 'https://arc.amig.com/wp-content/uploads/2016/01/training-header.jpg' }}"
                 class="w-full h-full object-cover">
 
-            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="absolute inset-0 bg-black/65/60"></div>
         </div>
 
         <div class="relative z-10 px-6 lg:px-20 mt-16 lg:mt-0">
@@ -157,7 +157,7 @@
     </div>
 
     {{-- Download Confirmation Modal --}}
-    <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div id="confirmModal" class="hidden fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full border border-gray-200"> {{-- Added border-gray-200 --}}
             <h2 class="text-lg font-semibold mb-4 text-gray-900">Konfirmasi</h2>
             <p class="text-gray-700 mb-4">Apakah Anda yakin ingin mengunduh CV ini?</p>
@@ -172,7 +172,7 @@
     </div>
 
     {{-- Loading Modal --}}
-    <div id="loadingModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+    <div id="loadingModal" class="hidden fixed inset-0 bg-black/65 bg-opacity-60 flex items-center justify-center z-50">
         <div class="flex flex-col items-center">
             <div class="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
             <p class="text-white mt-4">Sedang mengunduh...</p>
@@ -180,7 +180,7 @@
     </div>
 
     {{-- Success Modal --}}
-    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div id="successModal" class="hidden fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center border border-gray-200">
             {{-- Added border-gray-200 --}}
             <h2 class="text-lg font-semibold mb-2 text-green-600">Berhasil!</h2>

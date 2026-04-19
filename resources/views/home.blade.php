@@ -82,7 +82,7 @@
 
     </section>
 
-    <div class="mt-10 flex justify-center gap-10 items-center font-semibold border-b">
+    <div class="mt-10 flex justify-center gap-10 items-center font-semibold border-b border-gray-200">
         <button id="umpan-lowongan"
             class="border-b-2 border-[#fa6601] text-[13px] lg:text-[16px] text-zinc-500 md:text-[16px] cursor-pointer">
             UMPAN LOWONGAN
@@ -103,7 +103,7 @@
             class="relative grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3 overflow-visible">
             @forelse ($Data as $d)
                 @if ($d->paket_id)
-                    <div class="relative border p-8 overflow-visible">
+                    <div class="relative border border-gray-200 p-8 overflow-visible">
 
                         <div x-data="{ open: false }" class="absolute top-3 right-3 z-[1]">
                             <button @click="open = !open" class="text-3xl p-1 relative z-[1000]">
@@ -111,7 +111,7 @@
                             </button>
 
                             <div x-show="open" @click.outside="open = false" x-transition
-                                class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-xl border py-2 z-[1500]">
+                                class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-xl border border-gray-200 py-2 z-[1500]">
 
                                 <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(url('/detail/job/' . $d->slug)) }}"
                                     target="_blank" class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100">
@@ -183,7 +183,7 @@
 
                 @forelse ($recentResult as $d)
                     @if ($d->paket_id)
-                        <div class="relative border p-8 overflow-visible">
+                        <div class="relative border border-gray-200 p-8 overflow-visible">
 
                             <div x-data="{ open: false }" class="absolute top-3 right-3 z-[999]">
                                 <button @click="open = !open" class="text-3xl p-1 relative z-[1000]">
@@ -191,7 +191,7 @@
                                 </button>
 
                                 <div x-show="open" @click.outside="open = false" x-transition
-                                    class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-xl border py-2 z-[1500]">
+                                    class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-xl border border-gray-200 py-2 z-[1500]">
 
                                     <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(url('/detail/job/' . $d->slug)) }}"
                                         target="_blank" class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100">

@@ -151,7 +151,7 @@
     </div>
 
     @if (session('success'))
-        <div id="modalSukses" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modalSukses" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-xl shadow-lg w-[350px] text-center relative p-6">
                 <button id="closeSukses" class="absolute top-2 right-3 text-gray-400 text-xl hover:text-gray-600">×</button>
 

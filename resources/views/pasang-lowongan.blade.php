@@ -7,7 +7,7 @@
                 'https://www.shutterstock.com/image-illustration/blue-black-gradient-background-dark-600nw-2657331673.jpg' }}"
                 class="w-full h-full object-cover">
 
-            <div class="absolute inset-0 bg-black/65 bg-opacity-60"></div>
+            <div class="absolute inset-0 bg-black/65/65 bg-opacity-60"></div>
         </div>
         <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">
             <div class="max-w-lg">

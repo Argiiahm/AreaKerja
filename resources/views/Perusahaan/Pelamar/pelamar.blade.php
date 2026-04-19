@@ -5,7 +5,7 @@
             <div class="absolute inset-0">
                 <img src="https://asset-2.tribunnews.com/palu/foto/bank/images/ilustrasi-berjabat-tangan45.jpg"
                     alt="Background" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+                <div class="absolute inset-0 bg-black/65 bg-opacity-60"></div>
             </div>
             <div class="relative z-10 flex items-center justify-start h-full px-10 lg:px-20 md:px-20">
                 <div class="max-w-lg">
@@ -123,7 +123,7 @@
     </div>
 
 
-    <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div id="confirmModal" class="hidden fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
             <h2 class="text-lg font-semibold mb-4">Konfirmasi</h2>
             <p class="text-gray-600 mb-4">Apakah Anda yakin ingin mengunduh CV ini?</p>
@@ -134,14 +134,14 @@
         </div>
     </div>
 
-    <div id="loadingModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+    <div id="loadingModal" class="hidden fixed inset-0 bg-black/65 bg-opacity-60 flex items-center justify-center z-50">
         <div class="flex flex-col items-center">
             <div class="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
             <p class="text-white mt-4">Sedang mengunduh...</p>
         </div>
     </div>
 
-    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div id="successModal" class="hidden fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
             <h2 class="text-lg font-semibold mb-2 text-green-600">Berhasil!</h2>
             <p class="text-gray-600 mb-4">CV berhasil diunduh.</p>
