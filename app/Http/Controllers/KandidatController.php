@@ -17,12 +17,20 @@ class KandidatController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
         $harga = HargaPembayaran::where('id', 1)->get()->first();
+
+        // Cek Pending User 
+        $pending_kandidat = CatatanCash::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->whereNotNull('bukti')
+            ->first();
 
         return view('daftar-kandidat', [
             "payment"   =>    Bank::all(),
             "divisi"    =>    Divisi::all(),
-            "Harga"     =>    $harga
+            "Harga"     =>    $harga,
+            "pending_kandidat"  =>  $pending_kandidat
         ]);
     }
 

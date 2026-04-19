@@ -50,7 +50,7 @@
                                             class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200">{{ $datas->paket->nama }}</span>
                                         <button
                                             onclick="window.location='/dashboard/perusahaan/pelamar/{{ $datas->slug }}'"
-                                            class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200 whitespace-nowrap no-underline bg-orange-500 text-white hover:bg-orange-600 hover:-translate-y-px">
+                                            class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200 whitespace-nowrap no-underline  text-gray-500 hover:-translate-y-px">
                                             Lihat Pelamar
                                         </button>
                                     @else

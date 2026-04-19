@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
  @section('content')
-     <div class="container max-w-4xl mx-auto bg-white shadow-md rounded-2xl mt-32 p-8 border">
+     <div class="container max-w-4xl mx-auto bg-white shadow-md rounded-2xl mt-32 p-8 border border-gray-200">
 
          <div class="mb-8 pb-3 border-b border-gray-200 px-4">
              <h2 class="text-2xl font-bold text-gray-800">Detail Transaksi</h2>
@@ -42,7 +42,7 @@
              </div>
 
              <div class="flex justify-center items-start">
-                 <div class="border rounded-xl shadow-sm p-6 text-center w-full mx-10">
+                 <div class="border border-gray-200 rounded-xl shadow-sm p-6 text-center w-full mx-10">
                      @if ($Bank->nama_bank === 'QRIS')
                          <img src="{{ asset($Bank->logo_img) }}" alt="BCA" class="w-24 mx-auto mb-3">
                          <div class="text-left">
@@ -122,7 +122,7 @@
          <div class="mt-10 px-4">
              <h3 class="text-lg font-semibold text-gray-800 mb-3">Petunjuk Pembayaran</h3>
              <h3 class="text-lg font-semibold text-gray-800 mb-3">QRIS</h3>
-             <div class="divide-y border-t border-b-2"></div>
+             <div class="divide-y border-t border-b-2 border-gray-200"></div>
              @if ($Bank->nama_bank === 'QRIS')
                  <div class="mx-20 my-5">
                      <ul class="list-decimal">
@@ -134,7 +134,7 @@
                      </ul>
                  </div>
              @else
-                 <div class="divide-y border-t border-b">
+                 <div class="divide-y border-t border-b border-gray-200">
                      <button
                          class="w-full flex justify-between items-center py-3 text-left font-medium text-gray-700 hover:bg-gray-50">
                          <span>Transfer mBanking</span>

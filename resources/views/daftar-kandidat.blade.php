@@ -15,10 +15,17 @@
                     Ikuti pelatihan terakreditasi Areakerja.com<br>
                     dan dapatkan pekerjaan impian anda!
                 </p>
-                <button id="openFormModal"
-                    class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-md shadow-md">
-                    Daftar
-                </button>
+                @if ($pending_kandidat)
+                    <button
+                        class="inline-block bg-gray-300 text-white font-semibold px-6 py-2 rounded-md shadow-md">
+                        Harap Tunggu Konfirmasi
+                    </button>
+                @else
+                    <button id="openFormModal"
+                        class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-md shadow-md">
+                        Daftar
+                    </button>
+                @endif
             </div>
         </div>
     </section>

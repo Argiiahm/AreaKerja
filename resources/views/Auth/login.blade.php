@@ -67,12 +67,12 @@
                         <label for="name" class="font-semibold ">Nama Pengguna</label>
                         <div class="flex items-center border-2 mt-2 mb-8 py-2 px-3">
                             <input id="name" class=" pl-2 w-full outline-none border-none" type="text"
-                                name="username" placeholder="Nama Pengguna" required autofocus />
+                                name="username" placeholder="Nama Pengguna" required value="{{ old('username') }}" autofocus />
                         </div>
                         <label for="password" class="font-semibold">Kata Sandi</label>
                         <div class="flex items-center border-2 py-2 mt-2 px-3 mb-3">
                             <input class="pl-2 w-full outline-none border-none" type="password" name="password"
-                                id="password" placeholder="Kata Sandi" required />
+                                id="password" placeholder="Kata Sandi" required  />
                         </div>
                         <div>
                             <input type="checkbox" name="" id="" class="border">
