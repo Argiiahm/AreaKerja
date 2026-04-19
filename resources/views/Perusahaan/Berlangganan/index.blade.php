@@ -102,10 +102,6 @@
                             <span class="text-lg font-bold text-orange-500">{{ $totalSaldo }}</span>
                         </div>
                     </div>
-                    <a href="/koin/areakerja"
-                        class="text-green-600 text-sm font-semibold flex items-center gap-1 hover:underline">
-                        <span class="text-lg">+</span> Top Up Koin
-                    </a>
                 </div>
 
                 <div class="flex justify-end">

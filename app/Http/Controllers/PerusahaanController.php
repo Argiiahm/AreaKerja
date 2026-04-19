@@ -722,12 +722,4 @@ class PerusahaanController extends Controller
     {
         return view('Perusahaan.Event.detail-event-kosong');
     }
-
-    public function koin()
-    {
-        return view('Perusahaan.koin-saya', [
-            "HargaKoin" => HargaPembayaran::all(),
-            "payment" => Bank::all()
-        ]);
-    }
 }

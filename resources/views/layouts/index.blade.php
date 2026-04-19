@@ -98,8 +98,9 @@
                                 @endif
                             @elseif (Auth::user()->role == 'perusahaan')
                                 <span
-                                    class="flex justify-center bg-orange-500 px-4 py-2 text-white mx-5 my-3 rounded-md">
+                                    class="flex items-center justify-center gap-2 bg-orange-500 px-4 py-2 text-white mx-5 my-3 rounded-md cursor-pointer">
                                     {{ Auth::user()->username }}
+                                    <i class="ph ph-caret-down"></i>
                                 </span>
                             @else
                                 <img class="w-10 h-10 rounded-full"
@@ -163,12 +164,6 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/koin/areakerja"
-                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
-                                            <i class="ph ph-coins text-xl"></i> Koin Area Kerja
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a href="/dashboard/perusahaan/kandidat"
                                             class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
                                             <i class="ph ph-users-three text-xl"></i> Kandidat Saya
@@ -228,8 +223,7 @@
                             </ul>
                         </div>
                     @else
-                        <a href="/login"
-                            class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
+                        <a href="/login" class="text-white bg-[#fa6601] px-10 py-2 rounded-lg cursor-pointer">Masuk</a>
                     @endif
                 </div>
 

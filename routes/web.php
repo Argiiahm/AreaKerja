@@ -303,7 +303,6 @@ Route::middleware(['status'])->group(function () {
 
     //Perusahaan
     Route::get('/dashboard/perusahaan', [PerusahaanController::class, 'index'])->middleware(middleware: 'perusahaan');
-    Route::get('/koin/areakerja', [PerusahaanController::class, 'koin'])->middleware(middleware: 'perusahaan');
     Route::get('/dashboard/perusahaan/profile', [PerusahaanController::class, 'profile'])->middleware(middleware: 'perusahaan');
     Route::get('/dashboard/perusahaan/edit/profile', [PerusahaanController::class, 'edit_profile'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/update/profile/{perusahaan:id}', [PerusahaanController::class, 'update_profile'])->middleware('perusahaan');
