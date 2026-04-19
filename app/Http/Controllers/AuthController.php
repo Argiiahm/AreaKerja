@@ -55,10 +55,10 @@ class AuthController extends Controller
         return match ($user->role) {
             'superadmin' => redirect('/dashboard/superadmin'),
             'admin' => redirect('/dashboard/admin'),
-            'pelamar' => redirect('/')
+            'pelamar' => redirect('/profile')
                 ->with('show_event_modal', true)
                 ->with('latest_event', $latestEvent),
-            'perusahaan' => redirect('/dashboard/perusahaan')
+            'perusahaan' => redirect('/dashboard/perusahaan/profile')
                 ->with('show_event_modal', true)
                 ->with('latest_event', $latestEvent),
             'finance' => redirect('/dashboard/finance'),

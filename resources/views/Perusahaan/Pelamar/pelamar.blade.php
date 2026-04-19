@@ -22,7 +22,14 @@
             <div
                 class="bg-white rounded-xl shadow-md p-6 flex flex-col md:flex-row items-start md:items-center justify-between">
                 <div class="flex items-start md:items-center gap-4">
-                    <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-30">
+                    @if ($data->perusahaan->img_profile)
+                        <img class="object-contain w-20 h-full"
+                            src="{{ asset('storage/' . $data->perusahaan->img_profile) }}" alt="Company Logo">
+                    @else
+                        <img class="w-20 h-full object-cover p-2"
+                            src="https://ui-avatars.com/api/?name={{ urlencode($data->perusahaan->nama_perusahaan) }}&background=random&color=fff&size=128"
+                            alt="Placeholder Avatar">
+                    @endif
 
                     <div>
                         <p class="text-gray-500 text-sm">{{ $data->perusahaan->nama_perusahaan }}</p>

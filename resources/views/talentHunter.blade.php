@@ -88,7 +88,7 @@
 
         @if (Auth::check() && Auth::user()->role === 'perusahaan')
             <div id="modalbeli"
-                class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+                class="hidden fixed top-0 left-0 w-full h-full bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white w-full max-w-md p-8 relative mx-10 shadow-lg rounded-lg">
                     <button onclick="closeDetail()"
                         class="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
@@ -140,7 +140,7 @@
 
         @if (Auth::check() && Auth::user()->role === 'perusahaan')
             <div id="modalFormPerusahaan"
-                class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+                class="hidden fixed top-0 left-0 w-full h-full bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
                 <div
                     class="bg-white w-full max-w-lg p-8 relative mx-4 sm:mx-6 md:mx-10 shadow-2xl rounded-2xl border border-gray-100">
                     <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">
