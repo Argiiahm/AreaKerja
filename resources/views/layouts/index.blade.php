@@ -7,18 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AreaKerja.com</title>
     <link rel="shortcut icon" href="{{ asset('image/logo-areakerja.png') }}" type="image/x-icon">
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
-
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <link href="https://unpkg.com/intro.js/minified/introjs.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    @vite('resources/css/app.css')
+
 
     @vite('resources/css/app.css')
 
@@ -368,15 +366,20 @@
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:mt-0 md:border-0">
                     @if (Auth::check() && Auth::user()->role == 'perusahaan')
                         <li><a href="{{ Auth::user()->perusahaan->is_berlangganan ? '/dashboard/perusahaan/berlangganan/kandidat' : '/dashboard/perusahaan/berlangganan' }}"
-                                class="block py-2 px-3 text-[#fa6601] {{ Request::is('dashboard/perusahaan/berlangganan') ? 'opacity-30' : '' }} font-semibold">Beranda</a></li>
-                        <li><a href="/talenthunter" class="block py-2 px-3 text-[#fa6601] {{ Request::is('talenthunter') ? 'opacity-30' : '' }} font-semibold">Talent
+                                class="block py-2 px-3 text-[#fa6601] {{ Request::is('dashboard/perusahaan/berlangganan') ? 'opacity-30' : '' }} font-semibold">Beranda</a>
+                        </li>
+                        <li><a href="/talenthunter"
+                                class="block py-2 px-3 text-[#fa6601] {{ Request::is('talenthunter') ? 'opacity-30' : '' }} font-semibold">Talent
                                 Hunter</a></li>
                         <li><a href="/dashboard/perusahaan/kandidatak"
-                                class="block py-2 px-3 text-[#fa6601] {{ Request::is('dashboard/perusahaan/kandidatak') ? 'opacity-30' : '' }} font-semibold">Kandidat</a></li>
-                        <li><a href="/pasanglowongan" class="block py-2 px-3 text-[#fa6601] {{ Request::is('pasanglowongan') ? 'opacity-30' : '' }} font-semibold">Pasang
+                                class="block py-2 px-3 text-[#fa6601] {{ Request::is('dashboard/perusahaan/kandidatak') ? 'opacity-30' : '' }} font-semibold">Kandidat</a>
+                        </li>
+                        <li><a href="/pasanglowongan"
+                                class="block py-2 px-3 text-[#fa6601] {{ Request::is('pasanglowongan') ? 'opacity-30' : '' }} font-semibold">Pasang
                                 Lowongan</a></li>
-                        <li><a href="/dashboard/perusahaan/event" 
-                                class="block py-2 px-3 text-[#fa6601] {{ Request::is('dashboard/perusahaan/event') ? 'opacity-30' : '' }} font-semibold">Event</a></li>
+                        <li><a href="/dashboard/perusahaan/event"
+                                class="block py-2 px-3 text-[#fa6601] {{ Request::is('dashboard/perusahaan/event') ? 'opacity-30' : '' }} font-semibold">Event</a>
+                        </li>
                     @else
                         <li><a href="/"
                                 class="block py-2 px-3 text-[#fa6601] font-semibold {{ Request::is('/') ? 'opacity-30' : '' }}">Beranda</a>

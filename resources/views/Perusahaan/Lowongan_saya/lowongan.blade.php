@@ -1,253 +1,202 @@
 @extends('layouts.index')
 
 @section('content')
-    @if (Auth::user()->perusahaan->pasanglowongan->count() > 0)
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-24">
-            <div class="flex items-start gap-4 w-full py-5 justify-between">
-                <div class="flex gap-5 justify-between w-10/12 md:w-11/12 lg:w-11/12 items-center">
-                    <div class="flex items-center gap-2">
-                        @if (Auth::user()->perusahaan->img_profile)
-                            <div class="w-32 h-32 flex items-center justify-center">
-                                <img class="object-contain w-full"
-                                    src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="">
-                            </div>
-                        @else
-                            <div class="w-32 h-32 flex justify-center">
-                                <img class="w-20 h-20 rounded-full"
-                                    src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
-                                    alt="">
-                            </div>
-                        @endif
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 mt-24">
 
-                        <div>
-                            <h2 class="text-lg font-bold">{{ Auth::user()->perusahaan->nama_perusahaan }}</h2>
-                            <p class="text-gray-600 text-sm">{{ Auth::user()->perusahaan->deskripsi }}</p>
-                            <p class="text-gray-400 text-xs mt-1">
-                                {{ optional(Auth::user()->perusahaan->alamatperusahaan()->latest()->first())->detail ?? '-' }}
-                            </p>
-                        </div>
-                    </div>
+        {{-- Company Profile Section --}}
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-4 py-5 border-b border-gray-200 mb-8">
+            <div
+                class="flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
+                @if (Auth::user()->perusahaan->img_profile)
+                    <img class="object-contain w-full h-full"
+                        src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="Company Logo">
+                @else
+                    <img class="w-full h-full object-cover p-4"
+                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
+                        alt="Placeholder Avatar">
+                @endif
+            </div>
+            <div class="flex-grow">
+                <h2 class="text-xl font-bold text-gray-900">{{ Auth::user()->perusahaan->nama_perusahaan }}</h2>
+                <p class="text-gray-600 text-sm mt-1">{{ Auth::user()->perusahaan->deskripsi }}</p>
+                <p class="text-gray-400 text-xs mt-1">
+                    <i class="ph ph-map-pin inline-block mr-1"></i>
+                    {{ optional(Auth::user()->perusahaan->alamatperusahaan()->latest()->first())->detail ?? 'Alamat belum diatur' }}
+                </p>
+            </div>
+            <a href="/dashboard/perusahaan/isi/lowongan"
+                class="ml-auto w-10 h-10 border border-orange-500 rounded-md flex items-center justify-center text-orange-500 hover:bg-orange-50 transition-colors duration-200 flex-shrink-0">
+                <i class="ph ph-plus text-xl"></i>
+            </a>
+        </div>
 
-                    <div>
-                        <a href="/dashboard/perusahaan/isi/lowongan"
-                            class="absolute w-16 h-16 border border-orange-500 rounded-md flex items-center justify-center text-orange-500 hover:bg-orange-50">
-                            <i class="ph ph-plus text-xl"></i>
-                        </a>
-                    </div>
+        {{-- Lowongan Section --}}
+        <div> {{-- Removed x-data here --}}
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                <h3 class="text-xl font-semibold text-gray-900">Daftar Lowongan</h3>
+                <div class="flex gap-2 flex-wrap">
+                    <select id="paketFilter"
+                        class="border border-gray-300 rounded-md px-4 py-2 text-sm focus:ring-orange-500 focus:border-orange-500">
+                        <option value="">Semua Paket</option>
+                        @foreach ($Pakets->whereIn('id', [1, 2, 3]) as $pkt)
+                            <option value="{{ $pkt->id }}">{{ $pkt->nama }}</option>
+                        @endforeach
+                    </select>
+
+                    <select id="jenisFilter"
+                        class="border border-gray-300 rounded-md px-4 py-2 text-sm focus:ring-orange-500 focus:border-orange-500">
+                        <option value="">Semua Jenis</option>
+                        <option value="fulltime">Fulltime</option>
+                        <option value="middle">Middle</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="freelance">Freelance</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="mt-8" x-data="{ paket: '', jenis: '' }">
-
-                <div class="flex justify-between items-end text-center gap-3 mb-3">
-                    <h3 clas s="font-semibold text-center">Lowongan</h3>
-
-                    <div>
-                        <select x-model="paket" class="border rounded-md px-6 lg:px-10 md:px-10 py-2 text-sm">
-                            <option value="">Jenis Paket</option>
-                            @foreach ($Pakets->whereIn('id', [1, 2, 3]) as $pkt)
-                                <option value="{{ $pkt->id }}">{{ $pkt->nama }}</option>
-                            @endforeach
-                        </select>
-
-                        <select x-model="jenis" class="border rounded-md px-6 lg:px-10 md:px-10 py-2 text-sm">
-                            <option value="">Jenis Lowongan</option>
-                            <option value="fulltime">Fulltime</option>
-                            <option value="middle">Middle</option>
-                            <option value="part-time">Part-time</option>
-                            <option value="freelance">Freelance</option>
-                        </select>
-                    </div>
-                </div>
-
-                @forelse (Auth::user()->perusahaan->pasanglowongan as $d)
-                    <div
-                        x-show="
-                        (paket === '' || paket == '{{ $d->paket_id }}')
-&&
-                        (jenis === '' || jenis == '{{ $d->jenis }}')
-                    ">
-                        @if ($d->paket_id)
-                            <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}">
-                                <div class="flex shadow-md p-4 gap-5">
-
-                                    <div>
-                                        @if ($d->perusahaan->img_profile)
-                                            <div class="w-28 h-28 flex items-center justify-center">
-                                                <img class="object-contain w-full"
+            @if (Auth::user()->perusahaan->pasanglowongan->count() > 0)
+                <div class="grid gap-6" id="lowonganList">
+                    @forelse (Auth::user()->perusahaan->pasanglowongan as $d)
+                        <div class="lowongan-item" data-paket-id="{{ $d->paket_id }}" data-jenis="{{ $d->jenis }}">
+                            @if ($d->paket_id)
+                                <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}"
+                                    class="block p-4 sm:p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
+                                    <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                                        <div
+                                            class="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
+                                            @if ($d->perusahaan->img_profile)
+                                                <img class="object-contain w-full h-full"
                                                     src="{{ asset('storage/' . $d->perusahaan->img_profile) }}"
-                                                    alt="">
-                                            </div>
-                                        @else
-                                            <div class="w-28 h-28 flex justify-center">
-                                                <img class="w-20 h-20 rounded-full"
-                                                    src="https://ui-avatars.com/api/?name={{ urlencode($d->username) }}&background=random&color=fff&size=128"
-                                                    alt="">
-                                            </div>
-                                        @endif
-                                    </div>
+                                                    alt="Company Logo">
+                                            @else
+                                                <img class="w-full h-full object-cover p-2"
+                                                    src="https://ui-avatars.com/api/?name={{ urlencode($d->perusahaan->nama_perusahaan) }}&background=random&color=fff&size=128"
+                                                    alt="Placeholder Avatar">
+                                            @endif
+                                        </div>
+                                        <div class="flex-grow">
+                                            <p class="text-sm text-gray-600">{{ $d->perusahaan->nama_perusahaan }}</p>
+                                            <h1 class="text-lg font-semibold text-gray-900 mt-1">{{ $d->nama }} -
+                                                {{ ucfirst($d->jenis) }}</h1>
+                                            <p class="text-sm text-gray-500 mt-1"><i
+                                                    class="ph ph-map-pin inline-block mr-1"></i> {{ $d->alamat }}</p>
 
-                                    <div class="w-full">
-                                        <p>Seven Inc</p>
-                                        <h1 class="font-semibold">{{ $d->nama }} - {{ $d->jenis }}</h1>
-                                        <span>Yogyakarta</span>
-
-                                        <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                                            <span class="px-3 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">
-                                                Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }}
-                                            </span>
-                                            <span class="block mt-3 text-[#565656] pl-0 lg:pl-10 md:pl-10">
-                                                <p class="countdown text-red-500 font-medium"
-                                                    data-expired="{{ $d->expired_date }}"></p>
-                                            </span>
+                                            <div
+                                                class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                                <span
+                                                    class="inline-block px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md">
+                                                    Rp {{ number_format($d->gaji_awal, 0, ',', '.') }} - Rp
+                                                    {{ number_format($d->gaji_akhir, 0, ',', '.') }}
+                                                </span>
+                                                <span class="countdown text-red-600 text-sm font-medium"
+                                                    data-expired="{{ $d->expired_date }}"></span>
+                                            </div>
                                         </div>
                                     </div>
-
+                                </a>
+                            @else
+                                {{-- Non-Published Card --}}
+                                <div class="p-4 sm:p-6 bg-yellow-50 rounded-xl shadow-md border border-yellow-200">
+                                    <h3 class="font-semibold text-lg text-orange-600 mb-4">Lowongan Belum Dipublikasikan
+                                    </h3>
+                                    <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                                        <div
+                                            class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
+                                            @if ($d->perusahaan->img_profile)
+                                                <img class="object-contain w-full h-full"
+                                                    src="{{ asset('storage/' . $d->perusahaan->img_profile) }}"
+                                                    alt="Company Logo">
+                                            @else
+                                                <img class="w-full h-full object-cover p-2"
+                                                    src="https://ui-avatars.com/api/?name={{ urlencode($d->perusahaan->nama_perusahaan) }}&background=random&color=fff&size=128"
+                                                    alt="Placeholder Avatar">
+                                            @endif
+                                        </div>
+                                        <div class="flex-grow">
+                                            <p class="text-sm text-gray-600">
+                                                {{ Auth::user()->perusahaan->nama_perusahaan }}</p>
+                                            <h1 class="text-lg font-semibold text-gray-900 mt-1">{{ $d->nama }} -
+                                                {{ ucfirst($d->jenis) }}</h1>
+                                            <p class="text-sm text-gray-500 mt-1"><i
+                                                    class="ph ph-map-pin inline-block mr-1"></i> {{ $d->alamat }}</p>
+                                            <div
+                                                class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                                <span
+                                                    class="inline-block px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md">
+                                                    Rp {{ number_format($d->gaji_awal, 0, ',', '.') }} - Rp
+                                                    {{ number_format($d->gaji_akhir, 0, ',', '.') }}
+                                                </span>
+                                                <button type="button"
+                                                    class="publish-btn bg-orange-500 px-6 py-2 rounded-md text-white hover:bg-orange-600 transition-colors duration-200 text-sm"
+                                                    data-id="{{ $d->id }}"> Publish </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            @endif
+                        </div>
+                    @empty
+                        {{-- Initial empty state when no jobs are posted yet --}}
+                        <div id="initial-empty-state"
+                            class="border border-gray-200 rounded-xl p-6 min-h-[250px] flex flex-col items-center justify-center text-gray-500">
+                            <i class="ph ph-file text-4xl mb-2"></i>
+                            <p class="text-sm">Anda belum memposting lowongan apapun.</p>
+                            <a href="/dashboard/perusahaan/isi/lowongan"
+                                class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors duration-200">
+                                <i class="ph ph-plus text-lg"></i> Buat Lowongan Pertama Anda
                             </a>
-                        @else
-                            {{-- CARD NON-PUBLISH --}}
-                            <div class="flex justify-between items-end text-center gap-3 my-5">
-                                <h3 class="font-semibold text-center text-orange-500">Lowongan Non Publish</h3>
-                            </div>
-
-                            <div class="flex shadow-md p-4 gap-5">
-
-                                <div>
-                                    @if ($d->perusahaan->img_profile)
-                                        <div class="w-24 h-24 flex items-center justify-center">
-                                            <img class="object-contain w-full"
-                                                src="{{ asset('storage/' . $d->perusahaan->img_profile) }}" alt="">
-                                        </div>
-                                    @else
-                                        <div class="w-24 h-24 flex justify-center">
-                                            <img class="w-20 h-20 rounded-full"
-                                                src="https://ui-avatars.com/api/?name={{ urlencode($d->username) }}&background=random&color=fff&size=128"
-                                                alt="">
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="w-full">
-                                    <p>{{ Auth::user()->perusahaan->nama_perusahaan }}</p>
-                                    <h1 class="font-semibold">{{ $d->nama }} - {{ $d->jenis }}</h1>
-                                    <span>Yogyakarta</span>
-                                    <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                                        <div class="mt-5 block lg:flex md:flex justify-between items-center w-full">
-                                            <span class="px-2 bg-[#d7d6d6] text-[#565656] py-2 rounded-md">
-                                                Rp.{{ $d->gaji_awal }} - Rp.{{ $d->gaji_akhir }}
-                                            </span>
-                                        </div>
-
-                                        <button type="button"
-                                            class="publish-btn block  mt-3 bg-orange-500 px-10 py-2 rounded-md text-white"
-                                            data-id="{{ $d->id }}"> Publish </button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        @endif
-                    </div>
-
-                @empty
-                    <p class="text-center text-gray-500 mt-6">Belum ada lowongan.</p>
-                @endforelse
-
-            </div>
-        </div>
-
-        {{-- <div class="flex justify-center mt-8">
-            <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded-lg shadow">
-                Memuat
-            </button>
-        </div> --}}
-    @else
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-24">
-            <div class="flex items-start gap-4 w-full py-5">
-                <div class="w-32 h-32 flex items-center justify-center">
-                    @if (Auth::user()->perusahaan->img_profile)
-                        <img class="object-contain w-full"
-                            src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}" alt="">
-                    @else
-                        <img class="object-contain w-full"
-                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
-                            alt="">
-                    @endif
+                        </div>
+                    @endforelse
                 </div>
 
-                <div>
-                    <h2 class="text-lg font-bold">{{ Auth::user()->perusahaan->nama_perusahaan }}</h2>
-                    <p class="text-gray-600 text-sm">{{ Auth::user()->perusahaan->deskripsi }}</p>
-                    <p class="text-gray-400 text-xs mt-1">
-                        {{ optional(Auth::user()->perusahaan->alamatperusahaan()->latest()->first())->detail ?? '-' }}
-
-                    </p>
+                {{-- Filtered Empty State (Hidden by default, shown by JS) --}}
+                <div id="filtered-empty-state"
+                    class="hidden border border-gray-200 rounded-xl p-6 min-h-[200px] flex flex-col items-center justify-center text-gray-500">
+                    <i class="ph ph-magnifying-glass text-4xl mb-2"></i>
+                    <p class="text-sm">Tidak ada lowongan yang cocok dengan filter Anda.</p>
                 </div>
-            </div>
-
-            <div class="mt-8">
-                <div class="flex justify-between items-end text-center gap-3 mb-3">
-                    <h3 class="font-semibold text-center">Lowongan</h3>
-
-                    <div>
-                        <select class="border rounded-md px-6 lg:px-10 md:px-10 py-2 text-sm">
-                            <option value="">Jenis Paket</option>
-                            @foreach ($Pakets->whereIn('id', [1, 2, 3]) as $pkt)
-                                <option value="{{ $pkt->id }}">{{ $pkt->nama }}</option>
-                            @endforeach
-                        </select>
-
-                        <select class="border rounded-md px-6 lg:px-10 md:px-10 py-2 text-sm">
-                            <option value="">Jenis Lowongan</option>
-                            <option value="fulltime">Fulltime</option>
-                            <option value="middle">Middle</option>
-                            <option value="part-time">Part-time</option>
-                            <option value="freelance">Freelance</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="border rounded-xl p-6 min-h-[250px] flex flex-col items-center justify-center relative">
+            @else
+                {{-- Initial empty state when no jobs are posted yet (outer block) --}}
+                <div
+                    class="border border-gray-200 rounded-xl p-6 min-h-[250px] flex flex-col items-center justify-center text-gray-500">
+                    <i class="ph ph-file text-4xl mb-2"></i>
+                    <p class="text-sm">Anda belum memposting lowongan apapun.</p>
                     <a href="/dashboard/perusahaan/isi/lowongan"
-                        class="absolute top-4 left-4 w-10 h-10 border border-orange-500 rounded-md flex items-center justify-center text-orange-500 hover:bg-orange-50">
-                        <i class="ph ph-plus text-xl"></i>
+                        class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors duration-200">
+                        <i class="ph ph-plus text-lg"></i> Buat Lowongan Pertama Anda
                     </a>
-
-                    <div class="flex flex-col items-center justify-center text-gray-500">
-                        <i class="ph ph-file text-4xl mb-2"></i>
-                        <p class="text-sm">Lowongan Kosong</p>
-                    </div>
                 </div>
-            </div>
+            @endif
         </div>
-    @endif
+    </div>
 
-    <div id="publishModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-white p-6 rounded-md w-96 relative">
-            <h2 class="text-lg font-bold mb-4">Konfirmasi Publish</h2>
-            <p>Apakah Anda yakin ingin mem-publish lowongan ini?</p>
+    {{-- Publish Modal (jQuery controlled) --}}
+    <div id="publishModal" class="fixed inset-0 bg-black/65 bg-opacity-50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm relative">
+            <h2 class="text-lg font-bold mb-4 text-gray-900">Konfirmasi Publikasi</h2>
+            <p class="text-gray-700">Apakah Anda yakin ingin mempublikasikan lowongan ini?</p>
 
-            <div class="mt-4 flex justify-end gap-3">
-                <button type="button" id="closeModal" class="px-4 py-2 border rounded-md">Batal</button>
-                <a href="/pasanglowongan" class="px-4 py-2 bg-orange-500 text-white rounded-md">Ya, Publish</a>
+            <div class="mt-6 flex justify-end gap-3">
+                <button type="button" id="closeModal"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors duration-200">Batal</button>
+                <a href="#" id="confirmPublishBtn"
+                    class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors duration-200">Ya,
+                    Publikasikan</a>
             </div>
         </div>
     </div>
 
     <script>
-        const publishButtons = document.querySelectorAll('.publish-btn');
-        const modal = document.getElementById('publishModal');
-        const closeModal = document.getElementById('closeModal');
-
         function startCountdown(element) {
-            const expiredAt = new Date(element.dataset.expired).getTime();
+            const expiredAt = new Date($(element).data('expired')).getTime();
 
             function updateCountdown() {
                 const now = new Date().getTime();
                 const dist = expiredAt - now;
 
                 if (dist < 0) {
-                    element.innerHTML = "Expired";
+                    $(element).html("Expired");
+                    $(element).removeClass('text-red-600').addClass('text-gray-500');
                     return;
                 }
 
@@ -256,34 +205,76 @@
                 const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((dist % (1000 * 60)) / 1000);
 
-                element.innerHTML =
-                    d + " Hari " + h + " Jam " + m + " Menit " + s + " Detik";
+                $(element).html(`${d} Hari ${h} Jam ${m} Menit ${s} Detik`);
             }
 
             updateCountdown();
             setInterval(updateCountdown, 1000);
         }
 
-        document.querySelectorAll('.countdown').forEach(startCountdown);
+        $(document).ready(function() {
+            // Initialize countdowns
+            $('.countdown').each(function() {
+                startCountdown(this);
+            });
 
-        publishButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
+            // Filtering logic
+            function applyFilters() {
+                const selectedPaket = $('#paketFilter').val();
+                const selectedJenis = $('#jenisFilter').val();
+                let visibleItemsCount = 0;
+
+                $('.lowongan-item').each(function() {
+                    const paketId = $(this).data('paket-id');
+                    const jenis = $(this).data('jenis');
+
+                    const isPaketMatch = (selectedPaket === '' || selectedPaket == paketId);
+                    const isJenisMatch = (selectedJenis === '' || selectedJenis == jenis);
+
+                    if (isPaketMatch && isJenisMatch) {
+                        $(this).show();
+                        visibleItemsCount++;
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                // Handle empty states
+                const isAnyFilterActive = (selectedPaket !== '' || selectedJenis !== '');
+
+                if (isAnyFilterActive && visibleItemsCount === 0) {
+                    $('#filtered-empty-state').removeClass('hidden').addClass('flex');
+                    $('#lowonganList').addClass('hidden'); // Hide the grid container if no items
+                } else {
+                    $('#filtered-empty-state').removeClass('flex').addClass('hidden');
+                    $('#lowonganList').removeClass('hidden'); // Show the grid container
+                }
+
+                // If no jobs at all initially, the outer empty state already handles it.
+                // We only need to manage the filtered empty state.
+            }
+
+            $('#paketFilter, #jenisFilter').on('change', applyFilters);
+
+            // Initial filter application in case of pre-selected options
+            applyFilters();
+
+            // Publish Modal Logic
+            $('.publish-btn').on('click', function() {
+                const lowonganId = $(this).data('id');
+                $('#confirmPublishBtn').attr('href', `/pasanglowongan`);
+                $('#publishModal').removeClass('hidden').addClass('flex');
+            });
+
+            $('#closeModal, #publishModal').on('click', function(e) {
+                if (e.target.id === 'closeModal' || e.target.id === 'publishModal') {
+                    $('#publishModal').removeClass('flex').addClass('hidden');
+                }
+            });
+            // Stop propagation for modal content click
+            $('#publishModal > div').on('click', function(e) {
+                e.stopPropagation();
             });
         });
-
-        closeModal.addEventListener('click', () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-        });
     </script>
-
 @endsection
