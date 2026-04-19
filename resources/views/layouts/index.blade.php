@@ -17,112 +17,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     @vite('resources/css/app.css')
-
-
-    @vite('resources/css/app.css')
-
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* Intro.js Custom Styling */
-        .notif-profil {
-            margin: 0 !important;
-            padding: 0 !important;
-            border-radius: 12px !important;
-            background: transparent !important;
-            border: 0 !important;
-            box-shadow: none !important;
-        }
-
-        .notif-profil .introjs-skipbutton,
-        .notif-profil .introjs-arrow {
-            display: none !important;
-        }
-
-        .notif-profil.introjs-tooltip {
-            transform: translateY(-25px) !important;
-        }
-
-        .introjs-overlay,
-        .introjs-helperLayer {
-            pointer-events: none !important;
-        }
-
-        .introjs-overlay {
-            background: rgba(0, 0, 0, 0.3) !important;
-        }
-
-        .introjs-tooltip {
-            z-index: 100000 !important;
-            pointer-events: auto !important;
-            background-clip: padding-box;
-            box-shadow: none !important;
-            filter: none !important;
-        }
-
-        .introjs-tooltip:before,
-        .introjs-tooltip:after {
-            box-shadow: none !important;
-            background: transparent !important;
-        }
-
-        /* Profile & Modal */
-        .profile-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            cursor: pointer;
-            object-fit: cover;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal img {
-            max-width: 90%;
-            max-height: 90%;
-        }
-
-        /* Responsive Mobile */
-        @media (max-width: 767px) {
-            .introjs-tooltip {
-                max-width: calc(100vw - 32px) !important;
-                min-width: 220px !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-            }
-
-            .notif-profil.introjs-tooltip {
-                transform: translateX(-50%) !important;
-                left: 50% !important;
-            }
-
-            .introjs-tooltip img {
-                max-width: 100% !important;
-                height: auto !important;
-            }
-
-            .introjs-helperLayer {
-                border-radius: 50% !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -213,140 +107,125 @@
                             @endif
                         </button>
 
-                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg"
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-60"
                             id="user-dropdown">
-                            @if (Auth::user()->role == 'superadmin')
-                                <div class="flex items-center gap-2 mx-3">
-                                    <img class="w-10 h-10 rounded-full"
-                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128">
-                                    <div class="px-4 py-3">
-                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
-                                        <span
-                                            class="block text-sm text-gray-500 truncate">{{ Auth::user()->email }}</span>
-                                    </div>
+                            @php
+                                $user = Auth::user();
+                                $role = $user->role;
+                            @endphp
+
+                            {{-- Bagian Header Profil --}}
+                            <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-100">
+                                @php
+                                    $profileImg =
+                                        'https://ui-avatars.com/api/?name=' .
+                                        urlencode($user->username) .
+                                        '&background=random&color=fff&size=128';
+                                    if ($role == 'perusahaan' && $user->perusahaan?->img_profile) {
+                                        $profileImg = asset('storage/' . $user->perusahaan->img_profile);
+                                    } elseif ($role == 'pelamar' && $user->pelamars?->img_profile) {
+                                        $profileImg = asset('storage/' . $user->pelamars->img_profile);
+                                    }
+                                @endphp
+                                <img class="w-10 h-10 object-cover rounded-full shadow-sm" src="{{ $profileImg }}">
+                                <div class="overflow-hidden">
+                                    <span
+                                        class="block text-sm font-bold text-gray-900 truncate">{{ $user->username }}</span>
+                                    <span
+                                        class="block text-xs text-gray-500 truncate leading-tight">{{ $user->email }}</span>
                                 </div>
-                                <ul class="py-2">
-                                    <li class="px-3">SuperAdmin</li>
-                                    <li><a href="/dashboard/superadmin"
-                                            class="block px-4 py-2 text-sm underline">Dashboard</a></li>
-                                    <li
-                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
-                                        <button data-modal-target="popup-modal-logout"
-                                            data-modal-toggle="popup-modal-logout" type="button">Keluar</button>
+                            </div>
+
+                            <ul class="py-2 text-sm text-gray-700 font-medium">
+                                {{-- ROLE: SUPERADMIN / ADMIN / FINANCE --}}
+                                @if (in_array($role, ['superadmin', 'admin', 'finance']))
+                                    <li class="px-4 py-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                        {{ $role }}</li>
+                                    <li>
+                                        <a href="/dashboard/{{ $role }}"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            <i class="ph ph-gauge text-xl"></i> Dashboard
+                                        </a>
                                     </li>
-                                </ul>
-                            @elseif (Auth::user()->role == 'finance')
-                                <div class="flex items-center gap-2 mx-3">
-                                    <img class="w-10 h-10 rounded-full"
-                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128">
-                                    <div class="px-4 py-3">
-                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
-                                        <span
-                                            class="block text-sm text-gray-500 truncate">{{ Auth::user()->email }}</span>
-                                    </div>
-                                </div>
-                                <ul class="py-2">
-                                    <li class="px-3">Finance</li>
-                                    <li><a href="/dashboard/finance"
-                                            class="block px-4 py-2 text-sm underline">Dashboard</a></li>
-                                    <li
-                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
-                                        <button data-modal-target="popup-modal-logout"
-                                            data-modal-toggle="popup-modal-logout" type="button">Keluar</button>
+
+                                    {{-- ROLE: PERUSAHAAN --}}
+                                @elseif ($role == 'perusahaan')
+                                    <li>
+                                        <a href="/dashboard/perusahaan/profile"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            <i class="ph ph-buildings text-xl"></i> Profile Perusahaan
+                                        </a>
                                     </li>
-                                </ul>
-                            @elseif (Auth::user()->role == 'admin')
-                                <div class="flex items-center gap-2 mx-3">
-                                    <img class="w-10 h-10 rounded-full"
-                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128">
-                                    <div class="px-4 py-3">
-                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
-                                        <span
-                                            class="block text-sm text-gray-500 truncate">{{ Auth::user()->email }}</span>
-                                    </div>
-                                </div>
-                                <ul class="py-2">
-                                    <li class="px-3">Admin</li>
-                                    <li><a href="/dashboard/admin"
-                                            class="block px-4 py-2 text-sm underline">Dashboard</a></li>
-                                    <li
-                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
-                                        <button data-modal-target="popup-modal-logout"
-                                            data-modal-toggle="popup-modal-logout" type="button">Keluar</button>
+                                    <li>
+                                        <a href="/dashboard/perusahaan"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            <i class="ph ph-layout text-xl"></i> Dashboard
+                                        </a>
                                     </li>
-                                </ul>
-                            @elseif (Auth::user()->role == 'perusahaan')
-                                <div class="flex items-center gap-2 mx-3">
-                                    @if (Auth::user()->perusahaan->img_profile)
-                                        <img class="w-10 h-10 object-cover rounded-full"
-                                            src="{{ asset('storage/' . Auth::user()->perusahaan->img_profile) }}">
-                                    @else
-                                        <img class="w-10 h-10 rounded-full"
-                                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128">
-                                    @endif
-                                    <div class="px-4 py-3">
-                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
-                                        <span
-                                            class="block text-sm text-gray-500 truncate">{{ Auth::user()->email }}</span>
-                                    </div>
-                                </div>
-                                <ul class="py-2">
-                                    <li><a href="/dashboard/perusahaan/profile"
-                                            class="block px-4 py-2 text-sm">Profile Perusahaan</a></li>
-                                    <li><a href="/dashboard/perusahaan" class="block px-4 py-2 text-sm">Dashboard
-                                            Perusahaan</a></li>
-                                    <li><a href="/koin/areakerja" class="block px-4 py-2 text-sm">Koin Area Kerja</a>
+                                    <li>
+                                        <a href="/koin/areakerja"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            <i class="ph ph-coins text-xl"></i> Koin Area Kerja
+                                        </a>
                                     </li>
-                                    <li><a href="/dashboard/perusahaan/kandidat"
-                                            class="block px-4 py-2 text-sm">Kandidat Saya</a></li>
-                                    <li><a href="/dashboard/perusahaan/pengaturan"
-                                            class="block px-4 py-2 text-sm">Pengaturan</a></li>
-                                    <li
-                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
-                                        <button data-modal-target="popup-modal-logout"
-                                            data-modal-toggle="popup-modal-logout" type="button">Keluar</button>
+                                    <li>
+                                        <a href="/dashboard/perusahaan/kandidat"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            <i class="ph ph-users-three text-xl"></i> Kandidat Saya
+                                        </a>
                                     </li>
-                                </ul>
-                            @else
-                                {{-- Role Pelamar/Lainnya --}}
-                                <div class="flex items-center gap-2 mx-3">
-                                    @if (Auth::user()->role == 'pelamar' && Auth::user()->pelamars->img_profile)
-                                        <img class="w-10 h-10 object-cover rounded-full"
-                                            src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}">
-                                    @else
-                                        <img class="w-10 h-10 rounded-full"
-                                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128">
-                                    @endif
-                                    <div class="px-4 py-3">
-                                        <span class="block text-sm text-gray-900">{{ Auth::user()->username }}</span>
-                                        <span
-                                            class="block text-sm text-gray-500 truncate">{{ Auth::user()->email }}</span>
-                                    </div>
-                                </div>
-                                <ul class="py-2">
-                                    @if (Auth::user()->pelamars->kategori === 'kandidat aktif' || Auth::user()->pelamars->kategori === 'calon kandidat')
-                                        <li class="flex items-center justify-center">
-                                            <img src="{{ asset('image/Kandidat.png') }}" alt="">
-                                            <a href="/profile"
-                                                class="block px-4 py-2 text-sm text-center">Kandidat</a>
-                                        </li>
-                                    @else
-                                        <li><a href="/profile" class="block px-4 py-2 text-sm">Profile</a></li>
-                                    @endif
-                                    <li><a href="/lowongan/tersimpan" class="block px-4 py-2 text-sm">Lowongan
-                                            Tersimpan</a></li>
-                                    @if (Auth::user()->role === 'pelamar')
-                                        <li><a href="/transaksi/pelamar" class="block px-4 py-2 text-sm">Transaksi</a>
+                                    <li>
+                                        <a href="/dashboard/perusahaan/pengaturan"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            <i class="ph ph-gear text-xl"></i> Pengaturan
+                                        </a>
+                                    </li>
+
+                                    {{-- ROLE: PELAMAR / LAINNYA --}}
+                                @else
+                                    <li>
+                                        <a href="/profile"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            @if ($user->pelamars?->kategori === 'kandidat aktif' || $user->pelamars?->kategori === 'calon kandidat')
+                                                <i class="ph ph-identification-badge text-xl text-blue-600"></i>
+                                                <span>Kandidat</span>
+                                            @else
+                                                <i class="ph ph-user-circle text-xl"></i> <span>Profile</span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/lowongan/tersimpan"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            <i class="ph ph-bookmarks text-xl"></i> Lowongan Tersimpan
+                                        </a>
+                                    </li>
+                                    @if ($role === 'pelamar')
+                                        <li>
+                                            <a href="/transaksi/pelamar"
+                                                class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                                <i class="ph ph-credit-card text-xl"></i> Transaksi
+                                            </a>
                                         </li>
                                     @endif
-                                    <li><a href="/bantuan" class="block px-4 py-2 text-sm">Bantuan</a></li>
-                                    <li
-                                        class="flex justify-center bg-orange-500 px-4 py-1 text-white mx-5 my-3 rounded-md">
-                                        <button data-modal-target="popup-modal-logout"
-                                            data-modal-toggle="popup-modal-logout" type="button">Keluar</button>
+                                    <li>
+                                        <a href="/bantuan"
+                                            class="flex items-center px-4 py-2 hover:bg-orange-50 hover:text-orange-600 transition-all gap-3">
+                                            <i class="ph ph-question text-xl"></i> Bantuan
+                                        </a>
                                     </li>
-                                </ul>
-                            @endif
+                                @endif
+
+                                {{-- TOMBOL KELUAR --}}
+                                <li class="px-4 mt-3 mb-1">
+                                    <button data-modal-target="popup-modal-logout"
+                                        data-modal-toggle="popup-modal-logout" type="button"
+                                        class="w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 py-2.5 text-white text-sm font-semibold rounded-lg shadow-md transition-all active:scale-95">
+                                        <i class="ph ph-sign-out text-lg font-bold"></i>
+                                        Keluar
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     @else
                         <a href="/login"
@@ -415,7 +294,8 @@
     {{-- Event Modal --}}
     @if (Auth::check() && session('show_event_modal') && session('latest_event'))
         @php $event = session('latest_event'); @endphp
-        <div id="eventModal" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50 px-4">
+        <div id="eventModal"
+            class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50 px-4">
             <div class="bg-white shadow-xl w-3/4 lg:w-3/5 p-6 rounded-xl">
                 <h1 class="text-4xl text-gray-500 font-bold border-b-2 py-3">🎉 Event Untukmu!</h1>
                 <div class="overflow-y-auto max-h-[60vh] mt-4">

@@ -14,20 +14,20 @@
             @method('PUT')
 
             <div
-                class="mt-6 bg-white border border-gray-100 shadow-xl shadow-orange-100/50 p-8 sm:p-12 rounded-3xl mx-4 sm:mx-10 transition-all">
+                class="mt-6 bg-white border border-gray-100 p-8 sm:p-12 rounded-3xl mx-4 sm:mx-10 transition-all">
                 <div class="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-14">
 
                     <div class="flex flex-col items-center group">
                         <div class="relative">
                             <div
-                                class="w-44 h-44 rounded-full p-1 border-4 border-orange-100 group-hover:border-orange-500 transition-all duration-500 overflow-hidden shadow-inner bg-gray-50">
+                                class="w-44 h-44 rounded-full p-1  transition-all duration-500 overflow-hidden  bg-gray-50">
                                 @if (Auth::user()->pelamars->img_profile)
                                     <img id="previewImage"
-                                        class="w-full h-full object-cover rounded-full profile-img shadow-md cursor-pointer"
+                                        class="w-full h-full object-cover rounded-full profile-img  cursor-pointer"
                                         src="{{ asset('storage/' . Auth::user()->pelamars->img_profile) }}" alt="Profile">
                                 @else
                                     <img id="previewImage"
-                                        class="w-full h-full object-cover rounded-full shadow-md cursor-pointer"
+                                        class="w-full h-full object-cover rounded-full  cursor-pointer"
                                         src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=f97316&color=fff&size=256"
                                         alt="Avatar">
                                 @endif
@@ -186,7 +186,7 @@
                             <label class="block text-sm font-semibold text-gray-800 mb-2">Alamat <span
                                     class="text-red-500">*</span></label>
                             <a href="{{ Auth::user()->pelamars->alamat_pelamars->count() >= 1 ? '/alamat' : '/data/alamat' }}"
-                                class="flex items-center justify-between w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md shadow-orange-100">
+                                class="flex items-center justify-between w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-all  shadow-orange-100">
                                 <span>Kelola Alamat</span>
                                 <i class="ph ph-map-pin text-xl"></i>
                             </a>
