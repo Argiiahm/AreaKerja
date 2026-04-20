@@ -29,10 +29,11 @@ class PelamarController extends Controller
         return back()->with('success', 'Lamaran berhasil dikirim!');
     }
 
-    public function transaksi() {
-        $cekRiwayat = CatatanCash::where('user_id', Auth::user()->id)->get()->first();
-        return view('transaksi-pelamar',[
-            "Data"    =>    $cekRiwayat
+    public function transaksi()
+    {
+        $cekRiwayat = CatatanCash::where('user_id', Auth::user()->id)->first();
+        return view('transaksi-pelamar', [
+            "Data" => $cekRiwayat
         ]);
     }
 

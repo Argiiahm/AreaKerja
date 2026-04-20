@@ -7,6 +7,7 @@ use App\Models\LowonganPerusahaan;
 use App\Models\PelamarLowongan;
 use App\Models\PembeliKandidat;
 use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -88,32 +89,60 @@ class HomeController extends Controller
                 ->get();
         }
 
+        $pesan = collect();
+        $pesanPerusahaan = collect();
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role === 'pelamar' && $user->pelamars) {
+                $pesan = PelamarLowongan::where('pelamar_id', $user->pelamars->id)->get();
+            } elseif ($user->role === 'perusahaan' && $user->perusahaan) {
+                $lowonganIds = $user->perusahaan->pasanglowongan->pluck('id');
+                $pesanPerusahaan = PembeliKandidat::whereIn('lowongan_id', $lowonganIds)->with('pelamar')->get();
+            }
+        }
+
         return view('home', [
-            "Data"  =>    $Data,
-            "Pesan"  =>   PelamarLowongan::all(),
-            "PesanPerusahaan"  =>   PembeliKandidat::all(),
+            "Data" => $Data,
+            "Pesan" => $pesan,
+            "PesanPerusahaan" => $pesanPerusahaan,
             'historySearch' => session('history_search', []),
             'historyLokasi' => session('history_lokasi', []),
             'recentResult' => $recentResult,
-            'Kategories'   =>  Kategories::all()
+            'Kategories' => Kategories::all()
         ]);
     }
 
     public function viewjob(LowonganPerusahaan $job)
     {
+        $job->load('perusahaan');
+
+        $pesan = collect();
+        $pesanPerusahaan = collect();
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role === 'pelamar' && $user->pelamars) {
+                $pesan = PelamarLowongan::where('pelamar_id', $user->pelamars->id)->get();
+            } elseif ($user->role === 'perusahaan' && $user->perusahaan) {
+                $lowonganIds = $user->perusahaan->pasanglowongan->pluck('id');
+                $pesanPerusahaan = PembeliKandidat::whereIn('lowongan_id', $lowonganIds)->with('pelamar')->get();
+            }
+        }
+
         return view('details-job', [
-            "Data"  =>   $job,
-            "Pesan" =>   PelamarLowongan::all(),
-            "PesanPerusahaan"  =>   PembeliKandidat::all(),
-            'Kategories'   =>  Kategories::all()
+            "Data" => $job,
+            "Pesan" => $pesan,
+            "PesanPerusahaan" => $pesanPerusahaan,
+            'Kategories' => Kategories::all()
         ]);
     }
 
     public function lowongan_kategori(Kategories $kategori)
     {
         return view('lowongan-kategori', [
-            "Kategori"   =>   $kategori,
-            "Data"       =>   LowonganPerusahaan::all()
+            "Kategori" => $kategori,
+            "Data" => LowonganPerusahaan::with('perusahaan')->where('kategori', $kategori->nama)->get()
         ]);
     }
 
@@ -124,11 +153,11 @@ class HomeController extends Controller
         $lowongan->save();
         if ($lowongan->status === 'diterima') {
             return view('detail_status-melamar', [
-                "Data"  => $lowongan
+                "Data" => $lowongan
             ]);
         } elseif ($lowongan->status === 'ditolak') {
             return view('detail_status-tolak-melamar', [
-                "Data"  => $lowongan
+                "Data" => $lowongan
             ]);
         }
     }

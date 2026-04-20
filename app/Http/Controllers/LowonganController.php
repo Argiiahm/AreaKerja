@@ -20,10 +20,10 @@ class LowonganController extends Controller
         $totalKoin = CatatanCash::where('user_id', Auth::id())->where('status', 'diterima')->sum('total');
 
         return view('pasang-lowongan', [
-            "Data"   =>    HargaKoin::all(),
-            "data"   =>    $koin,
-            "totalKoin"   =>   $totalKoin,
-            "Pakets"   =>    PaketLowongan::all()
+            "Data" => HargaKoin::all(),
+            "data" => $koin,
+            "totalKoin" => $totalKoin,
+            "Pakets" => PaketLowongan::all()
         ]);
     }
 
@@ -32,7 +32,7 @@ class LowonganController extends Controller
         $Data = Auth::user()->pelamars->simpan_lowongan;
 
         return view('Lowongan-tersimpan.index', [
-            "Data"  =>   $Data
+            "Data" => $Data
         ]);
     }
 
@@ -51,23 +51,30 @@ class LowonganController extends Controller
 
     public function lowongan_tersimpan_detail(LowonganPerusahaan $lowongan)
     {
-        $rekomendasi = LowonganPerusahaan::where('perusahaan_id', $lowongan->perusahaan_id)
+        $lowongan->load('perusahaan');
+
+        $rekomendasi = LowonganPerusahaan::with('perusahaan')
+            ->where('perusahaan_id', $lowongan->perusahaan_id)
             ->where('id', '!=', $lowongan->id)
             ->get();
 
+        $beli = PembeliKandidat::where('lowongan_id', $lowongan->id)
+            ->with('pelamar')
+            ->get();
+
         return view('Lowongan-tersimpan.lowongan-tersimpan_detail', [
-            "Data"  =>   $lowongan,
-            "Rekomendasi"  =>   $rekomendasi,
-            "beli"   =>  PembeliKandidat::all()
+            "Data" => $lowongan,
+            "Rekomendasi" => $rekomendasi,
+            "beli" => $beli
         ]);
     }
 
     public function topup(Request $request)
     {
         $request->validate([
-            "pesanan"   => "required",
-            "total"     => "required|numeric",
-            "paket_id"  => "required",
+            "pesanan" => "required",
+            "total" => "required|numeric",
+            "paket_id" => "required",
             "id_lowongan" => "required"
         ]);
 
@@ -82,12 +89,12 @@ class LowonganController extends Controller
 
         $noref = "AK" . rand(1000000000, 9999999999);
         CatatanKoin::create([
-            "user_id"      => $user->id,
+            "user_id" => $user->id,
             "no_referensi" => $noref,
-            "pesanan"      => $request->pesanan,
-            "dari"         => $user->username,
-            "sumber_dana"  => "Koin-" . $user->username,
-            "total"        => $request->total,
+            "pesanan" => $request->pesanan,
+            "dari" => $user->username,
+            "sumber_dana" => "Koin-" . $user->username,
+            "total" => $request->total,
         ]);
 
 
@@ -95,7 +102,8 @@ class LowonganController extends Controller
         $cashRecords = CatatanCash::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
 
         foreach ($cashRecords as $record) {
-            if ($sisaKurang <= 0) break;
+            if ($sisaKurang <= 0)
+                break;
 
             if ($record->total <= $sisaKurang) {
                 $sisaKurang -= $record->total;
@@ -109,7 +117,7 @@ class LowonganController extends Controller
 
 
         $lowongan = LowonganPerusahaan::find($request->id_lowongan);
-        $paket  = PaketLowongan::find($request->paket_id);
+        $paket = PaketLowongan::find($request->paket_id);
         if ($lowongan) {
             $lowongan->paket_id = $request->paket_id;
             $lowongan->expired_date = now()->addDays($paket->batas_listing);

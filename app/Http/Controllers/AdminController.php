@@ -54,28 +54,28 @@ class AdminController extends Controller
         })->whereNotNull("paket_id")->count();
 
         return view('Admin.Dashboard-admin.dashboard', [
-            "title"    =>     "Dashboard",
+            "title" => "Dashboard",
             "Perusahaan" => $perusahaan,
-            "Lowongan" =>   $lowongan,
-            "Pelamar" =>    $pelamars,
-            "Kandidat"  =>  $kandidats,
-            "Provinsi"  =>  Provinsi::all()
+            "Lowongan" => $lowongan,
+            "Pelamar" => $pelamars,
+            "Kandidat" => $kandidats,
+            "Provinsi" => Provinsi::all()
         ]);
     }
     public function profile()
     {
         return view('Admin.Dashboard-admin.profile-dashboard_admin', [
-            "title"    =>     "Profile"
+            "title" => "Profile"
         ]);
     }
     public function profile_edit(Admin $admin)
     {
         return view('Admin.Dashboard-admin.edit-profile_admin_dashboard', [
-            "title"    =>     "Profile",
-            "Data"     =>      $admin,
-            "Provinsi"  =>   Provinsi::all(),
+            "title" => "Profile",
+            "Data" => $admin,
+            "Provinsi" => Provinsi::all(),
             "Kabupaten" => Kabupaten::all(),
-            "Daerah"   =>   Daerah::all(),
+            "Daerah" => Daerah::all(),
         ]);
     }
 
@@ -83,7 +83,7 @@ class AdminController extends Controller
     {
         $vdataUser = $request->validate([
             "username" => 'nullable|string',
-            "email"    => 'nullable|email',
+            "email" => 'nullable|email',
         ]);
 
         $u = User::where('id', $admin->user_id);
@@ -91,13 +91,13 @@ class AdminController extends Controller
 
 
         $vdata = $request->validate([
-            "nama_lengkap"  => 'nullable|string',
-            "img_profile"   => 'nullable|file|image|mimes:png,jpg,jpeg',
-            "provinsi"      => 'nullable|string',
-            "kota"          => 'nullable|string',
-            "kecamatan"     => 'nullable|string',
-            "desa"          => 'nullable|string',
-            "kode_pos"      => 'nullable',
+            "nama_lengkap" => 'nullable|string',
+            "img_profile" => 'nullable|file|image|mimes:png,jpg,jpeg',
+            "provinsi" => 'nullable|string',
+            "kota" => 'nullable|string',
+            "kecamatan" => 'nullable|string',
+            "desa" => 'nullable|string',
+            "kode_pos" => 'nullable',
             "detail_alamat" => 'nullable|string'
         ]);
 
@@ -118,31 +118,31 @@ class AdminController extends Controller
     public function pelamar()
     {
         return view('Admin.Dashboard-admin.pelamar-dashboard_admin', [
-            "title"    =>      "Data Kandidat",
-            "Data"     =>      Pelamar::all()
+            "title" => "Data Kandidat",
+            "Data" => Pelamar::with(['users', 'alamat_pelamars', 'skill'])->get()
         ]);
     }
 
     public function kandidat_view_cv(Pelamar $pelamar)
     {
         return view('Admin.Dashboard-admin.kandidat-view_cv_admin_dashboard', [
-            "title"   =>   "",
-            "Data"    =>   $pelamar
+            "title" => "",
+            "Data" => $pelamar
         ]);
     }
     public function non_kandidat_view_cv(Pelamar $pelamar)
     {
         return view('Admin.Dashboard-admin.nonkandidat-view_cv_admin_dashboard', [
-            "title"   =>   "",
-            "Data"   =>  $pelamar
+            "title" => "",
+            "Data" => $pelamar
         ]);
     }
 
     public function calon_kandidat_view(Pelamar $pelamar)
     {
         return view('Admin.Dashboard-admin.calon_kandidat-view_admin_dashboard', [
-            "title"   =>   "Data Kandidat",
-            "Data"    =>   $pelamar
+            "title" => "Data Kandidat",
+            "Data" => $pelamar
 
         ]);
     }
@@ -170,18 +170,18 @@ class AdminController extends Controller
     public function perusahaan()
     {
         return view('Admin.Dashboard-admin.perusahaan.data-perusahaan_admin_dashboard', [
-            "title"   =>   "Data Perusahaan",
-            "Data"    =>  Perusahaan::all(),
-            "talent_hunter"  =>  TalentHunter::all(),
-            "Recruitments"  =>  PembeliKandidat::all(),
+            "title" => "Data Perusahaan",
+            "Data" => Perusahaan::with(['users', 'alamatperusahaan'])->get(),
+            "talent_hunter" => TalentHunter::with('perusahaan')->get(),
+            "Recruitments" => PembeliKandidat::with(['pelamar', 'lowongan_perusahaan'])->get(),
         ]);
     }
     public function perusahaan_view(Perusahaan $perusahaan)
     {
         return view('Admin.Dashboard-admin.perusahaan.view-perusahaan_admin_dashboard', [
-            "title"   =>   "",
-            "data"    =>  $perusahaan,
-            "lowongan" => LowonganPerusahaan::all()
+            "title" => "",
+            "data" => $perusahaan,
+            "lowongan" => LowonganPerusahaan::where('perusahaan_id', $perusahaan->id)->get()
         ]);
     }
 
@@ -189,7 +189,7 @@ class AdminController extends Controller
     {
         return view('admin.dashboard-admin.perusahaan.detail-recruitment', [
             "title" => "Detail Kandidat",
-            "Data"  => $pelamar
+            "Data" => $pelamar
         ]);
     }
 
@@ -197,8 +197,8 @@ class AdminController extends Controller
     public function freeze_perusahaan(Request $request, User $user)
     {
         $data = $request->validate([
-            "status"  =>   'required|boolean',
-            "alasan_freeze_akun"  =>   'required'
+            "status" => 'required|boolean',
+            "alasan_freeze_akun" => 'required'
         ]);
 
         $user->update($data);
@@ -207,7 +207,7 @@ class AdminController extends Controller
     public function unfreeze_perusahaan(Request $request, User $user)
     {
         $data = $request->validate([
-            "status"  =>   'required|boolean'
+            "status" => 'required|boolean'
         ]);
 
         $user->update($data);
@@ -217,29 +217,29 @@ class AdminController extends Controller
     public function perusahaan_view_lowongan()
     {
         return view('Admin.Dashboard-admin.perusahaan.view-lowongan_perushaan_admin_dashboard', [
-            "title"   =>   ""
+            "title" => ""
         ]);
     }
     public function perusahaan_view_cv()
     {
         return view('Admin.Dashboard-admin.perusahaan.view-cv_perusahaan_admin_dashboard', [
-            "title"   =>   ""
+            "title" => ""
         ]);
     }
     public function perusahaan_view_talenthunter(TalentHunter $talenthunter)
     {
         return view('Admin.Dashboard-admin.perusahaan.perusahaan_view_talenthunter_admin_dashboard', [
-            "title"   =>   "",
-            "Data"    =>   $talenthunter
+            "title" => "",
+            "Data" => $talenthunter
         ]);
     }
 
     public function finance()
     {
         return view('Admin.Dashboard-admin.Finance.transaksi-koin_admin_dashboard', [
-            "title"   =>   "Data Transaksi Koin",
-            "koin"    =>   CatatanKoin::all(),
-            "data"    =>   CatatanCash::all()
+            "title" => "Data Transaksi Koin",
+            "koin" => CatatanKoin::with('users')->get(),
+            "data" => CatatanCash::with('users')->get()
         ]);
     }
 
@@ -257,27 +257,27 @@ class AdminController extends Controller
         }
 
         return view('Admin.Dashboard-admin.Finance.transaksi-koin_admin_dashboard', [
-            "title"   =>   "Data Transaksi Koin",
-            "koin"    =>   $koin->get(),
-            "data"    =>   $tunai->get()
+            "title" => "Data Transaksi Koin",
+            "koin" => $koin->get(),
+            "data" => $tunai->get()
         ]);
     }
 
     public function tips_kerja()
     {
         return view('Admin.Dashboard-admin.Tipskerja.index', [
-            "title"     =>   "Tips Kerja",
-            "all"       =>    Tipskerja::count(),
-            "terbit"    =>    Tipskerja::where('status', 'terbit')->count(),
-            "noterbit"  =>    Tipskerja::where('status', 'belum terbit')->count(),
-            "sudah_terbit"  =>    Tipskerja::where('status', 'terbit')->get(),
-            "belum_terbit"  =>    Tipskerja::where('status', 'belum terbit')->get(),
+            "title" => "Tips Kerja",
+            "all" => Tipskerja::count(),
+            "terbit" => Tipskerja::where('status', 'terbit')->count(),
+            "noterbit" => Tipskerja::where('status', 'belum terbit')->count(),
+            "sudah_terbit" => Tipskerja::where('status', 'terbit')->get(),
+            "belum_terbit" => Tipskerja::where('status', 'belum terbit')->get(),
         ]);
     }
     public function tips_kerja_add_post()
     {
         return view('Admin.Dashboard-admin.Tipskerja.add-post', [
-            "title"   =>   "Buat Post Baru"
+            "title" => "Buat Post Baru"
         ]);
     }
 
@@ -285,19 +285,19 @@ class AdminController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
-            'title'   => 'nullable|string',
+            'title' => 'nullable|string',
             'content' => 'nullable|string',
             'penulis' => 'nullable|string',
-            'image'   => 'nullable|file|image|mimes:png,jpg,jpeg',
-            'status'  => 'nullable',
-            'intro'   => 'nullable|string',
+            'image' => 'nullable|file|image|mimes:png,jpg,jpeg',
+            'status' => 'nullable',
+            'intro' => 'nullable|string',
             'section' => 'nullable|json',
         ]);
 
         $data['penulis'] = Auth::user()->username;
-        $data['status']  = 'belum terbit';
+        $data['status'] = 'belum terbit';
 
-        $intro   = $request->input('intro');
+        $intro = $request->input('intro');
         $content = $request->input('content');
         $section = $request->input('section');
 
@@ -315,7 +315,7 @@ class AdminController extends Controller
                 if (trim($p) !== '') {
                     $sections[] = [
                         "judul" => "Bagian " . ($index + 1),
-                        "isi"   => $p,
+                        "isi" => $p,
                     ];
                 }
             }
@@ -364,14 +364,14 @@ class AdminController extends Controller
     public function event()
     {
         return view('Admin.Dashboard-admin.Event.index', [
-            "title"   =>   "Kelola Event",
-            "Data"    =>    Event::all()
+            "title" => "Kelola Event",
+            "Data" => Event::all()
         ]);
     }
     public function event_add()
     {
         return view('Admin.Dashboard-admin.Event.add-event', [
-            "title"   =>   "Buat Event Baru"
+            "title" => "Buat Event Baru"
         ]);
     }
 
@@ -379,7 +379,7 @@ class AdminController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
-            'status'  =>  "nullable",
+            'status' => "nullable",
             'title' => "nullable|string",
             'pendaftaran' => "nullable|string",
             'kuota' => "nullable|integer",
@@ -402,8 +402,8 @@ class AdminController extends Controller
 
 
         $datas = $request->validate([
-            'waktu'    => "nullable|array",
-            'waktu.*'  => "nullable|string",
+            'waktu' => "nullable|array",
+            'waktu.*' => "nullable|string",
             'kegiatan' => "nullable|array",
             'kegiatan.*' => "nullable|string"
         ]);
@@ -412,7 +412,7 @@ class AdminController extends Controller
         foreach ($datas['waktu'] as $i => $waktu) {
             KegiatanEvent::create([
                 'event_id' => $event->id,
-                'waktu'    => $waktu,
+                'waktu' => $waktu,
                 'kegiatan' => $datas['kegiatan'][$i] ?? null,
             ]);
         }
@@ -424,14 +424,14 @@ class AdminController extends Controller
     public function event_edit(Event $event)
     {
         return view('Admin.Dashboard-admin.Event.edit-event', [
-            "title"   =>   "Edit Event",
-            "Data"    =>   $event
+            "title" => "Edit Event",
+            "Data" => $event
         ]);
     }
     public function event_update(Request $request, Event $event)
     {
         $data = $request->validate([
-            'status'  => "nullable",
+            'status' => "nullable",
             'title' => "nullable|string",
             'pendaftaran' => "nullable|string",
             'kuota' => "nullable|integer",
@@ -458,8 +458,8 @@ class AdminController extends Controller
         $datas = $request->validate([
             'id' => "nullable|array",
             'id.*' => "nullable|integer",
-            'waktu'    => "nullable|array",
-            'waktu.*'  => "nullable|string",
+            'waktu' => "nullable|array",
+            'waktu.*' => "nullable|string",
             'kegiatan' => "nullable|array",
             'kegiatan.*' => "nullable|string"
         ]);
@@ -469,12 +469,12 @@ class AdminController extends Controller
                 if (!empty($datas['id'][$i])) {
                     KegiatanEvent::where('id', $datas['id'][$i])
                         ->update([
-                            'waktu'    => $waktu,
+                            'waktu' => $waktu,
                             'kegiatan' => $datas['kegiatan'][$i] ?? null,
                         ]);
                 } else {
                     $event->kegiatan_events()->create([
-                        'waktu'    => $waktu,
+                        'waktu' => $waktu,
                         'kegiatan' => $datas['kegiatan'][$i] ?? null,
                     ]);
                 }
@@ -491,8 +491,8 @@ class AdminController extends Controller
     public function event_detail(Event $event)
     {
         return view('Admin.Dashboard-admin.Event.detail-event', [
-            "title"   =>   "Event",
-            "Data"    =>    $event
+            "title" => "Event",
+            "Data" => $event
         ]);
     }
 

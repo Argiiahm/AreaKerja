@@ -111,7 +111,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Pelamar.pelamar_super_admin', [
             "title" => "Data Kandidat",
-            "pelamar" => Pelamar::all()
+            "pelamar" => Pelamar::with(['users', 'alamat_pelamars', 'skill'])->get()
         ]);
     }
 
@@ -128,22 +128,22 @@ class SuperAdminController extends Controller
     public function edit_organisasi(Organisasi $organisasi)
     {
         return view('Super-Admin.Pelamar.edit-kandidat.edit-organisasi', [
-            "title"  =>  "Edit Organisasi",
-            "Data"  =>  $organisasi
+            "title" => "Edit Organisasi",
+            "Data" => $organisasi
         ]);
     }
 
     public function update_organisasi(Request $request, Organisasi $organisasi)
     {
         $v = $request->validate([
-            'nama_organisasi'     =>  "nullable",
-            'jabatan'     =>     "nullable",
-            'tahun_awal'     =>     "nullable",
-            'tahun_akhir'     =>     "nullable",
-            'deskripsi'     =>     "nullable",
+            'nama_organisasi' => "nullable",
+            'jabatan' => "nullable",
+            'tahun_awal' => "nullable",
+            'tahun_akhir' => "nullable",
+            'deskripsi' => "nullable",
         ]);
 
-        $v['pelamar_id']  =   $request->pelamar_id;
+        $v['pelamar_id'] = $request->pelamar_id;
 
         $organisasi->update($v);
         return back();
@@ -152,22 +152,22 @@ class SuperAdminController extends Controller
     public function edit_pendidikan(RiwayatPendidikan $pendidikan)
     {
         return view('Super-Admin.Pelamar.edit-kandidat.edit-pendidikan', [
-            "title" =>  'edit pendidikan',
-            "Data"  => $pendidikan
+            "title" => 'edit pendidikan',
+            "Data" => $pendidikan
         ]);
     }
 
     public function update_pendidikan(Request $request, RiwayatPendidikan $pendidikan)
     {
         $v = $request->validate([
-            "pendidikan"          =>      "nullable",
-            "jurusan"             =>      "nullable",
-            "asal_pendidikan"     =>      "nullable",
-            "tahun_awal"          =>      "nullable",
-            "tahun_akhir"         =>      "nullable",
+            "pendidikan" => "nullable",
+            "jurusan" => "nullable",
+            "asal_pendidikan" => "nullable",
+            "tahun_awal" => "nullable",
+            "tahun_akhir" => "nullable",
         ]);
 
-        $v['pelamar_id']  =  $request->pelamars_id;
+        $v['pelamar_id'] = $request->pelamars_id;
         $pendidikan->update($v);
 
         return back();
@@ -177,19 +177,19 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Pelamar.edit-kandidat.edit-pengalaman', [
             "title" => 'edit pengalaman',
-            "data"  => $pengalaman
+            "data" => $pengalaman
         ]);
     }
 
     public function update_pengalaman(Request $request, Pengalamankerja $pengalaman)
     {
         $vdata = $request->validate([
-            'posisi_kerja'  =>    "nullable",
-            'jabatan_kerja'  =>    "nullable",
-            'nama_perusahaan'  =>    "nullable",
-            'tahun_awal'  =>    "nullable",
-            'tahun_akhir'  =>    "nullable",
-            'deskripsi'  =>    "nullable",
+            'posisi_kerja' => "nullable",
+            'jabatan_kerja' => "nullable",
+            'nama_perusahaan' => "nullable",
+            'tahun_awal' => "nullable",
+            'tahun_akhir' => "nullable",
+            'deskripsi' => "nullable",
         ]);
         $vdata['pelamar_id'] = $request->pelamar_id;
         $pengalaman->update($vdata);
@@ -207,8 +207,8 @@ class SuperAdminController extends Controller
     public function update_skill(Request $request, Skill $skill)
     {
         $vData = $request->validate([
-            "skill"   => 'nullable',
-            "experience_level"  => 'nullable'
+            "skill" => 'nullable',
+            "experience_level" => 'nullable'
         ]);
         $vData['pelamar_id'] = $skill->pelamar_id;
         $skill->update($vData);
@@ -271,7 +271,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Pelamar.Kandidat.kandidat-view', [
             "title" => "Detail Kandidat",
-            "Data"  => $pelamar
+            "Data" => $pelamar
         ]);
     }
     public function update_kandidat(Request $request, Pelamar $pelamar)
@@ -298,7 +298,7 @@ class SuperAdminController extends Controller
             "nama_pelamar" => "required",
             "telepon_pelamar" => "required",
             "gender" => "required",
-            "img_profile"  =>   "nullable"
+            "img_profile" => "nullable"
         ]);
 
         if ($request->hasFile('img_profile')) {
@@ -387,7 +387,7 @@ class SuperAdminController extends Controller
         $pelamar = Pelamar::with('users')->find(session('pelamar_id'));
         return view('Super-Admin.Pelamar.Non_kandidat.add_non_kandidat_super_admin', [
             "title" => "Add Non Kandidat",
-            "pelamar"  =>   $pelamar
+            "pelamar" => $pelamar
         ]);
     }
 
@@ -407,7 +407,7 @@ class SuperAdminController extends Controller
             "nama_pelamar" => "required",
             "telepon_pelamar" => "required",
             "gender" => "required",
-            "img_profile"  =>   "nullable"
+            "img_profile" => "nullable"
         ]);
 
         $imgPath = null;
@@ -429,7 +429,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Pelamar.Non_kandidat.edit_non_kandidat_super_admin', [
             "title" => "Edit Non Kandidat",
-            "Data"  =>  $pelamar
+            "Data" => $pelamar
         ]);
     }
 
@@ -457,7 +457,7 @@ class SuperAdminController extends Controller
             "nama_pelamar" => "required",
             "telepon_pelamar" => "required",
             "gender" => "required",
-            "img_profile"  =>   "nullable"
+            "img_profile" => "nullable"
         ]);
 
         if ($request->hasFile('img_profile')) {
@@ -479,13 +479,13 @@ class SuperAdminController extends Controller
     public function create_alamat(Request $request)
     {
         $vData = $request->validate([
-            'label'     => 'nullable',
-            'desa'      => 'nullable',
+            'label' => 'nullable',
+            'desa' => 'nullable',
             'kecamatan' => 'nullable',
-            'kota'      => 'nullable',
-            'provinsi'  => 'nullable',
-            'kode_pos'  => 'nullable',
-            'detail'    => 'nullable',
+            'kota' => 'nullable',
+            'provinsi' => 'nullable',
+            'kode_pos' => 'nullable',
+            'detail' => 'nullable',
             'pelamar_id' => 'required|exists:pelamars,id',
         ]);
 
@@ -564,8 +564,8 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Pelamar.Calon_kandidat.add_kandidat_super_admin', [
             "title" => "Edit Calon Kandidat",
-            "pelamarList"   =>    Pelamar::all(),
-            "Divisi"        =>  Divisi::all()
+            "pelamarList" => Pelamar::with('users')->get(),
+            "Divisi" => Divisi::all()
         ]);
     }
 
@@ -603,10 +603,10 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.data-perusahaan_superAdmin', [
             "title" => "Data Perusahaan",
-            "Data" => Perusahaan::all(),
-            "Talent_hunter" =>  TalentHunter::all(),
-            "Recruitments"  =>  PembeliKandidat::all(),
-            "Panggilan"     => PelamarLowongan::all()
+            "Data" => Perusahaan::with(['users', 'alamatperusahaan'])->get(),
+            "Talent_hunter" => TalentHunter::with('perusahaan')->get(),
+            "Recruitments" => PembeliKandidat::with(['pelamar', 'lowongan_perusahaan'])->get(),
+            "Panggilan" => PelamarLowongan::all()
         ]);
     }
     public function perusahaan_add()
@@ -619,7 +619,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.edit_data_perusahaan_super_admin', [
             "title" => "Edit Perusahaan",
-            "Data"  =>  $perusahaan
+            "Data" => $perusahaan
         ]);
     }
     public function perusahaan_update(Request $request, Perusahaan $perusahaan)
@@ -642,7 +642,7 @@ class SuperAdminController extends Controller
 
         $validasi_dataPerusahaan = $request->validate([
             "nama_perusahaan" => "required",
-            "img_profile"   =>   "nullable",
+            "img_profile" => "nullable",
             "legalitas" => "required",
             "deskripsi" => "required",
             "visi" => "required",
@@ -716,21 +716,21 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.details_perusahaan_superAdmin', [
             "title" => "",
-            "Data"  =>    $perusahaan
+            "Data" => $perusahaan
         ]);
     }
     public function lowongan_detail(LowonganPerusahaan $lowongan)
     {
         return view('Super-Admin.Perusahaan.detail-lowongan_perusahaan_superAdmin', [
             "title" => "",
-            "Data"  => $lowongan
+            "Data" => $lowongan
         ]);
     }
 
     public function jadikan_rekomendasi(LowonganPerusahaan $lowongan)
     {
         $lowongan->update([
-            "rekomendasi"  => 1
+            "rekomendasi" => 1
         ]);
 
         return back();
@@ -740,7 +740,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.tambah_lowongan-perusahaan_superAdmin', [
             "title" => "Tambah Lowongan",
-            "Data"  =>  $perusahaan
+            "Data" => $perusahaan
         ]);
     }
 
@@ -748,18 +748,18 @@ class SuperAdminController extends Controller
     {
         // dd($request->all());
         $valdas = $request->validate([
-            "nama"    =>     "required",
-            "alamat"  =>     "required",
-            "jenis"   =>     "required",
-            "gaji_awal"  => "required",
+            "nama" => "required",
+            "alamat" => "required",
+            "jenis" => "required",
+            "gaji_awal" => "required",
             "gaji_akhir" => "required",
-            "deskripsi"  => "required",
+            "deskripsi" => "required",
             "syarat_pekerjaan" => "required",
-            "batas_lamaran"    => "required"
+            "batas_lamaran" => "required"
         ]);
 
         $valdas['perusahaan_id'] = $request->perusahaan_id;
-        $valdas['slug']     =   Str::slug($request->nama);
+        $valdas['slug'] = Str::slug($request->nama);
 
         LowonganPerusahaan::create($valdas);
         return redirect('/dashboard/superadmin/perusahaan');
@@ -769,21 +769,21 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.edit_lowongan-perusahaan_superAdmin', [
             "title" => "Edit Lowongan",
-            "Data"  =>  $lowongan
+            "Data" => $lowongan
         ]);
     }
 
     public function lowongan_update(Request $request, LowonganPerusahaan $lowongan)
     {
         $valdas = $request->validate([
-            "nama"    =>     "required",
-            "alamat"  =>     "required",
-            "jenis"   =>     "required",
-            "gaji_awal"  => "required",
+            "nama" => "required",
+            "alamat" => "required",
+            "jenis" => "required",
+            "gaji_awal" => "required",
             "gaji_akhir" => "required",
-            "deskripsi"  => "required",
+            "deskripsi" => "required",
             "syarat_pekerjaan" => "required",
-            "batas_lamaran"    => "required"
+            "batas_lamaran" => "required"
         ]);
 
         $lowongan->update($valdas);
@@ -795,7 +795,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.Recrutiment.detail_recrutiment_superAdmin', [
             "title" => "Detail Kandidat",
-            "Data"  => $pelamar
+            "Data" => $pelamar
         ]);
     }
     // public function recrutiment_edit()
@@ -810,7 +810,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.Talent-Hunter.detail-tulent_hunter_superAdmin', [
             "title" => "Data Talent Hunter",
-            "Data"  =>   $talenthunter
+            "Data" => $talenthunter
         ]);
     }
     public function talent_hunter_add()
@@ -823,21 +823,21 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Perusahaan.Talent-Hunter.edit-data_tulent-hunter_superAdmin', [
             "title" => "Edit Tulent Hunter",
-            "Data"  =>  $talent_hunter
+            "Data" => $talent_hunter
         ]);
     }
 
     public function talent_hunter_update(Request $request, TalentHunter $talent_hunter)
     {
         $validated = $request->validate([
-            "perusahaan_id"     => "nullable",
-            "alamat"            => "nullable",
-            "posisi"            => "nullable",
-            "pengalaman_kerja"  => "nullable",
-            "gender"            => "nullable",
-            "gaji_awal"         => "nullable",
-            "gaji_akhir"        => "nullable",
-            "deskripsi"        => "nullable",
+            "perusahaan_id" => "nullable",
+            "alamat" => "nullable",
+            "posisi" => "nullable",
+            "pengalaman_kerja" => "nullable",
+            "gender" => "nullable",
+            "gaji_awal" => "nullable",
+            "gaji_akhir" => "nullable",
+            "deskripsi" => "nullable",
         ]);
 
         $validated['perusahaan_id'] = $talent_hunter->perusahaan->id;
@@ -895,8 +895,8 @@ class SuperAdminController extends Controller
             "title" => "Paket Harga",
             "koin" => HargaKoin::all(),
             "tunai" => HargaPembayaran::all(),
-            "cash" => CatatanCash::all(),
-            "koins" => CatatanKoin::all(),
+            "cash" => CatatanCash::with('users')->get(),
+            "koins" => CatatanKoin::with('users')->get(),
             "transaksi" => $transaksi,
             "bulanList" => $bulanList,
             "tahunList" => [2025, 2024, 2023, 2022],
@@ -963,12 +963,12 @@ class SuperAdminController extends Controller
 
     public function update_koin(Request $request)
     {
+        $koins = HargaKoin::whereIn('id', $request->id)->get()->keyBy('id');
 
         foreach ($request->id as $i => $id) {
-            $koin = HargaKoin::find($id);
-            if ($koin) {
-                $koin->harga = $request->harga[$i];
-                $koin->save();
+            if ($koins->has($id)) {
+                $koins[$id]->harga = $request->harga[$i];
+                $koins[$id]->save();
             }
         }
 
@@ -985,11 +985,12 @@ class SuperAdminController extends Controller
 
     public function update_tunai(Request $request)
     {
+        $hargas = HargaPembayaran::whereIn('id', $request->id)->get()->keyBy('id');
+
         foreach ($request->id as $i => $id) {
-            $harga = HargaPembayaran::find($id);
-            if ($harga) {
-                $harga->harga = $request->harga[$i];
-                $harga->save();
+            if ($hargas->has($id)) {
+                $hargas[$id]->harga = $request->harga[$i];
+                $hargas[$id]->save();
             }
         }
 
@@ -1001,7 +1002,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Freeze-Akun.freeze_akun_superAdmin', [
             "title" => "Akun Freeze",
-            "Data" => User::all()
+            "Data" => User::with(['pelamars', 'perusahaan', 'admin', 'superadmins', 'finance'])->get()
         ]);
     }
 
@@ -1146,7 +1147,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Event.index', [
             "title" => "Event",
-            "Data" => Event::all()
+            "Data" => Event::with('kegiatan_events')->get()
         ]);
     }
     public function event_add()
@@ -1289,7 +1290,7 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Akun.akun_index-superAdmin', [
             "title" => "Kelola Akun",
-            "Data" => User::all()
+            "Data" => User::with(['pelamars', 'perusahaan', 'admin', 'superadmins', 'finance'])->get()
         ]);
     }
     public function akun_view(User $user)
@@ -1297,18 +1298,18 @@ class SuperAdminController extends Controller
         return view('Super-Admin.Akun.view_akun_super-Admin', [
             "title" => "Kelola Akun",
             "Data" => $user,
-            "Provinsi"  =>   Provinsi::all(),
-            "Kabupaten"  =>  Kabupaten::all(),
-            "Kecamatan"  =>  Daerah::all(),
+            "Provinsi" => Provinsi::all(),
+            "Kabupaten" => Kabupaten::all(),
+            "Kecamatan" => Daerah::all(),
         ]);
     }
     public function akun_add()
     {
         return view('Super-Admin.Akun.add-akun_superAdmin', [
             "title" => "Kelola Akun",
-            "Provinsi"  =>   Provinsi::all(),
-            "Kabupaten"  =>  Kabupaten::all(),
-            "Kecamatan"  =>  Daerah::all(),
+            "Provinsi" => Provinsi::all(),
+            "Kabupaten" => Kabupaten::all(),
+            "Kecamatan" => Daerah::all(),
         ]);
     }
 
@@ -1316,85 +1317,85 @@ class SuperAdminController extends Controller
     public function create_pengguna(Request $request)
     {
         $validasiData = $request->validate([
-            "username"   =>    "required",
-            "email"      =>    "required",
-            "password"   =>    "required",
-            "role"       =>     "required",
-            "status"     =>     "required|boolean",
-            "provinsi"   =>     "nullable",
-            "kota"       =>      "nullable",
-            "kecamatan"  =>      "nullable",
-            "kode_pos"   =>      "nullable",
-            "detail"     =>      "nullable"
+            "username" => "required",
+            "email" => "required",
+            "password" => "required",
+            "role" => "required",
+            "status" => "required|boolean",
+            "provinsi" => "nullable",
+            "kota" => "nullable",
+            "kecamatan" => "nullable",
+            "kode_pos" => "nullable",
+            "detail" => "nullable"
         ]);
 
 
         $user = User::create([
-            "username"   => $validasiData["username"],
-            "email"      => $validasiData["email"],
-            "password"   => $validasiData["password"] = Hash::make($request->password),
-            "role"       => $validasiData["role"],
-            "status"       => $validasiData["status"],
+            "username" => $validasiData["username"],
+            "email" => $validasiData["email"],
+            "password" => $validasiData["password"] = Hash::make($request->password),
+            "role" => $validasiData["role"],
+            "status" => $validasiData["status"],
         ]);
 
         if ($user->role === "pelamar") {
             $pelamar = $user->pelamars()->create([
-                "nama_pelamar"   =>    $validasiData['username']
+                "nama_pelamar" => $validasiData['username']
             ]);
 
             $pelamar->alamat_pelamars()->create([
-                "provinsi"   =>    $validasiData["provinsi"],
-                "kota"       =>    $validasiData["kota"],
-                "kecamatan"  =>    $validasiData["kecamatan"],
-                "kode_pos"   =>    $validasiData["kode_pos"],
-                "detail"     =>    $validasiData["detail"]
+                "provinsi" => $validasiData["provinsi"],
+                "kota" => $validasiData["kota"],
+                "kecamatan" => $validasiData["kecamatan"],
+                "kode_pos" => $validasiData["kode_pos"],
+                "detail" => $validasiData["detail"]
             ]);
         }
         if ($user->role === "perusahaan") {
             $perusahaan = $user->perusahaan()->create([
-                "nama_perusahaan"   =>    $validasiData['username']
+                "nama_perusahaan" => $validasiData['username']
             ]);
 
             $perusahaan->Alamatperusahaan()->create([
-                "provinsi"   =>    $validasiData["provinsi"],
-                "kota"       =>    $validasiData["kota"],
-                "kecamatan"  =>    $validasiData["kecamatan"],
-                "kode_pos"   =>    $validasiData["kode_pos"],
-                "detail"     =>    $validasiData["detail"]
+                "provinsi" => $validasiData["provinsi"],
+                "kota" => $validasiData["kota"],
+                "kecamatan" => $validasiData["kecamatan"],
+                "kode_pos" => $validasiData["kode_pos"],
+                "detail" => $validasiData["detail"]
             ]);
         }
 
 
         if ($user->role === "superadmin") {
             $user->superadmins()->create([
-                "nama_lengkap"  =>    $validasiData["username"],
-                "provinsi"   =>    $validasiData["provinsi"],
-                "kota"       =>    $validasiData["kota"],
-                "kecamatan"  =>    $validasiData["kecamatan"],
-                "kode_pos"   =>    $validasiData["kode_pos"],
-                "detail_alamat"     =>    $validasiData["detail"]
+                "nama_lengkap" => $validasiData["username"],
+                "provinsi" => $validasiData["provinsi"],
+                "kota" => $validasiData["kota"],
+                "kecamatan" => $validasiData["kecamatan"],
+                "kode_pos" => $validasiData["kode_pos"],
+                "detail_alamat" => $validasiData["detail"]
             ]);
         }
 
         if ($user->role === "admin") {
             $user->admin()->create([
-                "nama_lengkap"  =>    $validasiData["username"],
-                "provinsi"   =>    $validasiData["provinsi"],
-                "kota"       =>    $validasiData["kota"],
-                "kecamatan"  =>    $validasiData["kecamatan"],
-                "kode_pos"   =>    $validasiData["kode_pos"],
-                "detail_alamat"     =>    $validasiData["detail"]
+                "nama_lengkap" => $validasiData["username"],
+                "provinsi" => $validasiData["provinsi"],
+                "kota" => $validasiData["kota"],
+                "kecamatan" => $validasiData["kecamatan"],
+                "kode_pos" => $validasiData["kode_pos"],
+                "detail_alamat" => $validasiData["detail"]
             ]);
         }
 
         if ($user->role === "finance") {
             $user->finance()->create([
-                "nama_lengkap"  =>    $validasiData["username"],
-                "provinsi"   =>    $validasiData["provinsi"],
-                "kota"       =>    $validasiData["kota"],
-                "kecamatan"  =>    $validasiData["kecamatan"],
-                "kode_pos"   =>    $validasiData["kode_pos"],
-                "detail_alamat"     =>    $validasiData["detail"]
+                "nama_lengkap" => $validasiData["username"],
+                "provinsi" => $validasiData["provinsi"],
+                "kota" => $validasiData["kota"],
+                "kecamatan" => $validasiData["kecamatan"],
+                "kode_pos" => $validasiData["kode_pos"],
+                "detail_alamat" => $validasiData["detail"]
             ]);
         }
 
@@ -1405,16 +1406,16 @@ class SuperAdminController extends Controller
         $roleLama = $user->role;
 
         $validasiData = $request->validate([
-            "username"   => "required",
-            "email"      => "required|email",
-            "password"   => "nullable|min:6",
-            "role"       => "required",
-            "status"     => "required|boolean",
-            "provinsi"   => "nullable",
-            "kota"       => "nullable",
-            "kecamatan"  => "nullable",
-            "kode_pos"   => "nullable",
-            "detail"     => "nullable"
+            "username" => "required",
+            "email" => "required|email",
+            "password" => "nullable|min:6",
+            "role" => "required",
+            "status" => "required|boolean",
+            "provinsi" => "nullable",
+            "kota" => "nullable",
+            "kecamatan" => "nullable",
+            "kode_pos" => "nullable",
+            "detail" => "nullable"
         ]);
 
         if ($roleLama !== $request->role) {
@@ -1432,25 +1433,28 @@ class SuperAdminController extends Controller
                     }
                     break;
                 case 'admin':
-                    if ($user->admin) $user->admin->delete();
+                    if ($user->admin)
+                        $user->admin->delete();
                     break;
                 case 'finance':
-                    if ($user->finance) $user->finance->delete();
+                    if ($user->finance)
+                        $user->finance->delete();
                     break;
                 case 'superadmin':
-                    if ($user->superadmins) $user->superadmins->delete();
+                    if ($user->superadmins)
+                        $user->superadmins->delete();
                     break;
             }
         }
 
         $user->update([
             "username" => $validasiData["username"],
-            "email"    => $validasiData["email"],
+            "email" => $validasiData["email"],
             "password" => $request->filled('password')
                 ? Hash::make($request->password)
                 : $user->password,
-            "role"     => $validasiData["role"],
-            "status"   => $validasiData["status"],
+            "role" => $validasiData["role"],
+            "status" => $validasiData["status"],
         ]);
 
         switch ($request->role) {
@@ -1463,11 +1467,11 @@ class SuperAdminController extends Controller
                 $pelamar->alamat_pelamars()->updateOrCreate(
                     ['pelamar_id' => $pelamar->id],
                     [
-                        "provinsi"   => $validasiData["provinsi"],
-                        "kota"       => $validasiData["kota"],
-                        "kecamatan"  => $validasiData["kecamatan"],
-                        "kode_pos"   => $validasiData["kode_pos"],
-                        "detail"     => $validasiData["detail"],
+                        "provinsi" => $validasiData["provinsi"],
+                        "kota" => $validasiData["kota"],
+                        "kecamatan" => $validasiData["kecamatan"],
+                        "kode_pos" => $validasiData["kode_pos"],
+                        "detail" => $validasiData["detail"],
                     ]
                 );
                 break;
@@ -1481,11 +1485,11 @@ class SuperAdminController extends Controller
                 $perusahaan->alamatperusahaan()->updateOrCreate(
                     ['perusahaan_id' => $perusahaan->id],
                     [
-                        "provinsi"   => $validasiData["provinsi"],
-                        "kota"       => $validasiData["kota"],
-                        "kecamatan"  => $validasiData["kecamatan"],
-                        "kode_pos"   => $validasiData["kode_pos"],
-                        "detail"     => $validasiData["detail"],
+                        "provinsi" => $validasiData["provinsi"],
+                        "kota" => $validasiData["kota"],
+                        "kecamatan" => $validasiData["kecamatan"],
+                        "kode_pos" => $validasiData["kode_pos"],
+                        "detail" => $validasiData["detail"],
                     ]
                 );
                 break;
@@ -1494,11 +1498,11 @@ class SuperAdminController extends Controller
                 $user->admin()->updateOrCreate(
                     ['user_id' => $user->id],
                     [
-                        "nama_lengkap"  => $validasiData["username"],
-                        "provinsi"      => $validasiData["provinsi"],
-                        "kota"          => $validasiData["kota"],
-                        "kecamatan"     => $validasiData["kecamatan"],
-                        "kode_pos"      => $validasiData["kode_pos"],
+                        "nama_lengkap" => $validasiData["username"],
+                        "provinsi" => $validasiData["provinsi"],
+                        "kota" => $validasiData["kota"],
+                        "kecamatan" => $validasiData["kecamatan"],
+                        "kode_pos" => $validasiData["kode_pos"],
                         "detail_alamat" => $validasiData["detail"],
                     ]
                 );
@@ -1508,11 +1512,11 @@ class SuperAdminController extends Controller
                 $user->finance()->updateOrCreate(
                     ['user_id' => $user->id],
                     [
-                        "nama_lengkap"  => $validasiData["username"],
-                        "provinsi"      => $validasiData["provinsi"],
-                        "kota"          => $validasiData["kota"],
-                        "kecamatan"     => $validasiData["kecamatan"],
-                        "kode_pos"      => $validasiData["kode_pos"],
+                        "nama_lengkap" => $validasiData["username"],
+                        "provinsi" => $validasiData["provinsi"],
+                        "kota" => $validasiData["kota"],
+                        "kecamatan" => $validasiData["kecamatan"],
+                        "kode_pos" => $validasiData["kode_pos"],
                         "detail_alamat" => $validasiData["detail"],
                     ]
                 );
@@ -1522,11 +1526,11 @@ class SuperAdminController extends Controller
                 $user->superadmins()->updateOrCreate(
                     ['user_id' => $user->id],
                     [
-                        "nama_lengkap"  => $validasiData["username"],
-                        "provinsi"      => $validasiData["provinsi"],
-                        "kota"          => $validasiData["kota"],
-                        "kecamatan"     => $validasiData["kecamatan"],
-                        "kode_pos"      => $validasiData["kode_pos"],
+                        "nama_lengkap" => $validasiData["username"],
+                        "provinsi" => $validasiData["provinsi"],
+                        "kota" => $validasiData["kota"],
+                        "kecamatan" => $validasiData["kecamatan"],
+                        "kode_pos" => $validasiData["kode_pos"],
                         "detail_alamat" => $validasiData["detail"],
                     ]
                 );
@@ -1542,9 +1546,9 @@ class SuperAdminController extends Controller
         return view('Super-Admin.Akun.edit-akun_superAdmin', [
             "title" => "Kelola Akun",
             "Data" => $user,
-            "Provinsi"  =>   Provinsi::all(),
-            "Kabupaten"  =>  Kabupaten::all(),
-            "Kecamatan"  =>  Daerah::all(),
+            "Provinsi" => Provinsi::all(),
+            "Kabupaten" => Kabupaten::all(),
+            "Kecamatan" => Daerah::all(),
         ]);
     }
     public function akun_delete(User $user)
@@ -1560,7 +1564,7 @@ class SuperAdminController extends Controller
 
         return view('Super-Admin.Pengaturan.pengaturan_page_superAdmin', [
             "title" => "Image Header Social Media",
-            "sosial"  =>  $sosial
+            "sosial" => $sosial
         ]);
     }
 
@@ -1581,7 +1585,7 @@ class SuperAdminController extends Controller
             'pasang_lowongan_header',
             'daftar_kandidat_header',
             'tahunter_header',
-            'profil_pelamar_header', 
+            'profil_pelamar_header',
             'lowongan_tersimpan_header',
             'faq_header',
             'rekrut_pelamar_header',

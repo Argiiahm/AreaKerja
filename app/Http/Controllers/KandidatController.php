@@ -18,7 +18,7 @@ class KandidatController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $harga = HargaPembayaran::where('id', 1)->get()->first();
+        $harga = HargaPembayaran::where('id', 1)->first();
 
         // Cek Pending User 
         $pending_kandidat = CatatanCash::where('user_id', $user->id)
@@ -27,10 +27,10 @@ class KandidatController extends Controller
             ->first();
 
         return view('daftar-kandidat', [
-            "payment"   =>    Bank::all(),
-            "divisi"    =>    Divisi::all(),
-            "Harga"     =>    $harga,
-            "pending_kandidat"  =>  $pending_kandidat
+            "payment" => Bank::all(),
+            "divisi" => Divisi::all(),
+            "Harga" => $harga,
+            "pending_kandidat" => $pending_kandidat
         ]);
     }
 
@@ -39,21 +39,21 @@ class KandidatController extends Controller
         // dd($request->all());
         $pelamar = Auth::user()->pelamars;
         $noref = "AK" . rand(1000000, 9000000);
-        $Pembayaran = HargaPembayaran::where('id', $request->harga_pembayaran)->get()->first();
-        $Bank = Bank::where('id', $request->id_bank)->get()->first();
+        $Pembayaran = HargaPembayaran::where('id', $request->harga_pembayaran)->first();
+        $Bank = Bank::where('id', $request->id_bank)->first();
 
         $validasi_data = $request->validate([
-            'divisi'        => "required|array",
-            'divisi.*'      => "string",
+            'divisi' => "required|array",
+            'divisi.*' => "string",
         ]);
 
         $validasi_data = $request->validate([
-            'no_referensi'  =>   "nullable",
-            'pesanan'       =>   "nullable",
-            'dari'          =>   "nullable",
-            'sumber_dana'   =>   "nullable",
-            'total'         =>   "nullable",
-            'status'        =>   "nullable"
+            'no_referensi' => "nullable",
+            'pesanan' => "nullable",
+            'dari' => "nullable",
+            'sumber_dana' => "nullable",
+            'total' => "nullable",
+            'status' => "nullable"
         ]);
 
         $validasi_data['user_id'] = Auth::user()->id;
@@ -70,10 +70,10 @@ class KandidatController extends Controller
 
         return redirect('/daftarkandidat')->with('konfirmasi_transaksi', [
             "no_referensi" => $noref,
-            "pesanan"   =>   $Pembayaran->nama,
-            "dari"     =>  $pelamar->nama_pelamar,
-            "sumber_dana"  =>  $Bank->nama_bank,
-            "total"    =>   $Pembayaran->harga
+            "pesanan" => $Pembayaran->nama,
+            "dari" => $pelamar->nama_pelamar,
+            "sumber_dana" => $Bank->nama_bank,
+            "total" => $Pembayaran->harga
         ]);
     }
 
@@ -91,10 +91,10 @@ class KandidatController extends Controller
         $trx->created_at = now();
 
         return view('Detail-tf_pembayaran.detail_pembeli_kandidat', [
-            "Data"   =>   $trx,
-            "Bank"   =>   $bank,
-            "pembayaran"  =>  $pembayaran,
-            "isPreview"   =>  true
+            "Data" => $trx,
+            "Bank" => $bank,
+            "pembayaran" => $pembayaran,
+            "isPreview" => true
         ]);
     }
 
@@ -105,7 +105,7 @@ class KandidatController extends Controller
         }
 
         $validasi = $request->validate([
-            "bukti"    =>     "required|file|image|mimes:png,jpg,jpeg"
+            "bukti" => "required|file|image|mimes:png,jpg,jpeg"
         ]);
 
         $pendingData = session('pending_kandidat_data');
@@ -149,16 +149,16 @@ class KandidatController extends Controller
 
 
         return view('Detail-tf_pembayaran.detail_pembeli_kandidat', [
-            "Data"   =>   $p,
-            "Bank"   =>   $bank,
-            "pembayaran"  =>  $pembayaran
+            "Data" => $p,
+            "Bank" => $bank,
+            "pembayaran" => $pembayaran
         ]);
     }
 
     public function transaksi_update(Request $request, CatatanCash $p)
     {
         $validasi = $request->validate([
-            "bukti"    =>     "required|file|image|mimes:png,jpg,jpeg"
+            "bukti" => "required|file|image|mimes:png,jpg,jpeg"
         ]);
 
         if ($request->hasFile('bukti')) {
@@ -187,17 +187,25 @@ class KandidatController extends Controller
     public function rekrut()
     {
         $kandidat = Auth::user()->pelamars;
-        $rekrut = PembeliKandidat::where('pelamar_id', $kandidat->id)->get();
+        $rekrut = PembeliKandidat::where('pelamar_id', $kandidat->id)
+            ->with(['lowongan_perusahaan', 'lowongan_perusahaan.perusahaan'])
+            ->get();
         return view('kandidat.rekrut', [
-            "rekrut"   =>   $rekrut
+            "rekrut" => $rekrut
         ]);
     }
 
     public function rekrut_detail(PembeliKandidat $pembeli)
     {
+        $pembeli->load(['lowongan_perusahaan', 'lowongan_perusahaan.perusahaan']);
+        $lowongan = $pembeli->lowongan_perusahaan
+            ? LowonganPerusahaan::where('perusahaan_id', $pembeli->lowongan_perusahaan->perusahaan_id)
+                ->with('perusahaan')->get()
+            : collect();
+
         return view('kandidat.rekrut-detail', [
-            "Data"   =>   $pembeli,
-            "lowongan" => LowonganPerusahaan::all()
+            "Data" => $pembeli,
+            "lowongan" => $lowongan
         ]);
     }
 

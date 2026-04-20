@@ -19,23 +19,21 @@ class FinanceController extends Controller
 {
     public function index()
     {
-        $cash   = CatatanCash::all();
-        $koin   = CatatanKoin::all();
+        $cash = CatatanCash::with('users')->get();
+        $koin = CatatanKoin::with('users')->get();
 
-        $totalOmset = 0;
-        foreach ($cash->where('status', 'diterima') as $trx) {
-            $harga = HargaPembayaran::where('nama', $trx->pesanan)->first();
-            if ($harga) {
-                $totalOmset += $harga->harga;
-            }
-        }
+        // Pre-load semua harga pembayaran, lalu hitung omset via collection
+        $hargaMap = HargaPembayaran::all()->keyBy('nama');
+        $totalOmset = $cash->where('status', 'diterima')->sum(function ($trx) use ($hargaMap) {
+            return $hargaMap->get($trx->pesanan)->harga ?? 0;
+        });
 
         return view('Dashboard-finance.dashboard', [
-            "title"      => "Dashboard",
-            "koin"       => $koin,
-            "cash"       => $cash,
+            "title" => "Dashboard",
+            "koin" => $koin,
+            "cash" => $cash,
             "totalOmset" => $totalOmset,
-            "NotifTfMasuk"  =>   CatatanCash::all()
+            "NotifTfMasuk" => $cash
         ]);
     }
 
@@ -44,34 +42,34 @@ class FinanceController extends Controller
     public function paket_harga()
     {
         return view('Dashboard-finance.paket-harga_finance', [
-            "title"   =>   "Paket Harga",
-            "koin"    =>   HargaKoin::all(),
-            "tunai"   =>   HargaPembayaran::all()
+            "title" => "Paket Harga",
+            "koin" => HargaKoin::all(),
+            "tunai" => HargaPembayaran::all()
         ]);
     }
     public function edit_koin()
     {
         return view('Dashboard-finance.edit-paket-harga-koin', [
-            "title"   =>    "Edit Harga",
-            "koin"    =>     HargaKoin::all(),
+            "title" => "Edit Harga",
+            "koin" => HargaKoin::all(),
         ]);
     }
     public function edit_harga()
     {
         return view('Dashboard-finance.edit-paket-harga-harga', [
-            "title"   =>    "Edit Harga",
-            "harga"   =>   HargaPembayaran::all()
+            "title" => "Edit Harga",
+            "harga" => HargaPembayaran::all()
         ]);
     }
 
     public function update_koin(Request $request)
     {
+        $koins = HargaKoin::whereIn('id', $request->id)->get()->keyBy('id');
 
         foreach ($request->id as $i => $id) {
-            $koin = HargaKoin::find($id);
-            if ($koin) {
-                $koin->harga = $request->harga[$i];
-                $koin->save();
+            if ($koins->has($id)) {
+                $koins[$id]->harga = $request->harga[$i];
+                $koins[$id]->save();
             }
         }
 
@@ -79,11 +77,12 @@ class FinanceController extends Controller
     }
     public function update_harga(Request $request)
     {
+        $hargas = HargaPembayaran::whereIn('id', $request->id)->get()->keyBy('id');
+
         foreach ($request->id as $i => $id) {
-            $harga = HargaPembayaran::find($id);
-            if ($harga) {
-                $harga->harga = $request->harga[$i];
-                $harga->save();
+            if ($hargas->has($id)) {
+                $hargas[$id]->harga = $request->harga[$i];
+                $hargas[$id]->save();
             }
         }
 
@@ -160,7 +159,7 @@ class FinanceController extends Controller
 
 
         return view('Dashboard-finance.omset-finance', [
-            "title"   => "Omset Perusahaan",
+            "title" => "Omset Perusahaan",
             'listOmset' => $listOmset,
             'totalOmset' => $totalOmset,
             'rataRata' => $rataRata,
@@ -172,22 +171,22 @@ class FinanceController extends Controller
     public function catatan_transaksi()
     {
         return view('Dashboard-finance.catatan_transaksi', [
-            "title"   =>    "Catatan Transaksi"
+            "title" => "Catatan Transaksi"
         ]);
     }
 
     public function catatan_transaksi_tunai_detail()
     {
         return view('Dashboard-finance.riwayat-transaksi_tunai', [
-            "title"   =>     "Catatan Transaksi",
-            "data"    =>     CatatanCash::all(),
-            "data_pembayaran_kandidat"   =>   PembeliKandidat::all()
+            "title" => "Catatan Transaksi",
+            "data" => CatatanCash::with('users')->get(),
+            "data_pembayaran_kandidat" => PembeliKandidat::with(['pelamar', 'lowongan_perusahaan'])->get()
         ]);
     }
 
     public function updateStatus(Request $request)
     {
-        $p = Pelamar::where('nama_pelamar', $request->model)->get()->first();
+        $p = Pelamar::where('nama_pelamar', $request->model)->first();
         // dd($request->model, $p);
         $status = $request->status;
 
@@ -214,8 +213,8 @@ class FinanceController extends Controller
     public function catatan_transaksi_koin_detail()
     {
         return view('Dashboard-finance.riwayat-transaksi_koin', [
-            "title"   =>     "Catatan Transaksi",
-            "data"    =>     CatatanKoin::all()
+            "title" => "Catatan Transaksi",
+            "data" => CatatanKoin::with('users')->get()
         ]);
     }
 
