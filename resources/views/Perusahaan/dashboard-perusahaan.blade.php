@@ -1,23 +1,13 @@
 @extends('layouts.index')
 
 @section('content')
-    <div class="max-w-screen-xl mt-10 mx-auto px-6">
-        <div class="pt-24 pb-8 flex items-end justify-between gap-4 flex-wrap">
-            <div>
-                <p class="text-xs font-bold tracking-wider uppercase text-orange-500 mb-1.5">Dashboard</p>
-                <h1 class="text-3xl sm:text-4xl text-gray-400 leading-tight m-0">Selamat
-                    Datang,<br> <span class="font-medium text-gray-500">
-                        {{ Auth::user()->perusahaan->nama_perusahaan }}</h1>
-                </span>
-            </div>
-        </div>
-
+    <div class="max-w-screen-xl mt-32 mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-[1fr_340px] gap-5 items-start">
             <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                 <div class="flex items-center justify-between p-6 border-b border-gray-200">
                     <p class="text-base font-bold text-gray-900 m-0">Lowongan Saya</p>
                     <a href="/dashboard/perusahaan/lowongan"
-                        class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200 whitespace-nowrap no-underline bg-orange-500 text-white hover:bg-orange-600 hover:-translate-y-px">
+                        class="text-gray-300">
                         + Tambah Lowongan
                     </a>
                 </div>
@@ -89,7 +79,7 @@
                     </div>
                     <div class="p-6 pt-4">
                         <div
-                            class="flex items-center justify-center gap-3 bg-orange-50 border border-orange-300 rounded-xl p-5 mb-4 text-center">
+                            class="flex items-center justify-center gap-3 bg-gray-50 border border-gray-300 rounded-xl p-5 mb-4 text-center">
                             <div>
                                 <div class="text-5xl font-extrabold text-orange-500 leading-none">{{ $totalSaldo }}</div>
                                 <div class="text-xs text-gray-600 mt-0.5">koin tersedia</div>
@@ -328,10 +318,13 @@
                         <span>Rp {{ number_format(session('success_topup')['total'], 0, ',', '.') }}</span>
                     </div>
                 </div>
-                <a href="/detail/pembayaran/{{ session('success_topup')['id'] }}"
-                    class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200 whitespace-nowrap no-underline bg-orange-500 text-white hover:bg-orange-600 hover:-translate-y-px w-full mt-5">
-                    Konfirmasi & Lanjutkan
-                </a>
+                <form action="/dashboard/perusahaan/topup/konfirmasi" method="POST" class="w-full mt-5">
+                    @csrf
+                    <button type="submit"
+                        class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200 whitespace-nowrap no-underline bg-orange-500 text-white hover:bg-orange-600 hover:-translate-y-px w-full">
+                        Konfirmasi & Lanjutkan
+                    </button>
+                </form>
             </div>
         </div>
     @endif

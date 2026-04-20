@@ -13,10 +13,30 @@
                     </p>
                     @if (Auth::check() && Auth::user()->role === 'pelamar')
                         <div class="flex items-center gap-10">
-                            <button id="openModalBtn"
-                                class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
-                                Lamar Cepat
-                            </button>
+                            @php
+                                $lamaran = Auth::user()->pelamars->lowongan_perusahaan->where('id', $Data->id)->first();
+                            @endphp
+                            @if ($lamaran && $lamaran->pivot->status === 'ditolak')
+                                <button id="openModalBtn"
+                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-semibold">
+                                    Lamaran Ditolak
+                                </button>
+                            @elseif ($lamaran && $lamaran->pivot->status === 'diterima')
+                                <button id="openModalBtn"
+                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-semibold">
+                                    Lamaran Diterima
+                                </button>
+                            @elseif ($lamaran)
+                                <button id="openModalBtn"
+                                    class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md font-semibold">
+                                    Menunggu Respon
+                                </button>
+                            @else
+                                <button id="openModalBtn"
+                                    class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-semibold">
+                                    Lamar Cepat
+                                </button>
+                            @endif
                             <form action="/simpanlowongan/{{ $Data->slug }}" method="POST">
                                 @csrf
                                 <button type="submit">
@@ -128,18 +148,47 @@
                             </button>
                         </div>
                     @else
-                        <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
-                        <p class="text-center mb-1">
-                            Anda Sudah Mengirim Lamaran Ke <br> <span
-                                class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
-                        </p>
-                        <p class="text-center mb-3">Tunggu Respon dari perusahaan</p>
-                        <div class="flex justify-center">
-                            <button id="closeModalBtn"
-                                class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
-                                Selesai
-                            </button>
-                        </div>
+                        @php
+                            $lamaran = Auth::user()->pelamars->lowongan_perusahaan->where('id', $Data->id)->first();
+                        @endphp
+                        @if ($lamaran && $lamaran->pivot->status === 'ditolak')
+                            <h2 class="text-center text-xl font-semibold mb-4 text-red-500">Lamaran Ditolak</h2>
+                            <p class="text-center mb-1">
+                                Mohon maaf, lamaran Anda ke <br> <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span> telah ditolak.
+                            </p>
+                            <p class="text-center mb-3">Tetap semangat dan coba cari lowongan lainnya!</p>
+                            <div class="flex justify-center">
+                                <button id="closeModalBtn"
+                                    class="bg-red-500 hover:bg-red-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                    Tutup
+                                </button>
+                            </div>
+                        @elseif ($lamaran && $lamaran->pivot->status === 'diterima')
+                            <h2 class="text-center text-xl font-semibold mb-4 text-green-500">Selamat! Lamaran Diterima</h2>
+                            <p class="text-center mb-1">
+                                Lamaran Anda ke <br> <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span> telah diterima.
+                            </p>
+                            <p class="text-center mb-3">Silahkan cek pesan atau email terkait informasi selanjutnya.</p>
+                            <div class="flex justify-center">
+                                <button id="closeModalBtn"
+                                    class="bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                    Tutup
+                                </button>
+                            </div>
+                        @else
+                            <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+                            <p class="text-center mb-1">
+                                Anda Sudah Mengirim Lamaran Ke <br> <span
+                                    class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+                            </p>
+                            <p class="text-center mb-3">Tunggu Respon dari perusahaan</p>
+                            <div class="flex justify-center">
+                                <button id="closeModalBtn"
+                                    class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                    Selesai
+                                </button>
+                            </div>
+                        @endif
                     @endif
                 @endif
             </div>

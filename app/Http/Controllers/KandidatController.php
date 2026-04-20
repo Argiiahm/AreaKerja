@@ -47,10 +47,6 @@ class KandidatController extends Controller
             'divisi.*'      => "string",
         ]);
 
-        $pelamar->update([
-            'divisi' => json_encode($request->divisi),
-        ]);
-
         $validasi_data = $request->validate([
             'no_referensi'  =>   "nullable",
             'pesanan'       =>   "nullable",
@@ -69,18 +65,72 @@ class KandidatController extends Controller
         $validasi_data['status'] = "pending";
         $validasi_data['expired_date'] = now()->addHours(24);
 
-
-
-        $pembeli = CatatanCash::create($validasi_data);
+        session(['pending_kandidat_data' => $validasi_data]);
+        session(['pending_kandidat_divisi' => $request->divisi]);
 
         return redirect('/daftarkandidat')->with('konfirmasi_transaksi', [
-            "id"   =>    $pembeli->id,
             "no_referensi" => $noref,
             "pesanan"   =>   $Pembayaran->nama,
             "dari"     =>  $pelamar->nama_pelamar,
             "sumber_dana"  =>  $Bank->nama_bank,
             "total"    =>   $Pembayaran->harga
         ]);
+    }
+
+    public function transaksi_preview()
+    {
+        if (!session()->has('pending_kandidat_data')) {
+            return redirect('/daftarkandidat')->with('error', 'Sesi tidak valid.');
+        }
+
+        $pendingData = session('pending_kandidat_data');
+        $bank = Bank::where('nama_bank', $pendingData['sumber_dana'])->first();
+        $pembayaran = HargaPembayaran::where('nama', $pendingData['pesanan'])->first();
+
+        $trx = new CatatanCash($pendingData);
+        $trx->created_at = now();
+
+        return view('Detail-tf_pembayaran.detail_pembeli_kandidat', [
+            "Data"   =>   $trx,
+            "Bank"   =>   $bank,
+            "pembayaran"  =>  $pembayaran,
+            "isPreview"   =>  true
+        ]);
+    }
+
+    public function final_upload_transaksi(Request $request)
+    {
+        if (!session()->has('pending_kandidat_data')) {
+            return redirect('/daftarkandidat')->with('error', 'Sesi berakhir.');
+        }
+
+        $validasi = $request->validate([
+            "bukti"    =>     "required|file|image|mimes:png,jpg,jpeg"
+        ]);
+
+        $pendingData = session('pending_kandidat_data');
+        $divisi = session('pending_kandidat_divisi');
+
+        if ($request->hasFile('bukti')) {
+            $pendingData['bukti'] = $request->file('bukti')->store('images', 'public');
+        }
+
+        CatatanCash::create($pendingData);
+        if ($divisi) {
+            $pelamar = Auth::user()->pelamars;
+            $pelamar->update(['divisi' => json_encode($divisi)]);
+        }
+
+        session()->forget('pending_kandidat_data');
+        session()->forget('pending_kandidat_divisi');
+        session()->forget('konfirmasi_transaksi');
+
+        return redirect()->route('kandidat.success');
+    }
+
+    public function transaksi_success()
+    {
+        return view('Detail-tf_pembayaran.success-kandidat');
     }
 
     public function transaksi_detail(CatatanCash $p)

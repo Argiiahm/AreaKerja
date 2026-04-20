@@ -66,6 +66,9 @@ Route::middleware(['status'])->group(function () {
     Route::get('/daftarkandidat', [KandidatController::class, 'index'])->middleware('auth');
     // Transaksi Daftar Kandidat
     Route::post('/daftarkandidat/transaksi', [KandidatController::class, 'transaksi'])->middleware('auth');
+    Route::get('/daftarkandidat/transaksi/preview', [KandidatController::class, 'transaksi_preview'])->middleware('auth');
+    Route::post('/daftarkandidat/transaksi/final-upload', [KandidatController::class, 'final_upload_transaksi'])->middleware('auth');
+    Route::get('/daftarkandidat/transaksi/success', [KandidatController::class, 'transaksi_success'])->middleware('auth')->name('kandidat.success');
     Route::get('/detail/pembayaran/kandidat/{p:id}', [KandidatController::class, 'transaksi_detail'])->middleware('auth');
     Route::put('/transaksi/kandidat/update/{p:id}', [KandidatController::class, 'transaksi_update'])->middleware('auth');
     Route::put('/diterima/kandidat/{p:id}', [KandidatController::class, 'diterima_kandidat'])->middleware('auth');
@@ -345,6 +348,10 @@ Route::middleware(['status'])->group(function () {
 
     // Transaksi Top Up  
     Route::post('/dashboard/perusahaan/topup', [PerusahaanController::class, 'topup'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/topup/preview', [PerusahaanController::class, 'preview_pembayaran'])->middleware('perusahaan');
+    Route::post('/dashboard/perusahaan/topup/konfirmasi', [PerusahaanController::class, 'topup_konfirmasi'])->middleware('perusahaan');
+    Route::post('/dashboard/perusahaan/topup/final-upload', [PerusahaanController::class, 'final_upload'])->middleware('perusahaan');
+    Route::get('/dashboard/perusahaan/topup/success', [PerusahaanController::class, 'topup_success'])->middleware('perusahaan')->name('topup.success');
     Route::get('/detail/pembayaran/{trx:id}', [PerusahaanController::class, 'detail_pembayaran'])->middleware('perusahaan');
     Route::put('/upload/bukti/pembayaran/{bukti:id}', [PerusahaanController::class, 'uploadBukti'])->middleware('perusahaan');
     Route::put('/update/status', [FinanceController::class, 'updateStatus'])->name('update.status');

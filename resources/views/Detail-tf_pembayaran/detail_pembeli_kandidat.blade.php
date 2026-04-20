@@ -96,9 +96,11 @@
         </div>
 
         <div class="mt-8 px-4">
-            <form action="/transaksi/kandidat/update/{{ $Data->id }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ isset($isPreview) && $isPreview ? '/daftarkandidat/transaksi/final-upload' : '/transaksi/kandidat/update/' . $Data->id }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
+                @if(empty($isPreview))
+                    @method('PUT')
+                @endif
                 <label for="bukti"
                     class="cursor-pointer bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow inline-block">
                     Upload Bukti

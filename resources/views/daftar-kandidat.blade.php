@@ -218,7 +218,7 @@
                     </p>
                 </div>
                 <div>
-                    <a href="/detail/pembayaran/kandidat/{{ session('konfirmasi_transaksi')['id'] }}"
+                    <a href="/daftarkandidat/transaksi/preview"
                         class="mt-5 w-full flex justify-center my-5 bg-orange-500 text-white py-2 rounded-xl">Konfirmasi</a>
                 </div>
             </div>

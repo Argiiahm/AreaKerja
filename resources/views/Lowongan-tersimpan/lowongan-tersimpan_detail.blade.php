@@ -50,10 +50,30 @@
                                     </button>
                                 @endif
                             @else
-                                <button id="openModalBtn"
-                                    class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
-                                    Lamar Cepat
-                                </button>
+                                @php
+                                    $lamaran = Auth::user()->pelamars->lowongan_perusahaan->where('id', $Data->id)->first();
+                                @endphp
+                                @if ($lamaran && $lamaran->pivot->status === 'ditolak')
+                                    <button id="openModalBtn"
+                                        class="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+                                        Lamaran Ditolak
+                                    </button>
+                                @elseif ($lamaran && $lamaran->pivot->status === 'diterima')
+                                    <button id="openModalBtn"
+                                        class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+                                        Lamaran Diterima
+                                    </button>
+                                @elseif ($lamaran)
+                                    <button id="openModalBtn"
+                                        class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+                                        Menunggu Respon
+                                    </button>
+                                @else
+                                    <button id="openModalBtn"
+                                        class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+                                        Lamar Cepat
+                                    </button>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -61,7 +81,8 @@
 
                 <div class="p-8 space-y-8">
                     <div>
-                        <h2 class="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">Detail Lowongan</h2>
+                        <h2 class="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">Detail Lowongan
+                        </h2>
                         <p class="text-gray-600 mb-4">Berikut merupakan deskripsi lengkap terkait perusahaan yang anda tuju.
                         </p>
 
@@ -71,14 +92,14 @@
                                 <p class="font-semibold text-gray-700">Jenis Lowongan</p>
                                 <span
                                     class="inline-block mt-2 bg-gray-100 px-4 py-1.5 text-gray-700 font-medium rounded-md">
-                                    Full Time
+                                    {{ $Data->jenis ?? 'N/A' }}
                                 </span>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3 text-gray-700 border-t border-gray-200 pt-4">
                             <i class="ph ph-map-pin text-orange-500 text-lg"></i>
-                            <span>{{ $Data->alamat }}</span>
+                            <span>{{ $Data->alamat ?? 'N/A' }}</span>
                         </div>
                     </div>
 
@@ -98,7 +119,7 @@
                     <div class="">
                         <h3 class="font-semibold text-lg mb-2">Responsibilities</h3>
                         <ul class="list-disc list-inside space-y-1 text-gray-600">
-                            <li>{{ $Data->tanggung_jawab }}</li>
+                            <li>{{ $Data->tanggung_jawab ?? '' }}</li>
                         </ul>
                     </div>
                 </div>
@@ -183,8 +204,7 @@
                         <form action="/lamar/cepat" method="POST">
                             @csrf
                             <input type="text" name="lowongan_id" value="{{ $Data->id }}" id="" hidden>
-                            <button
-                                class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                            <button class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
                                 Kirim
                             </button>
                         </form>
@@ -194,18 +214,47 @@
                         </button>
                     </div>
                 @else
-                    <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
-                    <p class="text-center mb-1">
-                        Anda Sudah Mengirim Lamaran Ke <br> <span
-                            class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
-                    </p>
-                    <p class="text-center mb-3">Tunggu Respon dari perusahaan</p>
-                    <div class="flex justify-center">
-                        <button id="closeModalBtn"
-                            class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
-                            Selesai
-                        </button>
-                    </div>
+                    @php
+                        $lamaran = Auth::user()->pelamars->lowongan_perusahaan->where('id', $Data->id)->first();
+                    @endphp
+                    @if ($lamaran && $lamaran->pivot->status === 'ditolak')
+                        <h2 class="text-center text-xl font-semibold mb-4 text-red-500">Lamaran Ditolak</h2>
+                        <p class="text-center mb-1">
+                            Mohon maaf, lamaran Anda ke <br> <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span> telah ditolak.
+                        </p>
+                        <p class="text-center mb-3">Tetap semangat dan coba cari lowongan lainnya!</p>
+                        <div class="flex justify-center">
+                            <button id="closeModalBtn"
+                                class="bg-red-500 hover:bg-red-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                Tutup
+                            </button>
+                        </div>
+                    @elseif ($lamaran && $lamaran->pivot->status === 'diterima')
+                        <h2 class="text-center text-xl font-semibold mb-4 text-green-500">Selamat! Lamaran Diterima</h2>
+                        <p class="text-center mb-1">
+                            Lamaran Anda ke <br> <span class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span> telah diterima.
+                        </p>
+                        <p class="text-center mb-3">Silahkan cek pesan atau email terkait informasi selanjutnya.</p>
+                        <div class="flex justify-center">
+                            <button id="closeModalBtn"
+                                class="bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                Tutup
+                            </button>
+                        </div>
+                    @else
+                        <h2 class="text-center text-xl font-semibold mb-4">Konfirmasi</h2>
+                        <p class="text-center mb-1">
+                            Anda Sudah Mengirim Lamaran Ke <br> <span
+                                class="font-bold">({{ $Data->perusahaan->nama_perusahaan }})</span>
+                        </p>
+                        <p class="text-center mb-3">Tunggu Respon dari perusahaan</p>
+                        <div class="flex justify-center">
+                            <button id="closeModalBtn"
+                                class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg shadow">
+                                Selesai
+                            </button>
+                        </div>
+                    @endif
                 @endif
             @endif
         </div>
@@ -241,8 +290,7 @@
         <div id="modalSelesai"
             class="fixed inset-0 bg-black/65 bg-opacity-40 hidden z-50 flex items-center justify-center backdrop-blur-sm">
             <div class="relative bg-white rounded-2xl p-8 w-[400px] text-center shadow-xl">
-                <button id="closeSelesai"
-                    class="absolute top-4 right-5 text-gray-400 hover:text-black text-xl transition">
+                <button id="closeSelesai" class="absolute top-4 right-5 text-gray-400 hover:text-black text-xl transition">
                     &times;
                 </button>
                 <h2 class="text-lg font-semibold text-gray-700 mb-2">
@@ -276,20 +324,17 @@
                     </label>
 
                     <label class="block border-b border-gray-300 pb-1 cursor-pointer">
-                        <input type="radio" name="alasan" value="Menerima tawaran dari perusahaan lain"
-                            class="mr-2">
+                        <input type="radio" name="alasan" value="Menerima tawaran dari perusahaan lain" class="mr-2">
                         Menerima tawaran dari perusahaan lain
                     </label>
 
                     <label class="block border-b border-gray-300 pb-1 cursor-pointer">
-                        <input type="radio" name="alasan" value="Menginginkan benefit yang lebih lengkap"
-                            class="mr-2">
+                        <input type="radio" name="alasan" value="Menginginkan benefit yang lebih lengkap" class="mr-2">
                         Menginginkan benefit yang lebih lengkap
                     </label>
 
                     <label class="block border-b border-gray-300 pb-1 cursor-pointer">
-                        <input type="radio" name="alasan" value="Menginginkan fleksibilitas dalam bekerja"
-                            class="mr-2">
+                        <input type="radio" name="alasan" value="Menginginkan fleksibilitas dalam bekerja" class="mr-2">
                         Menginginkan fleksibilitas dalam bekerja
                     </label>
 
@@ -374,9 +419,8 @@
                 class="absolute top-3 right-4 text-gray-500 text-xl font-bold hover:text-gray-700">&times;</button>
             <div class="flex flex-col items-center justify-center">
                 <div class="bg-orange-100 p-4 rounded-full mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-orange-500" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 6L9 17l-5-5" />
                     </svg>
                 </div>
@@ -412,7 +456,7 @@
                 if (e.target === modal) modal.classList.add("hidden");
             });
 
-            window.openKonfirmasi = function(namaPerusahaan) {
+            window.openKonfirmasi = function (namaPerusahaan) {
                 document.getElementById("namaPerusahaan1").innerText = namaPerusahaan;
                 modalKonfirmasi.classList.remove("hidden");
             };
@@ -420,7 +464,7 @@
             @if (session('showModalSelesai'))
                 modalSelesai.classList.remove('hidden');
             @endif
-        });
+                                });
 
         const ModalTolak = document.getElementById("modalKonfirmasitolak");
         const ModalTolakSelesai = document.getElementById("modalTolakSelesai");
@@ -435,11 +479,11 @@
         }
 
 
-        window.openModalTolak = function(namaPerusahaan) {
+        window.openModalTolak = function (namaPerusahaan) {
             document.getElementById("namaPerusahaanTolak").innerText = namaPerusahaan;
             ModalTolak.classList.remove("hidden");
         };
-        window.closeModalTolak = function() {
+        window.closeModalTolak = function () {
             document.getElementById("modalKonfirmasitolak").classList.add("hidden");
         };
 

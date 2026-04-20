@@ -4,10 +4,10 @@
         <div class="max-w-3xl mx-auto px-8 py-12 mt-40 bg-white rounded-xl shadow-md border border-gray-300">
             @php
                 $namapelamar = \App\Models\Pelamar::find($Data->pelamar_id);
-                $lo{{  }}an = \App\Models\LowonganPerusahaan::find($Data->lowongan_id);
+                $lowongan = \App\Models\LowonganPerusahaan::find($Data->lowongan_id);
             @endphp
             <div class="flex items-center gap-6 mb-10">
-                <img src="{{ asset('Icon/seveninc.png') }}" alt="Logo" class="w-48 h-auto">
+                <img src="{{ asset('storage/' . $lowongan->perusahaan->img_profile) }}" alt="Logo" class="w-48 h-auto">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900">Mohon Maaf Kepada</h2>
                     <p class="mt-4 text-gray-800">
@@ -19,7 +19,8 @@
 
             <div class="text-gray-800 text-[15px] leading-relaxed space-y-5 max-w-2xl mx-auto text-justify">
                 <p>
-                   Mohon Maaf Lamaran yang anda ajukan ke lowongan kami pada <span class="font-semibold">{{ $lowongan->nama }}</span>
+                    Mohon Maaf Lamaran yang anda ajukan ke lowongan kami pada <span
+                        class="font-semibold">{{ $lowongan->nama }}</span>
                     <span class="text-red-600 font-bold">Belum Bisa Kami Terima</span>.
                 </p>
 

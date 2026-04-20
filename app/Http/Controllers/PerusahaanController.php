@@ -69,15 +69,68 @@ class PerusahaanController extends Controller
         $validasi['status'] = 'pending';
         $validasi['expired_date'] = now()->addHours(24);
 
-        $transaksi = CatatanCash::create($validasi);
+        session(['pending_topup_data' => $validasi]);
+
         return back()->with('success_topup', [
-            "id"          =>   $transaksi->id,
             'no_referensi' => $noref,
             'pesanan' => $koin->nama,
             'dari' => Auth::user()->username,
             'sumber_dana' => $bank->nama_bank,
             'total' => $koin->harga + 2000,
         ]);
+    }
+
+    public function topup_konfirmasi(Request $request)
+    {
+        if (!session()->has('pending_topup_data')) {
+            return back()->with('error', 'Sesi top up tidak valid atau telah berakhir.');
+        }
+
+        return redirect('/dashboard/perusahaan/topup/preview');
+    }
+
+    public function preview_pembayaran()
+    {
+        if (!session()->has('pending_topup_data')) {
+            return redirect('/dashboard/perusahaan')->with('error', 'Sesi top up tidak valid atau telah berakhir.');
+        }
+
+        $pendingData = session('pending_topup_data');
+        $bank = Bank::where('nama_bank', $pendingData['sumber_dana'])->first();
+        $pembayaran = HargaPembayaran::where('jumlah_koin', $pendingData['total'])->first();
+
+        $trx = new CatatanCash($pendingData);
+        $trx->created_at = now();
+
+        return view('Detail-tf_pembayaran.detail-transaksi_pembayaran', [
+            "Data"   =>    $trx,
+            "Bank"   =>    $bank,
+            "pembayaran" =>   $pembayaran,
+            "isPreview"  =>   true
+        ]);
+    }
+
+    public function final_upload(Request $request)
+    {
+        if (!session()->has('pending_topup_data')) {
+            return redirect('/dashboard/perusahaan')->with('error', 'Sesi top up berakhir.');
+        }
+
+        $validasi = $request->validate([
+            "bukti"    =>     "required|file|image|mimes:png,jpg,jpeg"
+        ]);
+
+        $pendingData = session('pending_topup_data');
+        
+        if ($request->hasFile('bukti')) {
+            $pendingData['bukti'] = $request->file('bukti')->store('images', 'public');
+        }
+
+        CatatanCash::create($pendingData);
+        session()->forget('pending_topup_data');
+        session()->forget('success_topup');
+
+        return redirect()->route('topup.success')->with('success', 'Bukti pembayaran berhasil diupload.');
     }
 
     public function detail_pembayaran(CatatanCash $trx)
@@ -108,15 +161,20 @@ class PerusahaanController extends Controller
         ]);
 
         if ($request->hasFile('bukti')) {
-            if ($bukti->$bukti && Storage::exists('public/' . $bukti->$bukti)) {
-                Storage::delete('public/' . $bukti->$bukti);
+            if ($bukti->bukti && Storage::exists('public/' . $bukti->bukti)) {
+                Storage::delete('public/' . $bukti->bukti);
             }
             $validasi['bukti'] = $request->file('bukti')->store('images', 'public');
         }
 
         $bukti->update($validasi);
 
-        return back();
+        return redirect()->route('topup.success')->with('success', 'Bukti pembayaran berhasil diupload.');
+    }
+
+    public function topup_success()
+    {
+        return view('Perusahaan.success-topup');
     }
 
 
