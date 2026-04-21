@@ -127,9 +127,15 @@ class SuperAdminController extends Controller
 
     public function edit_organisasi(Organisasi $organisasi)
     {
+        $pelamar = Pelamar::find($organisasi->pelamar_id);
+        $backUrl = $pelamar && $pelamar->kategori === 'kandidat aktif'
+            ? '/dashboard/superadmin/pelamar/edit/kandidat/' . $pelamar->id
+            : '/dashboard/superadmin/pelamar/edit/non_kandidat/' . $pelamar->id;
+
         return view('Super-Admin.Pelamar.edit-kandidat.edit-organisasi', [
             "title" => "Edit Organisasi",
-            "Data" => $organisasi
+            "Data" => $organisasi,
+            "back_url" => $backUrl
         ]);
     }
 
@@ -146,14 +152,25 @@ class SuperAdminController extends Controller
         $v['pelamar_id'] = $request->pelamar_id;
 
         $organisasi->update($v);
-        return back();
+
+        $pelamar = Pelamar::find($request->pelamar_id);
+        if ($pelamar && $pelamar->kategori === 'kandidat aktif') {
+            return redirect('/dashboard/superadmin/pelamar/edit/kandidat/' . $pelamar->id);
+        }
+        return redirect('/dashboard/superadmin/pelamar/edit/non_kandidat/' . $request->pelamar_id);
     }
 
     public function edit_pendidikan(RiwayatPendidikan $pendidikan)
     {
+        $pelamar = Pelamar::find($pendidikan->pelamar_id);
+        $backUrl = $pelamar && $pelamar->kategori === 'kandidat aktif'
+            ? '/dashboard/superadmin/pelamar/edit/kandidat/' . $pelamar->id
+            : '/dashboard/superadmin/pelamar/edit/non_kandidat/' . $pelamar->id;
+
         return view('Super-Admin.Pelamar.edit-kandidat.edit-pendidikan', [
             "title" => 'edit pendidikan',
-            "Data" => $pendidikan
+            "Data" => $pendidikan,
+            "back_url" => $backUrl
         ]);
     }
 
@@ -170,14 +187,24 @@ class SuperAdminController extends Controller
         $v['pelamar_id'] = $request->pelamars_id;
         $pendidikan->update($v);
 
-        return back();
+        $pelamar = Pelamar::find($request->pelamars_id);
+        if ($pelamar && $pelamar->kategori === 'kandidat aktif') {
+            return redirect('/dashboard/superadmin/pelamar/edit/kandidat/' . $pelamar->id);
+        }
+        return redirect('/dashboard/superadmin/pelamar/edit/non_kandidat/' . $request->pelamars_id);
     }
 
     public function edit_pengalaman(Pengalamankerja $pengalaman)
     {
+        $pelamar = Pelamar::find($pengalaman->pelamar_id);
+        $backUrl = $pelamar && $pelamar->kategori === 'kandidat aktif'
+            ? '/dashboard/superadmin/pelamar/edit/kandidat/' . $pelamar->id
+            : '/dashboard/superadmin/pelamar/edit/non_kandidat/' . $pelamar->id;
+
         return view('Super-Admin.Pelamar.edit-kandidat.edit-pengalaman', [
             "title" => 'edit pengalaman',
-            "data" => $pengalaman
+            "data" => $pengalaman,
+            "back_url" => $backUrl
         ]);
     }
 
@@ -193,14 +220,25 @@ class SuperAdminController extends Controller
         ]);
         $vdata['pelamar_id'] = $request->pelamar_id;
         $pengalaman->update($vdata);
-        return back();
+
+        $pelamar = Pelamar::find($request->pelamar_id);
+        if ($pelamar && $pelamar->kategori === 'kandidat aktif') {
+            return redirect('/dashboard/superadmin/pelamar/edit/kandidat/' . $pelamar->id);
+        }
+        return redirect('/dashboard/superadmin/pelamar/edit/non_kandidat/' . $request->pelamar_id);
     }
 
     public function edit_skill(Skill $skill)
     {
+        $pelamar = Pelamar::find($skill->pelamar_id);
+        $backUrl = $pelamar && $pelamar->kategori === 'kandidat aktif'
+            ? '/dashboard/superadmin/pelamar/edit/kandidat/' . $pelamar->id
+            : '/dashboard/superadmin/pelamar/edit/non_kandidat/' . $pelamar->id;
+
         return view('Super-Admin.Pelamar.edit-kandidat.edit-skill', [
             "title" => 'edit Skill',
-            "data" => $skill
+            "data" => $skill,
+            "back_url" => $backUrl
         ]);
     }
 
@@ -213,7 +251,11 @@ class SuperAdminController extends Controller
         $vData['pelamar_id'] = $skill->pelamar_id;
         $skill->update($vData);
 
-        return back();
+        $pelamar = Pelamar::find($skill->pelamar_id);
+        if ($pelamar && $pelamar->kategori === 'kandidat aktif') {
+            return redirect('/dashboard/superadmin/pelamar/edit/kandidat/' . $pelamar->id);
+        }
+        return redirect('/dashboard/superadmin/pelamar/edit/non_kandidat/' . $skill->pelamar_id);
     }
 
     public function delete_user(User $user)

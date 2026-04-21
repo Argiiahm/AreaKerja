@@ -45,9 +45,11 @@
                     </div>
 
                     <!-- Button -->
-                    <div class="pt-4">
+                    <div class="flex justify-end gap-3 pt-4">
+                        <a href="{{ $back_url }}"
+                            class="px-6 py-3 border border-gray-300 text-gray-600 font-medium rounded-xl text-sm text-center hover:bg-gray-50 transition duration-200">Kembali</a>
                         <button type="submit"
-                            class="w-full bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-3 rounded-xl transition duration-200 shadow-sm">
+                            class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-xl transition duration-200 shadow-sm">
                             Simpan Perubahan
                         </button>
                     </div>

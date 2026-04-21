@@ -44,8 +44,12 @@
                         class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
                         placeholder="deskripsi" value="{{ old('deskripsi', $Data->deskripsi) }}"></input>
                 </div>
-                <button type="submit"
-                    class="w-full text-white bg-orange-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Simpan</button>
+                <div class="flex justify-end gap-3 pt-2">
+                    <a href="{{ $back_url }}"
+                        class="px-6 py-2.5 border border-gray-300 text-gray-600 font-medium rounded-lg text-sm text-center hover:bg-gray-50 transition">Kembali</a>
+                    <button type="submit"
+                        class="px-6 py-2.5 text-white bg-orange-500 font-medium rounded-lg text-sm text-center hover:bg-orange-600 transition">Simpan</button>
+                </div>
             </form>
         </div>
 
