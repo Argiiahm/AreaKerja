@@ -258,12 +258,6 @@ class SuperAdminController extends Controller
         return redirect('/dashboard/superadmin/pelamar/edit/non_kandidat/' . $skill->pelamar_id);
     }
 
-    public function delete_user(User $user)
-    {
-        $user->delete();
-        return redirect('/dashboard/superadmin/pelamar');
-    }
-
     public function kandidat_create(Request $request)
     {
         $validasi_data = $request->validate([
@@ -1595,6 +1589,15 @@ class SuperAdminController extends Controller
     }
     public function akun_delete(User $user)
     {
+        $pelamar = Pelamar::where('user_id', $user->id)->first();
+
+        if ($pelamar->img_profile && Storage::exists('public/' . $pelamar->img_profile)) {
+            Storage::delete('public/' . $pelamar->img_profile);
+        }
+
+        $pelamar->img_profile = null;
+        $pelamar->save();
+
         $user->delete();
         return redirect('/dashboard/superadmin/akun')->with('success', 'berhasil');
     }

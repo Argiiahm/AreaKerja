@@ -162,7 +162,6 @@ Route::middleware(['status'])->group(function () {
     Route::put('/update/superadmin/kandidat/pengalaman/{pengalaman:id}', [SuperAdminController::class, 'update_pengalaman'])->middleware('superadmin');
     Route::get('/edit/superadmin/kandidat/skill/{skill:id}', [SuperAdminController::class, 'edit_skill'])->middleware('superadmin');
     Route::put('/update/superadmin/kandidat/skill/{skill:id}', [SuperAdminController::class, 'update_skill'])->middleware('superadmin');
-    Route::delete('/dashboard/superadmin/hapus/user/pelamar/{user:id}', [SuperAdminController::class, 'delete_user'])->middleware('superadmin');
 
     //View, Add Dan Edit Kandidat - SuperAdmin
     Route::get('/dashboard/superadmin/kandidat_view/{pelamar:id}', [SuperAdminController::class, 'kandidat_view'])->middleware('superadmin');
