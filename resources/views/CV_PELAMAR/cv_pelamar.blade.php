@@ -1,6 +1,6 @@
   <div class="mt-10">
       <div class="max-w-screen-md mx-auto p-4 md:p-10">
-          <div class="flex flex-col md:flex-row items-center md:items-start md:justify-between gap-6 border-b pb-6">
+          <div class="flex flex-col md:flex-row items-center md:items-start md:justify-between gap-6 border-b border-b-gray-200 pb-6">
               <div class="flex flex-col md:flex-row items-center md:items-start gap-6 text-center md:text-left">
                   @if (!empty($pdf))
                       <img src="{{ public_path('storage/' . $Data->img_profile) }}" alt="Profile"

@@ -22,115 +22,12 @@
     @vite('resources/css/app.css')
 
     <style>
-        body {
-            background: #f1f5f9;
-            font-family: 'Inter', sans-serif;
-        }
-
+        /* TRIX EDITOR - Hide file-tools button */
         trix-toolbar [data-trix-button-group="file-tools"] {
             display: none;
         }
 
-        /* SIDEBAR */
-        aside {
-            background: #0f172a;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        aside a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            margin: 4px 12px;
-            border-radius: 12px;
-            transition: 0.25s;
-            color: #cbd5f5;
-        }
-
-        aside a:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: white;
-        }
-
-        aside a.active {
-            background: linear-gradient(135deg, #f97316, #fb923c);
-            color: white;
-            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
-        }
-
-        aside i {
-            font-size: 18px;
-        }
-
-        aside p {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: #64748b;
-            margin: 16px 20px 6px;
-        }
-
-        /* TOPBAR */
-        .topbar {
-            background: white;
-            padding: 16px 20px;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-        }
-
-        /* PROFILE */
-        .profile-box {
-            background: white;
-            padding: 8px 12px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .profile-box img {
-            width: 38px;
-            height: 38px;
-            border-radius: 999px;
-        }
-
-        /* NOTIF */
-        #notif {
-            border-radius: 14px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        #notif ul li:hover {
-            background: #f8fafc;
-        }
-
-        /* MODAL IMAGE */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 12px;
-        }
-
-        .profile-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 999px;
-            object-fit: cover;
-            cursor: pointer;
-        }
-
-        /* SCROLL */
+        /* SCROLLBAR */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -142,7 +39,7 @@
     </style>
 </head>
 
-<body>
+<body class="bg-slate-100 font-sans">
 
     <!-- MOBILE BUTTON -->
     <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" class="p-2 m-3 sm:hidden">
@@ -150,7 +47,8 @@
     </button>
 
     <!-- SIDEBAR -->
-    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen flex flex-col justify-between">
+    <aside id="logo-sidebar"
+        class="fixed top-0 left-0 z-40 w-64 h-screen flex flex-col justify-between bg-slate-900 border-r border-gray-800">
 
         <div>
 
@@ -167,22 +65,20 @@
                     <div class="relative group">
 
                         <!-- LABEL FLOAT -->
-                        <span class="absolute -top-2 left-3 bg-[#0f172a] px-1 text-[10px] text-gray-400">
+                        <span class="absolute -top-2 left-3 bg-slate-900 px-1 text-[10px] text-gray-400">
                             Pilih Provinsi
                         </span>
 
                         <!-- SELECT -->
-                        <select name="provinsi"
-                            class="w-full pl-10 pr-10 py-3 rounded-2xl text-sm 
-                       bg-[#020617] text-gray-200
-                       border border-gray-700 
-                       shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]
+                        <select name="provinsi" class="w-full pl-10 pr-10 py-3 rounded-2xl text-sm
+                       bg-gray-950 text-gray-200
+                       border border-gray-700
+                       shadow-inner shadow-gray-900
                        focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400
                        transition-all duration-200 appearance-none cursor-pointer"
                             onchange="document.getElementById('formKota').submit()">
                             @foreach ($Provinsi as $p)
-                                <option value="{{ $p->name }}"
-                                    {{ request('provinsi', 'DI YOGYAKARTA') == $p->name ? 'selected' : '' }}>
+                                <option value="{{ $p->name }}" {{ request('provinsi', 'DI YOGYAKARTA') == $p->name ? 'selected' : '' }}>
                                     {{ $p->name }}
                                 </option>
                             @endforeach
@@ -192,36 +88,48 @@
             </div>
 
             <!-- MENU -->
-            <p>Menu</p>
+            <p class="text-xs uppercase text-slate-500 mt-4 mx-5 mb-1.5">Menu</p>
 
-            <a href="/dashboard/admin" class="{{ Request()->is('dashboard/admin') ? 'active' : '' }}">
-                <i class="ph ph-squares-four"></i> Dashboard
+            <a href="/dashboard/admin"
+                class="flex items-center gap-3 py-2.5 px-3 mx-3 rounded-xl transition-all duration-250 text-slate-300 hover:bg-white/10 hover:text-white
+                {{ Request()->is('dashboard/admin') ? 'bg-gradient-to-br from-orange-500 to-orange-400 text-white shadow-lg shadow-orange-500/40' : '' }}">
+                <i class="ph ph-squares-four text-lg"></i> Dashboard
             </a>
 
-            <a href="/dashboard/admin/profile" class="{{ Request()->is('dashboard/admin/profile') ? 'active' : '' }}">
-                <i class="ph ph-user"></i> Profile
+            <a href="/dashboard/admin/profile"
+                class="flex items-center gap-3 py-2.5 px-3 mx-3 rounded-xl transition-all duration-250 text-slate-300 hover:bg-white/10 hover:text-white
+                {{ Request()->is('dashboard/admin/profile') ? 'bg-gradient-to-br from-orange-500 to-orange-400 text-white shadow-lg shadow-orange-500/40' : '' }}">
+                <i class="ph ph-user text-lg"></i> Profile
             </a>
 
-            <a href="/dashboard/admin/pelamar" class="{{ Request()->is('dashboard/admin/pelamar') ? 'active' : '' }}">
-                <i class="ph ph-users"></i> Pelamar
+            <a href="/dashboard/admin/pelamar"
+                class="flex items-center gap-3 py-2.5 px-3 mx-3 rounded-xl transition-all duration-250 text-slate-300 hover:bg-white/10 hover:text-white
+                {{ Request()->is('dashboard/admin/pelamar') ? 'bg-gradient-to-br from-orange-500 to-orange-400 text-white shadow-lg shadow-orange-500/40' : '' }}">
+                <i class="ph ph-users text-lg"></i> Pelamar
             </a>
 
             <a href="/dashboard/admin/perusahaan"
-                class="{{ Request()->is('dashboard/admin/perusahaan') ? 'active' : '' }}">
-                <i class="ph ph-buildings"></i> Perusahaan
+                class="flex items-center gap-3 py-2.5 px-3 mx-3 rounded-xl transition-all duration-250 text-slate-300 hover:bg-white/10 hover:text-white
+                {{ Request()->is('dashboard/admin/perusahaan') ? 'bg-gradient-to-br from-orange-500 to-orange-400 text-white shadow-lg shadow-orange-500/40' : '' }}">
+                <i class="ph ph-buildings text-lg"></i> Perusahaan
             </a>
 
-            <a href="/dashboard/admin/finance" class="{{ Request()->is('dashboard/admin/finance') ? 'active' : '' }}">
-                <i class="ph ph-wallet"></i> Finance
+            <a href="/dashboard/admin/finance"
+                class="flex items-center gap-3 py-2.5 px-3 mx-3 rounded-xl transition-all duration-250 text-slate-300 hover:bg-white/10 hover:text-white
+                {{ Request()->is('dashboard/admin/finance') ? 'bg-gradient-to-br from-orange-500 to-orange-400 text-white shadow-lg shadow-orange-500/40' : '' }}">
+                <i class="ph ph-wallet text-lg"></i> Finance
             </a>
 
             <a href="/dashboard/admin/tipskerja"
-                class="{{ Request()->is('dashboard/admin/tipskerja') ? 'active' : '' }}">
-                <i class="ph ph-newspaper"></i> Tips Kerja
+                class="flex items-center gap-3 py-2.5 px-3 mx-3 rounded-xl transition-all duration-250 text-slate-300 hover:bg-white/10 hover:text-white
+                {{ Request()->is('dashboard/admin/tipskerja') ? 'bg-gradient-to-br from-orange-500 to-orange-400 text-white shadow-lg shadow-orange-500/40' : '' }}">
+                <i class="ph ph-newspaper text-lg"></i> Tips Kerja
             </a>
 
-            <a href="/dashboard/admin/event" class="{{ Request()->is('dashboard/admin/event') ? 'active' : '' }}">
-                <i class="ph ph-calendar"></i> Event
+            <a href="/dashboard/admin/event"
+                class="flex items-center gap-3 py-2.5 px-3 mx-3 rounded-xl transition-all duration-250 text-slate-300 hover:bg-white/10 hover:text-white
+                {{ Request()->is('dashboard/admin/event') ? 'bg-gradient-to-br from-orange-500 to-orange-400 text-white shadow-lg shadow-orange-500/40' : '' }}">
+                <i class="ph ph-calendar text-lg"></i> Event
             </a>
 
         </div>
@@ -242,20 +150,15 @@
     <!-- CONTENT -->
     <div class="p-4 sm:ml-64">
 
-        <div class="topbar flex justify-between items-center mb-6">
+        <div class="topbar flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-md">
 
             <h1 class="text-xl font-bold">{{ $title }}</h1>
 
             <div class="flex items-center gap-4">
-
-                <!-- NOTIF -->
-                <button id="notifikasi">
-                    <i class="ph ph-bell text-xl"></i>
-                </button>
-
                 <!-- PROFILE -->
-                <div class="profile-box">
-                    <img src="https://ui-avatars.com/api/?name={{ Auth::user()->username }}">
+                <div class="profile-box bg-white p-2 px-3 rounded-xl shadow-sm flex items-center gap-2.5">
+                    <img src="https://ui-avatars.com/api/?name={{ Auth::user()->username }}"
+                        class="w-10 h-10 rounded-full object-cover">
                     <div>
                         <p class="text-sm font-semibold">{{ Auth::user()->username }}</p>
                         <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>

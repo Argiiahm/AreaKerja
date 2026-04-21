@@ -1,31 +1,59 @@
 @extends('Super-Admin.layouts.index')
-@section('super_admin-content')
-    <section class="pt-40 mx-10">
-        <div class=" mx-auto bg-white p-6">
-            <h2 class="text-xl font-semibold text-gray-800 border-b-2 border-orange-500 pb-1 mb-6">
-                Edit Skill
-            </h2>
-            <form class="space-y-4" action="/update/superadmin/kandidat/skill/{{ $data->id }}" method="POST">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="pelamar_id" value="{{ $data->pelamar_id ?? '' }}">
-                <div>
-                    <label for="skill" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Skill</label>
-                    <input type="text" name="skill" id="skill"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5" placeholder="skill"
-                        value="{{ $data->skill }}">
-                </div>
-                <div>
-                    <label for="experience_level"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Experience Level</label>
-                    <input type="text" name="experience_level" id="experience_level"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5"
-                        placeholder="experience_level" value="{{ $data->experience_level }}">
-                </div>
-                <button type="submit"
-                    class="w-full text-white bg-orange-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>
-            </form>
-        </div>
 
+@section('super_admin-content')
+    <section class="min-h-screen bg-gray-50 pt-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Card -->
+            <div class="p-8">
+
+                <!-- Header -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-semibold text-gray-800">
+                        Edit Skill
+                    </h2>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Update skill dan level pengalaman kandidat
+                    </p>
+                    <div class="w-12 h-1 bg-orange-500 rounded-full mt-3"></div>
+                </div>
+
+                <!-- Form -->
+                <form class="space-y-6" action="/update/superadmin/kandidat/skill/{{ $data->id }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <input type="hidden" name="pelamar_id" value="{{ $data->pelamar_id ?? '' }}">
+
+                    <!-- Skill -->
+                    <div>
+                        <label for="skill" class="block text-sm font-medium text-gray-700 mb-2">
+                            Skill
+                        </label>
+                        <input type="text" name="skill" id="skill" value="{{ $data->skill }}"
+                            placeholder="Contoh: Laravel, React, UI Design"
+                            class="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition">
+                    </div>
+
+                    <!-- Experience -->
+                    <div>
+                        <label for="experience_level" class="block text-sm font-medium text-gray-700 mb-2">
+                            Experience Level
+                        </label>
+                        <input type="text" name="experience_level" id="experience_level"
+                            value="{{ $data->experience_level }}" placeholder="Contoh: Beginner / Intermediate / Expert"
+                            class="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition">
+                    </div>
+
+                    <!-- Button -->
+                    <div class="pt-4">
+                        <button type="submit"
+                            class="w-full bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-3 rounded-xl transition duration-200 shadow-sm">
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </section>
 @endsection

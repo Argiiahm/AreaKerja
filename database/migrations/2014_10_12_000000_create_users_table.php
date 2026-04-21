@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role',['superadmin','admin','finance','perusahaan','pelamar']);
+            $table->enum('role',['superadmin','admin','finance','perusahaan','pelamar'])->default('pelamar');
             $table->tinyInteger('verified')->default(1);
             $table->string('alasan_freeze_akun')->nullable();
             $table->boolean('status')->default(0);

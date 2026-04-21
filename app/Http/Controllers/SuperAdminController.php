@@ -219,26 +219,25 @@ class SuperAdminController extends Controller
     public function delete_user(User $user)
     {
         $user->delete();
-        return back()->with('success', 'akun berhasil di hapus');
+        return redirect('/dashboard/superadmin/pelamar');
     }
 
     public function kandidat_create(Request $request)
     {
         $validasi_data = $request->validate([
-            "username" => "required",
-            "email" => "required|email",
-            "password" => "required",
-            "role" => "required"
+            "username" => "required|unique:users,username",
+            "email" => "required|email|unique:users,email",
+            "password" => "required|min:8",
         ]);
         $validasi_data['password'] = Hash::make($request->password);
         $user = User::create($validasi_data);
 
         $validasi_dataPelamar = $request->validate([
-            "nama_pelamar" => "required",
-            "telepon_pelamar" => "required",
-            "gender" => "required",
+            "nama_pelamar" => "required|string|max:255",
+            "telepon_pelamar" => "required|string|max:20",
+            "gender" => "required|in:laki-laki,perempuan",
             "kategori" => "required",
-            "img_profile" => "nullable|image|mimes:jpg,jpeg,png"
+            "img_profile" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
         ]);
 
         $imgPath = null;
@@ -248,14 +247,10 @@ class SuperAdminController extends Controller
 
         $validasi_dataPelamar['img_profile'] = $imgPath;
 
-        // dd($validasi_dataPelamar);
 
+        $user->pelamars()->create($validasi_dataPelamar);
 
-        $pelamar = $user->pelamars()->create($validasi_dataPelamar);
-
-        session(['pelamar_id' => $pelamar->id]);
-
-        return redirect('/dashboard/superadmin/pelamar/add/kandidat');
+        return redirect('/dashboard/superadmin/pelamar');
     }
 
 
@@ -263,7 +258,11 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Pelamar.Kandidat.edit_kandidat_super_admin', [
             "title" => "Edit Kandidat",
-            "Data" => $pelamar
+            "Data" => $pelamar,
+            "Provinsi" => Provinsi::all(),
+            "Kabupaten" => Kabupaten::all(),
+            "Daerah" => Daerah::all()
+
         ]);
     }
 
@@ -280,9 +279,9 @@ class SuperAdminController extends Controller
         $user = User::findOrFail($pelamar->users->id);
 
         $validasi_data = $request->validate([
-            "username" => "required",
-            "email" => "required|email",
-            "password" => "nullable",
+            "username" => "required|string|max:255|unique:users,username," . $user->id,
+            "email" => "required|email|unique:users,email," . $user->id,
+            "password" => "nullable|min:8",
             "role" => "required"
         ]);
 
@@ -295,10 +294,10 @@ class SuperAdminController extends Controller
         $user->update($validasi_data);
 
         $validasi_dataPelamar = $request->validate([
-            "nama_pelamar" => "required",
-            "telepon_pelamar" => "required",
-            "gender" => "required",
-            "img_profile" => "nullable"
+            "nama_pelamar" => "required|string|max:255",
+            "telepon_pelamar" => "required|string|max:20",
+            "gender" => "required|in:laki-laki,perempuan",
+            "img_profile" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
         ]);
 
         if ($request->hasFile('img_profile')) {
@@ -313,7 +312,7 @@ class SuperAdminController extends Controller
         }
 
         $pelamar->update($validasi_dataPelamar);
-        return back();
+        return redirect('/dashboard/superadmin/pelamar');
     }
 
     //Bagian NON KANDIDAT
@@ -394,20 +393,20 @@ class SuperAdminController extends Controller
     public function create_non_kandidat(Request $request)
     {
         $validasi_data = $request->validate([
-            "username" => "required",
-            "email" => "required|email",
-            "password" => "required",
-            "role" => "required"
+            "username" => "required|string|max:255|unique:users,username",
+            "email" => "required|email|unique:users,email",
+            "password" => "required|min:8",
         ]);
 
         $validasi_data['password'] = Hash::make($request->password);
         $user = User::create($validasi_data);
 
         $validasi_dataPelamar = $request->validate([
-            "nama_pelamar" => "required",
-            "telepon_pelamar" => "required",
-            "gender" => "required",
-            "img_profile" => "nullable"
+            "nama_pelamar" => "required|string|max:255",
+            "telepon_pelamar" => "required|string|max:20",
+            "gender" => "required|in:laki-laki,perempuan",
+            "img_profile" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
+            "kategori"    =>  "required"
         ]);
 
         $imgPath = null;
@@ -417,19 +416,22 @@ class SuperAdminController extends Controller
 
         $validasi_dataPelamar['img_profile'] = $imgPath;
 
-        $pelamar = $user->pelamars()->create($validasi_dataPelamar);
-        // dd($pelamar->id);
-        session(['pelamar_id' => $pelamar->id]);
-        return redirect('/dashboard/superadmin/pelamar/add/non_kandidat');
+        $user->pelamars()->create($validasi_dataPelamar);
+
+        return redirect('/dashboard/superadmin/pelamar');
     }
 
 
 
     public function edit_non_kandidat(Pelamar $pelamar)
     {
+        $pelamar->load(['users', 'alamat_pelamars', 'organisasi', 'riwayat_pendidikan', 'pengalaman_kerja', 'skill']);
         return view('Super-Admin.Pelamar.Non_kandidat.edit_non_kandidat_super_admin', [
             "title" => "Edit Non Kandidat",
-            "Data" => $pelamar
+            "Data" => $pelamar,
+            "Provinsi" => Provinsi::all(),
+            "Kabupaten" => Kabupaten::all(),
+            "Daerah" => Daerah::all()
         ]);
     }
 
@@ -439,9 +441,9 @@ class SuperAdminController extends Controller
         $user = User::findOrFail($pelamar->users->id);
 
         $validasi_data = $request->validate([
-            "username" => "required",
-            "email" => "required|email",
-            "password" => "nullable",
+            "username" => "required|string|max:255|unique:users,username," . $user->id,
+            "email" => "required|email|unique:users,email," . $user->id,
+            "password" => "nullable|min:8",
             "role" => "required"
         ]);
 
@@ -454,10 +456,10 @@ class SuperAdminController extends Controller
         $user->update($validasi_data);
 
         $validasi_dataPelamar = $request->validate([
-            "nama_pelamar" => "required",
-            "telepon_pelamar" => "required",
-            "gender" => "required",
-            "img_profile" => "nullable"
+            "nama_pelamar" => "required|string|max:255",
+            "telepon_pelamar" => "required|string|max:20",
+            "gender" => "required|in:laki-laki,perempuan",
+            "img_profile" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
         ]);
 
         if ($request->hasFile('img_profile')) {
@@ -556,38 +558,30 @@ class SuperAdminController extends Controller
         return back();
     }
 
-
-
-
     //Bagian Calon Kandidat
     public function add_calon_kandidat()
     {
         return view('Super-Admin.Pelamar.Calon_kandidat.add_kandidat_super_admin', [
             "title" => "Edit Calon Kandidat",
-            "pelamarList" => Pelamar::with('users')->get(),
-            "Divisi" => Divisi::all()
+            "pelamarList" => Pelamar::where('kategori', 'calon kandidat')->with('users')->get(),
         ]);
     }
 
     public function update_calon_kandidat(Request $request, Pelamar $pelamar)
     {
-        if ($request->filled('kategori')) {
-            $pelamar->kategori = $request->kategori;
-        }
+        $request->validate([
+            'kategori' => 'required|string',
+            'mulai_pelatihan' => 'required|date',
+            'selesai_pelatihan' => 'required|date|after_or_equal:mulai_pelatihan',
+            'nama_pelamar' => 'required|string',
+        ]);
 
-        if ($request->filled('mulai_pelatihan')) {
-            $pelamar->mulai_pelatihan = $request->mulai_pelatihan;
-        }
-        if ($request->filled('divisi')) {
-            $pelamar->divisi = $request->divisi;
-        }
-
-        // if ($request->filled('selesai_pelatihan')) {
-        //     $pelamar->selesai_pelatihan = $request->selesai_pelatihan;
-        // }
+        $pelamar->kategori = $request->kategori;
+        $pelamar->mulai_pelatihan = $request->mulai_pelatihan;
+        $pelamar->selesai_pelatihan = $request->selesai_pelatihan;
 
         $pelamar->save();
-        return back();
+        return redirect('/dashboard/superadmin/pelamar')->with('success', 'Calon kandidat berhasil diupdate!');
     }
 
     public function view_calon_kandidat()
@@ -1002,7 +996,13 @@ class SuperAdminController extends Controller
     {
         return view('Super-Admin.Freeze-Akun.freeze_akun_superAdmin', [
             "title" => "Akun Freeze",
-            "Data" => User::with(['pelamars', 'perusahaan', 'admin', 'superadmins', 'finance'])->get()
+            "Data" => User::with([
+                'pelamars.alamat_pelamars',
+                'perusahaan.alamatperusahaan',
+                'admin',
+                'superadmins',
+                'finance'
+            ])->get()
         ]);
     }
 

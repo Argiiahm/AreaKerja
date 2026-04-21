@@ -1,7 +1,7 @@
 @extends('Super-Admin.layouts.index')
 @section('super_admin-content')
-    <section class="pt-40 mx-10">
-        <div class=" mx-auto bg-white p-6">
+    <section class="pt-10 mx-10">
+        <div class="mx-auto p-6">
             <h2 class="text-xl font-semibold text-gray-800 border-b-2 border-orange-500 pb-1 mb-6">
                 Edit Pendidikan
             </h2>

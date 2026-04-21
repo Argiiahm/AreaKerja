@@ -1,7 +1,7 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="mx-auto shadow-md rounded-xl p-8 border pl-10">
+    <div class="mx-auto shadow-md rounded-xl p-8 border border-gray-200 pl-10">
 
 
         <div class="flex items-start gap-6 mb-8">
@@ -132,12 +132,12 @@
 
 
         <div id="modalKonfirmasi-{{ $Data->id }}"
-            class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50">
+            class="fixed inset-0 hidden bg-black/65 flex items-center justify-center z-50">
             <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 w-[350px] text-center relative">
                 <div class="text-gray-600 text-5xl mb-3"><i class="ph ph-trash"></i></div>
                 <p class="text-gray-800 font-semibold mb-5">Yakin akan hapus data?</p>
                 <div class="flex justify-center space-x-4">
-                    <form action="dashboaod/supadmin./hapus/users/pelamar/{{ $Data->users->id }}" method="POST">
+                    <form action="/dashboard/superadmin/hapus/user/pelamar/{{ $Data->users->id }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
