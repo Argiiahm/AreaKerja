@@ -75,10 +75,10 @@
                 <div class="col-span-1 sm:col-span-2"> {{-- Adjusted span for responsiveness --}}
                     <label class="block text-sm font-medium text-gray-700 mb-1">Rentang Gaji (per bulan)</label>
                     <div class="flex items-center space-x-2">
-                        <input type="text" name="gaji_awal" placeholder="Minimum"
+                        <input type="number" name="gaji_awal" placeholder="Minimum"
                             class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-orange-500 focus:border-orange-500 text-gray-900 placeholder-gray-400 transition-colors duration-200">
                         <span class="text-gray-500">–</span>
-                        <input type="text" name="gaji_akhir" placeholder="Maksimum"
+                        <input type="number" name="gaji_akhir" placeholder="Maksimum"
                             class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-orange-500 focus:border-orange-500 text-gray-900 placeholder-gray-400 transition-colors duration-200">
                     </div>
                 </div>

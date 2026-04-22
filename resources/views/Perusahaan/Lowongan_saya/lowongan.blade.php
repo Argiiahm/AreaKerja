@@ -85,8 +85,8 @@
                                                 class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                                                 <span
                                                     class="inline-block px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md">
-                                                    Rp {{ number_format($d->gaji_awal, 0, ',', '.') }} - Rp
-                                                    {{ number_format($d->gaji_akhir, 0, ',', '.') }}
+                                                    Rp {{ number_format((float)$d->gaji_awal, 0, ',', '.') }} - Rp
+                                                    {{ number_format((float)$d->gaji_akhir, 0, ',', '.') }}
                                                 </span>
                                                 <span class="countdown text-red-600 text-sm font-medium"
                                                     data-expired="{{ $d->expired_date }}"></span>
@@ -123,8 +123,8 @@
                                                 class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                                                 <span
                                                     class="inline-block px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md">
-                                                    Rp {{ number_format($d->gaji_awal, 0, ',', '.') }} - Rp
-                                                    {{ number_format($d->gaji_akhir, 0, ',', '.') }}
+                                                    Rp {{ number_format((float)$d->gaji_awal, 0, ',', '.') }} - Rp
+                                                    {{ number_format((float)$d->gaji_akhir, 0, ',', '.') }}
                                                 </span>
                                                 <button type="button"
                                                     class="publish-btn bg-orange-500 px-6 py-2 rounded-md text-white hover:bg-orange-600 transition-colors duration-200 text-sm"
