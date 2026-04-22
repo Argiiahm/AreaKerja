@@ -15,9 +15,9 @@ class LowonganController extends Controller
 {
     public function index()
     {
-        $user = Auth::check() && Auth::user()->id;
-        $koin = CatatanCash::where('user_id', $user)->where('status', 'diterima')->get();
-        $totalKoin = CatatanCash::where('user_id', Auth::id())->where('status', 'diterima')->sum('total');
+        $user = Auth::user();
+        $koin = $user ? CatatanCash::where('user_id', $user->id)->where('status', 'diterima')->get() : collect();
+        $totalKoin = $user && $user->perusahaan ? $user->perusahaan->koin : 0;
 
         return view('pasang-lowongan', [
             "Data" => HargaKoin::all(),
@@ -81,11 +81,13 @@ class LowonganController extends Controller
         $user = Auth::user();
 
 
-        $totalSaldo = CatatanCash::where('user_id', $user->id)->sum('total');
+        $totalSaldo = $user->perusahaan->koin ?? 0;
 
         if ($totalSaldo < $request->total) {
             return back()->with('error', 'Saldo koin tidak mencukupi!');
         }
+
+        $user->perusahaan->decrement('koin', $request->total);
 
         $noref = "AK" . rand(1000000000, 9999999999);
         CatatanKoin::create([
@@ -96,24 +98,6 @@ class LowonganController extends Controller
             "sumber_dana" => "Koin-" . $user->username,
             "total" => $request->total,
         ]);
-
-
-        $sisaKurang = $request->total;
-        $cashRecords = CatatanCash::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
-
-        foreach ($cashRecords as $record) {
-            if ($sisaKurang <= 0)
-                break;
-
-            if ($record->total <= $sisaKurang) {
-                $sisaKurang -= $record->total;
-                $record->total = 0;
-            } else {
-                $record->total -= $sisaKurang;
-                $sisaKurang = 0;
-            }
-            $record->save();
-        }
 
 
         $lowongan = LowonganPerusahaan::find($request->id_lowongan);

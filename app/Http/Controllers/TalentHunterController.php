@@ -14,7 +14,7 @@ class TalentHunterController extends Controller
 {
     public function index()
     {
-        $totalKoin = CatatanCash::where('user_id', Auth::id())->where('status', 'diterima')->sum('total');
+        $totalKoin = Auth::check() && Auth::user()->perusahaan ? Auth::user()->perusahaan->koin : 0;
         $harga = HargaKoin::where('id', '4')->first();
         return view('talentHunter', [
             "totalKoin" => $totalKoin,
@@ -28,26 +28,12 @@ class TalentHunterController extends Controller
         $hargaKoin = HargaKoin::where('id', 4)->value('harga') ?? 0;
         $user = Auth::user();
 
-        $sisaKurang = $hargaKoin;
-        $cashRecords = CatatanCash::where('user_id', $user->id)
-            ->where('status', 'diterima')
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        foreach ($cashRecords as $record) {
-            if ($sisaKurang <= 0)
-                break;
-
-            if ($record->total <= $sisaKurang) {
-                $sisaKurang -= $record->total;
-                $record->total = 0;
-            } else {
-                $record->total -= $sisaKurang;
-                $sisaKurang = 0;
-            }
-
-            $record->save();
+        $totalKoin = $user->perusahaan->koin ?? 0;
+        if ($totalKoin < $hargaKoin) {
+            return back()->with('error', 'Saldo koin tidak mencukupi!');
         }
+
+        $user->perusahaan->decrement('koin', $hargaKoin);
 
         CatatanKoin::create([
             "user_id" => $user->id,

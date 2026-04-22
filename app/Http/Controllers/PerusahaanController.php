@@ -33,7 +33,7 @@ class PerusahaanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status', 'diterima')->sum('total');
+        $totalSaldo = $user->perusahaan->koin ?? 0;
 
         return view('Perusahaan.dashboard-perusahaan', [
             "data" => HargaPembayaran::all(),
@@ -533,7 +533,7 @@ class PerusahaanController extends Controller
         $user = Auth::user();
         $perusahaan = $user->perusahaan;
 
-        $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status', 'diterima')->sum('total');
+        $totalSaldo = $perusahaan->koin ?? 0;
         $lowongan = LowonganPerusahaan::where('perusahaan_id', $perusahaan->id)->get();
 
         $query = Pelamar::where('kategori', 'kandidat aktif');
@@ -581,9 +581,7 @@ class PerusahaanController extends Controller
 
         $user = Auth::user();
 
-        $totalSaldo = CatatanCash::where('user_id', $user->id)
-            ->where('status', 'diterima')
-            ->sum('total');
+        $totalSaldo = $user->perusahaan->koin ?? 0;
 
         $hargaKoin = HargaKoin::where('id', 7)->value('harga') ?? 0;
 
@@ -591,26 +589,7 @@ class PerusahaanController extends Controller
             return back()->with('error', 'Saldo koin tidak mencukupi untuk membeli kandidat!');
         }
 
-        $sisaKurang = $hargaKoin;
-        $cashRecords = CatatanCash::where('user_id', $user->id)
-            ->where('status', 'diterima')
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        foreach ($cashRecords as $record) {
-            if ($sisaKurang <= 0)
-                break;
-
-            if ($record->total <= $sisaKurang) {
-                $sisaKurang -= $record->total;
-                $record->total = 0;
-            } else {
-                $record->total -= $sisaKurang;
-                $sisaKurang = 0;
-            }
-
-            $record->save();
-        }
+        $user->perusahaan->decrement('koin', $hargaKoin);
 
         CatatanKoin::create([
             'user_id' => $user->id,
@@ -654,7 +633,7 @@ class PerusahaanController extends Controller
         $user = Auth::user();
         $sudahBeli = CatatanKoin::where('user_id', $user->id)->where('pesanan', 'Berlangganan')->first();
         $harga = HargaKoin::where('nama', 'Berlangganan')->first();
-        $totalSaldo = CatatanCash::where('user_id', $user->id)->where('status', 'diterima')->sum('total');
+        $totalSaldo = $user->perusahaan->koin ?? 0;
         return view('Perusahaan.Berlangganan.index', [
             "totalSaldo" => $totalSaldo,
             "harga" => $harga,
@@ -667,9 +646,7 @@ class PerusahaanController extends Controller
     {
         $user = Auth::user();
 
-        $totalSaldo = CatatanCash::where('user_id', $user->id)
-            ->where('status', 'diterima')
-            ->sum('total');
+        $totalSaldo = $user->perusahaan->koin ?? 0;
 
         $hargaKoin = HargaKoin::where('id', 6)->value('harga') ?? 0;
 
@@ -677,25 +654,7 @@ class PerusahaanController extends Controller
             return back()->with('error', 'Saldo koin tidak mencukupi untuk membeli kandidat!');
         }
 
-        $sisaKurang = $hargaKoin;
-        $cashRecords = CatatanCash::where('user_id', $user->id)
-            ->where('status', 'diterima')
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        foreach ($cashRecords as $record) {
-            if ($sisaKurang <= 0)
-                break;
-
-            if ($record->total <= $sisaKurang) {
-                $sisaKurang -= $record->total;
-                $record->total = 0;
-            } else {
-                $record->total -= $sisaKurang;
-                $sisaKurang = 0;
-            }
-            $record->save();
-        }
+        $user->perusahaan->decrement('koin', $hargaKoin);
 
         $noref = "AK" . rand(1000000000, 9999999999);
 

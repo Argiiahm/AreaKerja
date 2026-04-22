@@ -172,6 +172,7 @@ class AuthController extends Controller
         $telepon = preg_replace('/^62/', '0', $telepon);
 
         $validasi_perusahaan['nama_perusahaan']  = $request->username;
+        $validasi_perusahaan['koin']  = 400;
 
         // Create Perusahaan
         $user->perusahaan()->create($validasi_perusahaan);
