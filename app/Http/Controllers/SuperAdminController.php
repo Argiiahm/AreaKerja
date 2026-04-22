@@ -69,8 +69,8 @@ class SuperAdminController extends Controller
     public function profile_update(Request $request)
     {
         $vdataUser = $request->validate([
-            "username" => 'nullable|string',
-            "email" => 'nullable|email',
+            "username" => 'nullable|string|unique:users,username,' . Auth::user()->id,
+            "email" => 'nullable|email|unique:users,email,' . Auth::user()->id,
         ]);
 
         $vdata = $request->validate([
@@ -1638,11 +1638,11 @@ class SuperAdminController extends Controller
     {
         $request->validate([
             "password" => "required",
-            "password_new" => "required|min:6|confirmed",
+            "password_new" => "required|min:8|confirmed",
         ], [
             "password.required" => "Kata sandi lama wajib diisi",
             "password_new.required" => "Kata sandi baru wajib diisi",
-            "password_new.min" => "Kata sandi baru minimal 6 karakter",
+            "password_new.min" => "Kata sandi baru minimal 8 karakter",
             "password_new.confirmed" => "Kata sandi tidak sama",
         ]);
 

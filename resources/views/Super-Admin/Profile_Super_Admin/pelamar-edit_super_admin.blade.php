@@ -1,71 +1,48 @@
 @extends('Super-Admin.layouts.index')
 
 @section('super_admin-content')
-    <div class="p-6 mt-8 px-5 lg:px-20 md:px-5 border-2">
-        <h2 class="text-lg font-semibold mb-6">Edit Profile</h2>
+    <div class="p-6 mt-8 px-5 lg:px-20 md:px-5 border-2 border-gray-200 rounded-lg bg-white shadow-md space-y-5">
+        <h2 class="text-lg font-semibold mb-6 border-b border-gray-200 pb-3">Edit Profile</h2>
         <form action="/dashboard/superadmin/profile/update" method="POST" class="space-y-5" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <div class="flex items-center gap-4 mb-6">
-                <div class="flex items-center gap-4">
-                    <div class="modal" id="imgModal">
-                        <img id="modalImg" alt="Zoomed" class="w-40 h-40 sm:w-40 object-cover rounded-full">
-                    </div>
-                    @if (Auth::user()->superadmins->img_profile)
-                        <img id="previewImagesuperadmin" class="w-20 h-20 rounded-full object-cover border"
-                            src="{{ asset('storage/' . Auth::user()->superadmins->img_profile) }}" alt=""
-                            alt="Profile">
-                    @else
-                        <img id="previewImagesuperadmin" class="w-20 h-20 rounded-full object-cover border"
-                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->username) }}&background=random&color=fff&size=128"
-                            alt="" alt="Profile">
+                   @if ($errors->any())
+                        <div class="mb-6 p-4 bg-red-50 border border-red-300 rounded-lg">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="ph ph-warning-octagon text-red-500 text-2xl"></i>
+                                <h3 class="font-semibold text-red-700 text-lg">Terdapat kesalahan:</h3>
+                            </div>
+                            <ul class="list-disc list-inside text-sm text-red-600 space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
-                    <div>
-                        <h3 class="font-semibold text-lg">{{ Auth::user()->username }}</h3>
-                        <p class="text-gray-500 text-sm">{{ Auth::user()->email }}</p>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label
-                        class="flex items-center gap-1 bg-[#fa6601] hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm cursor-pointer">
-                        <i class="ph ph-upload-simple text-2xl"></i>
-                        <span class="text-white">Upload</span>
-                        <input type="file" id="fileInputsp" name="img_profile" accept="image/*" class="hidden">
-                    </label>
-
-                    <button form="hapus-profile" type="submit"
-                        class="flex items-center gap-1 border border-[#fa6601] text-[#fa6601] hover:bg-gray-100 px-4 py-2 rounded-md text-sm">
-                        <i class="ph ph-trash text-2xl"></i>
-                        <span>Remove</span>
-                    </button>
-                </div>
-            </div>
-
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Email</label>
                     <input type="email" name="email" value="{{ Auth::user()->email }}"
-                        class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Username</label>
                     <input type="text" name="username" value="{{ Auth::user()->username }}"
-                        class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 </div>
             </div>
 
             <div>
                 <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
                 <input type="text" name="nama_lengkap" value="{{ Auth::user()->superadmins->nama_lengkap }}"
-                    class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Provinsi</label>
-                    <select id="provinsi" name="provinsi" class="w-full border rounded-md p-2">
+                    <select id="provinsi" name="provinsi" class="w-full border border-gray-200 rounded-md p-2">
                         <option value="" disabled {{ !Auth::user()->superadmins->provinsi ? 'selected' : '' }}>Pilih
                             Provinsi</option>
                         @foreach ($Provinsi as $p)
@@ -79,7 +56,7 @@
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Kota/Kabupaten</label>
-                    <select id="kota" name="kota" class="w-full border rounded-md p-2">
+                    <select id="kota" name="kota" class="w-full border border-gray-200 rounded-md p-2">
                         <option value="" disabled {{ !Auth::user()->superadmins->kota ? 'selected' : '' }}>Pilih Kota /
                             Kabupaten</option>
                         @foreach ($Kabupaten as $k)
@@ -110,11 +87,11 @@
                     <label class="block text-sm font-medium mb-1">Desa</label>
                     @if (Auth::user()->superadmins->desa == null)
                         <input type="text" name="desa"
-                            class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                            class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300"
                             placeholder="Data masih Kosong" value="">
                     @else
                         <input type="text" name="desa"
-                            class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                            class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300"
                             value="{{ Auth::user()->superadmins->desa }}">
                     @endif
 
@@ -123,10 +100,10 @@
                     <label class="block text-sm font-medium mb-1">Kode Pos</label>
                     @if (Auth::user()->superadmins->kode_pos == null)
                         <input type="text" name="kode_pos" value="" placeholder="Data Kosong"
-                            class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                     @else
                         <input type="text" name="kode_pos" value="{{ Auth::user()->superadmins->kode_pos }}"
-                            class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                     @endif
                 </div>
             </div>
@@ -136,10 +113,10 @@
                 @if (Auth::user()->superadmins->detail_alamat == null)
                     <input type="text" name="detail_alamat" value=""
                         placeholder="Contoh: Jl. Perintis Kemerdekaan No. 11B, Gg. Cendrawasih"
-                        class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 @else
                     <input type="text" name="detail_alamat" value="{{ Auth::user()->superadmins->detail_alamat }}"
-                        class="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        class="w-full border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 @endif
             </div>
 
