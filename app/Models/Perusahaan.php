@@ -27,4 +27,32 @@ class Perusahaan extends Model
         return $this->hasMany(TalentHunter::class, 'perusahaan_id');
     }
 
+    public function getProfileCompletionPercentageAttribute()
+    {
+        $fields = [
+            'nama_perusahaan',
+            'jenis_perusahaan',
+            'website_perusahaan',
+            'telepon_perusahaan',
+            'visi',
+            'misi',
+            'img_profile',
+            'deskripsi'
+        ];
+
+        $completed = 0;
+        foreach ($fields as $field) {
+            if (!empty($this->$field)) {
+                $completed++;
+            }
+        }
+
+        $total = count($fields) + 1; // +1 for alamat
+        if ($this->alamatperusahaan()->exists()) {
+            $completed++;
+        }
+
+        return (int) round(($completed / $total) * 100);
+    }
+
 }

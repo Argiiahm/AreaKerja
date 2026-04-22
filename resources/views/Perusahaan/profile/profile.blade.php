@@ -19,6 +19,23 @@
                 </a>
             </div>
 
+            {{-- Progress Bar --}}
+            @php
+                $perusahaanCompletion = Auth::user()->perusahaan->profile_completion_percentage;
+            @endphp
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-8">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-sm font-bold text-slate-900">Kelengkapan Profile</h3>
+                    <span class="text-sm font-bold {{ $perusahaanCompletion == 100 ? 'text-emerald-500' : 'text-orange-500' }}">{{ $perusahaanCompletion }}%</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-2.5">
+                    <div class="h-2.5 rounded-full {{ $perusahaanCompletion == 100 ? 'bg-emerald-500' : 'bg-orange-500' }} transition-all" style="width: {{ $perusahaanCompletion }}%"></div>
+                </div>
+                @if($perusahaanCompletion < 100)
+                    <p class="text-xs text-slate-500 mt-2">Lengkapi profile Anda untuk dapat mengakses halaman dashboard utama.</p>
+                @endif
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-4 space-y-6">
                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">

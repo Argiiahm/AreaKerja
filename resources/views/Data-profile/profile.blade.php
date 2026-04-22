@@ -15,6 +15,24 @@
 
             <div
                 class="mt-6 bg-white border border-gray-100 p-8 sm:p-12 rounded-3xl mx-4 sm:mx-10 transition-all">
+
+                {{-- Progress Bar --}}
+                @php
+                    $pelamarCompletion = Auth::user()->pelamars->profile_completion_percentage;
+                @endphp
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-sm font-bold text-gray-800">Kelengkapan Profile</h3>
+                        <span class="text-sm font-bold {{ $pelamarCompletion == 100 ? 'text-emerald-500' : 'text-orange-500' }}">{{ $pelamarCompletion }}%</span>
+                    </div>
+                    <div class="w-full bg-gray-100 rounded-full h-3">
+                        <div class="h-3 rounded-full {{ $pelamarCompletion == 100 ? 'bg-emerald-500' : 'bg-orange-500' }} transition-all border outline-none" style="width: {{ $pelamarCompletion }}%"></div>
+                    </div>
+                    @if($pelamarCompletion < 100)
+                        <p class="text-xs text-gray-500 mt-2">Selesaikan pengisian profile Anda agar dapat mengakses halaman utama saat login.</p>
+                    @endif
+                </div>
+
                 <div class="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-14">
 
                     <div class="flex flex-col items-center group">

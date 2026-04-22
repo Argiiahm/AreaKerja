@@ -66,4 +66,32 @@ class Pelamar extends Model
     {
         return $this->hasOne(PembeliKandidat::class, 'pelamar_id');
     }
+
+    public function getProfileCompletionPercentageAttribute()
+    {
+        $fields = [
+            'nama_pelamar', 
+            'img_profile', 
+            'gender', 
+            'tanggal_lahir', 
+            'telepon_pelamar', 
+            'deskripsi_diri',
+            'gaji_minimal'
+        ];
+        
+        $completed = 0;
+        foreach ($fields as $field) {
+            if (!empty($this->$field)) {
+                $completed++;
+            }
+        }
+        
+        $total = count($fields) + 1; // +1 for alamat
+        
+        if ($this->alamat_pelamars()->exists()) {
+            $completed++;
+        }
+        
+        return (int) round(($completed / $total) * 100);
+    }
 }

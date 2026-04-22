@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use App\Models\CatatanCash;
 
 class AuthController extends Controller
 {
@@ -55,10 +56,10 @@ class AuthController extends Controller
         return match ($user->role) {
             'superadmin' => redirect('/dashboard/superadmin'),
             'admin' => redirect('/dashboard/admin'),
-            'pelamar' => redirect('/profile')
+            'pelamar' => redirect($user->pelamars->profile_completion_percentage == 100 ? '/' : '/profile')
                 ->with('show_event_modal', true)
                 ->with('latest_event', $latestEvent),
-            'perusahaan' => redirect('/dashboard/perusahaan/profile')
+            'perusahaan' => redirect($user->perusahaan->profile_completion_percentage == 100 ? '/dashboard/perusahaan' : '/dashboard/perusahaan/profile')
                 ->with('show_event_modal', true)
                 ->with('latest_event', $latestEvent),
             'finance' => redirect('/dashboard/finance'),
@@ -174,6 +175,17 @@ class AuthController extends Controller
 
         // Create Perusahaan
         $user->perusahaan()->create($validasi_perusahaan);
+
+        CatatanCash::create([
+            'user_id' => $user->id,
+            'no_referensi' => 'AK' . rand(1000000000, 9999999999),
+            'pesanan' => 'Bonus Pengguna Baru',
+            'dari' => 'Sistem Areakerja',
+            'sumber_dana' => 'Bonus',
+            'total' => 400,
+            'status' => 'diterima',
+            'expired_date' => now()->addYears(1)
+        ]);
 
         DB::commit();
         return back()->with('success', 'Akun Berhasil Dibuat');
