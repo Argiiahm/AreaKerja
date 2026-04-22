@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use App\Models\CatatanCash;
 
 class AuthController extends Controller
 {
@@ -80,7 +79,7 @@ class AuthController extends Controller
     {
         $validasi_data = $request->validate([
             "username" => "required|unique:users,username",
-            "email"    => "required|email|unique:users,email",
+            "email" => "required|email|unique:users,email",
             'password' => [
                 'required',
                 'string',
@@ -90,18 +89,18 @@ class AuthController extends Controller
                 'regex:/[0-9]/',
                 'regex:/[@$!%*#?&]/',
             ],
-            "role"     => "required",
+            "role" => "required",
             "telepon_pelamar" => ["required", "regex:/^(?:628|08)[0-9]+$/"],
         ], [
             "username.required" => "Username wajib diisi.",
-            "username.unique"   => "Username sudah digunakan.",
-            "email.required"    => "Email wajib diisi.",
-            "email.email"       => "Format email tidak valid.",
-            "email.unique"      => "Email sudah digunakan, coba yang lain.",
+            "username.unique" => "Username sudah digunakan.",
+            "email.required" => "Email wajib diisi.",
+            "email.email" => "Format email tidak valid.",
+            "email.unique" => "Email sudah digunakan, coba yang lain.",
             "password.required" => "Password wajib diisi.",
-            "password.min"       => "Password minimal 8 Karakter.",
+            "password.min" => "Password minimal 8 Karakter.",
             'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol.',
-            "role.required"     => "Role wajib diisi.",
+            "role.required" => "Role wajib diisi.",
             "telepon_pelamar.required" => "No. telepon wajib diisi.",
             "telepon_pelamar.regex" => "Nomor telepon harus diawali dengan 628, atau 08."
         ]);
@@ -130,7 +129,7 @@ class AuthController extends Controller
     {
         $validasi_user = $request->validate([
             "username" => "required|unique:users,username",
-            "email"    => "required|email|unique:users,email",
+            "email" => "required|email|unique:users,email",
             'password' => [
                 'required',
                 'string',
@@ -140,17 +139,17 @@ class AuthController extends Controller
                 'regex:/[0-9]/',
                 'regex:/[@$!%*#?&]/',
             ],
-            "role"     => "required"
+            "role" => "required"
         ], [
             "username.required" => "Username wajib diisi.",
-            "username.unique"   => "Username sudah digunakan.",
-            "email.required"    => "Email wajib diisi.",
-            "email.email"       => "Format email tidak valid.",
-            "email.unique"      => "Email sudah digunakan, coba yang lain.",
+            "username.unique" => "Username sudah digunakan.",
+            "email.required" => "Email wajib diisi.",
+            "email.email" => "Format email tidak valid.",
+            "email.unique" => "Email sudah digunakan, coba yang lain.",
             "password.required" => "Password wajib diisi.",
-            "password.min"      => "Password minimal 8 karakter.",
+            "password.min" => "Password minimal 8 karakter.",
             'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol.',
-            "role.required"     => "Role wajib diisi.",
+            "role.required" => "Role wajib diisi.",
         ]);
 
         DB::beginTransaction();
@@ -171,22 +170,11 @@ class AuthController extends Controller
         $telepon = preg_replace('/[^0-9\+]/', '', $validasi_perusahaan['telepon_perusahaan']);
         $telepon = preg_replace('/^62/', '0', $telepon);
 
-        $validasi_perusahaan['nama_perusahaan']  = $request->username;
-        $validasi_perusahaan['koin']  = 400;
+        $validasi_perusahaan['nama_perusahaan'] = $request->username;
+        $validasi_perusahaan['koin'] = 400;
 
         // Create Perusahaan
         $user->perusahaan()->create($validasi_perusahaan);
-
-        CatatanCash::create([
-            'user_id' => $user->id,
-            'no_referensi' => 'AK' . rand(1000000000, 9999999999),
-            'pesanan' => 'Bonus Pengguna Baru',
-            'dari' => 'Sistem Areakerja',
-            'sumber_dana' => 'Bonus',
-            'total' => 400,
-            'status' => 'diterima',
-            'expired_date' => now()->addYears(1)
-        ]);
 
         DB::commit();
         return back()->with('success', 'Akun Berhasil Dibuat');
@@ -201,7 +189,7 @@ class AuthController extends Controller
     public function sendOtp(Request $request)
     {
         $request->validate([
-            "email"   =>    "required|email"
+            "email" => "required|email"
         ]);
 
         $cek = User::where('email', $request->input('email'))->first();
@@ -210,13 +198,13 @@ class AuthController extends Controller
             return back()->with('error', 'Akun Tidak Tersedia!');
         }
 
-        $otp =  rand(100000, 999999);
+        $otp = rand(100000, 999999);
 
         DB::table('password_reset_tokens')->updateOrInsert(
-            ['email'  =>    $request->email],
+            ['email' => $request->email],
             [
-                'token'  =>   $otp,
-                'created_at'  =>  now()
+                'token' => $otp,
+                'created_at' => now()
             ]
         );
 

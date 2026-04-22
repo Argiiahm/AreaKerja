@@ -97,6 +97,7 @@
                             @else
                                 {{-- Non-Published Card --}}
                                 <div class="p-4 sm:p-6 bg-yellow-50 rounded-xl shadow-md border border-yellow-200">
+                                <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}">                                    
                                     <h3 class="font-semibold text-lg text-orange-600 mb-4">Lowongan Belum Dipublikasikan
                                     </h3>
                                     <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
@@ -132,6 +133,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
                             @endif
                         </div>

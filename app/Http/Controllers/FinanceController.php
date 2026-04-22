@@ -205,7 +205,7 @@ class FinanceController extends Controller
             }
         }
 
-        if ($status === 'diterima' && $data->total > 0 && $data->pesanan != 'Bonus Pengguna Baru') {
+        if ($status === 'diterima' && $data->total > 0) {
             $user = \App\Models\User::find($data->user_id);
             if ($user && $user->role === 'perusahaan' && $user->perusahaan) {
                 $user->perusahaan->increment('koin', $data->total);
