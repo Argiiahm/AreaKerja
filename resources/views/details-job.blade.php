@@ -86,8 +86,13 @@
                         </ul>
                     </div>
                     <p class="font-bold">Requirements</p>
+                    @php
+                        $syarats = is_array($Data->syarat_pekerjaan) ? $Data->syarat_pekerjaan : [$Data->syarat_pekerjaan];
+                    @endphp
                     <ul class="list-disc list-inside space-y-1 text-gray-600">
-                        <li>{{ $Data->syarat_pekerjaan }}</li>
+                        @foreach($syarats as $syarat)
+                            <li>{{ $syarat }}</li>
+                        @endforeach
                     </ul>
                 </div>
 

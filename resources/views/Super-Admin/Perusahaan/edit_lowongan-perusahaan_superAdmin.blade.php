@@ -57,37 +57,22 @@
                 </div>
 
                 <div class="">
-                    <div class="">
-                        <h3 class="font-semibold mb-3">Syarat Pekerjaan</h3>
-                        <div class="mb-4 flex gap-5">
-                            <div>
-                                <label class="block text-sm font-medium">Pendidikan <span
-                                        class="text-red-500">*</span></label>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold mb-3">Syarat Pekerjaan</h3>
-                                <div class="mb-4 flex gap-5">
-                                    <div>
-                                        <label class="block text-sm font-medium">Pendidikan <span
-                                                class="text-red-500">*</span></label>
-                                    </div>
-                                    <div>
-                                        <div class="flex flex-wrap gap-4 mt-2">
-                                            @foreach (['SD', 'SMP', 'SMA', 'SMK', 'S1', 'S2', 'S3'] as $edu)
-                                                <label class="flex items-center gap-2">
-                                                    <input type="radio" name="syarat_pekerjaan"
-                                                        value="{{ $edu }}"
-                                                        {{ $Data->syarat_pekerjaan == $edu ? 'checked' : '' }}
-                                                        class="appearance-none w-4 h-4 border-2 border-orange-500 rounded-full checked:bg-orange-500 checked:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                                    {{ $edu }}
-                                                </label>
-                                            @endforeach
-                                        </div>
-                                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-3">Syarat Pekerjaan <span class="text-red-500">*</span></label>
+                        @php
+                            $syarats = is_array($Data->syarat_pekerjaan) ? $Data->syarat_pekerjaan : [$Data->syarat_pekerjaan];
+                            if (empty($syarats) || $syarats[0] === null) $syarats = [''];
+                        @endphp
+                        <div id="syarat-pekerjaan-container">
+                            @foreach($syarats as $index => $syarat)
+                                <div class="flex items-center gap-2 mb-2 syarat-item">
+                                    <input type="text" name="syarat_pekerjaan[]" value="{{ $syarat }}" placeholder="Contoh: Minimal pendidikan SMA/SMK" required
+                                        class="w-full border border-gray-200 rounded-md px-3 py-2 focus:ring-orange-500 focus:border-orange-500">
+                                    <button type="button" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 {{ count($syarats) == 1 ? 'hidden' : '' }} hapus-syarat">Hapus</button>
                                 </div>
-                            </div>
-
+                            @endforeach
                         </div>
+                        <button type="button" id="tambah-syarat" class="mt-2 text-sm text-orange-500 font-semibold hover:text-orange-600">+ Tambah Syarat Pekerjaan</button>
                     </div>
                     <div>
                         <label class="block text-sm font-medium">Batas Lamaran <span class="text-red-500">*</span></label>
@@ -105,4 +90,43 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('syarat-pekerjaan-container');
+            const btnTambah = document.getElementById('tambah-syarat');
+
+            btnTambah.addEventListener('click', function() {
+                const items = container.querySelectorAll('.syarat-item');
+                const newItem = items[0].cloneNode(true);
+                newItem.querySelector('input').value = '';
+                newItem.querySelector('input').required = true;
+                newItem.querySelector('.hapus-syarat').classList.remove('hidden');
+                container.appendChild(newItem);
+                updateDeleteButtons();
+            });
+
+            container.addEventListener('click', function(e) {
+                if (e.target.classList.contains('hapus-syarat')) {
+                    const items = container.querySelectorAll('.syarat-item');
+                    if (items.length > 1) {
+                        e.target.closest('.syarat-item').remove();
+                    }
+                    updateDeleteButtons();
+                }
+            });
+
+            function updateDeleteButtons() {
+                const items = container.querySelectorAll('.syarat-item');
+                items.forEach((item, index) => {
+                    const btnHapus = item.querySelector('.hapus-syarat');
+                    if (items.length === 1) {
+                        btnHapus.classList.add('hidden');
+                    } else {
+                        btnHapus.classList.remove('hidden');
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

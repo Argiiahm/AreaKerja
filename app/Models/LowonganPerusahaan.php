@@ -10,6 +10,9 @@ class LowonganPerusahaan extends Model
     use HasFactory;
     protected $table = 'lowongan_perusahaans';
     protected $guarded = [];
+    protected $casts = [
+        'syarat_pekerjaan' => 'array'
+    ];
 
     public function perusahaan()
     {

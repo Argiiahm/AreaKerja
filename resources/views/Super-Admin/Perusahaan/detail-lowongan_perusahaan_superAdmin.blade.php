@@ -49,12 +49,19 @@
 
                 <div>
                     <h4 class="font-semibold">Syarat Pekerjaan</h4>
+                    @php
+                        $syarats = is_array($Data->syarat_pekerjaan) ? $Data->syarat_pekerjaan : [$Data->syarat_pekerjaan];
+                    @endphp
                     <ul class="list-disc list-inside">
-                        <li>Minimal pendidikan SMA/SMK</li>
-                        <li>Laki-laki/Perempuan</li>
-                        <li>Umur 18-30</li>
-                        <li>Batas lamaran hingga {{ $Data->batas_lamaran }}</li>
+                        @foreach($syarats as $syarat)
+                            <li>{{ $syarat }}</li>
+                        @endforeach
                     </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mt-4">Batas Lamaran</h4>
+                    <p>{{ $Data->batas_lamaran }}</p>
                 </div>
 
                 <div>

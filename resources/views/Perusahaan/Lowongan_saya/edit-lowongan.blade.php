@@ -100,19 +100,21 @@
             <div class="space-y-6 border-t border-gray-200 pt-6">
                 <h3 class="text-lg font-semibold text-orange-600">Syarat Pekerjaan & Lainnya</h3>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Jenjang Pendidikan Minimum</label>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-x-4 gap-y-2 mt-1">
-                        @foreach (['SD', 'SMP', 'SMA', 'SMK', 'D3', 'S1', 'S2', 'S3'] as $edu)
-                            <label class="flex items-center space-x-2 text-gray-800 cursor-pointer">
-                                <input type="radio" name="syarat_pekerjaan" value="{{ $edu }}"
-                                    {{ $data->syarat_pekerjaan == $edu ? 'checked' : '' }}
-                                    class="w-4 h-4 text-orange-500 focus:ring-orange-500 border-gray-300 accent-orange-500">
-                                <span>{{ $edu }}</span>
-                            </label>
-                        @endforeach
-                    </div>
+                @php
+                    $syarats = is_array($data->syarat_pekerjaan) ? $data->syarat_pekerjaan : [$data->syarat_pekerjaan];
+                    if (empty($syarats) || $syarats[0] === null) $syarats = [''];
+                @endphp
+                <div id="syarat-pekerjaan-container">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Syarat Pekerjaan</label>
+                    @foreach($syarats as $index => $syarat)
+                        <div class="flex items-center gap-2 mb-2 syarat-item">
+                            <input type="text" name="syarat_pekerjaan[]" value="{{ $syarat }}" placeholder="Contoh: Minimal pendidikan SMA/SMK" required
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-orange-500 focus:border-orange-500 text-gray-900 transition-colors duration-200">
+                            <button type="button" class="px-4 py-2 bg-rose-500 text-white rounded-lg hover:bg-rose-600 {{ count($syarats) == 1 ? 'hidden' : '' }} hapus-syarat"><i class="ph ph-trash"></i></button>
+                        </div>
+                    @endforeach
                 </div>
+                <button type="button" id="tambah-syarat" class="text-sm text-white bg-orange-500 px-4 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors">+ Tambah Syarat</button>
 
                 <div>
                     <label for="batas_lamaran" class="block text-sm font-medium text-gray-700 mb-1">Batas Akhir
@@ -136,4 +138,43 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('syarat-pekerjaan-container');
+            const btnTambah = document.getElementById('tambah-syarat');
+
+            btnTambah.addEventListener('click', function() {
+                const items = container.querySelectorAll('.syarat-item');
+                const newItem = items[0].cloneNode(true);
+                newItem.querySelector('input').value = '';
+                newItem.querySelector('input').required = true;
+                newItem.querySelector('.hapus-syarat').classList.remove('hidden');
+                container.appendChild(newItem);
+                updateDeleteButtons();
+            });
+
+            container.addEventListener('click', function(e) {
+                if (e.target.closest('.hapus-syarat')) {
+                    const items = container.querySelectorAll('.syarat-item');
+                    if (items.length > 1) {
+                        e.target.closest('.syarat-item').remove();
+                    }
+                    updateDeleteButtons();
+                }
+            });
+
+            function updateDeleteButtons() {
+                const items = container.querySelectorAll('.syarat-item');
+                items.forEach((item, index) => {
+                    const btnHapus = item.querySelector('.hapus-syarat');
+                    if (items.length === 1) {
+                        btnHapus.classList.add('hidden');
+                    } else {
+                        btnHapus.classList.remove('hidden');
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

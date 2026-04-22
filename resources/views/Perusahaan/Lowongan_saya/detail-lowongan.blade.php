@@ -83,7 +83,14 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-8 border-t border-slate-50">
                                 <div>
                                     <h4 class="text-xs font-bold text-slate-900 uppercase tracking-widest mb-4">Requirements</h4>
-                                    <p class="text-sm text-slate-500 leading-relaxed whitespace-pre-line">{{ $data->syarat_pekerjaan }}</p>
+                                    @php
+                                        $syarats = is_array($data->syarat_pekerjaan) ? $data->syarat_pekerjaan : [$data->syarat_pekerjaan];
+                                    @endphp
+                                    <ul class="list-disc pl-4 text-sm text-slate-500 leading-relaxed whitespace-pre-line">
+                                        @foreach($syarats as $syarat)
+                                            <li>{{ $syarat }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                                 <div>
                                     <h4 class="text-xs font-bold text-slate-900 uppercase tracking-widest mb-4">Responsibilities</h4>
