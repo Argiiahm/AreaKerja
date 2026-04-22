@@ -42,6 +42,20 @@
                 <form id="addForm" action="/dasboard/superadmin/create/pengguna" method="POST" class="p-8 space-y-8">
                     @csrf
 
+                    @if ($errors->any())
+                        <div class="mb-6 p-4 bg-red-50 border border-red-300 rounded-lg">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="ph ph-warning-octagon text-red-500 text-2xl"></i>
+                                <h3 class="font-semibold text-red-700 text-lg">Terdapat kesalahan:</h3>
+                            </div>
+                            <ul class="list-disc list-inside text-sm text-red-600 space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     {{-- Kredensial --}}
                     <div class="space-y-5">
                         <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 pb-2">
@@ -57,6 +71,7 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Email <span
                                         class="text-red-500">*</span></label>
                                 <input type="email" name="email" required placeholder="akun@example.com"
+                                    value="{{ old('email') }}"
                                     class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-900 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all placeholder-gray-400">
                             </div>
                         </div>
@@ -66,6 +81,7 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap / Username <span
                                         class="text-red-500">*</span></label>
                                 <input type="text" name="username" required placeholder="Masukkan nama"
+                                    value="{{ old('username') }}"
                                     class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-900 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all placeholder-gray-400">
                             </div>
                             <div>

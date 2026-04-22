@@ -52,13 +52,13 @@ Route::middleware(['status'])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/detail/job/{job:slug}', [HomeController::class, 'viewjob']);
 
-    Route::get('/lowongan/kategori/{kategori:id}',[HomeController::class, 'lowongan_kategori']);
+    Route::get('/lowongan/kategori/{kategori:id}', [HomeController::class, 'lowongan_kategori']);
 
-    Route::get('/transaksi/pelamar',[PelamarController::class, 'transaksi'])->middleware('auth');
+    Route::get('/transaksi/pelamar', [PelamarController::class, 'transaksi'])->middleware('auth');
 
     Route::get('/talenthunter', [TalentHunterController::class, 'index']);
-    Route::post('/beli/talenthunter',[TalentHunterController::class, 'beli'])->middleware('perusahaan');
-    Route::post('/form/talenthunter',[TalentHunterController::class, 'isi_form'])->middleware('perusahaan');
+    Route::post('/beli/talenthunter', [TalentHunterController::class, 'beli'])->middleware('perusahaan');
+    Route::post('/form/talenthunter', [TalentHunterController::class, 'isi_form'])->middleware('perusahaan');
 
 
     Route::get('/tipskerja', [TipskerjaController::class, 'index']);
@@ -74,7 +74,7 @@ Route::middleware(['status'])->group(function () {
     Route::put('/diterima/kandidat/{p:id}', [KandidatController::class, 'diterima_kandidat'])->middleware('auth');
     Route::put('/ditolak/kandidat/{p:id}', [KandidatController::class, 'ditolak_kandidat'])->middleware('auth');
     // End Route Landing Page
-    
+
     // CV
     Route::get('/cv/{pelamar:id}/unduh', [SuperAdminController::class, 'unduhCv'])->name('cv.unduh');
     Route::get('/cv/{pelamar:id}/preview', [SuperAdminController::class, 'cvPreview'])->name('cv.preview');
@@ -216,8 +216,8 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/finance', [SuperAdminController::class, 'finance'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/finance/edit/paketkoin', [SuperAdminController::class, 'finance_edit_paket_koin'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/finance/edit/paketpembayaran', [SuperAdminController::class, 'finance_edit_paket_pembayaran'])->middleware('superadmin');
-    Route::put('/dashboard/superadmin/update/harga/koin',[SuperAdminController::class, 'update_koin'])->middleware('superadmin');
-    Route::put('/dashboard/superadmin/update/harga/tunai',[SuperAdminController::class, 'update_tunai'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/update/harga/koin', [SuperAdminController::class, 'update_koin'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/update/harga/tunai', [SuperAdminController::class, 'update_tunai'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/finance/edit/laporan', [SuperAdminController::class, 'finance_laporan'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/finance/detail/laporan/penghasilan/{tanggal}', [SuperAdminController::class, 'catatan_laporan_transaksi_penghasilan'])->middleware('superadmin');
 
@@ -228,7 +228,6 @@ Route::middleware(['status'])->group(function () {
 
     Route::put('/dashboard/superadmin/unbanned/{user:id}', [SuperAdminController::class, 'unbanned'])->middleware('superadmin');
     Route::put('/dashboard/superadmin/banned/{user:id}', [SuperAdminController::class, 'banned'])->middleware('superadmin');
-    Route::delete('/dashboard/superadmin/hapus/{user:id}', [SuperAdminController::class, 'delete_akun'])->middleware('superadmin');
 
     // Tips Kerja - Super Admin
     Route::get('/dashboard/superadmin/tipskerja', [SuperAdminController::class, 'tipskerja'])->middleware('superadmin');
@@ -253,15 +252,15 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/superadmin/{user:id}/edit', [SuperAdminController::class, 'akun_edit'])->middleware('superadmin');
     Route::delete('/delete/akun/{user:id}', [SuperAdminController::class, 'akun_delete'])->middleware('superadmin');
 
-    Route::post('/dasboard/superadmin/create/pengguna',[SuperAdminController::class , 'create_pengguna'])->middleware('superadmin');
-    Route::put('/dasboard/superadmin/update/pengguna/{user:id}',[SuperAdminController::class , 'update_pengguna'])->middleware('superadmin');
+    Route::post('/dasboard/superadmin/create/pengguna', [SuperAdminController::class, 'create_pengguna'])->middleware('superadmin');
+    Route::put('/dasboard/superadmin/update/pengguna/{user:id}', [SuperAdminController::class, 'update_pengguna'])->middleware('superadmin');
 
     // Link & Header - Super Admin
     Route::get('/dashboard/superadmin/pengaturan_page', [SuperAdminController::class, 'pengaturan_page'])->middleware('superadmin');
     Route::post('/dashboard/superadmin', [SuperAdminController::class, 'pengaturan_page_c'])->middleware('superadmin');
     Route::get('/dashboard/superadmin/pengaturan', [SuperAdminController::class, 'pengaturan'])->middleware('superadmin');
 
-    Route::put('/dashboard/superadmin/pengaturan/change_password/{user:id}',[SuperAdminController::class, 'password_change'])->middleware('superadmin');
+    Route::put('/dashboard/superadmin/pengaturan/change_password/{user:id}', [SuperAdminController::class, 'password_change'])->middleware('superadmin');
 
 
     // Dashboard Admin
@@ -334,12 +333,12 @@ Route::middleware(['status'])->group(function () {
 
     //Berlangganan
     Route::get('/dashboard/perusahaan/berlangganan', [PerusahaanController::class, 'berlangganan'])->middleware('perusahaan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat'])->middleware('perusahaan','berlangganan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info'])->middleware('perusahaan','berlangganan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah', [PerusahaanController::class, 'kandidat_bermasalah'])->middleware('perusahaan','berlangganan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/nama', [PerusahaanController::class, 'kandidat_nama'])->middleware('perusahaan','berlangganan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/laporan', [PerusahaanController::class, 'kandidat_laporan'])->middleware('perusahaan','berlangganan');
-    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja'])->middleware('perusahaan','berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat', [PerusahaanController::class, 'berlangganan_kandidat'])->middleware('perusahaan', 'berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info', [PerusahaanController::class, 'kandidat_info'])->middleware('perusahaan', 'berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/bermasalah', [PerusahaanController::class, 'kandidat_bermasalah'])->middleware('perusahaan', 'berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/nama', [PerusahaanController::class, 'kandidat_nama'])->middleware('perusahaan', 'berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/laporan', [PerusahaanController::class, 'kandidat_laporan'])->middleware('perusahaan', 'berlangganan');
+    Route::get('/dashboard/perusahaan/berlangganan/kandidat/info/lapor/pekerja', [PerusahaanController::class, 'lapor_pekerja'])->middleware('perusahaan', 'berlangganan');
 
     //Event  Perusahaan
     Route::get('/dashboard/perusahaan/event', [PerusahaanController::class, 'halaman_event'])->middleware('perusahaan');
@@ -369,11 +368,11 @@ Route::middleware(['status'])->group(function () {
     Route::get('/dashboard/perusahaan/konfirmasi/lamaran/tolak/terkirim/{lowongan}', [PerusahaanController::class, 'konfirmasi_tolak_lamaran_terkirim'])->name(name: 'konfirmasi.lamaran.terkirim.tolak');
     Route::put('/dashboard/perusahaan/konfirmasi/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_status'])->middleware('perusahaan');
     Route::put('/dashboard/perusahaan/konfirmasi/tolak/{lowongan:id}', [PerusahaanController::class, 'konfirmasi_tolak_status'])->middleware('perusahaan');
-    
+
     Route::put('/detail/notif/read/{lowongan:id}', [HomeController::class, 'read_detail_notif']);
     Route::put('/detail/notif/read/perusahaan/{pembeli:id}', [PerusahaanController::class, 'read_detail_notif_perusahaan']);
 
     Route::post('/berlangganan/bayar', [PerusahaanController::class, 'berlangganan_bayar'])->middleware('perusahaan');
     Route::get('/dashboard/perusahaan/berlangganan/kirim/email', [PerusahaanController::class, 'berlangganan_send_email'])->middleware('perusahaan');
-    
+
 });

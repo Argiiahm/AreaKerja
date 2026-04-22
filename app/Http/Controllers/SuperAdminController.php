@@ -442,7 +442,7 @@ class SuperAdminController extends Controller
             "telepon_pelamar" => "required|string|max:20",
             "gender" => "required|in:laki-laki,perempuan",
             "img_profile" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
-            "kategori"    =>  "required"
+            "kategori" => "required"
         ]);
 
         $imgPath = null;
@@ -1055,13 +1055,6 @@ class SuperAdminController extends Controller
         return redirect('/dashboard/superadmin/freeze');
     }
 
-    public function delete_akun(User $user)
-    {
-        $user->delete();
-        return redirect('/dashboard/superadmin/freeze');
-    }
-
-
 
     public function freeze_detail(User $user)
     {
@@ -1342,9 +1335,9 @@ class SuperAdminController extends Controller
     public function create_pengguna(Request $request)
     {
         $validasiData = $request->validate([
-            "username" => "required",
-            "email" => "required",
-            "password" => "required",
+            "username" => "required|unique:users,username",
+            "email" => "required|email|unique:users,email",
+            "password" => "required|min:8",
             "role" => "required",
             "status" => "required|boolean",
             "provinsi" => "nullable",
@@ -1365,7 +1358,8 @@ class SuperAdminController extends Controller
 
         if ($user->role === "pelamar") {
             $pelamar = $user->pelamars()->create([
-                "nama_pelamar" => $validasiData['username']
+                "nama_pelamar" => $validasiData['username'],
+                "kategori" => "pelamar"
             ]);
 
             $pelamar->alamat_pelamars()->create([
@@ -1431,9 +1425,9 @@ class SuperAdminController extends Controller
         $roleLama = $user->role;
 
         $validasiData = $request->validate([
-            "username" => "required",
-            "email" => "required|email",
-            "password" => "nullable|min:6",
+            "username" => "required|unique:users,username," . $user->id,
+            "email" => "required|email|unique:users,email," . $user->id,
+            "password" => "nullable|min:8",
             "role" => "required",
             "status" => "required|boolean",
             "provinsi" => "nullable",
@@ -1486,7 +1480,7 @@ class SuperAdminController extends Controller
             case 'pelamar':
                 $pelamar = $user->pelamars()->firstOrCreate(
                     ['user_id' => $user->id],
-                    ['nama_pelamar' => $validasiData["username"]]
+                    ['nama_pelamar' => $validasiData["username"], 'kategori' => "pelamar"]
                 );
 
                 $pelamar->alamat_pelamars()->updateOrCreate(

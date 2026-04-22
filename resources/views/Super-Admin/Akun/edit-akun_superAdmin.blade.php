@@ -44,6 +44,20 @@
                     @csrf
                     @method('PUT')
 
+                    @if ($errors->any())
+                        <div class="mb-6 p-4 bg-red-50 border border-red-300 rounded-lg">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="ph ph-warning-octagon text-red-500 text-2xl"></i>
+                                <h3 class="font-semibold text-red-700 text-lg">Terdapat kesalahan:</h3>
+                            </div>
+                            <ul class="list-disc list-inside text-sm text-red-600 space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     {{-- Kredensial --}}
                     <div class="space-y-5">
                         <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 pb-2">
