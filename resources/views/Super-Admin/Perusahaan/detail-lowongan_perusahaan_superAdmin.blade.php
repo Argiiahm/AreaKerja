@@ -3,29 +3,26 @@
 @section('super_admin-content')
     <div class="mx-auto mt-10">
         <div class="p-6">
-            <div class="flex items-center justify-between border-b pb-4 mb-6 relative">
-                <div class="w-24 h-24 flex items-center justify-center rounded-md overflow-hidden">
-                    <img src="{{ asset('storage/' . $Data->perusahaan->img_profile) }}" alt="Logo" class="object-contain">
-                </div>
-                <h2 class="text-lg font-semibold absolute left-1/2 transform -translate-x-1/2">
-                    {{ $Data->nama }}
-                </h2>
-            </div>
-
-
             <div class="space-y-5 text-sm text-gray-800 leading-relaxed">
                 <div class="flex justify-between items-center">
                     <h3 class="font-semibold">Detail Lowongan</h3>
                     <div class="flex items-center gap-8">
-                        <button class="text-red-500 flex items-center gap-1">
-                            <i class="ph ph-trash"></i> Report Lowongan
-                        </button>
                         <button class="text-orange-500 flex items-center gap-1">
                             <a href="/dashboard/superadmin/perusahaan/lowongan/edit/{{ $Data->id }}">
                                 <i class="ph ph-pencil"></i> Edit Lowongan
                             </a>
                         </button>
                     </div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold">Nama Perusahaan</h4>
+                    <p>{{ $Data->perusahaan->nama_perusahaan ?? 'N/A' }}</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold">Nama Lowongan</h4>
+                    <p>{{ $Data->nama }}</p>
                 </div>
 
                 <div>
@@ -66,9 +63,9 @@
                 </div>
             </div>
 
-            <div class="flex flex-col items-center gap-3 mt-8">
+            <div class="flex items-center gap-3 mt-8">
                 @if ($Data->paket_id === null)
-                    <button type="button" class="bg-orange-500 text-white py-2 px-10 rounded-md w-fit">Lowongan Belum
+                    <button type="button" class="bg-zinc-500 text-white py-2 px-10 rounded-md w-fit">Lowongan Belum
                         Memiliki Paket.</button>
                 @else
                     @if ($Data->rekomendasi)
@@ -83,7 +80,8 @@
                         </form>
                     @endif
                 @endif
-                <button class="bg-orange-500 text-white py-2 px-28 rounded-md">Kembali</button>
+                <a href="/dashboard/superadmin/perusahaan" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-md">Kembali ke
+                    halaman</a>
             </div>
         </div>
     </div>

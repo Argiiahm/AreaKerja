@@ -23,10 +23,8 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <input type="text" id="searchInput" placeholder="Cari nama / email / telepon / alamat..."
+                    <input type="text" id="searchInput" placeholder="Cari Nama Perusahaan..."
                         class="border border-gray-300 rounded-lg px-4 py-2 w-72 focus:ring-2 focus:ring-orange-400 outline-none transition-all">
-                    <button
-                        class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow-md transition-all">Cari</button>
                 </div>
             </div>
 

@@ -657,9 +657,9 @@ class SuperAdminController extends Controller
         $user = User::findOrFail($perusahaan->users->id);
 
         $validasi_data = $request->validate([
-            "username" => "required",
-            "email" => "required|email",
-            "password" => "nullable",
+            "username" => "required|unique:users,username," . $user->id,
+            "email" => "required|email|unique:users,email," . $user->id,
+            "password" => "nullable|min:8",
         ]);
 
         if ($request->filled('password')) {
@@ -680,6 +680,7 @@ class SuperAdminController extends Controller
             "telepon_perusahaan" => "required",
             "whatsapp" => "required",
         ]);
+
         if ($request->hasFile('img_profile')) {
             if ($perusahaan->img_profile && Storage::exists('public/' . $perusahaan->img_profile)) {
                 Storage::delete('public/' . $perusahaan->img_profile);
@@ -690,15 +691,15 @@ class SuperAdminController extends Controller
         }
 
         $perusahaan->update($validasi_dataPerusahaan);
-        return back();
+        return redirect('/dashboard/superadmin/perusahaan');
     }
 
     public function perusahaan_create(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email',
-            'username' => 'required',
-            'password' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'username' => 'required|unique:users,username',
+            'password' => 'required|min:8',
             'nama_perusahaan' => 'required',
             'legalitas' => 'nullable',
             'deskripsi' => 'required',
@@ -736,23 +737,17 @@ class SuperAdminController extends Controller
         return redirect('/dashboard/superadmin/perusahaan')->with('success', 'Perusahaan berhasil ditambahkan!');
     }
 
-    public function perusahaan_delete(User $user)
-    {
-        $user->destroy($user->id);
-        return redirect('/dashboard/superadmin/perusahaan');
-    }
-
     public function perusahaan_detail(Perusahaan $perusahaan)
     {
         return view('Super-Admin.Perusahaan.details_perusahaan_superAdmin', [
-            "title" => "",
+            "title" => "Detail Perusahaan",
             "Data" => $perusahaan
         ]);
     }
     public function lowongan_detail(LowonganPerusahaan $lowongan)
     {
         return view('Super-Admin.Perusahaan.detail-lowongan_perusahaan_superAdmin', [
-            "title" => "",
+            "title" => "Detail Lowongan",
             "Data" => $lowongan
         ]);
     }
@@ -828,12 +823,7 @@ class SuperAdminController extends Controller
             "Data" => $pelamar
         ]);
     }
-    // public function recrutiment_edit()
-    // {
-    //     return view('Super-Admin.Perusahaan.Recrutiment.edit_kandidat_recrutiment_superAdmin', [
-    //         "title" => "Detail Pelamar"
-    //     ]);
-    // }
+
 
     // Talent Hunter
     public function talent_hunter_detail(TalentHunter $talenthunter)
@@ -932,7 +922,6 @@ class SuperAdminController extends Controller
             "tahunList" => [2025, 2024, 2023, 2022],
         ]);
     }
-
 
 
     public function catatan_laporan_transaksi_penghasilan($tanggal)
