@@ -304,7 +304,9 @@
                             <table class="w-full text-sm text-left border-collapse">
                                 <tbody class="divide-y divide-slate-200">
                                     @php
-                                        $lowongan = Auth::user()->perusahaan->pasanglowongan;
+                                        $lowongan = \App\Models\LowonganPerusahaan::withoutGlobalScope('aktif')
+                                            ->where('perusahaan_id', Auth::user()->perusahaan->id)
+                                            ->get();
                                         $tanpaPaket = $lowongan->whereNull('paket_id');
                                     @endphp
 

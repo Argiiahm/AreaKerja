@@ -9,7 +9,7 @@
         <div class="relative grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-3 overflow-visible">
             @forelse ($Data as $d)
                 @if ($d->paket_id && $d->kategori === $Kategori->nama)
-                    <div class="relative border border-gray-200 p-8 overflow-visible">
+                    <div class="relative border border-gray-200 p-8 overflow-visible lowongan-card transition-all duration-500" data-expired="{{ $d->expired_date }}">
 
                         <div x-data="{ open: false }" class="absolute top-3 right-3 z-[1]">
                             <button @click="open = !open" class="text-3xl p-1 relative z-[1000]">
@@ -34,8 +34,8 @@
                                     <i class="ph ph-link text-xl"></i> <span>Website</span>
                                 </a>
 
-                                <a href="https://wa.me/?text={{ urlencode(url('/detail/job/' . $d->slug)) }}"
-                                    target="_blank" class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100">
+                                <a href="https://wa.me/?text={{ urlencode(url('/detail/job/' . $d->slug)) }}" target="_blank"
+                                    class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100">
                                     <i class="ph ph-whatsapp-logo text-xl"></i> <span>WhatsApp</span>
                                 </a>
 
@@ -83,4 +83,37 @@
             @endforelse
         </div>
     </section>
+
+    <script>
+        function checkExpiredLowongan() {
+            const cards = document.querySelectorAll('.lowongan-card');
+            const now = new Date().getTime();
+
+            cards.forEach(card => {
+                const expiredStr = card.dataset.expired;
+                if (!expiredStr) return;
+
+                const expiredAt = new Date(expiredStr).getTime();
+                if (now >= expiredAt && !card.classList.contains('lowongan-expired')) {
+                    card.classList.add('lowongan-expired');
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.95)';
+                    card.style.maxHeight = card.scrollHeight + 'px';
+
+                    setTimeout(() => {
+                        card.style.maxHeight = '0';
+                        card.style.padding = '0';
+                        card.style.margin = '0';
+                        card.style.border = 'none';
+                        card.style.overflow = 'hidden';
+                    }, 500);
+
+                    setTimeout(() => card.remove(), 1000);
+                }
+            });
+        }
+
+        setInterval(checkExpiredLowongan, 5000);
+        document.addEventListener('DOMContentLoaded', checkExpiredLowongan);
+    </script>
 @endsection

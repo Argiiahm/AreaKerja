@@ -27,6 +27,25 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Auto-cleanup expired lowongan tanpa perlu Cron Job/Scheduler
+        // Menggunakan DB facade agar lebih ringan dan aman saat booting aplikasi
+        try {
+            \Illuminate\Support\Facades\DB::table('lowongan_perusahaans')
+                ->whereNotNull('expired_date')
+                ->where('expired_date', '<=', now())
+                ->update([
+                    'paket_id' => null,
+                    'expired_date' => null,
+                ]);
+
+            \Illuminate\Support\Facades\DB::table('pelamar_lowongans')
+                ->whereNotNull('expired_date')
+                ->where('expired_date', '<=', now())
+                ->delete();
+        } catch (\Exception $e) {
+            // Abaikan jika database belum siap
+        }
+
         Gate::define('perusahaan', function ($user) {
             return $user->role == 'perusahaan';
         });

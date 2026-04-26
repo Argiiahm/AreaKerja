@@ -34,11 +34,16 @@ class PerusahaanController extends Controller
     {
         $user = Auth::user();
         $totalSaldo = $user->perusahaan->koin ?? 0;
+        $lowongans = LowonganPerusahaan::withoutGlobalScope('aktif')
+            ->where('perusahaan_id', $user->perusahaan->id)
+            ->with('perusahaan', 'paket')
+            ->get();
 
         return view('Perusahaan.dashboard-perusahaan', [
             "data" => HargaPembayaran::all(),
             "payment" => Bank::all(),
-            "totalSaldo" => $totalSaldo
+            "totalSaldo" => $totalSaldo,
+            "lowongans" => $lowongans
         ]);
     }
 
@@ -285,14 +290,14 @@ class PerusahaanController extends Controller
     public function lowongan()
     {
         $perusahaan = Auth::user()->perusahaan;
-        $data = LowonganPerusahaan::where('perusahaan_id', $perusahaan->id)->get();
+        $data = LowonganPerusahaan::withoutGlobalScope('aktif')->where('perusahaan_id', $perusahaan->id)->get();
 
         // Batch update expired lowongan
         $expiredIds = $data->filter(fn($d) => $d->expired_date && now()->greaterThan($d->expired_date))->pluck('id');
         if ($expiredIds->isNotEmpty()) {
             LowonganPerusahaan::whereIn('id', $expiredIds)->update(['paket_id' => null, 'expired_date' => null]);
             // Refresh data setelah batch update
-            $data = LowonganPerusahaan::where('perusahaan_id', $perusahaan->id)->get();
+            $data = LowonganPerusahaan::withoutGlobalScope('aktif')->where('perusahaan_id', $perusahaan->id)->get();
         }
 
         return view('Perusahaan.Lowongan_saya.lowongan', [
@@ -379,7 +384,7 @@ class PerusahaanController extends Controller
         $lowongan->load('perusahaan');
         return view('Perusahaan.Lowongan_saya.detail-lowongan', [
             "data" => $lowongan,
-            "Data" => LowonganPerusahaan::where('perusahaan_id', $lowongan->perusahaan_id)
+            "Data" => LowonganPerusahaan::withoutGlobalScope('aktif')->where('perusahaan_id', $lowongan->perusahaan_id)
                 ->where('id', '!=', $lowongan->id)
                 ->get()
         ]);
@@ -544,7 +549,7 @@ class PerusahaanController extends Controller
         $perusahaan = $user->perusahaan;
 
         $totalSaldo = $perusahaan->koin ?? 0;
-        $lowongan = LowonganPerusahaan::where('perusahaan_id', $perusahaan->id)->get();
+        $lowongan = LowonganPerusahaan::withoutGlobalScope('aktif')->where('perusahaan_id', $perusahaan->id)->get();
 
         $query = Pelamar::where('kategori', 'kandidat aktif');
 

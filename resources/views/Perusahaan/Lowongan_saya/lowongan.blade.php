@@ -99,9 +99,9 @@
                 </div>
             </div>
 
-            @if (Auth::user()->perusahaan->pasanglowongan->count() > 0)
+            @if ($Data->count() > 0)
                 <div class="grid gap-6" id="lowonganList">
-                    @forelse (Auth::user()->perusahaan->pasanglowongan as $d)
+                    @forelse ($Data as $d)
                         <div class="lowongan-item" data-paket-id="{{ $d->paket_id }}" data-jenis="{{ $d->jenis }}">
                             @if ($d->paket_id)
                                 <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}"
@@ -141,44 +141,54 @@
                                 </a>
                             @else
                                 {{-- Non-Published Card --}}
-                                <div class="p-4 sm:p-6 bg-yellow-50 rounded-xl shadow-md border border-yellow-200">
-                                <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}">                                    
-                                    <h3 class="font-semibold text-lg text-orange-600 mb-4">Lowongan Belum Dipublikasikan
+                               <div class="p-4 sm:p-6 bg-yellow-50 rounded-xl shadow-md border border-yellow-200">
+    
+                                <!-- BAGIAN LINK (klik ke detail) -->
+                                <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}">
+                                    <h3 class="font-semibold text-lg text-orange-600 mb-4">
+                                        Lowongan Belum Dipublikasikan
                                     </h3>
+
                                     <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                                        <div
-                                            class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
+                                        <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center rounded-lg overflow-hidden border border-gray-200">
                                             @if ($d->perusahaan->img_profile)
                                                 <img class="object-contain w-full h-full"
-                                                    src="{{ asset('storage/' . $d->perusahaan->img_profile) }}"
-                                                    alt="Company Logo">
+                                                    src="{{ asset('storage/' . $d->perusahaan->img_profile) }}">
                                             @else
                                                 <img class="w-full h-full object-cover p-2"
-                                                    src="https://ui-avatars.com/api/?name={{ urlencode($d->perusahaan->nama_perusahaan) }}&background=random&color=fff&size=128"
-                                                    alt="Placeholder Avatar">
+                                                    src="https://ui-avatars.com/api/?name={{ urlencode($d->perusahaan->nama_perusahaan) }}">
                                             @endif
                                         </div>
+
                                         <div class="flex-grow">
                                             <p class="text-sm text-gray-600">
-                                                {{ Auth::user()->perusahaan->nama_perusahaan }}</p>
-                                            <h1 class="text-lg font-semibold text-gray-900 mt-1">{{ $d->nama }} -
-                                                {{ ucfirst($d->jenis) }}</h1>
-                                            <p class="text-sm text-gray-500 mt-1"><i
-                                                    class="ph ph-map-pin inline-block mr-1"></i> {{ $d->alamat }}</p>
-                                            <div
-                                                class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                                                <span
-                                                    class="inline-block px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md">
-                                                    Rp {{ number_format((float)$d->gaji_awal, 0, ',', '.') }} - Rp
-                                                    {{ number_format((float)$d->gaji_akhir, 0, ',', '.') }}
+                                                {{ Auth::user()->perusahaan->nama_perusahaan }}
+                                            </p>
+
+                                            <h1 class="text-lg font-semibold text-gray-900 mt-1">
+                                                {{ $d->nama }} - {{ ucfirst($d->jenis) }}
+                                            </h1>
+
+                                            <p class="text-sm text-gray-500 mt-1">
+                                                {{ $d->alamat }}
+                                            </p>
+
+                                            <div class="mt-4">
+                                                <span class="inline-block px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md">
+                                                    Rp {{ number_format((float)$d->gaji_awal, 0, ',', '.') }} -
+                                                    Rp {{ number_format((float)$d->gaji_akhir, 0, ',', '.') }}
                                                 </span>
-                                                <button type="button"
-                                                    class="publish-btn bg-orange-500 px-6 py-2 rounded-md text-white hover:bg-orange-600 transition-colors duration-200 text-sm"
-                                                    data-id="{{ $d->id }}"> Publish </button>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
+
+                                <!-- TOMBOL PUBLISH  -->
+                                <div class="mt-4 flex justify-end">
+                                    <a href="/pasanglowongan"
+                                        class="bg-orange-500 px-6 py-2 rounded-md text-white hover:bg-orange-600 text-sm">
+                                        Publish
+                                    </a>
                                 </div>
                             @endif
                         </div>

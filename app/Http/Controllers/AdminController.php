@@ -49,7 +49,7 @@ class AdminController extends Controller
             ->count();
 
 
-        $lowongan = LowonganPerusahaan::whereHas('perusahaan.alamatperusahaan', function ($q) use ($provinsi) {
+        $lowongan = LowonganPerusahaan::withoutGlobalScope('aktif')->whereHas('perusahaan.alamatperusahaan', function ($q) use ($provinsi) {
             $q->where('provinsi', $provinsi);
         })->whereNotNull("paket_id")->count();
 
@@ -181,7 +181,7 @@ class AdminController extends Controller
         return view('Admin.Dashboard-admin.perusahaan.view-perusahaan_admin_dashboard', [
             "title" => "",
             "data" => $perusahaan,
-            "lowongan" => LowonganPerusahaan::where('perusahaan_id', $perusahaan->id)->get()
+            "lowongan" => LowonganPerusahaan::withoutGlobalScope('aktif')->where('perusahaan_id', $perusahaan->id)->get()
         ]);
     }
 

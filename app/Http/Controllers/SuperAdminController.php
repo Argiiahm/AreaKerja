@@ -46,7 +46,7 @@ class SuperAdminController extends Controller
         return view('Super-Admin.dashboard-superAdmin.dashboard-super_admin', [
             "title" => "Dashboard",
             "Perusahaan" => Perusahaan::count(),
-            "Lowongan" => LowonganPerusahaan::whereNotNull('paket_id')->count(),
+            "Lowongan" => LowonganPerusahaan::withoutGlobalScope('aktif')->whereNotNull('paket_id')->count(),
             "Pelamar" => Pelamar::whereNull('kategori')->count() + Pelamar::where('kategori', 'pelamar')->count(),
             "Kandidat" => Pelamar::where('kategori', 'kandidat aktif')->count()
         ]);

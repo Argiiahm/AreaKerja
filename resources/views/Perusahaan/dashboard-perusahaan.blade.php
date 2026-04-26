@@ -13,7 +13,6 @@
                 </div>
                 <div class="p-6">
 
-                    @php $lowongans = Auth::user()->perusahaan->pasanglowongan; @endphp
 
                     @if ($lowongans->isNotEmpty())
                         @foreach ($lowongans as $datas)

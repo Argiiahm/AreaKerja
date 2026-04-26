@@ -54,6 +54,7 @@ class LowonganController extends Controller
         $lowongan->load('perusahaan');
 
         $rekomendasi = LowonganPerusahaan::with('perusahaan')
+            ->whereNotNull('paket_id')
             ->where('perusahaan_id', $lowongan->perusahaan_id)
             ->where('id', '!=', $lowongan->id)
             ->get();
@@ -100,7 +101,7 @@ class LowonganController extends Controller
         ]);
 
 
-        $lowongan = LowonganPerusahaan::find($request->id_lowongan);
+        $lowongan = LowonganPerusahaan::withoutGlobalScope('aktif')->find($request->id_lowongan);
         $paket = PaketLowongan::find($request->paket_id);
         if ($lowongan) {
             $lowongan->paket_id = $request->paket_id;

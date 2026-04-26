@@ -121,14 +121,12 @@
                         <a href="/dashboard/perusahaan/lowongan" class="text-xs font-bold text-orange-500 hover:underline transition-all">Lihat Semua</a>
                     </div>
                     <div class="space-y-4">
-                        @foreach (Auth::user()->perusahaan->pasanglowongan as $d)
-                            @if ($d->id != $data->id)
-                                <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}" class="block p-4 bg-white border border-slate-200 rounded-xl hover:border-orange-200 hover:shadow-md transition-all group">
+                        @foreach ($Data as $d)
+                            <a href="/dashboard/perusahaan/lowongan/detail/{{ $d->slug }}" class="block p-4 bg-white border border-slate-200 rounded-xl hover:border-orange-200 hover:shadow-md transition-all group">
                                     <h4 class="font-bold text-slate-800 group-hover:text-orange-600 transition-colors truncate">{{ $d->nama }}</h4>
                                     <p class="text-[10px] text-slate-400 font-bold uppercase mt-1">{{ $d->jenis }}</p>
                                     <p class="text-xs text-slate-700 font-bold mt-3">Rp {{ $d->gaji_awal }} - {{ $d->gaji_akhir }}</p>
                                 </a>
-                            @endif
                         @endforeach
                     </div>
                 @endif
