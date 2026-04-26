@@ -36,8 +36,7 @@
                     <h1 class=" font-bold text-2xl mb-4 text-center text-[#fa6601]">Buat Akun</h1>
                     <div class="flex justify-center mb-6">
                         <div class="flex bg-gray-200 rounded-full w-max p-1">
-                            <button id="pelamar"
-                                class="px-4 py-2 rounded-full bg-orange-500 text-white font-semibold">
+                            <button id="pelamar" class="px-4 py-2 rounded-full bg-orange-500 text-white font-semibold">
                                 Pelamar
                             </button>
                             <button id="perusahaan" class="px-4 py-2 rounded-full font-semibold">
@@ -60,30 +59,36 @@
                         <input type="hidden" name="type" value="pelamar">
                         <label for="name" class="font-semibold">Nama Pengguna</label>
                         <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
-                            <input id="name" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text"
-                                name="username" placeholder="Nama Pengguna" value="{{ old('username') }}"/>
+                            <input id="name"
+                                class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="text" name="username" placeholder="Nama Pengguna" value="{{ old('username') }}" />
                         </div>
 
                         <label for="email" class="font-semibold">E-Mail</label>
                         <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
-                            <input id="email" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="email"
-                                name="email" placeholder="E-Mail" value="{{ old('email') }}" />
+                            <input id="email"
+                                class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="email" name="email" placeholder="E-Mail" value="{{ old('email') }}" />
                         </div>
 
                         <label for="tlp" class="font-semibold">No. Tlp</label>
                         <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
-                            <input id="tlp" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text"
-                                name="telepon_pelamar" placeholder="No. Tlp" value="{{ old('telepon_pelamar') }}" />
+                            <input id="tlp"
+                                class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="text" name="telepon_pelamar" placeholder="No. Tlp"
+                                value="{{ old('telepon_pelamar') }}" />
                         </div>
 
-                        <input id="text" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="hidden" name="role"
-                            value="pelamar" />
+                        <input id="text"
+                            class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                            type="hidden" name="role" value="pelamar" />
 
                         <label for="password" class="font-semibold">Kata Sandi</label>
 
                         <div class="flex items-center border-2 border-gray-200 py-2 mt-2 px-3 mb-3">
-                            <input class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="password" name="password"
-                                id="password" placeholder="Kata Sandi" />
+                            <input
+                                class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="password" name="password" id="password" placeholder="Kata Sandi" />
                         </div>
 
                         <div class="flex items-center justify-center mb-4">
@@ -109,32 +114,40 @@
                         <input type="hidden" name="type" value="perusahaan">
                         <label for="name" class="font-semibold">Nama Perusahaan</label>
                         <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
-                            <input id="name" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text"
-                                name="username" placeholder="Nama Perusahaan"  value="{{ old('username') }}"/>
+                            <input id="name"
+                                class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="text" name="username" placeholder="Nama Perusahaan"
+                                value="{{ old('username') }}" />
                         </div>
 
-                        <input class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text" name="nama_perusahaan"
-                            hidden />
+                        <input
+                            class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                            type="text" name="nama_perusahaan" hidden />
 
                         <label for="email" class="font-semibold">E-Mail</label>
                         <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
-                            <input id="email" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="email"
-                                name="email" placeholder="E-Mail" value="{{ old('email') }}" />
+                            <input id="email"
+                                class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="email" name="email" placeholder="E-Mail" value="{{ old('email') }}" />
                         </div>
 
                         <label for="telepon_perusahaan" class="font-semibold">No. Tlp Perusahaan</label>
                         <div class="flex items-center border-2 border-gray-200 mt-2 mb-4 py-2 px-3">
-                            <input id="telepon_perusahaan" class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
-                                type="number" name="telepon_perusahaan" value="{{ old('telepon_perusahaan') }}" placeholder="No. Tlp Perusahaan" />
+                            <input id="telepon_perusahaan"
+                                class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="number" name="telepon_perusahaan" value="{{ old('telepon_perusahaan') }}"
+                                placeholder="No. Tlp Perusahaan" />
                         </div>
 
-                        <input id="role" hidden class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="text"
-                            name="role" value="perusahaan" placeholder="" />
+                        <input id="role" hidden
+                            class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                            type="text" name="role" value="perusahaan" placeholder="" />
 
                         <label for="password" class="font-semibold">Kata Sandi</label>
                         <div class="flex items-center border-2 border-gray-200 py-2 mt-2 px-3 mb-3">
-                            <input class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none" type="password" name="password"
-                                id="password" placeholder="Kata Sandi" />
+                            <input
+                                class="pl-2 w-full outline-none focus:outline-none focus:ring-0 focus:border-transparent border-none"
+                                type="password" name="password" id="password" placeholder="Kata Sandi" />
                         </div>
 
                         <div class="flex items-center justify-center mb-4">
@@ -180,7 +193,7 @@
     </div>
 
     @if (session('success'))
-        <div id="modalSuccess" class="fixed inset-0 bg-black/65/60 bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modalSuccess" class="fixed inset-0 bg-black/65 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-md p-6 w-[500px] shadow-lg relative text-center">
 
                 <h2 class="text-lg font-bold my-2">Selamat! Akun anda berhasil dibuat.</h2>
@@ -189,8 +202,7 @@
                 </p>
 
                 <div class="flex justify-center mb-2">
-                    <img src="{{ asset('Icon/regis.png') }}" alt="Success Illustration"
-                        class="w-40 h-40 object-contain">
+                    <img src="{{ asset('Icon/regis.png') }}" alt="Success Illustration" class="w-40 h-40 object-contain">
                 </div>
 
                 <div>

@@ -3,6 +3,36 @@
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 mt-24">
 
+        {{-- Profile Incomplete Warning --}}
+        @if(!$isProfileComplete)
+            <div class="mb-6 p-4 bg-amber-50 border border-amber-300 rounded-xl flex items-start gap-3">
+                <div class="flex-shrink-0 w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
+                    <i class="ph ph-warning text-xl text-amber-600"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-amber-800">Profile Belum Lengkap</h4>
+                    <p class="text-sm text-amber-700 mt-0.5">Lengkapi profile perusahaan Anda untuk dapat membuat lowongan. Data yang belum lengkap: <strong>{{ implode(', ', $missingFields) }}</strong></p>
+                    <a href="/dashboard/perusahaan/edit/profile" class="inline-flex items-center gap-1.5 mt-2 text-sm font-semibold text-amber-700 hover:text-amber-900 transition-colors">
+                        <i class="ph ph-pencil-simple"></i> Lengkapi Profile Sekarang
+                    </a>
+                </div>
+            </div>
+        @endif
+
+        @if(session('profile_warning'))
+            <div class="mb-6 p-4 bg-red-50 border border-red-300 rounded-xl flex items-start gap-3">
+                <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                    <i class="ph ph-warning-circle text-xl text-red-600"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-red-700">{{ session('profile_warning') }}</p>
+                    <a href="/dashboard/perusahaan/edit/profile" class="inline-flex items-center gap-1.5 mt-2 text-sm font-semibold text-red-700 hover:text-red-900 transition-colors">
+                        <i class="ph ph-pencil-simple"></i> Lengkapi Profile Sekarang
+                    </a>
+                </div>
+            </div>
+        @endif
+
         {{-- Company Profile Section --}}
         <div class="flex flex-col md:flex-row items-start md:items-center gap-4 py-5 border-b border-gray-200 mb-8">
             <div
@@ -24,10 +54,25 @@
                     {{ optional(Auth::user()->perusahaan->alamatperusahaan()->latest()->first())->detail ?? 'Alamat belum diatur' }}
                 </p>
             </div>
-            <a href="/dashboard/perusahaan/isi/lowongan"
-                class="ml-auto w-10 h-10 border border-orange-500 rounded-md flex items-center justify-center text-orange-500 hover:bg-orange-50 transition-colors duration-200 flex-shrink-0">
-                <i class="ph ph-plus text-xl"></i>
-            </a>
+            @if($isProfileComplete)
+                <a href="/dashboard/perusahaan/isi/lowongan"
+                    class="ml-auto w-10 h-10 border border-orange-500 rounded-md flex items-center justify-center text-orange-500 hover:bg-orange-50 transition-colors duration-200 flex-shrink-0"
+                    title="Buat Lowongan Baru">
+                    <i class="ph ph-plus text-xl"></i>
+                </a>
+            @else
+                <div class="ml-auto relative group flex-shrink-0">
+                    <button disabled
+                        class="w-10 h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400 bg-gray-100 cursor-not-allowed">
+                        <i class="ph ph-warning text-xl text-amber-500"></i>
+                    </button>
+                    <div class="absolute right-0 top-full mt-2 w-64 bg-gray-900 text-white text-xs rounded-lg p-3 hidden group-hover:block z-50 shadow-lg">
+                        <p class="font-semibold mb-1"><i class="ph ph-warning text-amber-400 mr-1"></i> Profile Belum Lengkap</p>
+                        <p>Lengkapi profile perusahaan untuk membuat lowongan.</p>
+                        <div class="absolute -top-1 right-4 w-2 h-2 bg-gray-900 rotate-45"></div>
+                    </div>
+                </div>
+            @endif
         </div>
 
         {{-- Lowongan Section --}}
@@ -143,10 +188,24 @@
                             class="border border-gray-200 rounded-xl p-6 min-h-[250px] flex flex-col items-center justify-center text-gray-500">
                             <i class="ph ph-file text-4xl mb-2"></i>
                             <p class="text-sm">Anda belum memposting lowongan apapun.</p>
-                            <a href="/dashboard/perusahaan/isi/lowongan"
-                                class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors duration-200">
-                                <i class="ph ph-plus text-lg"></i> Buat Lowongan Pertama Anda
-                            </a>
+                            @if($isProfileComplete)
+                                <a href="/dashboard/perusahaan/isi/lowongan"
+                                    class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors duration-200">
+                                    <i class="ph ph-plus text-lg"></i> Buat Lowongan Pertama Anda
+                                </a>
+                            @else
+                                <div class="relative group mt-4">
+                                    <button disabled
+                                        class="inline-flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+                                        <i class="ph ph-warning text-lg text-amber-500"></i> Buat Lowongan Pertama Anda
+                                    </button>
+                                    <div class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg p-3 hidden group-hover:block z-50 shadow-lg">
+                                        <p class="font-semibold mb-1"><i class="ph ph-warning text-amber-400 mr-1"></i> Profile Belum Lengkap</p>
+                                        <p>Lengkapi profile perusahaan untuk membuat lowongan.</p>
+                                        <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     @endforelse
                 </div>
@@ -163,10 +222,24 @@
                     class="border border-gray-200 rounded-xl p-6 min-h-[250px] flex flex-col items-center justify-center text-gray-500">
                     <i class="ph ph-file text-4xl mb-2"></i>
                     <p class="text-sm">Anda belum memposting lowongan apapun.</p>
-                    <a href="/dashboard/perusahaan/isi/lowongan"
-                        class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors duration-200">
-                        <i class="ph ph-plus text-lg"></i> Buat Lowongan Pertama Anda
-                    </a>
+                    @if($isProfileComplete)
+                        <a href="/dashboard/perusahaan/isi/lowongan"
+                            class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors duration-200">
+                            <i class="ph ph-plus text-lg"></i> Buat Lowongan Pertama Anda
+                        </a>
+                    @else
+                        <div class="relative group mt-4">
+                            <button disabled
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+                                <i class="ph ph-warning text-lg text-amber-500"></i> Buat Lowongan Pertama Anda
+                            </button>
+                            <div class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg p-3 hidden group-hover:block z-50 shadow-lg">
+                                <p class="font-semibold mb-1"><i class="ph ph-warning text-amber-400 mr-1"></i> Profile Belum Lengkap</p>
+                                <p>Lengkapi profile perusahaan untuk membuat lowongan.</p>
+                                <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             @endif
         </div>

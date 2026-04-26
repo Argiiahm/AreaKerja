@@ -297,12 +297,22 @@ class PerusahaanController extends Controller
 
         return view('Perusahaan.Lowongan_saya.lowongan', [
             "Data" => $data,
-            "Pakets" => HargaKoin::all()
+            "Pakets" => HargaKoin::all(),
+            "isProfileComplete" => $perusahaan->is_profile_complete,
+            "missingFields" => $perusahaan->missing_profile_fields
         ]);
     }
 
     public function isi_lowongan()
     {
+        $perusahaan = Auth::user()->perusahaan;
+
+        if (!$perusahaan->is_profile_complete) {
+            $missing = implode(', ', $perusahaan->missing_profile_fields);
+            return redirect('/dashboard/perusahaan/lowongan')
+                ->with('profile_warning', 'Lengkapi profile perusahaan terlebih dahulu sebelum membuat lowongan. Data yang belum lengkap: ' . $missing);
+        }
+
         return view('Perusahaan.Lowongan_saya.isi-lowongan', [
             "kategoris" => Kategories::all()
         ]);

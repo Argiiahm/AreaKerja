@@ -49,17 +49,15 @@
                     </p>
                     <p class="text-gray-800 font-medium flex">
                         Hanya dengan <span class="text-orange-500 px-2 font-bold flex items-center">
-                            <img class="w-10" src="{{ asset('Icon/coin perusahaan.png') }}" alt=""> 1.000
+                            <img class="w-10" src="{{ asset('Icon/coin perusahaan.png') }}" alt=""> {{ $harga->harga }}
                         </span> per Tahun
                     </p>
                     @if ($sudahBeli && Auth::user()->perusahaan->is_berlangganan === 0)
-                        <button 
-                            class="bg-orange-300 cursor-no-drop text-white px-5 py-2 rounded-lg">
+                        <button class="bg-orange-300 cursor-no-drop text-white px-5 py-2 rounded-lg">
                             Mohon Menunggu!
                         </button>
                     @else
-                        <button onclick="openModal()"
-                            class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg">
+                        <button onclick="openModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg">
                             Berlangganan
                         </button>
                     @endif
@@ -84,14 +82,14 @@
                 <div class="border-2 border-orange-500 rounded-lg flex items-center justify-between p-4 mb-4">
                     <div class="flex items-center gap-3">
                         <img src="{{ asset('Icon/coin perusahaan.png') }}" alt="Koin" class="w-12">
-                        <span class="text-2xl font-bold text-orange-500">1.000</span>
+                        <span class="text-2xl font-bold text-orange-500">{{ $harga->harga }}</span>
                     </div>
                     <span class="text-gray-600 font-medium">Berlangganan</span>
                 </div>
 
                 <div class="flex justify-between text-sm mb-6">
                     <span class="text-gray-600">Tagihan Tahunan</span>
-                    <span class="font-semibold text-gray-800">1000 Koin</span>
+                    <span class="font-semibold text-gray-800">{{ $harga->harga }} Koin</span>
                 </div>
 
                 <div class="flex items-center justify-between mb-6">
@@ -126,7 +124,7 @@
         </div>
 
         @if (session('success'))
-            <div id="popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div id="popup" class="fixed inset-0 flex items-center justify-center bg-black/65 bg-opacity-50 z-50">
                 <div class="bg-white rounded-lg shadow-xl w-[420px] text-center overflow-hidden">
                     <div class="bg-orange-500 text-white p-3">
                         <h2 class="font-semibold text-lg">Pembayaran Sukses</h2>
@@ -166,7 +164,7 @@
         @endif
 
         @if (session('success_email'))
-            <div id="popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div id="popup" class="fixed inset-0 flex items-center justify-center bg-black/65 bg-opacity-50 z-50">
                 <div class="bg-white rounded-lg shadow-xl w-[420px] text-center overflow-hidden">
                     <div class="bg-orange-500 text-white p-3">
                         <h2 class="font-semibold text-lg">Pembayaran Sukses</h2>
@@ -199,4 +197,4 @@
                 document.getElementById('modalLangganan').classList.add('hidden');
             }
         </script>
-    @endsection
+@endsection
